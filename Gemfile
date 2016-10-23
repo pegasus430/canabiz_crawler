@@ -8,6 +8,7 @@ gem 'httparty', '~> 0.13.7' #External API Integration
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a string and output it as a link
+gem 'rubypython', '~> 0.6.3' #python
 
 #gems for image management
 gem 'carrierwave', '~> 0.11.2'

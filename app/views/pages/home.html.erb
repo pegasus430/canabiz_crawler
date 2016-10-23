@@ -1,34 +1,8 @@
 <!--set the user state-->
 <% #@state = State.find_by name: request.location.state if request.location%>
-<div class = 'homepage-news'>
-    <div class = 'wrap'>
-        <div class = 'homepage-news-header'>
-            <p class = 'section-header-left'>News</p>
-            <p class = 'section-header-right'>
-                <% if @state != nil %>
-                    <%= link_to 'View All News', news_path(:id => @state.id) %>
-                <% else %>
-                    <%= link_to 'View All News', news_path(:id => 2) %>
-                <% end %>
-            </p>
-        </div>
-        <% @top_articles.each do |article| %>
-            <div class = 'homepage-article'>
-                <% if article.source.name == 'MjBizDaily' %>
-                    <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %>
-                <% else %>
-                    <%= link_to image_tag(article.image), article_path(article) %>
-                <% end %>
-                <h2><%= link_to article.title.truncate(86), article_path(article) %></h2>
-            </div>
-        <% end %>
-        <!--
-        <div class = 'popular-news-carousel'>
-            <p>Most Popular</p>
-            <h1>NEED TO DO THE CAROUSEL HERE</h1>
-        </div> -->
-    </div>
-</div>
+
+
+<h1 align = 'center'>:Cheeseburger Emoji:</h1>
 
 
 <script>
