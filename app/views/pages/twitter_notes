@@ -1,0 +1,77 @@
+    responseBody['statuses'].each do |tweet|
+        %><p>Tweet: <%= tweet%></p><%
+    end
+
+
+
+<%
+#require 'oauth'
+    # Change the following values to those provided on dev.twitter.com
+    # The consumer key identifies the application making the request.
+    # The access token identifies the user making the request.
+    consumer_key = OAuth::Consumer.new(
+        "PeKIPXsMPl80fKm6SipbqrRVL",
+        "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO")
+    access_token = OAuth::Token.new(
+        "418377285-HfXt8G0KxvBhNXQJRnnysTvt7yGAM0jWyfaIKSIU",
+        "3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez")
+    
+    # All requests will be sent to this server.
+    baseurl = "https://api.twitter.com"
+    
+    # The verify credentials endpoint returns a 200 status if
+    # the request is signed correctly.
+    address = URI("#{baseurl}/1.1/account/verify_credentials.json")
+    
+    # Set up Net::HTTP to use SSL, which is required by Twitter.
+    http = Net::HTTP.new address.host, address.port
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    
+    # Build the request and authorize it with OAuth.
+    request = Net::HTTP::Get.new address.request_uri
+    request.oauth! http, consumer_key, access_token
+    
+    # Issue the request and return the response.
+    http.start
+    response = http.request request
+    puts "The response status was #{response.code}"
+%>
+
+
+<%= form_for (@tweet = Tweet.new, :url => tweet_path) do |tweet_form| %>
+ <%= tweet_form.text_area :tweet_content, :id => "tweet" %>
+ <%= tweet_form.submit "Tweet" %>
+<% end %>
+
+        require "rubygems"
+        require "twitter"
+      
+        # Certain methods require authentication. To get your Twitter OAuth credentials,
+        # register an app at http://dev.twitter.com/apps
+        #Twitter.configure do |config|
+         # config.consumer_key = 'PeKIPXsMPl80fKm6SipbqrRVL'
+          #config.consumer_secret =  'EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO'
+          #config.oauth_token = '418377285-HfXt8G0KxvBhNXQJRnnysTvt7yGAM0jWyfaIKSIU'
+          #config.oauth_token_secret = '3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez'
+        #end
+      
+        # Initialize your Twitter client
+        #client = Twitter::Client.new
+      
+      
+        client = Twitter::Streaming::Client.new do |config|
+          config.consumer_key        = "PeKIPXsMPl80fKm6SipbqrRVL"
+          config.consumer_secret     = "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO"
+          config.access_token        = "418377285-HfXt8G0KxvBhNXQJRnnysTvt7yGAM0jWyfaIKSIU"
+          config.access_token_secret = "3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez"
+        end
+      
+        client.sample do |object|
+          puts object.text if object.is_a?(Twitter::Tweet)
+        end
+      
+        # Post a status update
+        #client.update("!")
+        #:notice => 'Tweet successfully posted'
+        #redirect_to twitter_path,

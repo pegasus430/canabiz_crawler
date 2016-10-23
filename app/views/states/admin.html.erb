@@ -1,0 +1,48 @@
+<div class = 'wrap'>
+    <h2 align = 'center'>States</h2>
+    <h3 align = 'center'><%= link_to 'Admin Home', admin_path %></h3>
+    <h3 align = 'center'><%= link_to 'Add State', new_state_path %></h3>
+    
+    <!--Import CSV File-->
+    <div align = 'center'>
+        <h3>Import States</h3>
+        <%= form_tag import_states_path, multipart: true do %>
+            <%= file_field_tag :file, :style => 'margin-left: 80px;' %>
+            </br>
+            <%=submit_tag "Import"%>
+        <% end %>    
+    </div>
+ 
+    
+    <!--Export CSV File-->
+    <div align = 'center'>
+        <h3>Export States</h3>
+        <%=link_to "CSV File", states_admin_path(format: "csv"), class: 'btn btn-default' %>
+    </div>    
+    
+    <table class = 'table' id = 'admin-table'>
+        <th>Name</th>
+        <th>Abbr.</th>
+        <th>TimeZone</th>
+        <th>Num Dispensaries</th>
+        <th>Num Articles</th>
+        <th>Keywords</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    <% @states.each do |state| %>
+
+        <tr>
+            <td><%= state.name %></td>
+            <td><%= state.abbreviation %></td>
+            <td><%= state.timezone.name if state.timezone %></td>
+            <td><%= state.dispensaries.count %></td>
+            <td><%= state.articles.count %></td>
+            <td><%= state.keywords.truncate(30) if state.keywords %></td>
+            <td><%= link_to "Edit", edit_state_path(state), class: "btn" %></td>
+            <td><%= link_to "Delete", state_path(state), method: :delete,
+                        data: { confirm: "Are you sure you want to delete this state?"},
+                        class: "btn" %></td>
+        </tr>
+    <% end %>
+    </table>
+</div>

@@ -1,0 +1,18 @@
+<!--PAGE SHOWS ALL OF THE ARTICLES OF A PARTICULAR CATEGORY-->
+<div class = 'wrap'>
+    <h1 align = 'center' ><%= @category.name %> News</h1>
+    <div class="center"><%= will_paginate @category_articles %></div>
+    <% @category_articles.each do |article| %>
+        <%=link_to article_path(article) do %>
+            <div class = 'category-article-big'>
+                <%= image_tag(article.image) %>
+                <div class = 'category-article-big-text'>
+                    <h2><%= article.title %></h2>
+                    <p class = 'category-article-big-date'><%= article.date.strftime("%B %d, %Y | %I:%M %p") %></p>
+                    <p class = 'category-article-big-abstract'><%= article.abstract %></p>
+                </div>
+            </div>
+        <% end %>     
+    <% end %>
+    <div class="center"><%= will_paginate @category_articles %></div>
+</div>

@@ -1,0 +1,52 @@
+<!--set the user state-->
+<% @state = State.find_by name: request.location.state if request.location%>
+<div class = 'header-top'>
+    <div class = 'wrap'>
+        <div class = 'header-twitter'>
+            <%= image_tag("header_footer/twitter-header.png") %><p><p>@CannabizNetwork</p></p>
+        </div>
+        <div class = 'header-location'>
+            <%= image_tag("header_footer/search-pin.png") %><p><p><%=@state.name if @state%></p></p>
+        </div>
+    </div>
+</div>
+<div class = 'clear'></div>
+<div class = 'header-bottom'>
+    <div class = 'wrap'>
+        <div class = 'header-logo inline'><%= link_to image_tag("header_footer/cbz-logo-us-color.svg"), root_path %></div>
+        
+        <!--search-->
+        <form class="navbar-form inline" role="search" method="get" action = '/search'>
+            <input type="text" class="form-control header-searchbar" name='query' id ='searchQuery' placeholder="Search For..." autocomplete='on'>
+            <input type = 'submit' id = 'searchButton' onclick = 'search()' class = "btn btn-default btn-green-touching" value = 'Go' />
+        </form>
+        
+        <div class = 'header-login'>
+            <% if logged_in? %>
+                <p><%= link_to 'Logout', logout_path, method: :delete %></p>
+            <% else %>
+                <p><%= link_to 'Sign Up', signup_path %> | <%= link_to 'Log In', login_path %></p>
+            <% end %>
+        </div>
+    </div>
+</div>
+<div class = 'header-nav'>
+    <div class = 'wrap'>
+		<ul>
+            <% if @state != nil %>
+                <li><%= link_to 'News', news_path(:id => @state.id) %></li>
+    			<li><%= link_to 'Deals', deals_path(:id => @state.id) %></li>
+    			<li><%= link_to 'Vaporizers', '#' %></li>
+    			<li><%= link_to 'Dispensaries', dispensaries_path(:id => @state.id) %></li>
+            <% else %>
+                <li><%= link_to 'News', news_path(:id => 2) %></li>
+    			<li><%= link_to 'Deals', deals_path(:id => 2) %></li>
+    			<li><%= link_to 'Vaporizers', '#' %></li>
+    			<li><%= link_to 'Dispensaries', dispensaries_path(:id => 2) %></li>
+            <% end %>
+			
+		</ul>        
+    </div>
+</div>
+
+

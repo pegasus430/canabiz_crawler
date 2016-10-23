@@ -1,5 +1,20 @@
 source 'https://rubygems.org'
 
+#STEVE ADDITIONS:
+gem 'will_paginate', '3.0.7' # PAGINATION
+gem 'bootstrap-will_paginate', '0.0.10' # BOOTSTRAP STYLING
+gem 'bootstrap-sass', '~> 3.3.6' # BOOTSTRAP STYLING
+gem 'httparty', '~> 0.13.7' #External API Integration
+gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
+gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
+gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a string and output it as a link
+
+#gems for image management
+gem 'carrierwave', '~> 0.11.2'
+gem 'mini_magick', '~> 4.5', '>= 4.5.1'
+gem 'fog', '~> 1.38'
+gem 'figaro', '~> 1.1', '>= 1.1.1'
+gem 'unf', '~> 0.1.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
@@ -45,3 +60,7 @@ group :development do
   gem 'spring'
 end
 
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end

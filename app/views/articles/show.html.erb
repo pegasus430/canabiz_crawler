@@ -1,0 +1,79 @@
+<div class = 'page-heading'>
+    <div class = 'wrap'>
+        <h1><%= @article.title %></h1>
+        <div class = 'breadcrumbs'>
+            <p>Home >> <% if @article.categories.present? %>
+                            <%= @article.categories.first.name %>
+                       <% end %>News >> <%= @article.title %></p>
+        </div>
+    </div>
+</div>
+<div class = 'wrap'>
+    <div class = 'article-page-left'>
+        <div class = 'article-big-image'>
+            <% if @article.image != nil && @article.source != 'MjBizDaily' %>
+                <%= image_tag(@article.image) %>
+            <% else %>
+                <%= image_tag("article-pages/news-substitute.jpg") %>
+            <% end %>
+            
+        </div>
+        <div class = 'article-page-content'>
+            <p id = 'article-author-date'><%= @article.date.strftime("%B %d, %Y | %I:%M %p") %></p>
+            <p><%= @article.abstract %></p>
+            <p style = 'margin-top: 10px;'><%= link_to 'Read More', @article.webUrl, target: '_blank' %></p>
+        </div>
+    </div>
+    <div class = 'article-page-right'>
+        <div class = 'articlepage-ad'>
+            <%= image_tag("article-pages/article-ad1.png") %>
+        </div>
+        <div class = 'articlepage-ad'>
+            <%= image_tag("article-pages/article-ad2.png") %>
+        </div>
+    </div>
+    <div class = 'under-article' style = 'clear: both;'>
+        <% if @article.categories.any?
+            @article.categories.each do |category| %>
+                
+                <div class = 'article-right-category-header'>
+                  <p id = 'articleCategoryHeaderLeft'>More Articles in <%= category.name %></p>
+                  <p id = 'articleCategoryHeaderRight' style = 'margin: 7px 0 3px;'><%= link_to 'See All', category_path(category) %></p>            
+                </div>
+                        
+                <% category.articles.limit(4).each do |article| %>
+                    <div class = 'homepage-article'>
+                        <% if article.source.name == 'MjBizDaily' %>
+                            <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %>
+                        <% else %>
+                            <%= link_to image_tag(article.image), article_path(article) %>
+                        <% end %>
+                        <h2><%= link_to article.title.truncate(86), article_path(article) %></h2>
+                    </div>
+                  <% 
+                end
+            end
+        end %>
+        <% if @article.states.any?
+            @article.states.each do |state| %>
+               
+                <div class = 'article-right-category-header'>
+                  <p id = 'articleCategoryHeaderLeft'>More Articles about <%= state.name %></p>
+                  <p id = 'articleCategoryHeaderRight' style = 'margin: 7px 0 3px;'><%= link_to 'See All', news_path(:id => state.id) %></p>            
+                </div>
+                                
+                <% state.articles.limit(4).each do |article| %>
+                    <div class = 'homepage-article'>
+                        <% if article.source.name == 'MjBizDaily' %>
+                            <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %>
+                        <% else %>
+                            <%= link_to image_tag(article.image), article_path(article) %>
+                        <% end %>
+                        <h2><%= link_to article.title, article_path(article) %></h2>
+                    </div>
+                  <% 
+                end                
+            end
+        end %>        
+    </div>
+</div>
