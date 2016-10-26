@@ -2,13 +2,40 @@
 <% #@state = State.find_by name: request.location.state if request.location%>
 
 
-<h1 align = 'center'>:Cheeseburger Emoji:</h1>
 
+<!--
+background: #D9D9D9
+search button: #14AF7C
+-->
 
 <script>
     function dispIndexImageError(image) {
       image.onerror = "";
-      image.src = "<%= asset_path 'assets/deal-dispensary/dispensaryIndexPlaceholder-7d1acdb8690d2fd4176b9a305b4ff7a3975a62d2e60ae8b3d4074e4766c95697.svg' %>"
+      image.src = "<%= asset_path 'assets/homepage/news-substitute.jpg' %>"
       return true;
     }
+    
+    function refreshArticles() {
+        $.get('pages_controller/homepage_ajax'), function(data, status) {
+            alert(status);
+        }
+    }
 </script>
+
+<div class = 'side-bar'>
+    <table class = 'side-bar-table'>
+        <% @all_sources.each do |source| %>
+            <tr>
+                <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :onclick => 'refreshArticles();' %></td>
+                <td><%= source.name%></td>
+            </tr>
+        <% end %>
+        
+    </table>
+</div>
+
+<div class = 'container'>
+
+    <%= render 'article_layout' %>
+  
+</div>

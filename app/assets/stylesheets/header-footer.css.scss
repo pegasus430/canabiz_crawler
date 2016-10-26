@@ -1,0 +1,16 @@
+// header
+.header {padding: 30px 10px;}
+	.header-left {float: left;}
+	
+	.header-right {float: right;}
+	
+	.header-center {width: 500px; margin: 0 auto;}
+		#searchButton {background-color: #14AF7C;}
+
+
+.header-logo {display: inline-block; margin: 5px 0; width: 320px;}
+        .header-logo img {width: 100%; height: auto}
+        
+//footer
+.footer-image {display: inline-block; border-right: 1px solid #9a9a9a; padding-right: 10px}
+    .footer-image img {width: 350px;}

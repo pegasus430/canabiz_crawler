@@ -1,0 +1,33 @@
+
+<% @home_articles.each_with_index do |article, i| %>
+    <% if (i == 0 || (i + 1) % 4.0 == 1.0) %>
+        <div class = 'row'>
+    <% end %>
+    
+        
+        <div class = 'homepage-article'>
+            <div class = 'homepage-article-image'>
+                <% if article.source.name == 'Marijuana Business Daily' %>
+                    <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %> <!-- , :class => "img-thumbnail rounded" -->
+                <% else %>
+                    <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
+                <% end %>
+            </div>
+            <div class = 'homepage-article-bottom'>
+                <div class = 'homepage-article-title'>
+                    <h1><%= article.title.truncate(60) if article.title %></h1>
+                </div>
+                <div class = 'homepage-article-source'>
+                    <img src = "<%= asset_path(article.source.logo) if article.source %>">
+                </div>
+                <div class = 'homepage-article-category'>
+                    
+                </div>
+            </div>
+        </div>
+        
+        
+    <% if i != 0 && (i + 1) % 4.0 == 0.0 %>
+        </div>
+    <% end %>
+<% end %>

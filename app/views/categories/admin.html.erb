@@ -33,7 +33,6 @@
             <th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
             <th><%= sortable "name" %></th>
             <th>Keywords</th>
-            <th><%= sortable "type" %></th>
             <th><%= sortable "active" %></th>
             <th>Edit</th>
             <th>Delete</th>
@@ -42,8 +41,7 @@
                 <tr>
                     <td><%= check_box_tag "categories[]", category.id %></td>
                     <td><%= category.name%></td>
-                    <td><%= category.keywords.truncate(50)%></td>
-                    <td><%= category.category_type%></td>
+                    <td><%= category.keywords.truncate(50)%></td>>
                     <td><%= category.active%></td>
                     <td><%= link_to "Edit", edit_category_path(category), class: "btn" %></td>
                     <td><%= link_to "Delete", category_path(category), method: :delete,

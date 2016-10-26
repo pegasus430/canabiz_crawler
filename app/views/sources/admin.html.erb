@@ -1,5 +1,6 @@
 <div class = 'wrap'>
-    <h2 align = 'center'>These are both Product and News Sources (Websites)</h2>
+   
+    <h2 align = 'center'>News Sources (Websites)</h2>
     <h3 align = 'center'><%= link_to 'Admin Home', admin_path %></h3>
     <h3 align = 'center'><%= link_to 'Create New Source', new_source_path %></h3>
     
@@ -32,7 +33,6 @@
         <table class = 'table' id = 'admin-table'>
             <th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
             <th><%= sortable "name" %></th>
-            <th><%= sortable "source_type" %></th>
             <th><%= sortable "url" %></th>
             <th><%= sortable "logo" %></th>
             <th>Edit</th>
@@ -42,7 +42,6 @@
                 <tr>
                     <td><%= check_box_tag "sources[]", source.id %></td>
                     <td><%= source.name%></td>
-                    <td><%= source.source_type%></td>
                     <td><%= source.url%></td>
                     <td><%= source.logo.truncate(20) if source.logo%></td>
                     <td><%= link_to "Edit", edit_source_path(source), class: "btn" %></td>

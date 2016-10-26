@@ -11,7 +11,7 @@
 <div class = 'wrap'>
     <div class = 'article-page-left'>
         <div class = 'article-big-image'>
-            <% if @article.image != nil && @article.source != 'MjBizDaily' %>
+            <% if @article.image != nil && @article.source != 'Marijuana Business Daily' %>
                 <%= image_tag(@article.image) %>
             <% else %>
                 <%= image_tag("article-pages/news-substitute.jpg") %>
@@ -21,7 +21,7 @@
         <div class = 'article-page-content'>
             <p id = 'article-author-date'><%= @article.date.strftime("%B %d, %Y | %I:%M %p") %></p>
             <p><%= @article.abstract %></p>
-            <p style = 'margin-top: 10px;'><%= link_to 'Read More', @article.webUrl, target: '_blank' %></p>
+            <p style = 'margin-top: 10px;'><%= link_to 'Read More', @article.web_url, target: '_blank' %></p>
         </div>
     </div>
     <div class = 'article-page-right'>

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'pages#home'
   get 'admin', to: 'pages#admin'
   get 'search', to: 'pages#search'
+  get 'homepage_ajax', to: 'pages#homepage_ajax'
   
   #LOGIN AND LOGOUT
   get 'login', to: 'sessions#new'

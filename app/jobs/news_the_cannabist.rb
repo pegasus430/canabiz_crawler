@@ -33,8 +33,8 @@ class NewsTheCannabist < ActiveJob::Base
 	def performSearchesAndAddArticles(searches)	
 	    
 		#FOR MATCHING STATES, CATEGORIES, AND SOURCE
-		@random_category = Category.where(:name => 'Random').where(:category_type => 'News')
-        @categories = Category.where('active = ? and category_type LIKE ?', true, 'News')
+		@random_category = Category.where(:name => 'Random')
+        @categories = Category.where(:active => true)
         @states = State.all
         source = Source.find_by name: 'The Cannabist'
         
@@ -77,7 +77,7 @@ class NewsTheCannabist < ActiveJob::Base
                     
                     #CREATE ARTICLE
                     article = Article.create(:title => result['weburl/_title'], :abstract => result['abstract'], :image => result['image'], :source_id => source.id, 
-												:date => DateTime.parse(result["date"]), :webUrl => result['weburl'])
+												:date => DateTime.parse(result["date"]), :web_url => result['weburl'])
     
                     #CREATE ARTICLE CATEGORIES
                     #If no category, set category to random

@@ -23,8 +23,6 @@
     <table class = 'table' id = 'admin-table'>
         <th>Name</th>
         <th>Abbr.</th>
-        <th>TimeZone</th>
-        <th>Num Dispensaries</th>
         <th>Num Articles</th>
         <th>Keywords</th>
         <th>Edit</th>
@@ -34,8 +32,6 @@
         <tr>
             <td><%= state.name %></td>
             <td><%= state.abbreviation %></td>
-            <td><%= state.timezone.name if state.timezone %></td>
-            <td><%= state.dispensaries.count %></td>
             <td><%= state.articles.count %></td>
             <td><%= state.keywords.truncate(30) if state.keywords %></td>
             <td><%= link_to "Edit", edit_state_path(state), class: "btn" %></td>

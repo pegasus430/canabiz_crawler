@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
     before_action :set_article, only: [:edit, :update, :destroy, :show]
-    before_action :require_admin, except: [:index, :show]
+    #before_action :require_admin, except: [:index, :show]
 
     #--------ADMIN PAGE-------------------------
     def admin

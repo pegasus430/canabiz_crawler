@@ -1,15 +1,30 @@
 class PagesController < ApplicationController
     
-    before_action :require_admin, only: [:admin]
+    #before_action :require_admin, only: [:admin]
     
     def home
-        @top_articles = Article.where('image IS NOT NULL').order("RANDOM()").limit(8)
+        @all_sources = Source.all
+        
+        if params[:sources].present?
+            @home_articles = Article.where('image IS NOT NULL').order("RANDOM()").where(:source_id => params[:sources]).limit(20)
+        else
+            @home_articles = Article.where('image IS NOT NULL').order("RANDOM()").limit(20)
+        end
+        
         
         # news background jobs:
-        #NewsMjBizDaily.perform_later()
-        #NewsTheCannabist.perform_later()
-        #NewsCannabisCulture.perform_later()
+        NewsMjBizDaily.perform_later()
+        NewsTheCannabist.perform_later()
+        NewsCannabisCulture.perform_later()
         
+    end
+    
+    def homepage_ajax
+        @home_articles = Article.where('image IS NOT NULL').order("RANDOM()").where(:source_id => params[:sources]).limit(20)
+        
+        if @home_articles
+          render partial: "pages/article_layout"
+        end
     end
     
     def admin
@@ -19,7 +34,7 @@ class PagesController < ApplicationController
         if params[:query].present? 
             @q = "%#{params[:query]}%"
             
-            @dispensaries = Article.where("source LIKE ? or title LIKE ? or abstract LIKE ?", @q, @q, @q)
+            @articles = Article.where("source LIKE ? or title LIKE ? or abstract LIKE ?", @q, @q, @q)
 
         else 
             redirect_to root_path
