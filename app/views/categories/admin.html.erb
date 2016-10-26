@@ -34,6 +34,7 @@
             <th><%= sortable "name" %></th>
             <th>Keywords</th>
             <th><%= sortable "active" %></th>
+            <th>Num Articles</th>
             <th>Edit</th>
             <th>Delete</th>
             
@@ -41,8 +42,9 @@
                 <tr>
                     <td><%= check_box_tag "categories[]", category.id %></td>
                     <td><%= category.name%></td>
-                    <td><%= category.keywords.truncate(50)%></td>>
+                    <td><%= category.keywords.truncate(50)%></td>
                     <td><%= category.active%></td>
+                    <td><%= category.articles.count%></td>
                     <td><%= link_to "Edit", edit_category_path(category), class: "btn" %></td>
                     <td><%= link_to "Delete", category_path(category), method: :delete,
                                 data: { confirm: "Are you sure you want to delete this category?"},

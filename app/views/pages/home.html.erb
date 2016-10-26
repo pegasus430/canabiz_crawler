@@ -2,23 +2,11 @@
 <% #@state = State.find_by name: request.location.state if request.location%>
 
 
-
-<!--
-background: #D9D9D9
-search button: #14AF7C
--->
-
 <script>
     function dispIndexImageError(image) {
       image.onerror = "";
       image.src = "<%= asset_path 'assets/homepage/news-substitute.jpg' %>"
       return true;
-    }
-    
-    function refreshArticles() {
-        $.get('pages_controller/homepage_ajax'), function(data, status) {
-            alert(status);
-        }
     }
 </script>
 

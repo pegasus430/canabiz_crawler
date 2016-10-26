@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017201213) do
+ActiveRecord::Schema.define(version: 20161026194535) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -50,9 +50,10 @@ ActiveRecord::Schema.define(version: 20161017201213) do
   create_table "sources", force: :cascade do |t|
     t.string   "name"
     t.string   "url"
-    t.string   "logo"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "article_logo"
+    t.string   "sidebar_logo"
   end
 
   create_table "states", force: :cascade do |t|
