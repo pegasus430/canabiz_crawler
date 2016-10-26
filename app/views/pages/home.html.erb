@@ -14,7 +14,7 @@
     <table class = 'side-bar-table'>
         <% @all_sources.each do |source| %>
             <tr>
-                <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :onclick => 'refreshArticles();' %></td>
+                <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', :onclick => 'showOrHideArticles(this);' %></td>
                 <td><%= source.name%></td>
             </tr>
         <% end %>
