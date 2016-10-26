@@ -25,4 +25,4 @@ Things you may want to cover:
 
 
 Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+//NOTES: add longitude and latitude to dispensaries <%= #HTTParty.get(“rubygems.org/api/v1/versions/httparty.json”) %>

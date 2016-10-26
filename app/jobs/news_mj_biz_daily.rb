@@ -32,7 +32,8 @@ class NewsMjBizDaily < ActiveJob::Base
     def performSearchesAndAddArticles(searches)
             
         #FOR MATCHING STATES, CATEGORIES, AND SOURCE
-
+        logger.info "I am in the method"
+        logger.info searches
 
         searches.each do |term|
         searchResponse = HTTParty.get('https://api.import.io/store/connector/4f495328-439c-47ce-add7-89227b00f9a1/_query?input=query:' + 
