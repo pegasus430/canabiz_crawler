@@ -16,7 +16,6 @@
                     <h1><%= article.title.truncate(60) if article.title %></h1>
                 </div>
                 <div class = 'homepage-article-source'>
-                    <%= image_tag(asset_path(article.source.article_logo)) if article.source %>
                     <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
                 </div>
                 <div class = 'homepage-article-category'>
