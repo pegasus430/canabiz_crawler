@@ -15,8 +15,8 @@ class ArticlesController < ApplicationController
     
     #method is used for csv file upload
     def import
-        Dispensary.import(params[:file])
-        flash[:success] = 'Dispensaries were successfully imported'
+        Article.import(params[:file])
+        flash[:success] = 'Articles were successfully imported'
         redirect_to article_admin_path 
     end
     

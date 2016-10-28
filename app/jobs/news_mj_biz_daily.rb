@@ -32,8 +32,10 @@ class NewsMjBizDaily < ActiveJob::Base
     def performSearchesAndAddArticles(searches)
             
         #FOR MATCHING STATES, CATEGORIES, AND SOURCE
-        logger.info "I am in the method"
-        logger.info searches
+        @random_category = Category.where(:name => 'Random')
+        @categories = Category.where(:active => true)
+        @states = State.all
+        source = Source.find_by name: 'Marijuana Business Daily'
 
         searches.each do |term|
         searchResponse = HTTParty.get('https://api.import.io/store/connector/4f495328-439c-47ce-add7-89227b00f9a1/_query?input=query:' + 
@@ -62,10 +64,48 @@ class NewsMjBizDaily < ActiveJob::Base
                         end
                     end
                     
+                    #MATCH ARTICLE CATEGORIES BASED ON KEYWORDS IN CATEGORY ARRAYS
+                    relateCategoriesSet = Set.new
+                    @categories.each do |category|
+                        if category.keywords.present?
+                            category.keywords.split(',').each do |keyword|
+                                if  (result["headline"] != nil && result["headline"].include?(keyword)) || (abstract != nil && abstract.include?(keyword))
+                                    relateCategoriesSet.add(category.id)
+                                    break
+                                end
+                            end
+                        end
+                    end
+                    
+                    #MATCH ARTICLE STATES
+                    relateStatesSet = Set.new
+                    @states.each do |state|
+                        if state.keywords.present?
+                            state.keywords.split(',').each do |keyword|
+                                if  (result["headline"] != nil && result["headline"].include?(keyword)) || (abstract != nil && abstract.include?(keyword))
+                                    relateStatesSet.add(state.id)
+                                end
+                            end
+                        end
+                    end
                     
                     #CREATE ARTICLE
-                    article = Article.create(:title => result["headline"], :abstract => abstract, :image => image, :date => DateTime.parse(result["date"]), :web_url => result["pageurl"])
+                    article = Article.create(:title => result["headline"], :abstract => abstract, :image => image, :source_id => source.id, :date => DateTime.parse(result["date"]), :web_url => result["pageurl"])
                     
+                    #CREATE ARTICLE CATEGORIES
+                    #If no category, set category to random
+                    if relateCategoriesSet.empty?
+                       relateCategoriesSet.add(@random_category[0].id) 
+                    end
+                    
+                    relateCategoriesSet.each do |setObject|
+                        ArticleCategory.create(:category_id => setObject, :article_id => article.id)
+                    end
+                    
+                    #CREATE ARTICLE STATES
+                    relateStatesSet.each do |setObject|
+                        ArticleState.create(:state_id => setObject, :article_id => article.id)
+                    end
                 end 
             end
         end

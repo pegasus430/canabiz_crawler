@@ -3,9 +3,11 @@
 
 
 body {background-color: #D9D9D9;}
+.wrap {width: 80%; margin: 0 auto;}
 
 //side bar
-.side-bar {float: left; width: 100px;}
+.side-bar {float: left; width: 175px; background-color: #3D3045; padding: 40px 5px 40px 0; margin-top: 21px;}
+.side-bar img {width: 100px; height: 100px;}
         
 //homepage-article
 .homepage-article {width: 23%; display: inline-block; margin: 20px 10px; position: relative; height: 300px; 

@@ -15,6 +15,7 @@
         <% @all_sources.each do |source| %>
             <tr>
                 <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', :onclick => 'showOrHideArticles(this);' %></td>
+                <td><img src = "<%= asset_path(source.sidebar_logo) %>"></td>
                 <td><%= source.name%></td>
             </tr>
         <% end %>
@@ -22,7 +23,7 @@
     </table>
 </div>
 
-<div class = 'container'>
+<div class = 'wrap'>
 
     <%= render 'article_layout' %>
   
