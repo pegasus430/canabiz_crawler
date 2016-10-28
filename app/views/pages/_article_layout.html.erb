@@ -5,7 +5,7 @@
         
         <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source %>'>
             <div class = 'homepage-article-image'>
-                <% if article.source.name == 'Marijuana Business Daily' %>
+                <% if article.source && article.source.name == 'Marijuana Business Daily' %>
                     <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %> <!-- , :class => "img-thumbnail rounded" -->
                 <% else %>
                     <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
