@@ -42,6 +42,9 @@ class NewsMjBizDaily < ActiveJob::Base
                             term + 
                             '&&_apikey=62b5b9a8fa284895a14abe58fa8046fff4e9d64ca401cc947ebe55b4fb24b7669b8732cac6bac15ab112b0f4c804a708547b691e124383e2b81155c5f3b14e786751bc908bdbe1913379a890d9db9793') 
         
+        
+            logger.info 'Steve Log: ' + searchResponse.body
+            logger.info 'Steve log: ' + JSON.parse(searchResponse.body)['results']
             if searchResponse.body != nil && searchResponse.body != '' && JSON.parse(searchResponse.body)['results'] != nil && JSON.parse(searchResponse.body)['results'] != ''
                 searchBody = JSON.parse(searchResponse.body)
                 searchBody["results"].each do |result|        
