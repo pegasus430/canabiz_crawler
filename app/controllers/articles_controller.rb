@@ -51,6 +51,12 @@ class ArticlesController < ApplicationController
     def show
         @categories = Category.order("RANDOM()").where(:active =>  true).limit(6)
         @other_articles = Article.order("RANDOM()").limit(7)
+        
+        #add view to article for sorting
+        @article.increment(:num_views, by = 1)
+        @article.save
+        
+        #add userView record
     end
     
     #-----------------------------------

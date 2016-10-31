@@ -35,6 +35,7 @@
       <th><%= sortable "title" %></th>
       <th><%= sortable "image" %></th>
       <th><%= sortable "date" %></th>
+      <th><%= sortable "num_views" %></th>
       <th><%= sortable "source_id" %></th>
       <th>States</th>
       <th>Categories</th>
@@ -47,6 +48,7 @@
               <td style = 'width: 300px'><%= article.title %></td>
               <td><%= article.image.truncate(30) if article.image %></td>
               <td><%= article.date %></td>
+              <td><%= article.num_views %></td>
               <td><%= article.source.name if article.source %></td>
               
               <td><% if article.states.any? %>
