@@ -5,23 +5,12 @@ class PagesController < ApplicationController
     def home
         @all_sources = Source.all
         @articles = Article.where('image IS NOT NULL').order("created_at DESC").limit(20)
-        #Dispensary.order
-        
-        
         
         # news background jobs:
         #NewsMjBizDaily.perform_later()
         #NewsTheCannabist.perform_later()
         #NewsCannabisCulture.perform_later()
         
-    end
-    
-    def homepage_ajax
-        @home_articles = Article.where('image IS NOT NULL').order("RANDOM()").where(:source_id => params[:sources]).limit(20)
-        
-        if @home_articles
-          render partial: "pages/article_layout"
-        end
     end
     
     def admin
@@ -31,7 +20,7 @@ class PagesController < ApplicationController
         if params[:query].present? 
             @q = "%#{params[:query]}%"
             
-            @articles = Article.where("source LIKE ? or title LIKE ? or abstract LIKE ?", @q, @q, @q)
+            @articles = Article.where("title LIKE ? or abstract LIKE ?", @q, @q)
 
         else 
             redirect_to root_path

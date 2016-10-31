@@ -50,7 +50,7 @@ class StatesController < ApplicationController
     end 
     
     def show
-        @articles = @state.articles
+        @articles = @state.articles.order("created_at DESC")
     end
     
    def edit

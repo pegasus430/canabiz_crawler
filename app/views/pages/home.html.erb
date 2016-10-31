@@ -1,15 +1,6 @@
 <!--set the user state-->
 <% #@state = State.find_by name: request.location.state if request.location%>
 
-
-<script>
-    function dispIndexImageError(image) {
-      image.onerror = "";
-      image.src = "<%= asset_path 'assets/homepage/news-substitute.jpg' %>"
-      return true;
-    }
-</script>
-
 <div class = 'side-bar'>
     <table class = 'side-bar-table'>
         <% @all_sources.each do |source| %>
