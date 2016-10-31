@@ -1,3 +1,5 @@
+//CODE NOT BEING USED
+
 <div class = 'col-md-3'>
     <% if article.source.name == 'Marijuana Business Daily' %>
         <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article), :class => "img-thumbnail rounded" %>
@@ -7,8 +9,7 @@
 </div>
             
             
-            
-            
+//new row for every 4 articles
 <% if (i == 0 || (i + 1) % 4.0 == 1.0) %>
     <div class = 'row'>
 <% end %>
@@ -16,3 +17,8 @@
 <% if i != 0 && (i + 1) % 4.0 == 0.0 %>
     </div>
 <% end %>
+
+
+----------------------------------
+
+//NOTES:

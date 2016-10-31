@@ -2,7 +2,7 @@
 <%
 	@side_sources = Source.all
 	@side_categories = Category.all
-	@side_states = State.all
+	@side_states = State.order("name ASC")
 %>
 
 <table class = 'side-bar-table'>
@@ -42,31 +42,35 @@
             <% end %>
         </div>
         
-        <div class = 'overylay-categories overlay-table'>
-            <h1>Categories</h1>
-            <% @side_categories.each do |category| %>
-                <div class = 'overlay-category'>
-                    <p><%=category.name%></p>
-                    <%= check_box_tag "categories[]", category.id, {:checked => "checked"}, :id => category.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                    :onclick => 'showOrHideArticles(this);' %>
-                    
-                </div>
-            
-            <% end %>
-        </div>
+        <% if @category.blank? %>
+            <div class = 'overylay-categories overlay-table'>
+                <h1>Categories</h1>
+                <% @side_categories.each do |category| %>
+                    <div class = 'overlay-category'>
+                        <p><%=category.name%></p>
+                        <%= check_box_tag "categories[]", category.id, {:checked => "checked"}, :id => category.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                        :onclick => 'showOrHideArticles(this);' %>
+                        
+                    </div>
+                
+                <% end %>
+            </div>
+        <% end %>
         
-        <div class = 'overylay-states overlay-table'>
-            <h1>States</h1>
-            <% @side_states.each do |state| %>
-                <div class = 'overlay-state overlay-item'>
-                    <p><%=state.name%></p>
-                    <%= check_box_tag "states[]", state.id, {:checked => "checked"}, :id => state.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                    :onclick => 'showOrHideArticles(this);' %>
-                    
-                </div>
-            
-            <% end %>
-        </div>
+        <% if @state.blank? %>
+            <div class = 'overylay-states overlay-table'>
+                <h1>States</h1>
+                <% @side_states.each do |state| %>
+                    <div class = 'overlay-state overlay-item'>
+                        <p><%=state.name%></p>
+                        <%= check_box_tag "states[]", state.id, {:checked => "checked"}, :id => state.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                        :onclick => 'showOrHideArticles(this);' %>
+                        
+                    </div>
+                
+                <% end %>
+            </div>
+        <% end %>
         
     </div>
 
