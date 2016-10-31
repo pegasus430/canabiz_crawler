@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
     
-    #before_action :require_admin, only: [:admin]
+    before_action :require_admin, only: [:admin]
     
     def home
         @articles = Article.where('image IS NOT NULL').order("created_at DESC").limit(20)

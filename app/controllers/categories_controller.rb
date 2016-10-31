@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
     
     before_action :set_category, only: [:edit, :update, :destroy, :show]
-    #before_action :require_admin, except: [:show]
+    before_action :require_admin, except: [:show]
 
     #--------ADMIN PAGE-------------------------
     def admin

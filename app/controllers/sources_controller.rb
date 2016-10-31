@@ -1,7 +1,7 @@
 class SourcesController < ApplicationController
     
     before_action :set_source, only: [:edit, :update, :destroy, :show]
-    #before_action :require_admin, except: [:show]
+    before_action :require_admin, except: [:show]
 
     #--------ADMIN PAGE-------------------------
     def admin

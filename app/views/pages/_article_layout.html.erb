@@ -10,7 +10,13 @@
 <% @articles.each_with_index do |article, i| %>
     
     <a href = '<%= article_path(article)%>'>
-        <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source %> <%article.categories.each do |category|%> <%=category.name.downcase.tr(" ", "_")%> <%end%>'>
+        <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source 
+            %><%article.categories.each do |category| 
+                %> <%=category.name.downcase.tr(" ", "_")
+                %><%end
+            %><%article.states.each do |state|
+                %> <%=state.name.downcase.tr(" ", "_")
+                %><%end%>'>
     
             
             <div class = 'homepage-article-image'>
@@ -20,9 +26,11 @@
                     <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
                 <% end %>
             </div>
+            
             <div class = 'homepage-article-date'>
                 <%= time_ago_in_words(article.created_at) %> ago
             </div>
+            
             <div class = 'homepage-article-bottom'>
                 <div class = 'homepage-article-title'>
                     <h1><%= article.title.truncate(60) if article.title %></h1>

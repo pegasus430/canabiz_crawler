@@ -28,16 +28,45 @@
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
     <div class="overlay-content">
-        <table class = 'overlay-source-table'>
+        
+        <div class = 'overylay-sources overlay-table'>
+            <h1>Sources</h1>
             <% @side_sources.each do |source| %>
-                <tr>
-                    <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                    :onclick => 'showOrHideArticles(this);' %></td>
-                    <td><%= source.name%></td>
-                </tr>
+                <div class = 'overlay-source'>
+                    <img src = "<%= asset_path(source.sidebar_logo) %>">
+                    <%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                    :onclick => 'showOrHideArticles(this);' %>
+                    
+                </div>
+            
             <% end %>
-        </table>
-                
+        </div>
+        
+        <div class = 'overylay-categories overlay-table'>
+            <h1>Categories</h1>
+            <% @side_categories.each do |category| %>
+                <div class = 'overlay-category'>
+                    <p><%=category.name%></p>
+                    <%= check_box_tag "categories[]", category.id, {:checked => "checked"}, :id => category.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                    :onclick => 'showOrHideArticles(this);' %>
+                    
+                </div>
+            
+            <% end %>
+        </div>
+        
+        <div class = 'overylay-states overlay-table'>
+            <h1>States</h1>
+            <% @side_states.each do |state| %>
+                <div class = 'overlay-state overlay-item'>
+                    <p><%=state.name%></p>
+                    <%= check_box_tag "states[]", state.id, {:checked => "checked"}, :id => state.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                    :onclick => 'showOrHideArticles(this);' %>
+                    
+                </div>
+            
+            <% end %>
+        </div>
         
     </div>
 
