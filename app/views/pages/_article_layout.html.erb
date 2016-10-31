@@ -10,7 +10,9 @@
 <% @articles.each_with_index do |article, i| %>
     
     <a href = '<%= article_path(article)%>'>
-        <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source %>'>
+        <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source %> <%article.categories.each do |category|%> <%=category.name.downcase.tr(" ", "_")%> <%end%>'>
+    
+            
             <div class = 'homepage-article-image'>
                 <% if article.source && article.source.name == 'Marijuana Business Daily' %>
                     <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %> <!-- , :class => "img-thumbnail rounded" -->

@@ -3,7 +3,6 @@ class PagesController < ApplicationController
     #before_action :require_admin, only: [:admin]
     
     def home
-        @all_sources = Source.all
         @articles = Article.where('image IS NOT NULL').order("created_at DESC").limit(20)
         
         # news background jobs:

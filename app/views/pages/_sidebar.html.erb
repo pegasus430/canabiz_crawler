@@ -1,0 +1,47 @@
+<!--queries-->
+<%
+	@side_sources = Source.all
+	@side_categories = Category.all
+	@side_states = State.all
+%>
+
+<table class = 'side-bar-table'>
+    <% @side_sources.each do |source| %>
+        <tr>
+            <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                    :onclick => 'showOrHideArticles(this);' %></td>
+            <td><img src = "<%= asset_path(source.sidebar_logo) %>"></td>
+            <td><%= source.name%></td>
+        </tr>
+    <% end %>
+</table>
+
+<div class = 'sidebar-plus'>
+	<img src = "<%= asset_path("homepage/sidebarPlus")%>" onclick="openSidebarNav()" />
+</div>
+
+
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" class="overlay">
+
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <div class="overlay-content">
+        <table class = 'overlay-source-table'>
+            <% @side_sources.each do |source| %>
+                <tr>
+                    <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                    :onclick => 'showOrHideArticles(this);' %></td>
+                    <td><%= source.name%></td>
+                </tr>
+            <% end %>
+        </table>
+                
+        
+    </div>
+
+</div>
+
+
+

@@ -6,8 +6,10 @@ body {background-color: #D9D9D9;}
 .wrap {width: 80%; margin: 0 auto; min-height: 600px;}
 
 //side bar
-.side-bar {float: left; width: 175px; background-color: #3D3045; padding: 40px 5px 40px 0; margin-top: 21px;}
-.side-bar img {width: 100px; height: 100px;}
+.side-bar {float: left; width: 175px; background-color: #3D3045; padding: 40px 5px 40px 0; margin-top: 21px; position: relative;}
+    .side-bar img {width: 100px; height: 100px;}
+    .sidebar-plus {position: absolute; bottom: -24px; width: 50px; left: 0; right: 0; margin-right: auto; margin-left: auto; cursor: pointer;}
+        .sidebar-plus img {width: 50px; height: 50px;}
         
 //homepage-article
 .homepage-article {width: 23%; display: inline-block; margin: 20px 10px; position: relative; height: 300px; 

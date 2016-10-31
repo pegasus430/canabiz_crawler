@@ -1,17 +1,11 @@
 <!--set the user state-->
 <% #@state = State.find_by name: request.location.state if request.location%>
 
+
 <div class = 'side-bar'>
-    <table class = 'side-bar-table'>
-        <% @all_sources.each do |source| %>
-            <tr>
-                <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', :onclick => 'showOrHideArticles(this);' %></td>
-                <td><img src = "<%= asset_path(source.sidebar_logo) %>"></td>
-                <td><%= source.name%></td>
-            </tr>
-        <% end %>
-        
-    </table>
+    
+    <%= render 'sidebar' %>
+    
 </div>
 
 <div class = 'wrap'>
