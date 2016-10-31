@@ -22,6 +22,6 @@ function openMenuNav() {
 function closeNav() {
     document.getElementById("state-overlay").style.width = "0%";
     document.getElementById("category-overlay").style.width = "0%";
-    document.getElementById("sidebar-overlay").style.width = "0%";
     document.getElementById("menu-overlay").style.width = "0%";
+    document.getElementById("sidebar-overlay").style.width = "0%";
 }

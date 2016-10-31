@@ -95,7 +95,12 @@
             <% end %>
         </div> 
         
-        <a href="#">My Page</a>
+        <% if current_user %>
+            <a href="<%= user_path(current_user)%>">My Page</a>
+        <% else %>
+            <a href="<%= login_path %>">My Page</a>
+        <% end %>
+        
         <a href="#">Settings</a>
         <a href="#">About</a>
         <a href="#">Contact</a>

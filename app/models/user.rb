@@ -3,6 +3,15 @@ class User < ActiveRecord::Base
     validates :username, presence: true, uniqueness: { case_sensitive: false }, length: {minimum: 1, maximum: 25}
     has_secure_password
     
+    has_many :user_categories
+    has_many :categories, through: :user_categories
+
+    has_many :user_states
+    has_many :states, through: :user_states
+    
+    has_many :user_sources
+    has_many :sources, through: :user_sources
+    
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true) do |row|

@@ -1,0 +1,55 @@
+
+<div class = "wrap">
+	<h1>Hey <%=@user.username %>! Choose The News You Would Like To See</h1>
+	
+	<%= render 'shared/errors', obj: @user %>
+
+	<div class='row'>
+	    <div class='col-xs-12'>
+	        <%= form_for(@user, :html => {class:"form-horizontal", role: "form"}) do |f| %>
+
+	            <div class="form-group">
+	             <div class="row">
+	                 <div class="control-label col-sm-2">
+	                    <b>Select Sources to Follow</b>
+	                </div>
+	               <div class="col-sm-8">
+	                 <%= f.collection_check_boxes :source_ids, Source.all, :id, :name do |cb| %>
+	                   <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+	                 <% end %>
+	               </div>
+	             </div>
+	           </div>
+	           <div class="form-group">
+	             <div class="row">
+	                 <div class="control-label col-sm-2">
+	                    <b>Select States to Follow</b>
+	                </div>
+	               <div class="col-sm-8">
+	                 <%= f.collection_check_boxes :state_ids, State.all, :id, :name do |cb| %>
+	                   <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+	                 <% end %>
+	               </div>
+	             </div>
+	           </div>
+	            <div class="form-group">
+	             <div class="row">
+	                 <div class="control-label col-sm-2">
+	                    <b>Select Categories to Follow</b>
+	                </div>
+	               <div class="col-sm-8">
+	                 <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
+	                   <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+	                 <% end %>
+	               </div>
+	             </div>
+	           </div>
+	            <div class="form-group">
+	                <div class="col-sm-offset-2 col-sm-10">
+	                    <%= f.submit "Save Preferences"%>
+	                </div>
+	            </div>
+	        <% end %>
+	    </div>
+	</div>
+</div>

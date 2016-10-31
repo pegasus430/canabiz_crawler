@@ -2,6 +2,9 @@ class Source < ActiveRecord::Base
 
     has_many :articles
     
+    has_many :user_sources
+    has_many :users, through: :user_sources 
+    
     validates :name, presence: true, length: { minimum: 3, maximum: 25 }
     validates_uniqueness_of :name
     

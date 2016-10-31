@@ -12,9 +12,9 @@
             <th><%= sortable "username" %></th>
             <th><%= sortable "email" %></th>
             <th><%= sortable "admin" %></th>
-            <th>Num Sources Tracking</th>
-            <th>Num Categories Tracking</th>
-            <th>Num States Tracking</th>
+            <th>Sources Tracking</th>
+            <th>Categories Tracking</th>
+            <th>States Tracking</th>
             <th>Num Articles Read</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -25,7 +25,19 @@
                     <td><%= user.username%></td>
                     <td><%= user.email%></td>
                     <td><%= user.admin%></td>
-					<td></td>
+                    
+                    <td><% if user.sources.any? %>
+                        <%= render user.sources %>
+                    <% end %></td>
+                    
+                    <td><% if user.categories.any? %>
+                        <%= render user.categories %>
+                    <% end %></td>                    
+					
+					<td><% if user.states.any? %>
+                        <%= render user.states %>
+                    <% end %></td> 
+                    
 					<td></td>
 					<td></td>
 					<td></td>

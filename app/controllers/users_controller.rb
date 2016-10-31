@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update, :show]
+  before_action :set_user, only: [:edit, :update]
   before_action :require_same_user, only: [:edit, :update, :destroy]
   before_action :require_admin, only: [:destroy]
   
@@ -44,16 +44,20 @@ class UsersController < ApplicationController
   
   def update
     if @user.update(user_params)
-      flash[:success] = "Your account was updated successfully"
-      redirect_to root_path
+      flash[:success] = "Your settings were saved successfully"
+      redirect_to user_path(@user)
     else
       render 'edit'
     end
   end
   
-  def show
-    #
-  end
+    def show
+        if current_user
+            @user = current_user
+        else 
+            @user = User.find(params[:id])
+        end
+    end
   
   def destroy
     @user = User.find(params[:id])
@@ -64,7 +68,7 @@ class UsersController < ApplicationController
   
   private
   def user_params
-    params.require(:user).permit(:username, :email, :password)
+    params.require(:user).permit(:username, :email, :password, state_ids: [], category_ids: [], source_ids: [])
   end
   def set_user
     @user = User.find(params[:id])
