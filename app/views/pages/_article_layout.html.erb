@@ -1,8 +1,7 @@
 
-<% @home_articles.each_with_index do |article, i| %>
+<% @articles.each_with_index do |article, i| %>
     
-    
-        
+    <a href = '<%= article_path(article)%>'>
         <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source %>'>
             <div class = 'homepage-article-image'>
                 <% if article.source && article.source.name == 'Marijuana Business Daily' %>
@@ -10,6 +9,9 @@
                 <% else %>
                     <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
                 <% end %>
+            </div>
+            <div class = 'homepage-article-date'>
+                <%= time_ago_in_words(article.created_at) %> ago
             </div>
             <div class = 'homepage-article-bottom'>
                 <div class = 'homepage-article-title'>
@@ -23,7 +25,6 @@
                 </div>
             </div>
         </div>
-        
-        
+    </a>
     
 <% end %>

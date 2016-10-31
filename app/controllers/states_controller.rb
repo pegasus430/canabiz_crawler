@@ -1,6 +1,6 @@
 class StatesController < ApplicationController
     
-    before_action :set_state, only: [:edit, :update, :destroy, :deals, :dispensaries]
+    before_action :set_state, only: [:edit, :update, :destroy, :show]
     
     def news
         if params[:id].present?
@@ -48,6 +48,10 @@ class StatesController < ApplicationController
          render 'new'
       end
     end 
+    
+    def show
+        @articles = @state.articles
+    end
     
    def edit
    end   

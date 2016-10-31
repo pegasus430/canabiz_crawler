@@ -7,7 +7,7 @@
             <% if logged_in? %>
                 <p><%= link_to 'Logout', logout_path, method: :delete %></p>
             <% else %>
-                <p><%= link_to 'Sign Up', signup_path %> | <%= link_to 'Log In', login_path %></p>
+                <p><%= link_to 'Log In', login_path %> | <%= link_to 'Sign Up', signup_path, :class => 'signup-button' %></p>
             <% end %>
         </div>
     </div>
@@ -19,8 +19,63 @@
             <input type="text" class="form-control input-lg" name='query' id ='searchQuery' placeholder="What can we help you find..." autocomplete='on'>
             <input type = 'submit' id = 'searchButton' onclick = 'search()' class = "btn btn-default btn-green-touching" value = 'Search' />
         </form>
+        
+        <!--bottom-->
+        <div class = "under-search">
+            <p>
+                Choose Your State 
+                    <span class = "under-search-button" onclick="openStateNav()">
+                        <% if @state.present? %>
+                            <%= @state.name %>
+                        <% else %>
+                            All News
+                        <% end %>
+                    </span>    
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                
+                Sort By 
+                    <span class = "under-search-button" onclick="openCategoryNav()">
+                        <% if @category.present? %>
+                            <%= @category.name %>
+                        <% else %>
+                            Newest
+                        <% end %>
+                    </span>
+            </p>
+            
+        </div>
 
+    </div>
+</div>
+
+
+<!-- State Overlay -->
+<div id="state-overlay" class="overlay">
+
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <div class="overlay-content">
+        <% State.all.order("name ASC").each do |state| %>
+            <a href="<%=state_path(state)%>"><%=state.name%></a>
+        <% end %>
     </div>
 
 </div>
+    
+<!-- Category Overlay -->
+<div id="category-overlay" class="overlay">
+
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <div class="overlay-content">
+        <%@all_categores = State.all.order("name ASC") %>
+        <% Category.all.order("name ASC").each do |category| %>
+            <a href="<%=category_path(category)%>"><%=category.name%></a>
+        <% end %>
+    </div>
+
+</div>
+    
 

@@ -15,10 +15,18 @@
 //= require turbolinks
 //= require_tree .
 
-var hide_spinner = function(){
-  $('#spinner').hide();
+/* Open when someone clicks on the span element */
+function openStateNav() {
+    document.getElementById("state-overlay").style.width = "100%";
 }
 
-var show_spinner = function(){
-  $('#spinner').show();
+/* Open when someone clicks on the span element */
+function openCategoryNav() {
+    document.getElementById("category-overlay").style.width = "100%";
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav() {
+    document.getElementById("state-overlay").style.width = "0%";
+    document.getElementById("category-overlay").style.width = "0%";
 }

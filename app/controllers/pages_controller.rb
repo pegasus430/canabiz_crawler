@@ -4,12 +4,9 @@ class PagesController < ApplicationController
     
     def home
         @all_sources = Source.all
+        @articles = Article.where('image IS NOT NULL').order("created_at DESC").limit(20)
+        #Dispensary.order
         
-        if params[:sources].present?
-            @home_articles = Article.where('image IS NOT NULL').order("RANDOM()").where(:source_id => params[:sources]).limit(20)
-        else
-            @home_articles = Article.where('image IS NOT NULL').order("RANDOM()").limit(20)
-        end
         
         
         # news background jobs:
