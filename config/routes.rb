@@ -14,7 +14,12 @@ Rails.application.routes.draw do
   
   #USER
   get 'signup', to: 'users#new'
-  resources :users, except: [:new]
+  resources :users, except: [:new] do 
+    collection do
+      delete 'destroy_multiple'
+    end
+  end
+  get 'users-admin', to: 'users#admin'
   
   
   #STATES

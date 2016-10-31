@@ -4,10 +4,12 @@
     </div>
     <div class = 'header-right'>
         <div class = 'header-login'>
+            
+            <p class = 'header-menu-button' onclick = "openMenuNav()">Menu | 
             <% if logged_in? %>
-                <p><%= link_to 'Logout', logout_path, method: :delete %></p>
+                <%= link_to 'Logout', logout_path, method: :delete %></p>
             <% else %>
-                <p><%= link_to 'Log In', login_path %> | <%= link_to 'Sign Up', signup_path, :class => 'signup-button' %></p>
+                <%= link_to 'Log In', login_path %> <%= link_to 'Sign Up', signup_path, :class => 'signup-button' %></p>
             <% end %>
         </div>
     </div>
@@ -74,6 +76,35 @@
         <% Category.all.order("name ASC").each do |category| %>
             <a href="<%=category_path(category)%>"><%=category.name%></a>
         <% end %>
+    </div>
+
+</div>
+
+<!--Menu Overlay-->
+<div id="menu-overlay" class="overlay">
+
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <div class="overlay-content">
+        <div class = 'menu-login'>
+            <% if logged_in? %>
+                <%= link_to 'Logout', logout_path, method: :delete %></p>
+            <% else %>
+                <%= link_to 'Log In', login_path %> <%= link_to 'Sign Up', signup_path, :class => 'signup-button' %></p>
+            <% end %>
+        </div> 
+        
+        <a href="#">My Page</a>
+        <a href="#">Settings</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        
+        <div class = "menu-small-links">
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        
     </div>
 
 </div>

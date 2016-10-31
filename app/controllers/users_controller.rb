@@ -7,6 +7,23 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page], per_page: 5)
   end
   
+  def admin
+      @users = User.all
+      
+      #method is used for csv file upload
+      def import
+          State.import(params[:file])
+          flash[:success] = 'Users were successfully imported'
+          redirect_to users_admin_path 
+      end        
+  
+      #for csv downloader
+      respond_to do |format|
+          format.html
+          format.csv {render text: @users.to_csv }
+      end
+  end  
+  
   def new
     @user = User.new
   end
@@ -42,7 +59,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     flash[:danger] = "User has been deleted"
-    redirect_to users_path
+    redirect_to users_admin_path
   end
   
   private

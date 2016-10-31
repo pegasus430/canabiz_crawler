@@ -1,0 +1,27 @@
+cant get import to work: 
+
+    <div align = 'center'>
+        <h3>Import Users</h3>
+        <%= form_tag import_users_path, multipart: true do %>
+            <%= file_field_tag :file, :style => 'margin-left: 80px;' %>
+            </br>
+            <%=submit_tag "Import"%>
+        <% end %>    
+    </div>
+    
+    
+        <!--Import CSV File-->
+    
+    <!--Export CSV File-->
+    <div align = 'center'>
+        <h3>Export Users</h3>
+        <%=link_to "CSV File", users_admin_path(format: "csv"), class: 'btn btn-default' %>
+    </div>
+    
+    <!--SEARCH BAR-->
+    </br>
+    <div align = 'center'>
+      <%= form_tag search_users_path do %>
+        <input name='query' placeholder='  Search Users' type = 'text' autocomplete='on'>
+      <% end %>
+    </div>
