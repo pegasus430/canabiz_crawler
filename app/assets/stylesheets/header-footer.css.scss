@@ -4,8 +4,8 @@
 	
 	.header-right {float: right; margin-top: 21px;}
 		.header-login {font-weight: bold;}
-			.signup-button {padding: 10px 20px; border: 2px solid #3D3045; color: #3D3045;}
-			.signup-button:hover {text-decoration: none; color: #3D3045;}
+			.signup-button {padding: 10px 20px; border: 2px solid #8A2A88; color: #8A2A88;}
+			.signup-button:hover {text-decoration: none; color: white; background-color: #8A2A88;}
 			
 			.header-menu-button {cursor: pointer;}
 	
@@ -30,6 +30,13 @@
 
         
 //footer
-.footer {min-height: 300px; background-color: #3D3045;}
-.footer-image {display: inline-block; border-right: 1px solid #9a9a9a; padding-right: 10px}
-    .footer-image img {width: 350px;}
+.footer {min-height: 300px; background-color: #8A2A88;}
+	.footer-text {width: 50%; margin: 0 auto; padding-top: 50px; text-align: center;}
+		.footer-text h1, .footer-text p {color: white;}
+		.footer-text-title, .footer-text-tagline {width: 45%; display: inline-block}
+		.footer-text-title {text-align: center; padding-right: 30px; border-right: 2px solid white;}
+		.footer-text-tagline {padding-left: 40px; text-align: left;}
+		
+	//email
+	#saveEmailButton {background-color: #14AF7C; color: white; margin-left: 4%; padding: 10px 16px; border: none;}
+	#emailTextBox {background-color: white; width: 50%;}

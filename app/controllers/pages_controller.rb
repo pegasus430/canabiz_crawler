@@ -26,6 +26,17 @@ class PagesController < ApplicationController
         end
     end
     
+    def save_email
+        if params[:email].present?
+            DigestEmail.create(email: params[:email], active: true)
+            flash[:success] = 'Thank you for signing up to the Weekly Roll Up!'
+            redirect_to root_path
+        else
+            flash[:success] = 'No Email'
+            redirect_to root_path
+        end
+    end
+    
     
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
     def prepare_access_token(oauth_token, oauth_token_secret)

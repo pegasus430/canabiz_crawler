@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'pages#home'
   get 'admin', to: 'pages#admin'
   get 'search', to: 'pages#search'
+  get 'save_email', to: 'pages#save_email'
   get 'homepage_ajax', to: 'pages#homepage_ajax'
   
   #LOGIN AND LOGOUT
@@ -20,6 +21,16 @@ Rails.application.routes.draw do
     end
   end
   get 'users-admin', to: 'users#admin'
+  
+  
+  #DIGEST EMAILS
+  resources :digest_emails do
+    collection {post :import}
+    collection do
+      delete 'destroy_multiple'
+    end
+  end
+  get 'digest_emails-admin', to: 'digest_emails#admin'
   
   
   #STATES

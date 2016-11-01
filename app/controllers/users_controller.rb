@@ -24,6 +24,13 @@ class UsersController < ApplicationController
       end
   end  
   
+  def search
+    @q = "%#{params[:query]}%"
+    @users = User.where("username LIKE ? or email LIKE ?", @q, @q).order(sort_column + " " + sort_direction)
+    
+    render 'admin'
+  end
+  
   def new
     @user = User.new
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161031155919) do
+ActiveRecord::Schema.define(version: 20161101170027) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -46,6 +46,11 @@ ActiveRecord::Schema.define(version: 20161031155919) do
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "digest_emails", force: :cascade do |t|
+    t.string  "email"
+    t.boolean "active"
   end
 
   create_table "sources", force: :cascade do |t|
