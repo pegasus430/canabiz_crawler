@@ -1,14 +1,3 @@
-<!--set the user state-->
-<% #@state = State.find_by name: request.location.state if request.location%>
-
-
-<% if current_user %>
-    <h1>USER <%=current_user.username %></h1>
-    
-<% else %>
-    <h1>No User</h1>
-<% end %>
-
 <div class = 'side-bar'>
     
     <%= render 'sidebar' %>
