@@ -49,14 +49,26 @@ class ArticlesController < ApplicationController
     #-----------------------------------
     
     def show
-        @categories = Category.order("RANDOM()").where(:active =>  true).limit(6)
-        @other_articles = Article.order("RANDOM()").limit(7)
+        #related articles
+        if @article.categories.present?
+            @related_articles = Article.all.order("RANDOM()").limit(3) 
+        elsif @article.states.present?
+            @related_articles = Article.all.order("RANDOM()").limit(3)  
+        else
+            @related_articles = Article.all.order("RANDOM()").limit(3)
+        end
+        
+        #same source articles
+        @same_source_articles = Article.where(source_id: @article.source).limit(3)
         
         #add view to article for sorting
         @article.increment(:num_views, by = 1)
         @article.save
         
         #add userView record
+        if current_user
+            #the table isn't created yet
+        end
     end
     
     #-----------------------------------

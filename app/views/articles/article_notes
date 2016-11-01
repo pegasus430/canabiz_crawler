@@ -1,9 +1,7 @@
-<div class = 'article-page-heading'>
-    <!--put the background image in here-->
-</div>
+/side bar
 
 <div class = 'article-right-sidebar'>
-    <h1 class = 'article-right-sidebar-title'>Related News</h1>
+    <h1>Related News</h1>
     
     <% @related_articles.each do |article| %>
         <div class = 'related-article'>
@@ -32,35 +30,7 @@
             </div>            
         </div>
     <% end %>
-    
-    <div class = 'more-from-same-source'>
-        <h2>More From <%= @article.source.name if @article.source %></h2>
         
-        <% @same_source_articles.each do |article| %>
-            <p><%= link_to article.title, article_path(article)%></p>
-        <% end %>
-        
-    </div>
 </div>
 
-<div class = 'article-wrap'>
-    <div class = 'article-big-image'>
-        <% if @article.image != nil && @article.source != 'Marijuana Business Daily' %>
-            <%= image_tag(@article.image) %>
-        <% else %>
-            <%= image_tag("article-pages/news-substitute.jpg") %>
-        <% end %>
-    </div>
-    <div class = 'article-title'>
-        <h1><%=@article.title%></h1>
-    </div>
-    <div class = 'article-date'>
-        <p><%= @article.date.strftime("%B %d, %Y | %I:%M %p") %></p>
-    </div>
-    <div class = 'article-body'>
-        
-        <p><%= simple_format(@article.body) %></p>
-    </div>
-
-</div>
-
+<p><%= #@article.body.gsub('<br/>', '<br/>') %></p>
