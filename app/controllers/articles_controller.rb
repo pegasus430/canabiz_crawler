@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
-    before_action :set_article, only: [:edit, :update, :destroy, :show]
-    before_action :require_admin, except: [:index, :show]
+    before_action :set_article, only: [:edit, :update, :destroy, :show, :tweet]
+    before_action :require_admin, except: [:index, :show, :tweet]
 
     #--------ADMIN PAGE-------------------------
     def admin
@@ -26,6 +26,11 @@ class ArticlesController < ApplicationController
                                     sort_direction).paginate(page: params[:page], per_page: 50)
         render 'admin'
     end
+    
+    def tweet
+        #not on admin page but admin functionality
+    end
+    
     #--------ADMIN PAGE-------------------------
     
     def index

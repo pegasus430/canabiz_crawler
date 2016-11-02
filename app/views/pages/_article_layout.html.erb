@@ -38,8 +38,13 @@
                 <div class = 'homepage-article-source'>
                     <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
                 </div>
+                <% if current_user && current_user.admin? %>
+                    <div class = 'admin-twitter-share'>
+                        <p class = 'admin-twitter-share-button'><%= link_to "SHARE", tweet_path(article) %></p>
+                    </div>
+                <% end %>
                 <div class = 'homepage-article-category'>
-                    
+                        
                 </div>
             </div>
         </div>

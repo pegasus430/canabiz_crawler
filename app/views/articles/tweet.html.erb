@@ -1,0 +1,26 @@
+
+
+<div class = 'wrap'>
+	<h1>Send Tweet: </h1>
+
+	<div class="form-group">
+	 	<textarea class="form-control" rows="5" id="tweet-textbody" maxlength="140" 
+			onchange = "characterCount();" onkeyup = "characterCount();"
+		>FROM <%= @article.source.name %>: <%= link_to @article.title, article_path(@article) %>
+		</textarea>
+	</div>
+	
+	<div id = 'character-count'>
+		<p>Character Count: <span id = 'count'></span></p>
+	</div>
+</div>
+
+<script>
+
+	characterCount();
+	// call the character counter as soon as page loads
+	function characterCount() {
+		document.getElementById("count").innerHTML = document.getElementById("tweet-textbody").innerHTML.length;
+	}
+</script>
+
