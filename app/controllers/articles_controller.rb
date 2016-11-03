@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
     before_action :set_article, only: [:edit, :update, :destroy, :show, :tweet]
-    before_action :require_admin, except: [:index, :show, :tweet]
+    before_action :require_admin, except: [:index, :show, :tweet, :digest]
 
     #--------ADMIN PAGE-------------------------
     def admin
@@ -28,6 +28,10 @@ class ArticlesController < ApplicationController
     end
     
     def tweet
+        #not on admin page but admin functionality
+    end
+    
+    def digest
         #not on admin page but admin functionality
     end
     

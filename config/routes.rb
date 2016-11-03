@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   end
   post 'articles/search' => 'articles#search', as: 'search_articles'
   get 'article-admin', to: 'articles#admin'
+  get 'digest', to: 'articles#digest'
   get 'tweet/:id', to: 'articles#tweet', as: 'tweet'
   
   
