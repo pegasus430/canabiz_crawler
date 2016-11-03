@@ -14,7 +14,6 @@ gem 'rubypython', '~> 0.6.3' #python
 gem 'carrierwave', '~> 0.11.2'
 gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 gem 'fog', '~> 1.38'
-gem 'figaro', '~> 1.1', '>= 1.1.1'
 gem 'unf', '~> 0.1.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

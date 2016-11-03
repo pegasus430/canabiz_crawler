@@ -1,6 +1,6 @@
 class DigestEmailsController < ApplicationController
     
-    before_action :set_digest_email, only: [:edit, :update, :destroy, :show, :admin]
+    before_action :set_digest_email, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, only: [:edit, :update, :destroy, :show, :admin]
 
     #--------ADMIN PAGE-------------------------
@@ -67,8 +67,8 @@ class DigestEmailsController < ApplicationController
     #-------------------------------------------
    
     def destroy
-        @category.destroy
-        flash[:success] = 'Category was successfully deleted'
+        @digest_email.destroy
+        flash[:success] = 'Email was successfully deleted'
         redirect_to digest_emails_admin_path
     end
    
@@ -91,7 +91,7 @@ class DigestEmailsController < ApplicationController
         end
         
         def set_digest_email
-          #@digest_email = DigestEmail.find(params[:id])
+          @digest_email = DigestEmail.find(params[:id])
         end
         
         def digest_email_params
