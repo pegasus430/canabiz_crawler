@@ -115,6 +115,10 @@ class ArticlesController < ApplicationController
         
         def set_article
             @article = Article.find(params[:id])
+            if @article.blank?
+                flash[:danger] = 'The page you are looking for does not exist'
+                redirect_to root_path 
+            end
         end
         def article_params
             params.require(:article).permit(:title, :abstract, :body, :date, :image, :source_id, :include_in_digest, state_ids: [], category_ids: [])
