@@ -1,6 +1,5 @@
 <% 
 #query all active digest users, put them in loop and send
-#only admin - set in article controller
 
 DigestEmail.where(active: true).each do |user|
 	WeeklyDigest.email(user).deliver	
