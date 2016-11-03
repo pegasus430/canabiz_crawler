@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101170027) do
+ActiveRecord::Schema.define(version: 20161103131612) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20161101170027) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "num_views"
+    t.boolean  "include_in_digest"
   end
 
   create_table "categories", force: :cascade do |t|

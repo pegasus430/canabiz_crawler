@@ -5,7 +5,7 @@
     <div class = 'header-right'>
         <div class = 'header-login'>
             
-            <p class = 'header-menu-button' onclick = "openMenuNav()">Menu | 
+            <p><span onclick = "openMenuNav()" style = "cursor:pointer">Menu</span> | 
             <% if logged_in? %>
                 <%= link_to 'Logout', logout_path, method: :delete %></p>
             <% else %>

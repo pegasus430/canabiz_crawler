@@ -6,7 +6,7 @@
 	<div class="form-group">
 	 	<textarea class="form-control" rows="5" id="tweet-textbody" maxlength="140" 
 			onchange = "characterCount();" onkeyup = "characterCount();"
-		>FROM <%= @article.source.name %>: <%= link_to @article.title, article_path(@article) %>
+		>FROM <%= @article.source.name %>: <%= @article.title %> http://cannabiznetwork.com/articles/<%=@article.id%>
 		</textarea>
 	</div>
 	
