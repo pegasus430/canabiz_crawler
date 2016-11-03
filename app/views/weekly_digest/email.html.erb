@@ -4,10 +4,52 @@
 <html>
 	<head>
 		<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+		
+		
 	</head>
 	<body>
-		<p>
-		  Sample mail sent using smtp.
-		</p>
+		<div class = 'digest-header'>
+			<h1>The Cannabiz Network Weekly Roll Up</h1>
+		</div>
+		<div class = 'wrap'>
+			<% Article.where(include_in_digest: true).each do |article| %>
+    		
+	    		<a href = '<%= article_path(article)%>'>
+			        <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source 
+			            %><%article.categories.each do |category| 
+			                %> <%=category.name.downcase.tr(" ", "_")
+			                %><%end
+			            %><%article.states.each do |state|
+			                %> <%=state.name.downcase.tr(" ", "_")
+			                %><%end%>'>
+			    
+			            
+			            <div class = 'homepage-article-image'>
+			                <% if article.source && article.source.name == 'Marijuana Business Daily' %>
+			                    <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %> <!-- , :class => "img-thumbnail rounded" -->
+			                <% else %>
+			                    <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
+			                <% end %>
+			            </div>
+			            
+			            <div class = 'homepage-article-date'>
+			                <%= time_ago_in_words(article.created_at) %> ago
+			            </div>
+			            
+			            <div class = 'homepage-article-bottom'>
+			                <div class = 'homepage-article-title'>
+			                    <h1><%= article.title.truncate(60) if article.title %></h1>
+			                </div>
+			                <div class = 'homepage-article-source'>
+			                    <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
+			                </div>
+			                <div class = 'homepage-article-category'>
+			                        
+			                </div>
+			            </div>
+			        </div>
+			    </a>
+  			<% end %>
+		</div>
 	</body>
 </html>
