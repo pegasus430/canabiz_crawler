@@ -32,7 +32,7 @@ class PagesController < ApplicationController
             flash[:success] = 'Thank you for signing up to the Weekly Roll Up!'
             redirect_to root_path
         else
-            flash[:success] = 'No Email'
+            flash[:danger] = 'No Email Provided'
             redirect_to root_path
         end
     end

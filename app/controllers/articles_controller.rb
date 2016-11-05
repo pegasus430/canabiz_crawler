@@ -31,6 +31,56 @@ class ArticlesController < ApplicationController
         #not on admin page but admin functionality
     end
     
+    def send_tweet
+        
+       	require 'rubygems'
+		require 'oauth'
+		require 'json'
+		
+		if params[:tweet_body].present?
+
+    		consumer_key = OAuth::Consumer.new(
+    		    "PeKIPXsMPl80fKm6SipbqrRVL",
+    		    "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO")
+    		access_token = OAuth::Token.new(
+    		    "418377285-HfXt8G0KxvBhNXQJRnnysTvt7yGAM0jWyfaIKSIU",
+    		    "3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez")
+    		
+    		# Note that the type of request has changed to POST.
+    		# The request parameters have also moved to the body
+    		# of the request instead of being put in the URL.
+    		baseurl = "https://api.twitter.com"
+    		path    = "/1.1/statuses/update.json"
+    		address = URI("#{baseurl}#{path}")
+    		request = Net::HTTP::Post.new address.request_uri
+    		request.set_form_data(
+    		  "status" => params[:tweet_body],
+    		)
+    		
+    		# Set up HTTP.
+    		http             = Net::HTTP.new address.host, address.port
+    		http.use_ssl     = true
+    		http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    		
+    		# Issue the request.
+    		request.oauth! http, consumer_key, access_token
+    		http.start
+    		response = http.request request
+    		
+    		if response.code == '200' then
+    		  flash[:success] = 'Tweet Sent'
+    		else
+    		  flash[:danger] = 'No Tweet Sent'
+    		end
+		
+            
+            redirect_to root_path
+        else
+            flash[:danger] = 'No Tweet Sent'
+            redirect_to root_path
+        end
+    end
+    
     def digest
         #not on admin page but admin functionality
     end

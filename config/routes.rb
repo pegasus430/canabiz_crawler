@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   get 'article-admin', to: 'articles#admin'
   get 'digest', to: 'articles#digest'
   get 'tweet/:id', to: 'articles#tweet', as: 'tweet'
+  get 'send_tweet', to: 'articles#send_tweet'
   
   
   #CATEGORIES  

@@ -13,29 +13,28 @@
 	
 	<!--bitly link-->
     <%
-    #this will be the link when live
-    #link = u"http://cannabiznetwork.com/articles/#{@article.id}"
-    
-    #testing link
-    link = u"http://cannabiz-news.herokuapp.com/articles/#{@article.id}"
-    
-   	bitlyResponse = HTTParty.get("https://api-ssl.bitly.com/v3/shorten?access_token=6a88d948272321a232f973370fd36ebafce5d121&longUrl=#{link}")
-   	
-   	bitlyLink = ''
-   	
-   	if bitlyResponse["data"] != nil && bitlyResponse["data"]["url"] != nil
-   		bitlyLink = bitlyResponse["data"]["url"]		
-   	end
-   	
+	    #this will be the link when live
+	    #link = u"http://cannabiznetwork.com/articles/#{@article.id}"
+	    
+	    #testing link
+	    link = u"http://cannabiz-news.herokuapp.com/articles/#{@article.id}"
+	    
+	   	bitlyResponse = HTTParty.get("https://api-ssl.bitly.com/v3/shorten?access_token=6a88d948272321a232f973370fd36ebafce5d121&longUrl=#{link}")
+	   	
+	   	bitlyLink = ''
+	   	
+	   	if bitlyResponse["data"] != nil && bitlyResponse["data"]["url"] != nil
+	   		bitlyLink = bitlyResponse["data"]["url"]		
+	   	end
    	%>
-	
-
-	<div class="form-group">
-		<!--http://cannabiznetwork.com/articles/@article.id -->
-	 	<textarea class="form-control" rows="5" id="tweet-textbody" onkeyup = "characterCount()"
+   	
+    <!--tweet-->
+    <form class="navbar-form inline" role="search" method="get" action = '/send_tweet'>
+        <textarea class="form-control" rows="5" id="tweet-textbody" name='tweet_body' onkeyup = "characterCount()" style = "width: 600px"
 		><%=@article.source.name%>: <%=@article.title.truncate(60)%> <%=bitlyLink%>
 		</textarea>
-	</div>
+        <input type = 'submit' id = 'sendTweetButton' class = "btn btn-default btn-green-touching" value = 'Send Tweet' />
+    </form>	   	
 	
 	<div id = 'hashtags'>
 		<div class = 'source-hashtags'>
@@ -59,6 +58,7 @@
 	<div id = 'character-count'>
 		<p>Character Count: <span id = 'count'></span></p>
 	</div>
+	
 </div>
 
 <script>
@@ -76,4 +76,3 @@
 	}
 	
 </script>
-
