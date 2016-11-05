@@ -1,9 +1,11 @@
 <% 
 #query all active digest users, put them in loop and send
 
-DigestEmail.where(active: true).each do |user|
-	WeeklyDigest.email(user).deliver	
-end
+WeeklyDigestJob.perform_later()
+
+#DigestEmail.where(active: true).each do |user|
+	#WeeklyDigest.email(user).deliver	
+#end
 
 
 %>

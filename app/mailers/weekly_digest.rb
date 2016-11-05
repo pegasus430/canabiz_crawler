@@ -1,5 +1,5 @@
 class WeeklyDigest < ApplicationMailer
-	default from: "steve@cannabiznetwork.com"
+	default from: "noreply@cannabiznetwork.com"
 	
 	def email(user)
 		@user = user
