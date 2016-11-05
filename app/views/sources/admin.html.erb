@@ -37,6 +37,7 @@
             <th><%= sortable "url" %></th>
             <th><%= sortable "article_logo" %></th>
             <th><%= sortable "sidebar_logo" %></th>
+            <th>Hashtags</th>
             <th>Edit</th>
             <th>Delete</th>
             
@@ -48,6 +49,11 @@
                     <td><%= source.url%></td>
                     <td><%= source.article_logo.truncate(20) if source.article_logo%></td>
                     <td><%= source.sidebar_logo.truncate(20) if source.sidebar_logo%></td>
+                    
+                    <td><% if source.hashtags.any? %>
+						<%= render source.hashtags %>
+					<% end %></td>
+					
                     <td><%= link_to "Edit", edit_source_path(source), class: "btn" %></td>
                     <td><%= link_to "Delete", source_path(source), method: :delete,
                                 data: { confirm: "Are you sure you want to delete this source?"},

@@ -2,35 +2,112 @@
 @import "bootstrap";
 
 
-body {background-color: #D9D9D9;}
-.wrap {width: 80%; margin: 0 auto; min-height: 600px;}
+body {
+    background-color: #D9D9D9;
+}
+.wrap {
+    width: 80%;
+    margin: 0 auto;
+    min-height: 600px;
+ }
 
 //side bar
-.side-bar {float: left; width: 175px; background-color: #3D3045; padding: 40px 5px 40px 0; margin-top: 21px; position: relative;}
-    .side-bar img {width: 100px; height: 100px;}
-    .sidebar-plus {position: absolute; bottom: -24px; width: 50px; left: 0; right: 0; margin-right: auto; margin-left: auto; cursor: pointer;}
-        .sidebar-plus img {width: 50px; height: 50px;}
+.side-bar {
+     float: left;
+     width: 175px;
+     background-color: #3D3045;
+     padding: 40px 5px 40px 0;
+     margin-top: 21px;
+     position: relative;
+ }
+    .side-bar img {
+         width: 100px;
+         height: 100px;
+     }
+    .sidebar-plus {
+         position: absolute;
+         bottom: -24px;
+         width: 50px;
+         left: 0;
+         right: 0;
+         margin-right: auto;
+         margin-left: auto;
+         cursor: pointer;
+     }
+        .sidebar-plus img {
+             width: 50px;
+             height: 50px;
+         }
         
         
         
 //homepage-article
-.homepage-article {width: 22%; display: inline-block; margin: 20px 10px; position: relative; height: 300px; 
-                    box-shadow: 2px 2px 2px 2px #888888; border-radius: 5px; float: left;}
+.homepage-article {
+    width: 22%;
+    display: inline-block;
+    margin: 20px 10px;
+    position: relative;
+    height: 300px;
+    box-shadow: 2px 2px 2px 2px #888888;
+    border-radius: 5px;
+    float: left;
+}
 
-    .homepage-article-image img {width: 100%; height: 300px; border-radius: 5px;}
+    .homepage-article-image img {
+        width: 100%;
+        height: 300px;
+        border-radius: 5px;
+     }
     
-    .homepage-article-date {position: absolute; top: 5px; padding-left: 5px; color: white;}
+    .homepage-article-date {
+        position: absolute;
+        top: 5px;
+        padding-left: 5px;
+        color: white;
+     }
     
     
-    .homepage-article-bottom {background: rgba(0,0,0,0.5); position: absolute; height: 100px; bottom: 0; width: 100%;}
-        .homepage-article-title h1 {font-size: 16px; font-weight: bold; color: white; padding: 5px; margin-top: 0;}
-        .homepage-article-source {position: absolute; bottom: 5px; padding-left: 5px;}
-            .homepage-article-source img {width: 100px; height: 30px;}
+    .homepage-article-bottom {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.57+100 */
+        // background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.57) 100%); /* FF3.6-15 */
+        // background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.57) 100%); /* Chrome10-25,Safari5.1-6 */
+        // background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.57) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#91000000',GradientType=0 ); /* IE6-9 */
+        background:#000;
+        position: absolute;
+        height: 150px;
+        bottom: 0;
+        width: 100%;
+     }
+        .homepage-article-title h1 {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            padding: 5px;
+            margin-top: 0;
+         }
+        .homepage-article-source {
+            position: absolute;
+            bottom: 5px;
+            padding-left: 5px;
+         }
+            .homepage-article-source img {
+                width: 100px;
+                height: 30px;
+             }
             
     //twitter sharing
-    .admin-twitter-share {position: absolute; bottom: 5px; right: 5px;}
-        .admin-twitter-share-button {padding: 10px 20px; background-color: blue; color: white; margin-bottom: 0px;}
-        
+    .admin-twitter-share {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+     }
+        .admin-twitter-share-button {
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            margin-bottom: 0px;
+         }
         
         
         

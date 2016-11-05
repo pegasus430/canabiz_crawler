@@ -1,12 +1,6 @@
-class Source < ActiveRecord::Base
-
-    has_many :articles
-    
-    has_many :user_sources
-    has_many :users, through: :user_sources
-    
+class Hashtag < ActiveRecord::Base
     has_many :source_hashtags
-    has_many :hashtags, through: :source_hashtags
+    has_many :sources, through: :source_hashtags 
     
     validates :name, presence: true, length: { minimum: 3, maximum: 25 }
     validates_uniqueness_of :name
@@ -14,7 +8,7 @@ class Source < ActiveRecord::Base
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true) do |row|
-            Source.create! row.to_hash
+            Hashtag.create! row.to_hash
         end
     end
     
@@ -22,8 +16,8 @@ class Source < ActiveRecord::Base
     def self.to_csv
         CSV.generate do |csv|
             csv << column_names
-            all.each do |source|
-                csv << source.attributes.values_at(*column_names)
+            all.each do |hashtag|
+                csv << hashtag.attributes.values_at(*column_names)
             end
         end
     end

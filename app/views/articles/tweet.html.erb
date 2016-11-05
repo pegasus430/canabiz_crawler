@@ -1,13 +1,59 @@
-
+<style>
+	
+	#hashtags {margin: 20px 0;}
+		#hashtags p {cursor: pointer;}
+	
+	.source-hashtags, .our-hashtags {width: 48%; display: inline-block; vertical-align: top;}
+	
+</style>
 
 <div class = 'wrap'>
 	<h1>Send Tweet: </h1>
 
+	
+	<!--bitly link-->
+    <%
+    #this will be the link when live
+    #link = u"http://cannabiznetwork.com/articles/#{@article.id}"
+    
+    #testing link
+    link = u"http://cannabiz-news.herokuapp.com/articles/#{@article.id}"
+    
+   	bitlyResponse = HTTParty.get("https://api-ssl.bitly.com/v3/shorten?access_token=6a88d948272321a232f973370fd36ebafce5d121&longUrl=#{link}")
+   	
+   	bitlyLink = ''
+   	
+   	if bitlyResponse["data"] != nil && bitlyResponse["data"]["url"] != nil
+   		bitlyLink = bitlyResponse["data"]["url"]		
+   	end
+   	
+   	%>
+	
+
 	<div class="form-group">
-	 	<textarea class="form-control" rows="5" id="tweet-textbody" maxlength="140" 
-			onchange = "characterCount();" onkeyup = "characterCount();"
-		>FROM <%= @article.source.name %>: <%= @article.title %> http://cannabiznetwork.com/articles/<%=@article.id%>
+		<!--http://cannabiznetwork.com/articles/@article.id -->
+	 	<textarea class="form-control" rows="5" id="tweet-textbody" onkeyup = "characterCount()"
+		><%=@article.source.name%>: <%=@article.title.truncate(60)%> <%=bitlyLink%>
 		</textarea>
+	</div>
+	
+	<div id = 'hashtags'>
+		<div class = 'source-hashtags'>
+			<h3>Source Hashtags:</h3>
+			<% @article.source.hashtags.each do |hashtag| %>
+				<p onclick='addText("<%=hashtag.name%>")'><%=hashtag.name%></p>
+			<% end %>	
+		</div>
+		<div class = 'our-hashtags'>
+			<h3>Our Hashtags:</h3>
+			<% Hashtag.all.each do |hashtag| %>
+			
+				<% if hashtag.sources.blank? %>
+					<p onclick='addText("<%=hashtag.name%>")'><%=hashtag.name%></p>	
+				<% end %>
+			<% end %>
+				
+		</div>		
 	</div>
 	
 	<div id = 'character-count'>
@@ -22,5 +68,12 @@
 	function characterCount() {
 		document.getElementById("count").innerHTML = document.getElementById("tweet-textbody").innerHTML.length;
 	}
+	
+	function addText(text) {
+		
+		document.getElementById("tweet-textbody").innerHTML += ' #' + text;
+		characterCount();
+	}
+	
 </script>
 

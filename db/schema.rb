@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103131612) do
+ActiveRecord::Schema.define(version: 20161105165151) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20161103131612) do
   create_table "digest_emails", force: :cascade do |t|
     t.string  "email"
     t.boolean "active"
+  end
+
+  create_table "hashtags", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "source_hashtags", force: :cascade do |t|
+    t.integer "source_id"
+    t.integer "hashtag_id"
   end
 
   create_table "sources", force: :cascade do |t|
