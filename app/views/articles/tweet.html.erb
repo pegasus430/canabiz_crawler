@@ -33,6 +33,8 @@
         <textarea class="form-control" rows="5" id="tweet-textbody" name='tweet_body' onkeyup = "characterCount()" style = "width: 600px"
 		><%=@article.source.name%>: <%=@article.title.truncate(60)%> <%=bitlyLink%>
 		</textarea>
+		<!--hidden article id-->
+		<input type = 'hidden' value = "<%=@article.id%>" name ='id'>
         <input type = 'submit' id = 'sendTweetButton' class = "btn btn-default btn-green-touching" value = 'Send Tweet' />
     </form>	   	
 	

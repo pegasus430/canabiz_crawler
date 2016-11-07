@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-    before_action :set_article, only: [:edit, :update, :destroy, :show, :tweet]
+    before_action :set_article, only: [:edit, :update, :destroy, :show, :tweet, :send_tweet]
     before_action :require_admin, only: [:edit, :update, :destroy, :admin, :digest, :tweet]
 
     #--------ADMIN PAGE-------------------------
@@ -36,10 +36,9 @@ class ArticlesController < ApplicationController
        	require 'rubygems'
 		require 'oauth'
 		require 'json'
-		require 'imgkit'
 		
 		if params[:tweet_body].present?
-
+		    
             client = Twitter::REST::Client.new do |config|
                 config.consumer_key    = "PeKIPXsMPl80fKm6SipbqrRVL"
                 config.consumer_secret = "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO"
@@ -47,8 +46,12 @@ class ArticlesController < ApplicationController
                 config.access_token_secret = "3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez"
             end
             
-            data = open("http://www.w3schools.com/css/paris.jpg")
-            client.update_with_media(params[:tweet_body], File.new(data))
+            if @article.image.present?
+                data = open(@article.image)
+                client.update_with_media(params[:tweet_body], File.new(data))
+            else 
+                client.update(params[:tweet_body])
+            end
             
             flash[:success] = 'Tweet Sent'
             redirect_to root_path
