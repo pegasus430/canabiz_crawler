@@ -41,8 +41,8 @@ body {
         
         
         
-//homepage-article
-.homepage-article {
+//article
+.article {
     width: 22%;
     display: inline-block;
     margin: 20px 10px;
@@ -53,21 +53,21 @@ body {
     float: left;
 }
 
-    .homepage-article-image img {
+    .article-image {
         width: 100%;
         height: 300px;
         border-radius: 5px;
      }
     
-    .homepage-article-date {
+    .article-date {
         position: absolute;
-        top: 5px;
-        padding-left: 5px;
+        top: 10px;
+        left: 5%;
         color: white;
      }
     
     
-    .homepage-article-bottom {
+    .article-bottom {
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.57+100 */
         background: -moz-linear-gradient(top,  rgba(0,0,0,.05) 0%, rgba(0,0,0,0.7) 100%); /* FF3.6-15 */
         background: -webkit-linear-gradient(top,  rgba(0,0,0,.05) 0%,rgba(0,0,0,0.7) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -79,23 +79,24 @@ body {
         left: 0;
         width: 100%;
      }
-         .homepage-article-title {
+         .grid-article-title {
+             width: 90%;
              position: absolute;
              bottom: 60px;
+             left: 15px;
          }
-        .homepage-article-title h1 {
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            padding: 5px;
-            margin-top: 0;
+        .grid-article-title h1 {
+            font-size: 20px;
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: 0.03em;
          }
-        .homepage-article-source {
+        .article-source {
             position: absolute;
             bottom: 5px;
-            padding-left: 5px;
+            left: 15px;
          }
-            .homepage-article-source img {
+            .article-source img {
                 width: 100px;
                 height: 30px;
              }
@@ -112,7 +113,3 @@ body {
             color: white;
             margin-bottom: 0px;
          }
-        
-        
-        
-    

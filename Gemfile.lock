@@ -220,6 +220,7 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
+    imgkit (1.6.1)
     inflecto (0.0.2)
     ipaddress (0.8.3)
     jbuilder (2.6.0)
@@ -349,6 +350,7 @@ GEM
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
     will_paginate (3.0.7)
+    wkhtmltoimage-binary (0.12.2)
     xml-simple (1.1.5)
 
 PLATFORMS
@@ -363,6 +365,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   fog (~> 1.38)
   httparty (~> 0.13.7)
+  imgkit (~> 1.6, >= 1.6.1)
   jbuilder (~> 2.0)
   jquery-rails
   mini_magick (~> 4.5, >= 4.5.1)
@@ -383,6 +386,7 @@ DEPENDENCIES
   unf (~> 0.1.4)
   web-console (~> 2.0)
   will_paginate (= 3.0.7)
+  wkhtmltoimage-binary (~> 0.12.2)
 
 BUNDLED WITH
    1.11.2

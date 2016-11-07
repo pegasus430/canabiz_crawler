@@ -9,33 +9,25 @@
 
 <% @articles.each_with_index do |article, i| %>
     
-    <a href = '<%= article_path(article)%>'>
-        <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source 
+        <div class = 'article <%=article.source.name.downcase.tr(" ", "_") if article.source 
             %><%article.categories.each do |category| 
                 %> <%=category.name.downcase.tr(" ", "_")
                 %><%end
             %><%article.states.each do |state|
                 %> <%=state.name.downcase.tr(" ", "_")
-                %><%end%>'>
-    
+                %><%end%>' style = "<% if article.image %> background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
+        
+        <a href = '<%= article_path(article)%>'>
             
-            <div class = 'homepage-article-image'>
-                <% if article.source && article.source.name == 'Marijuana Business Daily' %>
-                    <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %> <!-- , :class => "img-thumbnail rounded" -->
-                <% else %>
-                    <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
-                <% end %>
-            </div>
-            
-            <div class = 'homepage-article-date'>
+            <div class = 'article-date'>
                 <%= time_ago_in_words(article.created_at) %> ago
             </div>
             
-            <div class = 'homepage-article-bottom'>
-                <div class = 'homepage-article-title'>
+            <div class = 'article-bottom'>
+                <div class = 'grid-article-title'>
                     <h1><%= article.title.truncate(60) if article.title %></h1>
                 </div>
-                <div class = 'homepage-article-source'>
+                <div class = 'article-source'>
                     <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
                 </div>
                 <% if current_user && current_user.admin? %>
@@ -43,11 +35,10 @@
                         <p class = 'admin-twitter-share-button'><%= link_to "SHARE", tweet_path(article) %></p>
                     </div>
                 <% end %>
-                <div class = 'homepage-article-category'>
+                <div class = 'article-category'>
                         
                 </div>
             </div>
+            </a>
         </div>
-    </a>
-    
 <% end %>

@@ -6,27 +6,22 @@
     <h1 class = 'article-right-sidebar-title'>Related News</h1>
     
     <% @related_articles.each do |article| %>
-        <div class = 'related-article'>
-            <div class = 'homepage-article-image'>
-                <% if article.source && article.source.name == 'Marijuana Business Daily' %>
-                    <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %> <!-- , :class => "img-thumbnail rounded" -->
-                <% else %>
-                    <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
-                <% end %>
+        <div class = 'related-article' style = "<% if article.image %> background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
+            <div class = 'article-image'>
             </div>
             
-            <div class = 'homepage-article-date'>
+            <div class = 'article-date'>
                 <%= time_ago_in_words(article.created_at) %> ago
             </div>
             
-            <div class = 'homepage-article-bottom'>
-                <div class = 'homepage-article-title'>
+            <div class = 'article-bottom'>
+                <div class = 'single-article-title'>
                     <h1><%= article.title.truncate(60) if article.title %></h1>
                 </div>
-                <div class = 'homepage-article-source'>
+                <div class = 'article-source'>
                     <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
                 </div>
-                <div class = 'homepage-article-category'>
+                <div class = 'article-category'>
                     
                 </div>
             </div>            

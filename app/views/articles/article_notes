@@ -96,3 +96,81 @@
 		  puts "Could not send the Tweet! " +
 		  "Code:#{response.code} Body:#{response.body}"
 		end
+		
+		
+//tried with image as well
+
+    		consumer_key = OAuth::Consumer.new(
+    		    "PeKIPXsMPl80fKm6SipbqrRVL",
+    		    "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO")
+    		access_token = OAuth::Token.new(
+    		    "418377285-HfXt8G0KxvBhNXQJRnnysTvt7yGAM0jWyfaIKSIU",
+    		    "3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez")
+    		
+    
+            #upload image
+            
+            #base64 image
+            
+            
+            baseurl = "https://upload.twitter.com"
+    		path    = "/1.1/media/upload.json"
+    		address = URI("#{baseurl}#{path}")
+    		request = Net::HTTP::Post.new address.request_uri
+    		request.set_form_data(
+    		    "media" => '',
+    		    "media_data" => ActiveSupport::Base64.encode64(open("http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg")),
+    		)
+            
+            #upload status
+    		baseurl = "https://api.twitter.com"
+    		path    = "/1.1/statuses/update.json"
+    		address = URI("#{baseurl}#{path}")
+    		request = Net::HTTP::Post.new address.request_uri
+    		request.set_form_data(
+    		  "status" => params[:tweet_body],
+    		  #media_ids --> this is the parameter to reference an image - have to upload the image first
+    		)
+    		
+    		# Set up HTTP.
+    		http             = Net::HTTP.new address.host, address.port
+    		http.use_ssl     = true
+    		http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    		
+    		# Issue the request.
+    		request.oauth! http, consumer_key, access_token
+    		http.start
+    		response = http.request request
+    		
+    		if response.code == '200' then
+    		  flash[:success] = 'Tweet Sent'
+    		else
+    		  flash[:danger] = 'No Tweet Sent'
+    		end
+		
+            
+            redirect_to root_path
+            
+            
+//imgkit notes
+Now install wkhtmltoimage binaries:
+Global: sudo `which imgkit` --install-wkhtmltoimage
+        rvmsudo imgkit --install-wkhtmltoimage
+(installs to default /usr/local/bin/wkhtmltoimage)
+
+inside RVM folder: export TO=`which imgkit | sed 's:/imgkit:/wkhtmltoimage:'` && imgkit --install-wkhtmltoimage
+(you'll have to configure the location of the binary if you do this!)
+
+(run imgkit --help to see more options)
+
+
+
+//TRYING TO USE IMAGE KIT TO CREATE A FILE: 
+
+            kit = IMGKit.new("http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg")
+            img = kit.to_img(:png)
+            
+            file  = Tempfile.new(img)
+            #file = kit.to_file("/assets/images/tweetImages/#{kit}")
+            
+            client.update_with_media(params[:tweet_body], File.new(file))
