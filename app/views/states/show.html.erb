@@ -1,5 +1,7 @@
 <!--PAGE SHOWS ALL OF THE ARTICLES OF A PARTICULAR STATE-->
 
+<% @articles_to_hide = [] %>
+
 <div class = 'side-bar'>
     
     <%= render 'pages/sidebar' %>
@@ -11,3 +13,7 @@
     <%= render 'pages/article_layout' %>
   
 </div>
+
+<% @articles_to_hide.each do |item| %>
+    <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>
+<% end %>
