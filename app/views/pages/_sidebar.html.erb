@@ -5,16 +5,46 @@
 	@side_states = State.order("name ASC")
 %>
 
-<table class = 'side-bar-table'>
-    <% @side_sources.each do |source| %>
-        <tr>
-            <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                    :onclick => 'showOrHideArticles(this);' %></td>
-            <td><img src = "<%= asset_path(source.sidebar_logo) %>"></td>
-            <td><%= source.name%></td>
-        </tr>
-    <% end %>
-</table>
+
+<% if logged_in? && current_user.sources.any? %> 
+    
+    <!--user is logged in so I need their preferences-->
+    <table class = 'side-bar-table'>
+        <% @side_sources.each do |source| %>
+            <% if current_user.sources.include?(source) %>
+                <tr>
+                    <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                            :onclick => 'showOrHideArticles(this);' %></td>
+                    <td><img src = "<%= asset_path(source.sidebar_logo) %>"></td>
+                    <td><%= source.name%></td>                
+                </tr>
+                
+            <% else %>
+                <% @articles_to_hide.push(source) %>
+                <tr>
+                    <td><%= check_box_tag "sources[]", source.id, false, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                            :onclick => 'showOrHideArticles(this);' %></td>
+                    <td><img src = "<%= asset_path(source.sidebar_logo) %>"></td>
+                    <td><%= source.name%></td>                
+                </tr>    
+            <% end %>
+        <% end %>
+    </table>
+
+<% else %>
+
+    <!--no user logged in, whole sidebar is checked-->
+    <table class = 'side-bar-table'>
+        <% @side_sources.each do |source| %>
+            <tr>
+                <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                        :onclick => 'showOrHideArticles(this);' %></td>
+                <td><img src = "<%= asset_path(source.sidebar_logo) %>"></td>
+                <td><%= source.name%></td>
+            </tr>
+        <% end %>
+    </table>
+<% end %>
 
 <div class = 'sidebar-plus'>
 	<img src = "<%= asset_path("homepage/sidebarPlus.png")%>" onclick="openSidebarNav()" />

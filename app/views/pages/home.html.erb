@@ -1,3 +1,5 @@
+<% @articles_to_hide = [] %>
+
 <div class = 'side-bar'>
     
     <%= render 'sidebar' %>
@@ -9,3 +11,7 @@
     <%= render 'article_layout' %>
   
 </div>
+
+<% @articles_to_hide.each do |item| %>
+    <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>
+<% end %>
