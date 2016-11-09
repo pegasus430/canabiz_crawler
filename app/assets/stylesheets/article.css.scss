@@ -19,3 +19,14 @@
 	//lower portion
 	.more-from-same-source {margin-top: 20px;}
 		.more-from-same-source h2 {font-size: 20px; border-bottom: 1px solid black;}
+		
+//bottom
+.below-article-source a {color: purple;}
+	.below-article-source img {width: 150px; height: auto;}
+	
+.below-article-header {border-bottom: 1px solid black; margin: 30px 0 10px;}
+	
+.below-article-tag {margin: 30px 15px; display: inline-block;}
+	.below-article-tag a {padding: 10px 20px; border: 1px solid blue; color: blue; border-radius: 25px; }
+
+.below-article-back {margin: 40px 0;}

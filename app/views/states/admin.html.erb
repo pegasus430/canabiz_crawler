@@ -25,6 +25,7 @@
         <th>Abbr.</th>
         <th>Num Articles</th>
         <th>Num Users Tracking</th>
+        <th>Logo</th>
         <th>Keywords</th>
         <th>Edit</th>
         <th>Delete</th>
@@ -35,6 +36,7 @@
             <td><%= state.abbreviation %></td>
             <td><%= state.articles.count %></td>
             <td><%= state.users.count %></td>
+            <td><%= state.logo.truncate(50) if state.logo %></td>
             <td><%= state.keywords.truncate(30) if state.keywords %></td>
             <td><%= link_to "Edit", edit_state_path(state), class: "btn" %></td>
             <td><%= link_to "Delete", state_path(state), method: :delete,
