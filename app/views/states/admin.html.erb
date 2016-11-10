@@ -39,7 +39,7 @@
             <td><%= state.logo.truncate(50) if state.logo %></td>
             <td><%= state.keywords.truncate(30) if state.keywords %></td>
             <td><%= link_to "Edit", edit_state_path(state), class: "btn" %></td>
-            <td><%= link_to "Delete", state_path(state), method: :delete,
+            <td><%= link_to "Delete", state_path(state), method: :delete, remote: true,
                         data: { confirm: "Are you sure you want to delete this state?"},
                         class: "btn" %></td>
         </tr>

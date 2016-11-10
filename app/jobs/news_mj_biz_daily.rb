@@ -3,10 +3,31 @@ class NewsMjBizDaily < ActiveJob::Base
     
     def perform()
         logger.info "MjBizDaily background job is running"
-        addArticlesFromMJCananbizDailyOne()
-        addArticlesFromMJCananbizDailyTwo()
-        addArticlesFromMJCananbizDailyThree()
-        addArticlesFromMJCananbizDailyFour()
+        
+        python()
+        #addArticlesFromMJCananbizDailyOne()
+        #addArticlesFromMJCananbizDailyTwo()
+        ##addArticlesFromMJCananbizDailyThree()
+        #addArticlesFromMJCananbizDailyFour()
+    end
+    
+    def python
+        
+        logger.info "In Python Method"
+        require "json"
+        require 'open-uri'
+        
+        #removed ##print u'Processing article: {}'.format(title)
+        output = IO.popen(["python", "#{Rails.root}/app/scrapers/news_scrapper.py"]) #cmd,
+        contents = JSON.parse(output.read)
+        puts contents["url"]
+        puts contents["articles"][1]["title"]
+        puts contents["articles"][1]["date"]
+        puts contents["articles"][1]["image_url"]
+        puts contents["articles"][1]["url"]
+        puts contents["articles"][1]["text_plain"]
+        
+        logger.info "Done with Python Method"
     end
     
     def addArticlesFromMJCananbizDailyOne()
@@ -43,8 +64,6 @@ class NewsMjBizDaily < ActiveJob::Base
                             '&&_apikey=62b5b9a8fa284895a14abe58fa8046fff4e9d64ca401cc947ebe55b4fb24b7669b8732cac6bac15ab112b0f4c804a708547b691e124383e2b81155c5f3b14e786751bc908bdbe1913379a890d9db9793') 
         
         
-            logger.info 'Steve Log: ' + searchResponse.body
-            logger.info 'Steve log: ' + JSON.parse(searchResponse.body)['results']
             if searchResponse.body != nil && searchResponse.body != '' && JSON.parse(searchResponse.body)['results'] != nil && JSON.parse(searchResponse.body)['results'] != ''
                 searchBody = JSON.parse(searchResponse.body)
                 searchBody["results"].each do |result|        

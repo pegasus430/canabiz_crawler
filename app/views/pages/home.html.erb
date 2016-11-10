@@ -1,4 +1,5 @@
 <% @articles_to_hide = [] %>
+<% article_start = 20 %>
 
 <div class = 'side-bar'>
     
@@ -15,3 +16,14 @@
 <% @articles_to_hide.each do |item| %>
     <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>
 <% end %>
+
+<script>
+    $(window).scroll(function() {
+       if($(window).scrollTop() + $(window).height() == $(document).height()) {
+           <% 
+               #@articles = Article.where('image IS NOT NULL').order("created_at DESC").limit(20).skip(article_start)
+               #render 'article_layout'
+           %> 
+       }
+    });
+</script>

@@ -6,6 +6,8 @@ class PagesController < ApplicationController
         @articles = Article.where('image IS NOT NULL').order("created_at DESC").limit(20)
         
         # news background jobs:
+        NewsHighTimes.perform_later()
+        
         #NewsMjBizDaily.perform_later()
         #NewsTheCannabist.perform_later()
         #NewsCannabisCulture.perform_later()
@@ -36,7 +38,6 @@ class PagesController < ApplicationController
             redirect_to root_path
         end
     end
-    
     
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
     def prepare_access_token(oauth_token, oauth_token_secret)
