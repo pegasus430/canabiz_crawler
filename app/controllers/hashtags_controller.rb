@@ -66,9 +66,9 @@ class HashtagsController < ApplicationController
     #-------------------------------------------
    
     def destroy
-        @category.destroy
-        flash[:success] = 'Category was successfully deleted'
-        redirect_to category_admin_path
+        @hashtag.destroy
+        flash[:success] = 'Hashtag was successfully deleted'
+        redirect_to hashtag_admin_path
     end
    
     def destroy_multiple

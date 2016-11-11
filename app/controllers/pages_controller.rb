@@ -3,10 +3,25 @@ class PagesController < ApplicationController
     before_action :require_admin, only: [:admin]
     
     def home
-        @articles = Article.where('image IS NOT NULL').order("created_at DESC").limit(20)
+        
+        #sort by the option selected by user
+        if params[:option] != nil
+            sort_option = SortOptions.find(params[:option])
+            @articles = Article.paginate(page: params[:page], per_page: 24).order(sort_option.query + " " + sort_option.direction)
+        else 
+
+            @articles = Article.paginate(page: params[:page], per_page: 24).order("created_at DESC")
+
+        end
+        
+        
+        respond_to do |format|
+          format.html
+          format.js
+        end
         
         # news background jobs:
-        NewsHighTimes.perform_later()
+        #NewsHighTimes.perform_later()
         
         #NewsMjBizDaily.perform_later()
         #NewsTheCannabist.perform_later()

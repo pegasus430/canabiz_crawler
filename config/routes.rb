@@ -75,6 +75,8 @@ Rails.application.routes.draw do
   post 'sources/search' => 'sources#search', as: 'search_sources'
   get 'source-admin', to: 'sources#admin'
   
+  
+  #HASHTAGS
   resources :hashtags do
     collection {post :import}
     collection do
@@ -84,6 +86,13 @@ Rails.application.routes.draw do
   post 'hashtags/search' => 'hashtags#search', as: 'search_hashtags'
   get 'hashtag-admin', to: 'hashtags#admin'  
   
-     
+  resources :sort_options do
+    collection {post :import}
+    collection do
+      delete 'destroy_multiple'
+    end
+  end
+  post 'sort_options/search' => 'sort_options#search', as: 'search_sort_options'
+  get 'sort_options-admin', to: 'sort_options#admin'  
 
 end
