@@ -1,7 +1,7 @@
 <% @articles_to_hide = [] %>
 <% article_start = 20 %>
 
-<%=link_to "reload", url_for(params) %>
+<%=link_to "reload", url_for(params.merge(:option => 1)) %>
 
 <div class = 'side-bar'>
     
