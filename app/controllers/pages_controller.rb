@@ -6,15 +6,11 @@ class PagesController < ApplicationController
         
         #sort by the option selected by user
         if params[:option] != nil
-            
             @sort_option = SortOption.find(params[:option])
             @articles = Article.paginate(page: params[:page], per_page: 24).order(@sort_option.query + " " + @sort_option.direction)
         else 
-
             @articles = Article.paginate(page: params[:page], per_page: 24).order("created_at DESC")
-
         end
-        
         
         respond_to do |format|
           format.html

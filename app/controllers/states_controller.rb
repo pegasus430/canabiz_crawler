@@ -50,7 +50,15 @@ class StatesController < ApplicationController
     end 
     
     def show
-        @articles = @state.articles.order("created_at DESC")
+        
+        #sort by the option selected by user
+        if params[:option] != nil
+            @sort_option = SortOption.find(params[:option])
+            @articles = @state.articles.order(@sort_option.query + " " + @sort_option.direction)
+        else 
+            @articles = @state.articles.order("created_at DESC")
+        end 
+        
     end
     
    def edit
