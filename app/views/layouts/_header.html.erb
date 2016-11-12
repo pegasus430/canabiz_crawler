@@ -37,8 +37,8 @@
                 
                 Sort By 
                     <span class = "under-search-button" onclick="openCategoryNav()">
-                        <% if @category.present? %>
-                            <%= @category.name %>
+                        <% if @sort_option.present? %>
+                            <%= @sort_option.name %>
                         <% else %>
                             Newest
                         <% end %>
@@ -64,21 +64,24 @@
     </div>
 
 </div>
+
+
     
-<!-- Category Overlay -->
+<!-- Sort Overlay -->
 <div id="category-overlay" class="overlay">
 
   <!-- Button to close the overlay navigation -->
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
     <div class="overlay-content">
-        <%@all_categores = State.all.order("name ASC") %>
-        <% Category.all.order("name ASC").each do |category| %>
-            <a href="<%=category_path(category)%>"><%=category.name%></a>
+        <% SortOption.all.order("name ASC").each do |option| %>
+            <a href="<%=url_for(params.merge(:option => option.id))%>"><%=option.name%></a>
         <% end %>
     </div>
 
 </div>
+
+
 
 <!--Menu Overlay-->
 <div id="menu-overlay" class="overlay">
@@ -96,12 +99,11 @@
         </div> 
         
         <% if current_user %>
-            <a href="<%= user_path(current_user)%>">My Page</a>
+            <a href="<%= user_path(current_user)%>">My Settings</a>
         <% else %>
             <a href="<%= login_path %>">My Page</a>
         <% end %>
         
-        <a href="#">Settings</a>
         <a href="#">About</a>
         <a href="#">Contact</a>
         

@@ -1,7 +1,4 @@
 <% @articles_to_hide = [] %>
-<% article_start = 20 %>
-
-<%=link_to "reload", url_for(params.merge(:option => 1)) %>
 
 <div class = 'side-bar'>
     
@@ -14,6 +11,7 @@
     <%= render 'article_layout' %>
     
 </div>
+
 <div class = 'clear'></div>
 <div id = 'infinite-scrolling'><%= will_paginate @articles %></div> 
 
