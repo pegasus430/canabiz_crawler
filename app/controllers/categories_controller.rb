@@ -51,6 +51,11 @@ class CategoriesController < ApplicationController
         #sort by the option selected by user
         if params[:option] != nil
             @sort_option = SortOption.find(params[:option])
+            
+            #add a click to the sort option
+            @sort_option.increment(:num_clicks, by = 1)
+            @sort_option.save
+        
             @articles = @category.articles.order(@sort_option.query + " " + @sort_option.direction)
         else 
             @articles = @category.articles.order("created_at DESC")
