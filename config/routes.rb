@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get 'search', to: 'pages#search'
   get 'save_email', to: 'pages#save_email'
   
+  #DIFF STYLING
+  get 'test', to: 'diff_layouts#test'
+  
   #LOGIN AND LOGOUT
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
