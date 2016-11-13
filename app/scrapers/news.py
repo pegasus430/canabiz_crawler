@@ -12,7 +12,7 @@ class NewsArticle:
     def __init__(self, title, url, image_url, date, text_html, text_plain):
         self.title = title
         self.url = url
-        self.image_url = url
+        self.image_url = image_url
         self.date = date
         self.text_html = text_html
         self.text_plain = text_plain

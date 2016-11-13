@@ -14,7 +14,7 @@ class NewsHighTimes < ActiveJob::Base
         require "json"
         require 'open-uri'
         
-        #removed ##print u'Processing article: {}'.format(title)
+        #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
         output = IO.popen(["python", "#{Rails.root}/app/scrapers/news_scrapper.py"]) #cmd,
         contents = JSON.parse(output.read)
         
