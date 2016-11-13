@@ -152,7 +152,7 @@ class ArticlesController < ApplicationController
             end
         end
         def article_params
-            params.require(:article).permit(:title, :abstract, :body, :date, :image, :source_id, :include_in_digest, state_ids: [], category_ids: [])
+            params.require(:article).permit(:title, :abstract, :body, :date, :image, :remote_image_url, :remote_file_url, :source_id, :include_in_digest, state_ids: [], category_ids: [])
         end
       
         def sort_column

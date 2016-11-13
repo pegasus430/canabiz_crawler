@@ -1,4 +1,6 @@
 class Article < ActiveRecord::Base
+    #attr_accessible :remote_file_url
+    
     has_many :article_categories
     has_many :categories, through: :article_categories
 
@@ -9,6 +11,10 @@ class Article < ActiveRecord::Base
     
     validates :title, presence: true, length: {minimum: 3, maximum: 300}
     validates_uniqueness_of :title
+    
+    #photo aws storage
+    #mount_uploader :image, PhotoUploader
+    mount_uploader :image, PhotoUploader
     
     #import CSV files
     def self.import(file)

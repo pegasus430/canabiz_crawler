@@ -23,6 +23,8 @@ class ApplicationController < ActionController::Base
   #redirect to homepage on error
   rescue_from ActionView::MissingTemplate, :with => :template_not_found
   rescue_from ActiveRecord::RecordNotFound, :with => :template_not_found
+  rescue_from ActiveRecord::StatementInvalid, :with => :template_not_found
+  
 
   private
   

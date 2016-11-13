@@ -47,7 +47,7 @@
           <tr>
               <td><%= check_box_tag "articles[]", article.id %></td>
               <td style = 'width: 300px'><%= article.title %></td>
-              <td><%= article.image.truncate(30) if article.image %></td>
+              <td><%= article.image %></td> <!--.truncate(30) if article.image-->
               <td><%= article.include_in_digest %></td>
               <td><%= article.date %></td>
               <td><%= article.num_views %></td>

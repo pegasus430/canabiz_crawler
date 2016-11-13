@@ -8,18 +8,19 @@ gem 'httparty', '~> 0.13.7' #External API Integration
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a string and output it as a link
-gem 'rubypython', '~> 0.6.3' #python
+#gem 'rubypython', '~> 0.6.3' #python
 
 #TWITTER GEMS
 gem 'twitter' #TWITTER
 gem 'oauth', '~> 0.5.1' #Needed for Twitter
-gem 'wkhtmltoimage-binary', '~> 0.12.2' #convert image url to file so we can tweet
-gem 'imgkit', '~> 1.6', '>= 1.6.1' #convert image url to file so we can tweet
+#gem 'wkhtmltoimage-binary', '~> 0.12.2' #convert image url to file so we can tweet
+#gem 'imgkit', '~> 1.6', '>= 1.6.1' #convert image url to file so we can tweet
 
 #gems for image management
 gem 'carrierwave', '~> 0.11.2'
 gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 gem 'fog', '~> 1.38'
+gem 'figaro', '~> 1.1', '>= 1.1.1'
 gem 'unf', '~> 0.1.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

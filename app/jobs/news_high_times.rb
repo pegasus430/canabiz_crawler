@@ -10,6 +10,9 @@ class NewsHighTimes < ActiveJob::Base
     
     def scrapeHighTimes()
         
+        #store image
+        #https://github.com/savon40/Cannabiz-SecondAttempt/commit/f7e51bb4f5153f073d4ffeb8d888e78a463e63e2
+        
         
         require "json"
         require 'open-uri'
@@ -69,9 +72,24 @@ class NewsHighTimes < ActiveJob::Base
 	            end
 	        end
 	        
-	        #CREATE ARTICLE
-	        #missing abstract right now
-	        article = Article.create(:title => article["title"], :image => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
+
+	        #if (article["image_url"] != nil)
+	        
+	        	#data = open(article["image_url"])
+	        	#@image_stored = File.new(data)
+
+	        	#CREATE ARTICLE
+	        	#missing abstract right now
+	        	puts "this is the image url: " + article["image_url"]
+	        	article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))	
+	        
+	        #else 
+	    		#CREATE ARTICLE
+	        	#missing abstract right now
+	        #	article = Article.create(:title => article["title"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
+	        #end
+	        
+
 	        
 	        #CREATE ARTICLE CATEGORIES
 	        #If no category, set category to random
