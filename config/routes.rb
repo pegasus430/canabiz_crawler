@@ -67,6 +67,7 @@ Rails.application.routes.draw do
   end
   post 'categories/search' => 'categories#search', as: 'search_categories'
   get 'category-admin', to: 'categories#admin'
+  get 'python', to: 'categories#python'
   
   
   #SOURCES  
