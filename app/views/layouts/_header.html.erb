@@ -22,31 +22,6 @@
             <input type = 'submit' id = 'searchButton' onclick = 'search()' class = "btn btn-default btn-green-touching" value = 'Search' />
         </form>
         
-        <!--bottom-->
-        <div class = "under-search">
-            <p>
-                Choose Your State 
-                    <span class = "under-search-button" onclick="openStateNav()">
-                        <% if @state.present? %>
-                            <%= @state.name %>
-                        <% else %>
-                            All News
-                        <% end %>
-                    </span>    
-                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                
-                Sort By 
-                    <span class = "under-search-button" onclick="openCategoryNav()">
-                        <% if @sort_option.present? %>
-                            <%= @sort_option.name %>
-                        <% else %>
-                            Newest
-                        <% end %>
-                    </span>
-            </p>
-            
-        </div>
-
     </div>
 </div>
 

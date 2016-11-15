@@ -1,5 +1,32 @@
 <% @articles_to_hide = [] %>
 
+<div class = 'header-center'>
+<!--header sorting-->
+    <div class = "under-search">
+        <p>
+            Choose Your State 
+            <span class = "under-search-button" onclick="openStateNav()">
+                <% if @state.present? %>
+                    <%= @state.name %>
+                <% else %>
+                    All News
+                <% end %>
+            </span>    
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            
+            Sort By 
+            <span class = "under-search-button" onclick="openCategoryNav()">
+                <% if @sort_option.present? %>
+                    <%= @sort_option.name %>
+                <% else %>
+                    Newest
+                <% end %>
+            </span>
+        </p>
+    </div>
+</div>
+
+
 <div class = 'side-bar'>
     
     <%= render 'sidebar' %>
@@ -8,12 +35,10 @@
 
 <div class = 'wrap'>
 
-    <%= render 'article_layout' %>
+    <%= render 'article_loop' %>
     
 </div>
 
-<div class = 'clear'></div>
-<div id = 'infinite-scrolling'><%= will_paginate @articles %></div> 
 
 <% @articles_to_hide.each do |item| %>
     <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'admin', to: 'pages#admin'
   get 'search', to: 'pages#search'
   get 'save_email', to: 'pages#save_email'
+  get 'unsubscribe', to: 'pages#unsubscribe'
   
   #DIFF STYLING
   get 'test', to: 'diff_layouts#test'

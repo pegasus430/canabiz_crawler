@@ -56,6 +56,25 @@ class PagesController < ApplicationController
         end
     end
     
+    def unsubscribe
+        if params[:id].present?
+        
+            #expecting: 'A3d' <id> 'G64r7'
+            if params[:id].split('d').count == 2 && params[:id].split('d')[1].split('G').count == 2 
+            	@actual_id = params[:id].split('d')[1].split('G')[0]
+            	
+            	@digest = DigestEmail.find(@actual_id)
+                @digest.active = false
+                @digest.save
+            
+            else
+                redirect_to root_path
+            end
+        else 
+            redirect_to root_path   
+        end
+    end
+    
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
     def prepare_access_token(oauth_token, oauth_token_secret)
 

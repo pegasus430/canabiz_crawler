@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update]
-  before_action :require_same_user, only: [:edit, :update, :destroy]
+  before_action :require_same_user, only: [:edit, :update, :destroy, :show]
   before_action :require_admin, only: [:destroy]
   
   def index
@@ -59,6 +59,7 @@ class UsersController < ApplicationController
   end
   
     def show
+        
         if current_user
             @user = current_user
         else 
