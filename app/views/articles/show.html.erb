@@ -8,7 +8,7 @@
     <% @related_articles.each do |article| %>
         <div class = 'related-article' style = "<% if article.image %> background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
             <div class = 'article-image'>
-            </div>
+[[[[[[[[[===-            </div>
             
             <div class = 'article-date'>
                 <%= time_ago_in_words(article.created_at) %> ago
@@ -55,6 +55,30 @@
     <div class = 'article-body'>
         
         <p><%= simple_format(@article.body) %></p>
+    </div>
+    
+    <div class = 'below-article'>
+        
+        <div class = 'below-article-source'>
+            <img src = "<%= asset_path(@article.source.article_logo) if @article.source %>"> <%= link_to @article.title, @article.web_url, target: "_blank" %>
+        </div>
+        <div class = 'below-article-tags'>
+            
+            <% @article.categories.each do |category| %>
+                <div class = 'below-article-tag'>
+                    <a href="<%=category_path(category)%>"><%=category.name%></a>
+                </div>
+            <% end %>
+            
+            <% @article.states.each do |state| %>
+                <div class = 'below-article-tag'>
+                    <a href="<%=state_path(state)%>"><%=state.name%></a>
+                </div>
+            <% end %>
+        </div>
+        <div class = 'below-article-back'>
+            <%= link_to '<--- Back to News', root_path %>
+        </div>
     </div>
 
 </div>

@@ -8,7 +8,15 @@ gem 'httparty', '~> 0.13.7' #External API Integration
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a string and output it as a link
-gem 'rubypython', '~> 0.6.3' #python
+gem 'rubypython', '~> 0.6.3', :git => 'https://github.com/savon40/rubypython' #python
+
+#PYTHON GEMS
+#gem 'ffi', '~> 1.9', '>= 1.9.14'
+gem 'blankslate', '~> 3.1', '>= 3.1.3'
+gem 'hoe', '~> 3.15', '>= 3.15.2'
+gem 'rspec', '~> 2.0'
+gem 'rubyforge', '~> 2.0', '>= 2.0.4'
+gem 'tilt', '~> 2.0', '>= 2.0.5'
 
 #TWITTER GEMS
 gem 'twitter' #TWITTER

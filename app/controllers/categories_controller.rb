@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
     
     before_action :set_category, only: [:edit, :update, :destroy, :show]
-    before_action :require_admin, except: [:show]
+    before_action :require_admin, except: [:show, :python]
 
     #--------ADMIN PAGE-------------------------
     def admin
@@ -48,6 +48,34 @@ class CategoriesController < ApplicationController
     
     def show
         @articles = @category.articles.order("created_at DESC")
+    end
+    
+    def python
+        require "json"
+        require 'open-uri'
+        
+        
+        output = IO.popen(["python", "#{Rails.root}/app/python.py"]) #cmd,
+        contents = output.read
+        puts contents
+        #output = open(["python", "#{Rails.root}/app/python.py"])
+        puts 'this is the output: '
+        #puts output
+        #puts JSON.parse(contents)
+
+#def get_json_from_command( cmd: )
+ # output = IO.popen(cmd)
+  #return JSON.load(output)
+#end
+
+#puts get_json_from_command(cmd: ["ruby", "-e", "puts '[1,2,3,4,5]'"]).inspect
+#puts get_json_from_command(cmd: ["/path/to/that/program"])
+        
+        #output = IO.popen(["ruby", "-e", "puts '[1,2,3,4,5]'"]) #cmd,
+
+        
+        #puts get_json_from_command(cmd: ["ruby", "-e", "puts '[1,2,3,4,5]'"]).inspect
+        
     end
 
     #-------------------------------------------
