@@ -59,10 +59,8 @@ class PagesController < ApplicationController
     def unsubscribe
         if params[:id].present?
         
-            puts 'id is here'
             if params[:id].split('d').count == 2 && params[:id].split('d')[1].split('G').count == 2 
             	
-            	puts 'made it in'
             	@actual_id = params[:id].split('d')[1].split('G')[0]
             	
             	@digest = DigestEmail.find(@actual_id)
@@ -70,11 +68,10 @@ class PagesController < ApplicationController
                 @digest.save
             
             else
-                #redirect_to root_path
+                redirect_to root_path
             end
         else 
-            puts 'NO ID'
-            #redirect_to root_path   
+            redirect_to root_path   
         end
     end
     
