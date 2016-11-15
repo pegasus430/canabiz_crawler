@@ -1,8 +1,23 @@
 
 <% if params[:id].present? %>
 
+    <p>'id is here'</p>
+    
+    <%= params[:id].split('d').count == 2 %>
+    
+    <% if params[:id].split('d').count == 2 && params[:id].split('d')[1].split('G').count == 2 %>
+    
+    	<p>Meeting Critera</p>
+    
+    <% else %>
+    	not meeting critera
+    <% end %>
+
 	<div class = 'wrap'>
 		<p align = 'center'>You have been unsubscribed from the Cannabiz Network Weekly Digest</p>
 	</div>
 
-<% end %> 
+<% else %>
+
+	<p>THERE IS NO ID</p>
+<% end %>

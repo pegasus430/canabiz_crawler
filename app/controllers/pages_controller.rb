@@ -70,11 +70,11 @@ class PagesController < ApplicationController
                 @digest.save
             
             else
-                redirect_to root_path
+                #redirect_to root_path
             end
         else 
             puts 'NO ID'
-            redirect_to root_path   
+            #redirect_to root_path   
         end
     end
     
