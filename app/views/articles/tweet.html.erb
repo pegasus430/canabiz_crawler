@@ -1,43 +1,26 @@
 <style>
 	
 	#hashtags {margin: 20px 0;}
-		#hashtags p {cursor: pointer;}
+		#hashtags p {cursor: pointer; line-height: 200%; border-bottom: 1px solid black; padding-left: 10px;}
+		#hashtags h3 {text-align: center; font-weight: bold; font-size: 20px;}
+		
+	.source-hashtags, .our-hashtags {width: 48%; display: inline-block; vertical-align: top; 
+										border: 1px solid black;}
+										
+	#character-count p {text-align: center;}
 	
-	.source-hashtags, .our-hashtags {width: 48%; display: inline-block; vertical-align: top;}
+	#tweet-textbody {width: 100%;}
+	#sendTweetButton {display: block; width: 100%;}
+										
+	.source-hashtags h3, .our-hashtags h3 {}
+	.source-hashtags p, .our-hashtags p {}
 	
 </style>
 
 <div class = 'wrap'>
-	<h1>Send Tweet: </h1>
+	
+	<h1>Send Tweet:</h1>
 
-	
-	<!--bitly link-->
-    <%
-	    #this will be the link when live
-	    #link = u"http://cannabiznetwork.com/articles/#{@article.id}"
-	    
-	    #testing link
-	    link = u"http://cannabiz-news.herokuapp.com/articles/#{@article.id}"
-	    
-	   	bitlyResponse = HTTParty.get("https://api-ssl.bitly.com/v3/shorten?access_token=6a88d948272321a232f973370fd36ebafce5d121&longUrl=#{link}")
-	   	
-	   	bitlyLink = ''
-	   	
-	   	if bitlyResponse["data"] != nil && bitlyResponse["data"]["url"] != nil
-	   		bitlyLink = bitlyResponse["data"]["url"]		
-	   	end
-   	%>
-   	
-    <!--tweet-->
-    <form class="navbar-form inline" role="search" method="get" action = '/send_tweet'>
-        <textarea class="form-control" rows="5" id="tweet-textbody" name='tweet_body' onkeyup = "characterCount()" style = "width: 600px"
-		><%=@article.source.name%>: <%=@article.title.truncate(60)%> <%=bitlyLink%>
-		</textarea>
-		<!--hidden article id-->
-		<input type = 'hidden' value = "<%=@article.id%>" name ='id'>
-        <input type = 'submit' id = 'sendTweetButton' class = "btn btn-default btn-green-touching" value = 'Send Tweet' />
-    </form>	   	
-	
 	<div id = 'hashtags'>
 		<div class = 'source-hashtags'>
 			<h3>Source Hashtags:</h3>
@@ -60,6 +43,15 @@
 	<div id = 'character-count'>
 		<p>Character Count: <span id = 'count'></span></p>
 	</div>
+
+	<form class="navbar-form inline" role="search" method="get" action = '/send_tweet'>
+        <textarea class="form-control" rows="5" id="tweet-textbody" name='tweet_body' onkeyup = "characterCount()"
+		><%=@article.source.name%>: <%=@article.title.truncate(60)%> <%=@bitlyLink%>
+		</textarea>
+		<!--hidden article id-->
+		<input type = 'hidden' value = "<%=@article.id%>" name ='id'>
+        <input type = 'submit' id = 'sendTweetButton' class = "btn btn-default btn-green-touching" value = 'Send Tweet' />
+    </form>	
 	
 </div>
 
@@ -72,8 +64,10 @@
 	}
 	
 	function addText(text) {
+		var newText = document.getElementById('tweet-textbody').innerHTML;
+		var trimText = newText.trim()
 		
-		document.getElementById("tweet-textbody").innerText += ' #' + text;
+		document.getElementById("tweet-textbody").innerText = trimText + ' #' + text;
 		characterCount();
 	}
 	

@@ -29,6 +29,21 @@ class ArticlesController < ApplicationController
     
     def tweet
         #not on admin page but admin functionality
+        
+        require 'open-uri'
+        #this will be the link when live
+	    #link = u"http://cannabiznetwork.com/articles/#{@article.id}"
+	    
+	    #testing link
+	    link = URI::encode("http://cannabiz-news.herokuapp.com/articles/#{@article.id}")
+	    
+	   	bitlyResponse = HTTParty.get("https://api-ssl.bitly.com/v3/shorten?access_token=6a88d948272321a232f973370fd36ebafce5d121&longUrl=#{link}")
+	   	
+	   	@bitlyLink = ''
+	   	
+	   	if bitlyResponse["data"] != nil && bitlyResponse["data"]["url"] != nil
+	   		@bitlyLink = bitlyResponse["data"]["url"]		
+	   	end
     end
     
     def send_tweet
@@ -47,7 +62,8 @@ class ArticlesController < ApplicationController
             end
             
             if @article.image.present?
-                data = open(@article.image)
+                data = open(@article.image.to_s)
+                #data = File.expand_path(@article.image, __FILE__)
                 client.update_with_media(params[:tweet_body], File.new(data))
             else 
                 client.update(params[:tweet_body])
