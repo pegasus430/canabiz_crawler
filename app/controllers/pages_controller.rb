@@ -75,6 +75,19 @@ class PagesController < ApplicationController
         end
     end
     
+    def submit_contact_form
+        if params[:name] != nil && params[:email] != nil && params[:message] != nil
+           
+           ContactUs.email(params[:name], params[:email], params[:message]).deliver 
+           
+           flash[:success] = 'Thanks for your message! We look forward to responding soon'
+           redirect_to root_path
+        end
+        
+        flash[:danger] = 'Sorry, There was an error with the form Submission'
+    end
+    
+    
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
     def prepare_access_token(oauth_token, oauth_token_secret)
 

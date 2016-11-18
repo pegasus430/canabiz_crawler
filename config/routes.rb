@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get 'save_email', to: 'pages#save_email'
   get 'unsubscribe', to: 'pages#unsubscribe'
   
+  get 'contact_us', to: 'pages#contact_us'
+  get 'submit_contact_form', to: 'pages#submit_contact_form'
+  
   #DIFF STYLING
   get 'test', to: 'diff_layouts#test'
   

@@ -62,8 +62,7 @@ class ArticlesController < ApplicationController
             end
             
             if @article.image.present?
-                data = open(@article.image.to_s)
-                #data = File.expand_path(@article.image, __FILE__)
+                data = open(@article.image.to_s) #when I didnt store image, i didnt have to do to_s
                 client.update_with_media(params[:tweet_body], File.new(data))
             else 
                 client.update(params[:tweet_body])
@@ -80,6 +79,8 @@ class ArticlesController < ApplicationController
     
     def digest
         #not on admin page but admin functionality
+        
+        WeeklyDigestJob.perform_later()
     end
     
     #--------ADMIN PAGE-------------------------
