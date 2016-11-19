@@ -33,9 +33,9 @@
   <table class = 'table' id = 'admin-table'>
       <th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
       <th><%= sortable "title" %></th>
-      <th><%= sortable "image" %></th>
+      <th><%= sortable "web_url" %></th>
       <th><%= sortable "include_in_digest" %></th>
-      <th><%= sortable "date" %></th>
+      <th><%= sortable "created_at" %></th>
       <th><%= sortable "num_views" %></th>
       <th><%= sortable "source_id" %></th>
       <th>States</th>
@@ -47,9 +47,9 @@
           <tr>
               <td><%= check_box_tag "articles[]", article.id %></td>
               <td style = 'width: 300px'><%= article.title %></td>
-              <td><%= article.image %></td> <!--.truncate(30) if article.image-->
+              <td><%= article.web_url %></td> <!--.truncate(30) if article.image-->
               <td><%= article.include_in_digest %></td>
-              <td><%= article.date %></td>
+              <td><%= article.created_at %></td>
               <td><%= article.num_views %></td>
               <td><%= article.source.name if article.source %></td>
               

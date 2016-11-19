@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
 
     #--------ADMIN PAGE-------------------------
     def admin
-        @articles = Article.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 20)
+        @articles = Article.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 200)
     
         #for csv downloader
         respond_to do |format|

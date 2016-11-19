@@ -24,9 +24,10 @@ class PagesController < ApplicationController
         
         # news background jobs:
         NewsHighTimes.perform_later()
+        #NewsMarijuana.perform_later()
         
         #NewsMjBizDaily.perform_later()
-        #NewsTheCannabist.perform_later()
+        NewsTheCannabist.perform_later()
         #NewsCannabisCulture.perform_later()
         
     end

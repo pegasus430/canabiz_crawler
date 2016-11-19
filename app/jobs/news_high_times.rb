@@ -13,12 +13,11 @@ class NewsHighTimes < ActiveJob::Base
         #store image
         #https://github.com/savon40/Cannabiz-SecondAttempt/commit/f7e51bb4f5153f073d4ffeb8d888e78a463e63e2
         
-        
         require "json"
         require 'open-uri'
         
         #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrapers/news_scrapper.py"]) #cmd,
+        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_hightimes.py"]) #cmd,
         contents = JSON.parse(output.read)
         
         #call method:
@@ -26,15 +25,6 @@ class NewsHighTimes < ActiveJob::Base
         if contents["articles"] != nil
         	addArticles(contents["articles"])	
         end
-        
-        
-        #puts contents["url"]
-        #puts contents["articles"][1]["title"]
-        #puts contents["articles"][1]["date"]
-        ##puts contents["articles"][1]["image_url"]
-        #puts contents["articles"][1]["url"]
-        #puts contents["articles"][1]["text_plain"]
-        
            	
     end
     
@@ -81,8 +71,12 @@ class NewsHighTimes < ActiveJob::Base
 	        	#CREATE ARTICLE
 	        	#missing abstract right now
 	        	puts "this is the image url: " + article["image_url"]
-	        	article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))	
-	        
+	        	
+	        	if article["date"] != nil
+	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))	
+	        	else 
+	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
+	        	end
 	        #else 
 	    		#CREATE ARTICLE
 	        	#missing abstract right now

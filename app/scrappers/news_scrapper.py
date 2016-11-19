@@ -1,38 +1,27 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from lxml import html
-import requests
-from datetime import datetime
+from newsparser_hightimes import NPHighTimes
+from newsparser_leafly import NPLeafly
+from newsparser_marijuana import NPMarijuana
+from newsparser_thecannabist import NPTheCannabist
 
-from news import NewsSite
+import json
 
-def parse_site():
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+def parse_all_sites():
+    parsers = []
+    responses = []
 
-    site_url = 'http://hightimes.com/news/'
-    site = NewsSite(site_url)
-    home_raw = requests.get(site_url, headers = headers)
-    home = html.fromstring(home_raw.content)
+    parsers.append(NPHighTimes())
+    parsers.append(NPLeafly())
+    parsers.append(NPMarijuana())
+    parsers.append(NPTheCannabist())
 
-    excerpts = home.xpath('//article')
+    for parser in parsers:
+        response = parser.parse()
+        responses.append(response)
 
-    for excerpt in excerpts:
-        title = excerpt.xpath('.//a[@rel="bookmark"]/text()')[0]
-        
-        url = excerpt.xpath('.//a[@rel="bookmark"]/@href')[0]
-        image_url = excerpt.xpath('.//a[@rel="bookmark"]/img/@src')[0]
-        article_raw = requests.get(url, headers = headers)
-        article = html.fromstring(article_raw.content)
-        date_raw = article.xpath('(//div[@class="share"])[2]/preceding-sibling::div//strong/following-sibling::text()')[0]
-        date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
-        body_html = html.tostring(article.xpath('//section[@class="entry-content"]')[0])
-        body_text = article.xpath('//section[@class="entry-content"]')[0].text_content().strip()
-
-        site.add_article(title, url, image_url, date, body_html, body_text)
-
-    return site.to_json()
-
+    return json.dumps(responses)
 
 if __name__ == '__main__':
-    print parse_site()
+    print parse_all_sites()
