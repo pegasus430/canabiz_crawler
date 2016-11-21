@@ -8,14 +8,17 @@ class PagesController < ApplicationController
         if params[:option] != nil
             @sort_option = SortOption.find(params[:option])
             
-            #add a click to the sort option
-            @sort_option.increment(:num_clicks, by = 1)
-            @sort_option.save
-            
-            @articles = Article.paginate(page: params[:page], per_page: 24).order(@sort_option.query + " " + @sort_option.direction)
+            if @sort_option != nil
+                #add a click to the sort option
+                @sort_option.increment(:num_clicks, by = 1)
+                @sort_option.save
+                
+                @articles = Article.order(@sort_option.query + " " + @sort_option.direction).page(params[:page]).per_page(24)
+            else 
+                @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)    
+            end
         else 
-           # @articles = Article.paginate(page: params[:page], per_page: 24).order("created_at DESC")
-           @articles = Article.order("created_at DESC").page(params[:page])
+           @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)
         end
         
         respond_to do |format|

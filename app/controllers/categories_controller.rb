@@ -52,42 +52,18 @@ class CategoriesController < ApplicationController
         if params[:option] != nil
             @sort_option = SortOption.find(params[:option])
             
-            #add a click to the sort option
-            @sort_option.increment(:num_clicks, by = 1)
-            @sort_option.save
-        
-            @articles = @category.articles.order(@sort_option.query + " " + @sort_option.direction)
+            if @sort_option != nil
+                #add a click to the sort option
+                @sort_option.increment(:num_clicks, by = 1)
+                @sort_option.save
+                
+                @articles = @category.articles.order(@sort_option.query + " " + @sort_option.direction).page(params[:page]).per_page(24)
+            else 
+                @articles = @category.articles.order("created_at DESC").page(params[:page])    
+            end
         else 
-            @articles = @category.articles.order("created_at DESC")
+            @articles = @category.articles.order("created_at DESC").page(params[:page])
         end        
-        
-    end
-    
-    def python
-        require "json"
-        require 'open-uri'
-        
-        
-        output = IO.popen(["python", "#{Rails.root}/app/python.py"]) #cmd,
-        contents = output.read
-        puts contents
-        #output = open(["python", "#{Rails.root}/app/python.py"])
-        puts 'this is the output: '
-        #puts output
-        #puts JSON.parse(contents)
-
-#def get_json_from_command( cmd: )
- # output = IO.popen(cmd)
-  #return JSON.load(output)
-#end
-
-#puts get_json_from_command(cmd: ["ruby", "-e", "puts '[1,2,3,4,5]'"]).inspect
-#puts get_json_from_command(cmd: ["/path/to/that/program"])
-        
-        #output = IO.popen(["ruby", "-e", "puts '[1,2,3,4,5]'"]) #cmd,
-
-        
-        #puts get_json_from_command(cmd: ["ruby", "-e", "puts '[1,2,3,4,5]'"]).inspect
         
     end
 

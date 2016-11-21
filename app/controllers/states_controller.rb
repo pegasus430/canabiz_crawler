@@ -2,22 +2,7 @@ class StatesController < ApplicationController
     
     before_action :set_state, only: [:edit, :update, :destroy, :show]
     
-    def news
-        if params[:id].present?
-            @state = State.find(params[:id])
-            @top_articles = @state.articles.where('image IS NOT NULL').limit(3).order("RANDOM()")
-            @second_articles = @state.articles.where('image IS NOT NULL').limit(4).order("RANDOM()")
-        else
-            @top_articles = Article.all
-            @second_articles = Article.all
-        end
-        @categories = Category.order("RANDOM()").where(:active =>  true).limit(5)
-            
-        #@teams = Team.where("name NOT IN (?)", @team_exclude_list)
-        # This set up will make it so i don't query the same articles in the second list
-        # need to first do a for loop that puts all of the names into an array and then do this        
-    end
-    
+
     def admin
         @states = State.all
         
@@ -51,17 +36,22 @@ class StatesController < ApplicationController
     
     def show
         
+                    
         #sort by the option selected by user
         if params[:option] != nil
             @sort_option = SortOption.find(params[:option])
             
-            #add a click to the sort option
-            @sort_option.increment(:num_clicks, by = 1)
-            @sort_option.save
-            
-            @articles = @state.articles.order(@sort_option.query + " " + @sort_option.direction)
+            if @sort_option != nil
+                #add a click to the sort option
+                @sort_option.increment(:num_clicks, by = 1)
+                @sort_option.save
+                
+                @articles = @state.articles.order(@sort_option.query + " " + @sort_option.direction).page(params[:page]).per_page(24)
+            else 
+                @articles = @state.articles.order("created_at DESC").page(params[:page])    
+            end
         else 
-            @articles = @state.articles.order("created_at DESC")
+            @articles = @state.articles.order("created_at DESC").page(params[:page])
         end 
         
     end
