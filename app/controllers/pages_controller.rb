@@ -31,11 +31,12 @@ class PagesController < ApplicationController
         NewsMarijuana.perform_later()
         NewsCannabisCulture.perform_later()
         NewsCannaLawBlog.perform_later()
+        NewsMjBizDaily.perform_later()
         NewsHighTimes.perform_later()
+        NewsDopeMagazine.perform_later()
+        NewsFourTwentyTimes.perform_later()
         
         
-        
-        #NewsMjBizDaily.perform_later()
         
         
     end
