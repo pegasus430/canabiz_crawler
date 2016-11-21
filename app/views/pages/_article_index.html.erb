@@ -42,16 +42,22 @@
     <% end %>
 </div>
 
+
+
+
 <div class = 'wrap'>
 
-	<% if @state != nil || @category != nil %>
-    	<%= render 'pages/article_loop' %>
-    <% else %>
-    	<%= render 'article_loop' %>
-    <% end %>
+    <div class = 'article-index'>
+    	<% if @state != nil || @category != nil %>
+        	<%= render 'pages/article_loop' %>
+        <% else %>
+        	<%= render 'article_loop' %>
+        <% end %>
+    </div>
     
 </div>
 
+<%= paginate @articles %>
 
 <% @articles_to_hide.each do |item| %>
     <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>

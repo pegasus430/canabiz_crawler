@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require jquery.infinitescroll
+
+
+//method used to display a stock image in the article index
+function dispIndexImageError(image) {
+  image.onerror = "";
+  image.src = "<%= asset_path 'homepage/news-substitute.jpg' %>"
+  return true;
+}

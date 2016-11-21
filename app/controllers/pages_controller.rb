@@ -14,7 +14,8 @@ class PagesController < ApplicationController
             
             @articles = Article.paginate(page: params[:page], per_page: 24).order(@sort_option.query + " " + @sort_option.direction)
         else 
-            @articles = Article.paginate(page: params[:page], per_page: 24).order("created_at DESC")
+           # @articles = Article.paginate(page: params[:page], per_page: 24).order("created_at DESC")
+           @articles = Article.order("created_at DESC").page(params[:page])
         end
         
         respond_to do |format|
@@ -87,7 +88,7 @@ class PagesController < ApplicationController
            redirect_to root_path
         end
         
-        flash[:danger] = 'Sorry, There was an error with the form Submission'
+        redirect_to root_path
     end
     
     
