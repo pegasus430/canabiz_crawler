@@ -24,7 +24,7 @@ class NewsMarijuana < ActiveJob::Base
                 #date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
         
         #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_marijuana.py"]) #cmd,
+        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_cannabisculture.py"]) #cmd,
         contents = JSON.parse(output.read)
         
         #call method:
