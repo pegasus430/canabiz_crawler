@@ -3,116 +3,109 @@ class NewsCannabisCulture < ActiveJob::Base
     
     def perform()
         logger.info "Cannabis Culture background job is running"
-        addArticlesFromCannabisCultureOne()
-        addArticlesFromCannabisCultureTwo()
-        addArticlesFromCannabisCultureThree()
-        addArticlesFromCannabisCultureFour()
-    end
-    
-    def addArticlesFromCannabisCultureOne()
-        
-        @searches = ['Cannabis', 'Hemp', "Pot", "Marijuana", "Ganja", "Vaporizer", "Vape", "Hydroponics", "Legalization", "Decriminalize"] 
-        performSearchesAndAddArticles(@searches)
+        scrapeCannabisCulture()
 
     end
     
-    def addArticlesFromCannabisCultureTwo()
+    def scrapeCannabisCulture()
+        #store image
+        #https://github.com/savon40/Cannabiz-SecondAttempt/commit/f7e51bb4f5153f073d4ffeb8d888e78a463e63e2
         
-        @searches = ['Recreational', 'Medical', "Medicinal", "Cbd", "Terpene", "Tax", "Banking", "Cannabusiness", "Cannabiz", "DEA"]  
-        performSearchesAndAddArticles(@searches)
+        require "json"
+        require 'open-uri'
+        
+        #leafly removed here
+            #date_raw = article.xpath('(//div[@class="leafly-publish-date"])/text()')
+            #date = None
+            #if len(date_raw):
+                #date_raw = date_raw[0]
+                #date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
+        
+        #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
+        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_cannabisculture.py"]) #cmd,
+        contents = JSON.parse(output.read)
+        
+        #call method:
+        
+        if contents["articles"] != nil
+        	addArticles(contents["articles"])	
+        end
 
-    end    
+    end
     
-    def addArticlesFromCannabisCultureThree()
-        
-        @searches = ['FDA', 'Dispensary', "Greenhouse", "Strain", "Indoor", "Outdoor", "Headshop", "Bong", "Dab", "Dabbing"]
-        performSearchesAndAddArticles(@searches)
+    def addArticles(articles)
 
-    end 
-    
-    def addArticlesFromCannabisCultureFour()
-        
-        @searches = ['Shatter', 'Wax', "Butter", "Concentrate", "Oil", "Charlottes web", "Delivery", "Doctors", "Edibles", "Topicals"] 
-        performSearchesAndAddArticles(@searches)
-
-    end     
-    
-    def performSearchesAndAddArticles(searches)
-        
-        #FOR MATCHING STATES, CATEGORIES, AND SOURCE
         @random_category = Category.where(:name => 'Random')
         @categories = Category.where(:active => true)
         @states = State.all
-        source = Source.find_by name: 'Cannabis Culture'        
+        source = Source.find_by name: 'Cannabis Culture'
         
-        searches.each do |term|
-            
-            searchResponse = HTTParty.get('https://api.import.io/store/connector/2832623a-7354-4f21-8526-100f43d958ef/_query?input=query:' + 
-                                term + 
-                                '&&_apikey=62b5b9a8fa284895a14abe58fa8046fff4e9d64ca401cc947ebe55b4fb24b7669b8732cac6bac15ab112b0f4c804a708547b691e124383e2b81155c5f3b14e786751bc908bdbe1913379a890d9db9793') 
-            
-            if searchResponse.body != nil && searchResponse.body != '' && JSON.parse(searchResponse.body)['results'] != nil && JSON.parse(searchResponse.body)['results'] != ''
-                searchBody = JSON.parse(searchResponse.body)
-                
-                searchBody["results"].each do |result|        
-                    
-                    image = ''
-                    indResponse = HTTParty.get('https://api.import.io/store/connector/b3acc144-fc81-4718-b1ae-9080e6762e06/_query?input=query:' + 
-                                    URI::encode(result["headline"]) + 
-                                    '&&_apikey=62b5b9a8fa284895a14abe58fa8046fff4e9d64ca401cc947ebe55b4fb24b7669b8732cac6bac15ab112b0f4c804a708547b691e124383e2b81155c5f3b14e786751bc908bdbe1913379a890d9db9793')
-                    indBody = JSON.parse(indResponse.body)
-                    if indBody["results"].present? 
-                        indBody["results"].each do |indResult| 
-                            image = indResult['image']  
-                        end
-                    end
-                    
-                    #MATCH ARTICLE CATEGORIES BASED ON KEYWORDS IN CATEGORY ARRAYS
-                    relateCategoriesSet = Set.new
-                    @categories.each do |category|
+        articles.each do |article|
+        
+	        #MATCH ARTICLE CATEGORIES BASED ON KEYWORDS IN CATEGORY ARRAYS
+	        relateCategoriesSet = Set.new
+	        @categories.each do |category|
+	            if category.keywords.present?
+	                category.keywords.split(',').each do |keyword|
+	                    if  (article["title"] != nil && article["title"].include?(keyword))
+	                        relateCategoriesSet.add(category.id)
+	                        break
+	                    end
+	                end
+	            end
+	        end
+	        
+	        #MATCH ARTICLE STATES
+	        relateStatesSet = Set.new
+	        @states.each do |state|
+	            if state.keywords.present?
+	                state.keywords.split(',').each do |keyword|
+	                    if  (article["title"] != nil && article["title"].include?(keyword))
+	                        relateStatesSet.add(state.id)
+	                    end
+	                end
+	            end
+	        end
+	        
 
-                        if category.keywords.present?
-                            category.keywords.split(',').each do |keyword|
-                                if  (result["headline"] != nil && result["headline"].include?(keyword)) || (result["abstract"] != nil && result["abstract"].include?(keyword))
-                                    relateCategoriesSet.add(category.id)
-                                    break
-                                end
-                            end
-                        end
-                    end
-                    
-                    #MATCH ARTICLE STATES
-                    relateStatesSet = Set.new
-                    @states.each do |state|
-                        if state.keywords.present?
-                            state.keywords.split(',').each do |keyword|
-                                if  (result["headline"] != nil && result["headline"].include?(keyword)) || (result["abstract"] != nil && result["abstract"].include?(keyword))
-                                    relateStatesSet.add(state.id)
-                                end
-                            end
-                        end
-                    end
-                    
-                    #CREATE ARTICLE
-                    article = Article.create(:title => result["headline"], :abstract => result["abstract"], :image => image, :source_id => source.id,
-                                                :date => DateTime.parse(result["date"]), :web_url => result["url"])
-                    
-                    #CREATE ARTICLE CATEGORIES
-                    #If no category, set category to random
-                    if relateCategoriesSet.empty?
-                       relateCategoriesSet.add(@random_category[0].id) 
-                    end
-                    
-                    relateCategoriesSet.each do |setObject|
-                        ArticleCategory.create(:category_id => setObject, :article_id => article.id)
-                    end
-                    
-                    #CREATE ARTICLE STATES
-                    relateStatesSet.each do |setObject|
-                        ArticleState.create(:state_id => setObject, :article_id => article.id)
-                    end
-                end
-            end
-        end
-    end
+	        #if (article["image_url"] != nil)
+	        
+	        	#data = open(article["image_url"])
+	        	#@image_stored = File.new(data)
+
+	        	#CREATE ARTICLE
+	        	#missing abstract right now
+	        	puts "this is the image url: " + article["image_url"]
+	        	
+	        	if article["date"] != nil
+	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))	
+	        	else 
+	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
+	        	end
+	        #else 
+	    		#CREATE ARTICLE
+	        	#missing abstract right now
+	        #	article = Article.create(:title => article["title"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
+	        #end
+	        
+
+	        
+	        #CREATE ARTICLE CATEGORIES
+	        #If no category, set category to random
+	        if relateCategoriesSet.empty?
+	           relateCategoriesSet.add(@random_category[0].id) 
+	        end
+	        
+	        relateCategoriesSet.each do |setObject|
+	            ArticleCategory.create(:category_id => setObject, :article_id => article.id)
+	        end
+	        
+	        #CREATE ARTICLE STATES
+	        relateStatesSet.each do |setObject|
+	            ArticleState.create(:state_id => setObject, :article_id => article.id)
+	        end 
+	        
+	   end #end of article loop
+	   
+    end #end of add article method
 end

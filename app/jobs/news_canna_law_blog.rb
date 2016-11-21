@@ -1,23 +1,27 @@
-class NewsHighTimes < ActiveJob::Base
+class NewsCannaLawBlog < ActiveJob::Base
     include SuckerPunch::Job
     
     
     def perform()
     	
-    	logger.info "HighTimes background job is running"
-        scrapeHighTimes()	
+    	logger.info "Canna Law Blog background job is running"
+        scrapeCannaLawBlog()	
     end
     
-    def scrapeHighTimes()
-        
-        #store image
-        #https://github.com/savon40/Cannabiz-SecondAttempt/commit/f7e51bb4f5153f073d4ffeb8d888e78a463e63e2
+    def scrapeCannaLawBlog()
         
         require "json"
         require 'open-uri'
         
+        #leafly removed here
+            #date_raw = article.xpath('(//div[@class="leafly-publish-date"])/text()')
+            #date = None
+            #if len(date_raw):
+                #date_raw = date_raw[0]
+                #date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
+        
         #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_hightimes.py"]) #cmd,
+        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_cannalawblog.py"]) #cmd,
         contents = JSON.parse(output.read)
         
         #call method:
@@ -33,7 +37,7 @@ class NewsHighTimes < ActiveJob::Base
         @random_category = Category.where(:name => 'Random')
         @categories = Category.where(:active => true)
         @states = State.all
-        source = Source.find_by name: 'HighTimes'
+        source = Source.find_by name: 'Canna Law Blog'
         
         articles.each do |article|
         
@@ -63,25 +67,15 @@ class NewsHighTimes < ActiveJob::Base
 	        end
 	        
 
-	        #if (article["image_url"] != nil)
-	        
-	        	#data = open(article["image_url"])
-	        	#@image_stored = File.new(data)
 
-	        	#CREATE ARTICLE
-	        	#missing abstract right now
-	        	
-	        	if article["date"] != nil
-	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))	
-	        	else 
-	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
-	        	end
-	        #else 
-	    		#CREATE ARTICLE
-	        	#missing abstract right now
-	        #	article = Article.create(:title => article["title"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
-	        #end
-	        
+        	#CREATE ARTICLE
+        	#missing abstract right now
+        	
+        	if article["date"] != nil
+        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))	
+        	else 
+        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
+        	end
 
 	        
 	        #CREATE ARTICLE CATEGORIES

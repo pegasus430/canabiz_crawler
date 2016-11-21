@@ -24,7 +24,7 @@ class NewsMarijuana < ActiveJob::Base
                 #date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
         
         #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_cannabisculture.py"]) #cmd,
+        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_marijuana.py"]) #cmd,
         contents = JSON.parse(output.read)
         
         #call method:
@@ -77,7 +77,6 @@ class NewsMarijuana < ActiveJob::Base
 
 	        	#CREATE ARTICLE
 	        	#missing abstract right now
-	        	puts "this is the image url: " + article["image_url"]
 	        	
 	        	if article["date"] != nil
 	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))	

@@ -69,7 +69,6 @@ class NewsTheCannabist < ActiveJob::Base
 
 	        	#CREATE ARTICLE
 	        	#missing abstract right now
-	        	puts "this is the image url: " + article["image_url"]
 	        	
 	        	if article["date"] != nil
 	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))	
