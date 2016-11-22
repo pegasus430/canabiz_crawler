@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from lxml import html
 import requests
-from datetime import datetime
 import json
+import urllib3
+from lxml import html
+from datetime import datetime
+from urllib3.exceptions import InsecureRequestWarning
 
 from news import NewsSite, INewsParser
 
@@ -13,8 +15,9 @@ class NPGreenRushDaily(INewsParser):
         self.url = 'http://www.greenrushdaily.com'
 
     def parse(self):
+        urllib3.disable_warnings(InsecureRequestWarning)
         site = NewsSite(self.url)
-        home_raw = requests.get(self.url, headers = self.headers)
+        home_raw = requests.get(self.url, headers = self.headers, verify = False)
         home = html.fromstring(home_raw.content)
 
         excerpts = home.xpath('//article')

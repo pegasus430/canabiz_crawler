@@ -27,11 +27,11 @@ class NPLeafly(INewsParser):
             article = html.fromstring(article_raw.content)
             for script in article.xpath('//script'):
                 script.getparent().remove(script)
-            date_raw = article.xpath('(//div[@class="leafly-publish-date"])/text()')
+            date_raw = article.xpath('//meta[@property="article:published_time"]/@content')
             date = None
             if len(date_raw):
                 date_raw = date_raw[0]
-                date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
+                date = datetime.strptime(date_raw.strip()[:10], "%Y-%m-%d")
             image_url = None
             image_url_raw = article.xpath('//div[@class="leafly-standard-article-header"]//img/@src')
             if len(image_url_raw):
