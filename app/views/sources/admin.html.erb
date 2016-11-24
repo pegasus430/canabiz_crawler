@@ -34,6 +34,7 @@
             <th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
             <th><%= sortable "name" %></th>
             <th>Num Users Tracking</th>
+            <th>Num Articles</th>
             <th><%= sortable "url" %></th>
             <th><%= sortable "article_logo" %></th>
             <th><%= sortable "sidebar_logo" %></th>
@@ -46,6 +47,7 @@
                     <td><%= check_box_tag "sources[]", source.id %></td>
                     <td><%= source.name%></td>
                     <td><%= source.users.count%></td>
+                    <td><%= source.articles.count%></td>
                     <td><%= source.url%></td>
                     <td><%= source.article_logo.truncate(20) if source.article_logo%></td>
                     <td><%= source.sidebar_logo.truncate(20) if source.sidebar_logo%></td>
