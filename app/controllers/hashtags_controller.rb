@@ -84,7 +84,7 @@ class HashtagsController < ApplicationController
     
         def require_admin
             if !logged_in? || (logged_in? and !current_user.admin?)
-                flash[:danger] = 'Only administrators can visit that page'
+                #flash[:danger] = 'Only administrators can visit that page'
                 redirect_to root_path
             end
         end

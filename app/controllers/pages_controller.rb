@@ -4,6 +4,10 @@ class PagesController < ApplicationController
     
     def home
         
+        #@articles = Article.order("created_at DESC").page(params[:page]).per_page(24)
+        
+        @articles_viewed = Article.order("num_clicks DESC").page(params[:page]).per_page(24)
+        
         #sort by the option selected by user
         if params[:option] != nil
             @sort_option = SortOption.find(params[:option])
@@ -27,15 +31,16 @@ class PagesController < ApplicationController
         end
         
         # news background jobs:
-        NewsTheCannabist.perform_later()
-        NewsLeafly.perform_later()
-        NewsMarijuana.perform_later()
-        NewsCannabisCulture.perform_later()
-        NewsCannaLawBlog.perform_later()
-        NewsMjBizDaily.perform_later()
-        NewsHighTimes.perform_later()
-        NewsDopeMagazine.perform_later()
-        NewsFourTwentyTimes.perform_later()
+        #NewsTheCannabist.perform_later()
+        #NewsLeafly.perform_later()
+        #NewsMarijuana.perform_later()
+        #NewsCannabisCulture.perform_later()
+        #NewsCannaLawBlog.perform_later()
+        #NewsMjBizDaily.perform_later()
+        #NewsHighTimes.perform_later()
+        #NewsDopeMagazine.perform_later()
+        #NewsFourTwentyTimes.perform_later()
+        NewsMarijuanaStocks.perform_later()
         
     end
     
@@ -113,7 +118,6 @@ class PagesController < ApplicationController
     private
         def require_admin
             if !logged_in? || (logged_in? and !current_user.admin?)
-                flash[:danger] = 'Only administrators can visit that page'
                 redirect_to root_path
             end
         end

@@ -1,12 +1,12 @@
-class NewsTheCannabist < ActiveJob::Base
+class NewsMarijuanaStocks < ActiveJob::Base
     include SuckerPunch::Job
  
     def perform()
-        logger.info "The Cannabist background job is running"
-        scrapeCannabist()
+        logger.info "Marijuana Stocks background job is running"
+        scrapeMarijuanaStocks()
     end    
     
-    def scrapeCannabist()
+    def scrapeMarijuanaStocks()
         
         #store image
         #https://github.com/savon40/Cannabiz-SecondAttempt/commit/f7e51bb4f5153f073d4ffeb8d888e78a463e63e2
@@ -32,7 +32,7 @@ class NewsTheCannabist < ActiveJob::Base
         @random_category = Category.where(:name => 'Random')
         @categories = Category.where(:active => true)
         @states = State.all
-        source = Source.find_by name: 'Green Rush Daily'
+        source = Source.find_by name: 'Marijuana Stocks'
         
         articles.each do |article|
         

@@ -108,9 +108,9 @@ class ArticlesController < ApplicationController
     def show
         #related articles
         if @article.categories.present?
-            @related_articles = Article.all.order("RANDOM()").limit(3) 
+            @related_articles = @article.categories[0].articles.order("RANDOM()").limit(3) 
         elsif @article.states.present?
-            @related_articles = Article.all.order("RANDOM()").limit(3)  
+            @related_articles = @article.states[0].articles.order("RANDOM()").limit(3) 
         else
             @related_articles = Article.all.order("RANDOM()").limit(3)
         end
@@ -156,7 +156,6 @@ class ArticlesController < ApplicationController
     private 
         def require_admin
             if !logged_in? || (logged_in? and !current_user.admin?)
-                flash[:danger] = 'Only administrators can visit that page'
                 redirect_to root_path
             end
         end
@@ -164,7 +163,6 @@ class ArticlesController < ApplicationController
         def set_article
             @article = Article.find(params[:id])
             if @article.blank?
-                flash[:danger] = 'The page you are looking for does not exist'
                 redirect_to root_path 
             end
         end
