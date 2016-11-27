@@ -1,5 +1,5 @@
 // header
-.header {padding: 50px; padding-bottom: 0;}
+.header {background: #333; padding: 25px 0;}
 	.header-left {float: left;}
 	
 	.header-right {float: right; margin-top: 21px;}
@@ -13,7 +13,8 @@
 		#searchButton {background-color: #14AF7C; color: white; margin-left: 4%; padding: 10px 16px;}
 		#searchQuery {background-color: #D9D9D9; width: 80%;}
 		
-		.under-search {margin-top: 20px; font-size: 16px; margin-left: 10%;}
+	.search-filters {text-align: center; padding: 10px 0;}
+		.under-search {font-size: 16px;}
 			.under-search-button {border: 1px solid black; border-radius: 25px; padding: 5px 30px; cursor: pointer;}
 
 

@@ -7,15 +7,19 @@ body {
 }
 .wrap {
     width: 80%;
-    margin: 30px auto 0;
-    min-height: 600px;
+    margin: 0 auto;
+    position: relative;
  }
+
+.flash-messages {
+    display: none;
+}
 
 //side bar
 .side-bar {
      float: left;
      width: 175px;
-     background-color: #3D3045;
+     background-color: #4c7384;
      padding: 40px 5px 40px 0;
      margin-top: 51px;
      position: relative;
@@ -49,6 +53,8 @@ body {
     box-shadow: 2px 2px 2px 2px #888888;
     border-radius: 5px;
     float: left;
+    background-size: cover !important;
+    background-position: 50% !important;
 }
 
     .article-image {

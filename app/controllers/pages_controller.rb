@@ -31,16 +31,18 @@ class PagesController < ApplicationController
         end
         
         # news background jobs:
-        NewsTheCannabist.perform_later()
-        NewsLeafly.perform_later()
-        NewsMarijuana.perform_later()
-        NewsCannabisCulture.perform_later()
-        NewsCannaLawBlog.perform_later()
-        NewsMjBizDaily.perform_later()
-        NewsHighTimes.perform_later()
-        NewsDopeMagazine.perform_later()
-        NewsFourTwentyTimes.perform_later()
-        NewsMarijuanaStocks.perform_later()
+        if Rails.env.production?
+            NewsTheCannabist.perform_later()
+            NewsLeafly.perform_later()
+            NewsMarijuana.perform_later()
+            NewsCannabisCulture.perform_later()
+            NewsCannaLawBlog.perform_later()
+            NewsMjBizDaily.perform_later()
+            NewsHighTimes.perform_later()
+            NewsDopeMagazine.perform_later()
+            NewsFourTwentyTimes.perform_later()
+            NewsMarijuanaStocks.perform_later()
+        end
         
     end
     

@@ -107,10 +107,10 @@ class ArticlesController < ApplicationController
     
     def show
         #related articles
-        if @article.categories.present?
-            @related_articles = @article.categories[0].articles.order("RANDOM()").limit(3) 
-        elsif @article.states.present?
+        if @article.states.present?
             @related_articles = @article.states[0].articles.order("RANDOM()").limit(3) 
+        elsif @article.categories.present?
+            @related_articles = @article.categories[0].articles.order("RANDOM()").limit(3) 
         else
             @related_articles = Article.all.order("RANDOM()").limit(3)
         end
