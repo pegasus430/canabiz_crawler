@@ -11,103 +11,13 @@
     <% @side_sources.each do |source| %>
         
         <div class = 'source' id = '<%= source.name.downcase.tr(" ", "_") %>'>
-            <% if (logged_in? && current_user.sources.any? && current_user.sources.include?(source)) || !logged_in? %>
-                <div class = 'source-check inline'><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                    :onclick => 'showOrHideArticles(this);' %></div>
-            <% else %>
-                <div class = 'source-check inline'><%= check_box_tag "sources[]", source.id, false, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                    :onclick => 'showOrHideArticles(this);' %></div>
-                <% @articles_to_hide.push(source) %>
-            <% end %>
             
-            <!--no matter what show these-->
             <div class = 'source-icon inline'><%= link_to image_tag(asset_path(source.sidebar_logo)), source_path(source) %></div>
             
             <div class = 'source-name inline'><%= source.name%></div>                
         </div>
             
     <% end %>
-</div>
-
-<!--
-<div class = 'sidebar-plus'>
-	<img src = " #asset_path("homepage/sidebarPlus.png")" onclick="openSidebarNav()" />
-</div>
--->
-
-<!-- Sidebar Overlay -->
-<div id="sidebar-overlay" class="overlay">
-
-  <!-- Button to close the overlay navigation -->
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-    <div class="overlay-content">
-        
-        <div class = 'overylay-sources overlay-table'>
-            <h1>Sources</h1>
-            <% @side_sources.each do |source| %>
-                <div class = 'overlay-source'>
-                    <img src = "<%= asset_path(source.sidebar_logo) %>">
-                    
-                    <% if (logged_in? && current_user.sources.any? && current_user.sources.include?(source)) || !logged_in? %>
-                        <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                            :onclick => 'showOrHideArticles(this);' %></td>
-                    <% else %>
-                        <td><%= check_box_tag "sources[]", source.id, false, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                            :onclick => 'showOrHideArticles(this);' %></td>
-                        <% @articles_to_hide.push(source) %>
-                    <% end %>
-                </div>
-            
-            <% end %>
-        </div>
-        
-        <% if @category.blank? %>
-            <div class = 'overylay-categories overlay-table'>
-                <h1>Categories</h1>
-                <% @side_categories.each do |category| %>
-                    <div class = 'overlay-category'>
-                        <p><%=category.name%></p>
-                        
-                        <% if (logged_in? && current_user.categories.any? && current_user.categories.include?(category)) || !logged_in? %>
-                            <%= check_box_tag "categories[]", category.id, {:checked => "checked"}, :id => category.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                        :onclick => 'showOrHideArticles(this);' %>
-                        <% else %>
-                            <%= check_box_tag "categories[]", category.id, false, :id => category.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                        :onclick => 'showOrHideArticles(this);' %>
-                            <% @articles_to_hide.push(category) %>
-                        <% end %>
-                        
-                    </div>
-                
-                <% end %>
-            </div>
-        <% end %>
-        
-        <% if @state.blank? %>
-            <div class = 'overylay-states overlay-table'>
-                <h1>States</h1>
-                <% @side_states.each do |state| %>
-                    <div class = 'overlay-state overlay-item'>
-                        <p><%=state.name%></p>
-                        
-                        <% if (logged_in? && current_user.states.any? && current_user.states.include?(state)) || !logged_in? %>
-                            <%= check_box_tag "states[]", state.id, {:checked => "checked"}, :id => state.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                        :onclick => 'showOrHideArticles(this);' %>
-                        <% else %>
-                            <%= check_box_tag "states[]", state.id, false, :id => state.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                        :onclick => 'showOrHideArticles(this);' %>
-                            <% @articles_to_hide.push(state) %>
-                        <% end %>
-                        
-                    </div>
-                
-                <% end %>
-            </div>
-        <% end %>
-        
-    </div>
-
 </div>
 
 
