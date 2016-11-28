@@ -116,7 +116,7 @@ class ArticlesController < ApplicationController
         end
         
         #same source articles
-        @same_source_articles = Article.where(source_id: @article.source).limit(3)
+        @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").limit(3)
         
         #add view to article for sorting
         @article.increment(:num_views, by = 1)

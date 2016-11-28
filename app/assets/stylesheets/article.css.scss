@@ -7,7 +7,13 @@
 	.article-big-image img {width: 100%;}
 	
 	.article-title {margin-top: -55px; text-align: center; padding: 0 30px;}
-		.article-title h1 {color: #FFF; font-weight: bold; text-shadow: 0 0 5px #000; font-size: 40px;}
+		.article-title h1 {
+			font-weight: 900;
+			font-size: 36px;
+			color: #FFFFFF;
+			letter-spacing: 1.79px;
+			text-shadow: 0 2px 8px rgba(0,0,0,0.50);
+		}
 		
 	.article-body {margin: 20px 0;}
 	.article-body p {

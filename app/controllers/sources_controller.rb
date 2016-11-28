@@ -46,7 +46,22 @@ class SourcesController < ApplicationController
     #-------------------------------------------
     
     def show
-        #probably show the products or the articles depending on the type
+        #sort by the option selected by user
+        if params[:option] != nil
+            @sort_option = SortOption.find(params[:option])
+            
+            if @sort_option != nil
+                #add a click to the sort option
+                @sort_option.increment(:num_clicks, by = 1)
+                @sort_option.save
+                
+                @articles = @source.articles.order(@sort_option.query + " " + @sort_option.direction).page(params[:page]).per_page(24)
+            else 
+                @articles = @source.articles.order("created_at DESC").page(params[:page]).per_page(24)
+            end
+        else 
+            @articles = @source.articles.order("created_at DESC").page(params[:page]).per_page(24)
+        end 
     end
 
     #-------------------------------------------

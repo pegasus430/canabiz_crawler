@@ -34,8 +34,8 @@
 <% end %>
 
 
-<div class = 'side-bar'>
-    <% if @state != nil || @category != nil %>
+<div class = 'source-drawer'>
+    <% if @state != nil || @category != nil || @source != nil %>
         <%= render 'pages/sidebar' %>
     <% else %>
     	<%= render 'sidebar' %>
@@ -48,7 +48,7 @@
 <div class = 'wrap'>
 
     <div class = 'article-index'>
-    	<% if @state != nil || @category != nil %>
+    	<% if @state != nil || @category != nil || @source != nil%>
         	<%= render 'pages/article_loop' %>
         <% else %>
         	<%= render 'article_loop' %>
@@ -56,7 +56,7 @@
     </div>
     
     <div class = 'article-index-views' style = 'display: none;'>
-    	<% if @state != nil || @category != nil %>
+    	<% if @state != nil || @category != nil || @source != nil %>
         	<%= render 'pages/article_loop' %>
         <% else %>
         	<%= render 'article_loop' %>
@@ -64,14 +64,16 @@
     </div>
     
     <%= paginate @articles %>
-    <%= paginate @articles_viewed %>
+    
     
 </div>
 
 <style> .wrap.pagination {display: none; important!}</style>
 
 
-
-<% @articles_to_hide.each do |item| %>
-    <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>
+<!--dont hide if it is the search page-->
+<% if @query == nil %>
+    <% @articles_to_hide.each do |item| %>
+        <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>
+    <% end %>
 <% end %>

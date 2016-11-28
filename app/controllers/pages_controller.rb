@@ -51,10 +51,10 @@ class PagesController < ApplicationController
     
     def search
         if params[:query].present? 
-            @q = "%#{params[:query]}%"
+            @query = "%#{params[:query]}%"
             
-            @articles = Article.where("title LIKE ? or abstract LIKE ?", @q, @q)
-
+            @articles = Article.where("title LIKE ? or abstract LIKE ?", @query, @query).page(params[:page]).per_page(24)
+            @articles_viewed = Article.where("title LIKE ? or abstract LIKE ?", @query, @query).page(params[:page]).per_page(24)
         else 
             redirect_to root_path
         end

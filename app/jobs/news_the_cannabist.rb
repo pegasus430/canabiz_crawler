@@ -15,7 +15,7 @@ class NewsTheCannabist < ActiveJob::Base
         require 'open-uri'
         
         #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_marijuanastocksnews.py"]) #cmd,
+        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_thecannabist.py"]) #cmd,
         contents = JSON.parse(output.read)
         
         #call method:
@@ -32,7 +32,7 @@ class NewsTheCannabist < ActiveJob::Base
         @random_category = Category.where(:name => 'Random')
         @categories = Category.where(:active => true)
         @states = State.all
-        source = Source.find_by name: 'Green Rush Daily'
+        source = Source.find_by name: 'The Cannabist'
         
         articles.each do |article|
         

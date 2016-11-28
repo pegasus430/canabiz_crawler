@@ -7,31 +7,33 @@
 
 
 <!--have to check on and off based on if user is logged in and they have saved preferences-->
-<table class = 'side-bar-table'>
+<div class = 'sources-sidebar'>
     <% @side_sources.each do |source| %>
         
-        <tr>
+        <div class = 'source' id = '<%= source.name.downcase.tr(" ", "_") %>'>
             <% if (logged_in? && current_user.sources.any? && current_user.sources.include?(source)) || !logged_in? %>
-                <td><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                    :onclick => 'showOrHideArticles(this);' %></td>
+                <div class = 'source-check inline'><%= check_box_tag "sources[]", source.id, {:checked => "checked"}, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                    :onclick => 'showOrHideArticles(this);' %></div>
             <% else %>
-                <td><%= check_box_tag "sources[]", source.id, false, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
-                                                    :onclick => 'showOrHideArticles(this);' %></td>
+                <div class = 'source-check inline'><%= check_box_tag "sources[]", source.id, false, :id => source.name.downcase.tr(" ", "_") + '_checkbox', 
+                                                    :onclick => 'showOrHideArticles(this);' %></div>
                 <% @articles_to_hide.push(source) %>
             <% end %>
             
             <!--no matter what show these-->
-            <td><img src = "<%= asset_path(source.sidebar_logo) %>"></td>
-            <td><%= source.name%></td>                
-        </tr>
+            <div class = 'source-icon inline'><%= link_to image_tag(asset_path(source.sidebar_logo)), source_path(source) %></div>
+            
+            <div class = 'source-name inline'><%= source.name%></div>                
+        </div>
             
     <% end %>
-</table>
-
-<div class = 'sidebar-plus'>
-	<img src = "<%= asset_path("homepage/sidebarPlus.png")%>" onclick="openSidebarNav()" />
 </div>
 
+<!--
+<div class = 'sidebar-plus'>
+	<img src = " #asset_path("homepage/sidebarPlus.png")" onclick="openSidebarNav()" />
+</div>
+-->
 
 <!-- Sidebar Overlay -->
 <div id="sidebar-overlay" class="overlay">

@@ -59,10 +59,10 @@ class CategoriesController < ApplicationController
                 
                 @articles = @category.articles.order(@sort_option.query + " " + @sort_option.direction).page(params[:page]).per_page(24)
             else 
-                @articles = @category.articles.order("created_at DESC").page(params[:page])    
+                @articles = @category.articles.order("created_at DESC").page(params[:page]).per_page(24)  
             end
         else 
-            @articles = @category.articles.order("created_at DESC").page(params[:page])
+            @articles = @category.articles.order("created_at DESC").page(params[:page]).per_page(24)
         end        
         
     end
