@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
     has_many :user_sources
     has_many :sources, through: :user_sources
     
+    has_many :articles, through: :categories
+    has_many :articles, through: :states
+    
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true) do |row|

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :show]
   before_action :require_same_user, only: [:edit, :update, :destroy, :show]
   #before_action :require_admin, only: [:destroy]
   
@@ -60,11 +60,16 @@ class UsersController < ApplicationController
   
     def show
         
-        if @current_user
-            @user = @current_user
+
+    end
+    
+    def noshow
+               @user = User.find(params[:id])
+        if current_user
+            @user = current_user
         else 
-            @user = User.find(params[:id])
-        end
+            
+        end 
     end
   
   def destroy
@@ -75,25 +80,27 @@ class UsersController < ApplicationController
   end
   
   private
-  def user_params
-    params.require(:user).permit(:username, :email, :password, state_ids: [], category_ids: [], source_ids: [])
-  end
-  def set_user
-    @user = User.find(params[:id])
-  end
-  
-  def require_same_user
-    if @current_user != @user
-      flash[:danger] = "You can only edit your own account"
-      redirect_to root_path
+    
+    def user_params
+        params.require(:user).permit(:username, :email, :password, state_ids: [], category_ids: [], source_ids: [])
     end
-  end
-  
-  def require_admin
-    if logged_in? and !current_user.admin?
-      flash[:danger] = "Only admin users can perform that action"
-      redirect_to root_path
+    
+    def set_user
+        @user = User.find(params[:id])
     end
-  end
+  
+    def require_same_user
+        if current_user != @user
+            flash[:danger] = "You can only edit your own account"
+            redirect_to root_path
+        end
+    end
+  
+    def require_admin
+        if logged_in? and !current_user.admin?
+            flash[:danger] = "Only admin users can perform that action"
+            redirect_to root_path
+        end
+    end
   
 end
