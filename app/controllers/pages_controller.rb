@@ -6,9 +6,11 @@ class PagesController < ApplicationController
         if current_user != nil
             
             @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)
+            @articles_viewed = Article.order("num_views DESC").page(params[:page]).per_page(24)
             
             if current_user.sources.any?
                  @articles = @articles.where(source_id: current_user.sources)
+                 @articles_viewed = @articles_viewed.where(source_id: current_user.sources)
             end
             
             if current_user.states.any?
@@ -16,6 +18,8 @@ class PagesController < ApplicationController
                 state_ids = current_user.states.pluck(:id)
                 article_ids = ArticleState.where(state_id: state_ids).pluck(:article_id)
                 @articles = @articles.where(id: article_ids)
+                @articles_viewed = @articles_viewed.where(id: article_ids)
+                
             end
             
             if current_user.categories.any?
@@ -23,9 +27,12 @@ class PagesController < ApplicationController
                 category_ids = current_user.categories.pluck(:id)
                 article_ids = ArticleCategory.where(category_id: category_ids).pluck(:article_id)
                 @articles = @articles.where(id: article_ids)
+                @articles_viewed = @articles_viewed.where(id: article_ids)
             end
+            
         else 
-            @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)    
+            @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)
+            @articles_viewed = Article.order("num_views DESC").page(params[:page]).per_page(24)
         end    
         
     end 
@@ -49,9 +56,7 @@ class PagesController < ApplicationController
                 @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)    
             end
         else
-            
-            
-           
+
         end
         
         respond_to do |format|

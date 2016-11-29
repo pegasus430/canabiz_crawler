@@ -15,6 +15,10 @@ body {
     text-align: center;
 }
 
+.article-index, .article-index-views {min-height: 500px;}
+    .article-index-views {display: none;}
+
+
 //side bar
 .source-drawer {
      background-color: #4c7384;

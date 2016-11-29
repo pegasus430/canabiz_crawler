@@ -47,11 +47,14 @@ class StatesController < ApplicationController
                 @sort_option.save
                 
                 @articles = @state.articles.order(@sort_option.query + " " + @sort_option.direction).page(params[:page]).per_page(24)
+                @articles_viewed = Article.order("num_clicks DESC").page(params[:page]).per_page(24)
             else 
                 @articles = @state.articles.order("created_at DESC").page(params[:page])    
+                @articles_viewed = Article.order("num_clicks DESC").page(params[:page]).per_page(24)
             end
         else 
             @articles = @state.articles.order("created_at DESC").page(params[:page])
+            @articles_viewed = Article.order("num_clicks DESC").page(params[:page]).per_page(24)
         end 
         
     end

@@ -52,11 +52,29 @@
 
     <div class="overlay-content">
         <% SortOption.all.order("name ASC").each do |option| %>
-            <a href="<%=url_for(params.merge(:option => option.id))%>"><%=option.name%></a>
+            <p onclick = 'changeSort(this)'><%=option.name%></p>
+            
         <% end %>
     </div>
 
 </div>
+
+<script>
+    function changeSort(elem) {
+        if (elem.innerHTML == 'Most Popular') {
+            $(".article-index-views").css("display", "block");
+            $(".article-index").css("display", "none");
+            $(".sort-button").html("Most Popular");
+        } else if (elem.innerHTML == 'Newest') {
+            $(".article-index-views").css("display", "none");
+            $(".article-index").css("display", "block");
+            $(".sort-button").html("Newest");
+        }
+        //hide the overlay
+        closeNav();
+    }
+    
+</script>
 
 
 

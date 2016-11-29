@@ -15,7 +15,7 @@
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             
             Sort By 
-            <span class = "under-search-button" onclick="openCategoryNav()">
+            <span class = "under-search-button sort-button" onclick="openCategoryNav()">
                 <% if @sort_option.present? %>
                     <%= @sort_option.name %>
                 <% else %>
@@ -43,8 +43,6 @@
 </div>
 
 
-
-
 <div class = 'wrap'>
 
     <div class = 'article-index'>
@@ -55,15 +53,16 @@
         <% end %>
     </div>
     
-    <div class = 'article-index-views' style = 'display: none;'>
-    	<% if @state != nil || @category != nil || @source != nil %>
-        	<%= render 'pages/article_loop' %>
+    <div class = 'article-index-views'>
+    	<% if @state != nil || @category != nil || @source != nil%>
+        	<%= render 'pages/article_loop2' %>
         <% else %>
-        	<%= render 'article_loop' %>
+        	<%= render 'article_loop2' %>
         <% end %>
     </div>
     
     <%= paginate @articles %>
+    <%= paginate @articles_viewed %>
     
     
 </div>
