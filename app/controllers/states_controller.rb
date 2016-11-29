@@ -36,26 +36,8 @@ class StatesController < ApplicationController
     
     def show
         
-                    
-        #sort by the option selected by user
-        if params[:option] != nil
-            @sort_option = SortOption.find(params[:option])
-            
-            if @sort_option != nil
-                #add a click to the sort option
-                @sort_option.increment(:num_clicks, by = 1)
-                @sort_option.save
-                
-                @articles = @state.articles.order(@sort_option.query + " " + @sort_option.direction).page(params[:page]).per_page(24)
-                @articles_viewed = Article.order("num_clicks DESC").page(params[:page]).per_page(24)
-            else 
-                @articles = @state.articles.order("created_at DESC").page(params[:page])    
-                @articles_viewed = Article.order("num_clicks DESC").page(params[:page]).per_page(24)
-            end
-        else 
-            @articles = @state.articles.order("created_at DESC").page(params[:page])
-            @articles_viewed = Article.order("num_clicks DESC").page(params[:page]).per_page(24)
-        end 
+        @articles = @state.articles.order("created_at DESC").page(params[:page]).per_page(24)
+        @articles_viewed = @state.articles.order("num_views DESC").page(params[:page]).per_page(24) 
         
     end
     
