@@ -35,6 +35,25 @@ class PagesController < ApplicationController
             @articles_viewed = Article.order("num_views DESC").page(params[:page]).per_page(24)
         end    
         
+        respond_to do |format|
+          format.html
+          format.js # add this line for your js template
+        end
+        
+        # news background jobs:
+        if Rails.env.production?
+            NewsTheCannabist.perform_later()
+            NewsLeafly.perform_later()
+            NewsMarijuana.perform_later()
+            NewsCannabisCulture.perform_later()
+            NewsCannaLawBlog.perform_later()
+            NewsMjBizDaily.perform_later()
+            NewsHighTimes.perform_later()
+            NewsDopeMagazine.perform_later()
+            NewsFourTwentyTimes.perform_later()
+            NewsMarijuanaStocks.perform_later()
+        end
+        
     end 
     
     def other
@@ -64,19 +83,7 @@ class PagesController < ApplicationController
           format.js
         end
         
-        # news background jobs:
-        if Rails.env.production?
-            NewsTheCannabist.perform_later()
-            NewsLeafly.perform_later()
-            NewsMarijuana.perform_later()
-            NewsCannabisCulture.perform_later()
-            NewsCannaLawBlog.perform_later()
-            NewsMjBizDaily.perform_later()
-            NewsHighTimes.perform_later()
-            NewsDopeMagazine.perform_later()
-            NewsFourTwentyTimes.perform_later()
-            NewsMarijuanaStocks.perform_later()
-        end
+
         
     end
     

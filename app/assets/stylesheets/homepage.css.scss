@@ -18,6 +18,22 @@ body {
 .article-index, .article-index-views {min-height: 500px;}
     .article-index-views {display: none;}
 
+//infinite scroll
+#infscr-loading {
+
+  position: fixed;
+  bottom: 200px;
+  left: 42%;
+  z-index: 100;
+  background: white;
+  background: hsla( 0, 0%, 100%, 0.9 );
+  padding: 20px;
+  color: #222;
+  font-size: 15px;
+  font-weight: bold;
+
+}
+
 
 //side bar
 .source-drawer {
