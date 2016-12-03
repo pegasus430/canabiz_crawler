@@ -49,8 +49,8 @@
                     <td><%= source.users.count%></td>
                     <td><%= source.articles.count%></td>
                     <td><%= source.url%></td>
-                    <td><%= source.article_logo.truncate(20) if source.article_logo%></td>
-                    <td><%= source.sidebar_logo.truncate(20) if source.sidebar_logo%></td>
+                    <td><%= source.article_logo if source.article_logo%></td>
+                    <td><%= source.sidebar_logo if source.sidebar_logo%></td>
                     
                     <td><% if source.hashtags.any? %>
 						<%= render source.hashtags %>
