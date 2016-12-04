@@ -1,10 +1,36 @@
-.article-page-heading {height: 300px; background-color: #8A2A88;}
+.article-page-heading {
+	height: 300px;
+	background-color: rgb(20,175,124); /* Old browsers */
+	background-color: -moz-linear-gradient(-45deg,  rgba(20,175,124,1) 0%, rgba(149,47,146,1) 100%); /* FF3.6-15 */
+	background-color: -webkit-linear-gradient(-45deg,  rgba(20,175,124,1) 0%,rgba(149,47,146,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background-color: linear-gradient(135deg,  rgba(20,175,124,1) 0%,rgba(149,47,146,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#14af7c', endColorstr='#952f92',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background-image: url(../assets/sourceLogos/CBZ_Source_Banner.png), linear-gradient(135deg,  rgba(20,175,124,1) 0%,rgba(149,47,146,1) 100%);
+	background-size: 100%!important;
+	background-position: 0 50%!important;
+}
 
 
 //article
-.article-wrap {width: 40%; margin: 0 40% 0 auto;}
-	.article-big-image {margin-top: -150px;}
-	.article-big-image img {width: 100%;}
+	.article-main {
+		width: 60%;
+		margin-top: -150px;
+	}
+
+	.article-main-image {
+		width: 100%;
+		min-height: 400px;
+		background-size: cover!important;
+		background-position: 50%!important;
+	}
+	
+	.article-main .article-date {
+		top: -170px;
+	    left: 0;
+	    font-weight: 100;
+	    letter-spacing: .05em;
+	    font-size: 14px;
+	}
 	
 	.article-title {margin-top: -55px; text-align: center; padding: 0 30px;}
 		.article-title h1 {
@@ -25,21 +51,44 @@
 	}
 
 // right sidebar
-.article-right-sidebar {float: right; width: 25%; margin-right: 5%;}
+.sidebar .article {
+	display: inline-block;
+	width: 100%;
+	margin: 15px 0;
+}
+
+.article-right-sidebar {vertical-align: top; width: 30%; margin-left: 9%;}
 	.article-right-sidebar-title {border-bottom: 1px solid black;}
 	.related-article {width: 100%; display: block; position: relative; margin: 20px 0;}
 	
 	//lower portion
-	.more-from-same-source {margin-top: 20px;}
-		.more-from-same-source h2 {font-size: 20px; border-bottom: 1px solid black;}
+	.more-from-source {margin-top: 20px;}
+		.more-from-source a {
+			display: block;
+			font-size: 14px;
+			color: #666666;
+			letter-spacing: 0.05em;
+			margin: 15px 0;
+		}
 		
 //bottom
-.below-article-source a {color: purple;}
-	.below-article-source img {width: 150px; height: auto;}
+.article-ind-source a {color: #93278F;}
+	.article-ind-source img {width: 150px; height: auto;}
 	
-.below-article-header {border-bottom: 1px solid black; margin: 30px 0 10px;}
-	
-.below-article-tag {margin: 30px 15px; display: inline-block;}
-	.below-article-tag a {padding: 10px 20px; border: 1px solid blue; color: blue; border-radius: 25px; }
+.article-section-title {border-bottom: 1px solid #333; margin: 30px 0 10px;}
+	.article-section-title h2 {
+		font-weight: 900;
+		font-size: 18px;
+		color: #333333;
+		letter-spacing: 0.05em;
+	}
 
-.below-article-back {margin: 40px 0;}
+.article-tags .tags a {padding: 10px 20px; border: 1px solid #666; color: #666; border-radius: 50px; display: inline-block; text-decoration: none;}
+	.article-tags .tags a:hover {
+		background: #93278F;
+		color: #FFF;
+		border: 1px solid #93278F;
+		text-decoration: none;
+	}
+
+.article-back {margin: 40px 0;}

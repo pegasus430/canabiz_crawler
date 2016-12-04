@@ -2,84 +2,104 @@
     <!--put the background image in here-->
 </div>
 
-<div class = 'article-right-sidebar'>
-    <h1 class = 'article-right-sidebar-title'>Related News</h1>
+<div class = 'wrap article-ind'>
+  
+    <div class="article-main inline">  
+            <% if @article.image != nil && @article.source != 'Marijuana Business Daily' %>
+                <div class = 'article-main-image' style= 'background: url(<%= image_url(@article.image) %>);'>
+                </div>
+            <% else %>
+                <div class = 'article-main-image' style= 'background: url(<%= image_url("article-pages/news-substitute.jpg") %>);'>
+                </div>
+            <% end %>
+        <div class = 'article-title'>
+            <h1 id='main-title'><%=@article.title%></h1>
+        </div>
+        <div class = 'article-date'>
+            <p><%= @article.date.strftime("%B %d, %Y | %I:%M %p") %></p>
+        </div>
+        <div class = 'article-body'>
+            
+            <%= simple_format(@article.body) %>
+        </div>
+        
+        <div class = 'article-ind-bottom'>
+            
+            <div class = 'article-ind-source'>
+                <div class = 'article-section-title'><h2>Source</h2></div>
+                <div class='article-source-logo inline vam'>
+                    <img src = "<%= asset_path(@article.source.article_logo) if @article.source %>">
+                </div> <!--END SOURCE LOGO-->
+                <div class= 'article-source-link inline vam'>
+                    <%= link_to @article.title, @article.web_url, target: "_blank", controller: "articles", action: "add_view" %>
+                </div> <!-- END SOURCE LINK -->
+            </div> <!-- END SOURCES -->
+            <div class = 'article-tags'>
+                <div class = 'article-section-title'><h2>Tags</h2></div>
+                <% @article.categories.each do |category| %>
+                    <div class = 'tags'>
+                        <a href="<%=category_path(category)%>"><%=category.name%></a>
+                    </div>
+                <% end %>
+                
+                <% @article.states.each do |state| %>
+                    <div class = 'tags'>
+                        <a href="<%=state_path(state)%>"><%=state.name%></a>
+                    </div>
+                <% end %>
+            </div>
+            <div class = 'article-back'>
+                <a href = "<%=root_path%>"><span></span>Back to News</a>
+            </div>
+        </div>
+    </div> <!-- END ARTICLE MAIN -->
+
+<div class = 'sidebar article-right-sidebar inline'>
+    <div class= 'article-section-title'><h2>Related News</h2></div>
     
     <% @related_articles.each do |article| %>
-        <div class = 'related-article' style = "<% if article.image %> background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
-            <div class = 'article-image'></div>
+        <div class = 'article <%=article.source.name.downcase.tr(" ", "_") if article.source 
+            %><%article.categories.each do |category| 
+                %> <%=category.name.downcase.tr(" ", "_")
+                %><%end
+            %><%article.states.each do |state|
+                %> <%=state.name.downcase.tr(" ", "_")
+                %><%end%>' style = "<% if article.image %> background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
+        
+        <a href = '<%= article_path(article)%>'>
             
             <div class = 'article-date'>
                 <%= time_ago_in_words(article.created_at) %> ago
             </div>
             
             <div class = 'article-bottom'>
-                <div class = 'single-article-title'>
+                <div class = 'grid-article-title'>
                     <h1><%= article.title.truncate(60) if article.title %></h1>
                 </div>
                 <div class = 'article-source'>
-                    <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
+                    <img class='inline' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
+                    <div class = 'article-source-name inline'>
+                        <%= article.source.name %>
+                    </div>
                 </div>
-                <div class = 'article-category'>
-                    
-                </div>
-            </div>            
+                <% if @current_user && @current_user.admin? %>
+                    <div class = 'admin-twitter-share'>
+                        <p class = 'admin-twitter-share-button'><%= link_to "SHARE", tweet_path(article) %></p>
+                    </div>
+                <% end %>
+            </div>
+            </a>
         </div>
     <% end %>
     
-    <div class = 'more-from-same-source'>
-        <h2>More From <%= @article.source.name if @article.source %></h2>
+    <div class = 'more-from-source'>
+        <div class= 'article-section-title'><h2>More From <%= @article.source.name if @article.source %></h2></div>
         
         <% @same_source_articles.each do |article| %>
             <p><%= link_to article.title, article_path(article)%></p>
         <% end %>
         
     </div>
-</div>
+</div> <!-- END SIDEBAR -->
 
-<div class = 'article-wrap'>
-    <div class = 'article-big-image'>
-        <% if @article.image != nil && @article.source != 'Marijuana Business Daily' %>
-            <%= image_tag(@article.image) %>
-        <% else %>
-            <%= image_tag("article-pages/news-substitute.jpg") %>
-        <% end %>
-    </div>
-    <div class = 'article-title'>
-        <h1><%=@article.title%></h1>
-    </div>
-    <div class = 'article-date'>
-        <p><%= @article.date.strftime("%B %d, %Y | %I:%M %p") %></p>
-    </div>
-    <div class = 'article-body'>
-        
-        <%= simple_format(@article.body) %>
-    </div>
-    
-    <div class = 'below-article'>
-        
-        <div class = 'below-article-source'>
-            <div class = 'below-article-header'><h2>Source</h2></div>
-            <img src = "<%= asset_path(@article.source.article_logo) if @article.source %>"> <%= link_to @article.title, @article.web_url, target: "_blank" %>
-        </div>
-        <div class = 'below-article-tags'>
-            <div class = 'below-article-header'><h2>Tags</h2></div>
-            <% @article.categories.each do |category| %>
-                <div class = 'below-article-tag'>
-                    <a href="<%=category_path(category)%>"><%=category.name%></a>
-                </div>
-            <% end %>
-            
-            <% @article.states.each do |state| %>
-                <div class = 'below-article-tag'>
-                    <a href="<%=state_path(state)%>"><%=state.name%></a>
-                </div>
-            <% end %>
-        </div>
-        <div class = 'below-article-back'>
-            <%= link_to '<--- Back to News', root_path %>
-        </div>
-    </div>
-
-</div>
-
+</div> <!-- END ARTICLE WRAP -->

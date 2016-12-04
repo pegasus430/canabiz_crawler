@@ -30,14 +30,46 @@
 	.menu-small-links a {font-size: 20px !important;}
 
         
-//footer
-.footer {min-height: 300px; background-color: #8A2A88;}
-	.footer-text {width: 50%; margin: 0 auto; padding-top: 50px; text-align: center;}
-		.footer-text h1, .footer-text p {color: white;}
-		.footer-text-title, .footer-text-tagline {width: 45%; display: inline-block}
-		.footer-text-title {text-align: center; padding-right: 30px; border-right: 2px solid white;}
-		.footer-text-tagline {padding-left: 40px; text-align: left;}
-		
-	//email
-	#saveEmailButton {background-color: #14AF7C; color: white; margin-left: 4%; padding: 10px 16px; border: none;}
-	#emailTextBox {background-color: white; width: 50%;}
+//Roll Up
+.roll-up {
+	background: #8A2A88;
+	padding: 50px 0;
+	text-align: center;
+	color: #FFF;
+}
+
+.roll-up-text {
+	margin-bottom: 40px;
+}
+
+.roll-up-text h2 {
+	display: inline-block;
+	font-weight: 900;
+	font-size: 24px;
+	letter-spacing: 0.52px;
+	vertical-align: middle;
+}
+
+.roll-up-text p {
+	display: inline-block;
+	text-align: left;
+	font-weight: 100;
+	font-size: 18px;
+	color: #FFFFFF;
+	letter-spacing: 0.39px;
+	vertical-align: middle;
+	padding: 10px 0 10px 15px;
+	border-left: 1px solid #979797;
+	margin-left: 15px;
+}
+
+// Roll Up Form
+.roll-up-form {
+	width: 90%;
+	max-width: 550px;
+	margin: 0 auto;
+}
+
+.roll-up-form input.form-control {
+	width: 80%;
+}

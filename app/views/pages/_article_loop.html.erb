@@ -28,7 +28,10 @@
                     <h1><%= article.title.truncate(60) if article.title %></h1>
                 </div>
                 <div class = 'article-source'>
-                    <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
+                    <img class='inline' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
+                    <div class = 'article-source-name inline'>
+                        <%= article.source.name %>
+                    </div>
                 </div>
                 <% if @current_user && @current_user.admin? %>
                     <div class = 'admin-twitter-share'>

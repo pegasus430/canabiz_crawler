@@ -26,5 +26,25 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-family: 'Lato', sans-serif;
 }
 
+a:hover {
+	text-decoration: none;
+}
+
 .center {text-align: center;}
 .clear {clear: both;}
+
+.inline {
+	display: inline-block
+}
+
+.vam {
+	vertical-align: middle;
+}
+
+form .btn {
+	background-color: #14AF7C;
+	color: #FFFFFF;
+	padding: 12px 20px;
+	font-size: 16px;
+	border: none;
+}

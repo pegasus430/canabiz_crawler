@@ -128,6 +128,10 @@ class ArticlesController < ApplicationController
         end
     end
     
+    def add_view
+       logger.info ("THE LINK HAS BEEN CLICKED") 
+    end
+    
     #-----------------------------------
     def edit
     end   
