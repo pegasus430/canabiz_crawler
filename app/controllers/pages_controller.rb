@@ -40,8 +40,10 @@ class PagesController < ApplicationController
           format.js # add this line for your js template
         end
         
+        
         # news background jobs:
         if Rails.env.production?
+            NewsMarijuanaStocks.perform_later()
             NewsTheCannabist.perform_later()
             NewsLeafly.perform_later()
             NewsMarijuana.perform_later()
@@ -51,7 +53,7 @@ class PagesController < ApplicationController
             NewsHighTimes.perform_later()
             NewsDopeMagazine.perform_later()
             NewsFourTwentyTimes.perform_later()
-            NewsMarijuanaStocks.perform_later()
+            
         end
         
     end 
