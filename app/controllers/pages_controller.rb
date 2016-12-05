@@ -96,8 +96,9 @@ class PagesController < ApplicationController
         if params[:query].present? 
             @query = "%#{params[:query]}%"
             
-            @articles = Article.where("title LIKE ? or abstract LIKE ?", @query, @query).page(params[:page]).per_page(24)
-            @articles_viewed = Article.where("title LIKE ? or abstract LIKE ?", @query, @query).page(params[:page]).per_page(24)
+            @articles = Article.where("title LIKE ? or body LIKE ?", @query, @query).order("created_at DESC").page(params[:page]).per_page(24)
+            @articles_viewed = Article.where("title LIKE ? or body LIKE ?", @query, @query).order("num_views DESC").page(params[:page]).per_page(24)
+
         else 
             redirect_to root_path
         end

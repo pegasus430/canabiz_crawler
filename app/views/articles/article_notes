@@ -174,3 +174,14 @@ inside RVM folder: export TO=`which imgkit | sed 's:/imgkit:/wkhtmltoimage:'` &&
             #file = kit.to_file("/assets/images/tweetImages/#{kit}")
             
             client.update_with_media(params[:tweet_body], File.new(file))
+            
+
+
+                'background: url(<%= image_url(@article.image) %>);'>
+                </div>
+            <% else %>
+                <div class = 'article-main-image' style= 'background: url('<%= asset_path 'homepage/CBZ_News_Placeholder.jpg' %>');'>
+                </div>
+            <% end %>
+            
+            <% if @article.image != nil%>

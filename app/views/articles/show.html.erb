@@ -5,15 +5,16 @@
 <div class = 'wrap article-ind'>
   
     <div class="article-main inline">  
-            <% if @article.image != nil && @article.source != 'Marijuana Business Daily' %>
-                <div class = 'article-main-image' style= 'background: url(<%= image_url(@article.image) %>);'>
-                </div>
-            <% else %>
-                <div class = 'article-main-image' style= 'background: url(<%= image_url("article-pages/news-substitute.jpg") %>);'>
-                </div>
-            <% end %>
+            
+        <div class = 'article-main-image' style = "<% if @article.image 
+            %> background: url('<%= @article.image %>'), url('<%= asset_path 'homepage/CBZ_News_Placeholder.jpg' %>'); <% 
+            else %> background: url('<%= asset_path 'homepage/CBZ_News_Placeholder.jpg' %>') <% 
+            end %>">
+        </div>
+                
+
         <div class = 'article-title'>
-            <h1 id='main-title'><%=@article.title%></h1>
+            <h1 id='main-title'><span><%=@article.title%></span></h1>
         </div>
         <div class = 'article-date'>
             <p><%= @article.date.strftime("%B %d, %Y | %I:%M %p") %></p>
@@ -21,9 +22,14 @@
         <div class = 'article-body'>
             
             <%= simple_format(@article.body) %>
+            
         </div>
         
         <div class = 'article-ind-bottom'>
+            
+            <div class = 'article-back'>
+                <a href = "<%=root_path%>"><span></span>Back to News</a>
+            </div>
             
             <div class = 'article-ind-source'>
                 <div class = 'article-section-title'><h2>Source</h2></div>
@@ -48,11 +54,8 @@
                     </div>
                 <% end %>
             </div>
-            <div class = 'article-back'>
-                <a href = "<%=root_path%>"><span></span>Back to News</a>
-            </div>
         </div>
-    </div> <!-- END ARTICLE MAIN -->
+    </div><!-- END ARTICLE MAIN -->
 
 <div class = 'sidebar article-right-sidebar inline'>
     <div class= 'article-section-title'><h2>Related News</h2></div>

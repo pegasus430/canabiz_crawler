@@ -7,7 +7,7 @@
 </script>
 
 
-<% @articles.each do |article| %>
+<% @articles.each_with_index  do |article, i| %>
     
         <div class = 'article <%=article.source.name.downcase.tr(" ", "_") if article.source 
             %><%article.categories.each do |category| 
@@ -15,7 +15,7 @@
                 %><%end
             %><%article.states.each do |state|
                 %> <%=state.name.downcase.tr(" ", "_")
-                %><%end%>' style = "<% if article.image %> background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
+                %><%end%><%if (i + 1) % 4 == 0 %> last<% end %>' style = "<% if article.image %> background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
         
         <a href = '<%= article_path(article)%>'>
             

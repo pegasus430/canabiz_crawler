@@ -1,33 +1,41 @@
 /* The Overlay (background) */
 .overlay {
     /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+    background: rgb(20,175,124); /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  rgba(20,175,124,1) 0%, rgba(149,47,146,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg,  rgba(20,175,124,1) 0%,rgba(149,47,146,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg,  rgba(20,175,124,1) 0%,rgba(149,47,146,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#14af7c', endColorstr='#952f92',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     height: 100%;
-    width: 0;
+    width: 100%;
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 10000; /* Sit on top */
     left: 0;
     top: 0;
-    background-color: #3D3045;
-    opacity: 0.8;
-    overflow-x: hidden; /* Disable horizontal scroll */
-    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+    visibility: hidden;
+    opacity: 0;
+    overflow: hidden;
+    -webkit-transition: opacity .2s; /* Safari 3.1 to 6.0 */
+    transition: opacity .2s;
 }
 
 /* Position the content inside the overlay */
 .overlay-content {
     position: relative;
-    top: 5%; /* 5% from the top */
+    color: #FFF;
+    top: 100px; /* 5% from the top */
     width: 100%; /* 100% width */
     text-align: center; /* Centered text/links */
     margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
 }
 
 /* The navigation links inside the overlay */
-.overlay a, .overlay p {
+.overlay-content a, .overlay-content p {
     padding: 8px;
     text-decoration: none;
     font-size: 36px;
-    color: #818181;
+    font-weight: 900;
+    color: #FFF;
     display: block; /* Display block instead of inline */
     transition: 0.3s; /* Transition effects on hover (color) */
     cursor: pointer;
@@ -38,12 +46,43 @@
     color: #f1f1f1;
 }
 
+.overlay-content .menu-login a {
+    font-weight: 100;
+    font-size: 16px;
+    letter-spacing: .03em;
+}
+
+.overlay-content .signup-button {
+    border: 1px solid #FFF;
+}
+
 /* Position the close button (top right corner) */
 .overlay .closebtn {
     position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px;
+    top: 50px;
+    left: 50%;
+    margin-left: -22px;
+    font-size: 36px;
+    color: #FFF;
+    display: block;
+    text-align: center;
+    line-height: 30px;
+    font-weight: 100;
+}
+
+.overlay .closebtn span.closeIcon {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #FFF;
+    border-radius: 50%;
+    display:block;
+    margin: 0 auto;
+}
+
+.overlay .closebtn span.closeText {
+    font-size: 16px;
+    display: block;
+    margin-top: -5px;
 }
 
 /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */

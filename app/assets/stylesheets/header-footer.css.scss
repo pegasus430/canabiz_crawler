@@ -1,15 +1,17 @@
 // header
-.header {background: #333; padding: 25px 0;}
-	.header-left {float: left;}
+.header {background: #333; padding: 5px 0;}
+	.header .inline {vertical-align: middle;}
+	.header-left {width: 20%;}
 	
-	.header-right {float: right; margin-top: 21px;}
+	.header-right {width: 15%; text-align: right;}
 		.header-login {font-weight: bold;}
-			.signup-button {padding: 10px 20px; border: 2px solid #8A2A88; color: #8A2A88;}
+			.header-login p {color: #f2f2f2;}
+			.signup-button {padding: 10px 20px; border: 2px solid #8A2A88; color: #8A2A88; border-radius: 3px;}
 			.signup-button:hover {text-decoration: none; color: white; background-color: #8A2A88;}
 			
 			.header-menu-button {cursor: pointer;}
 	
-	.header-center {width: 50%; margin: 0 auto;}
+	.header-center {width: 64%; text-align: center;}
 		#searchButton {background-color: #14AF7C; color: white; margin-left: 4%; padding: 10px 16px;}
 		#searchQuery {background-color: #D9D9D9; width: 80%;}
 		
@@ -24,10 +26,10 @@
         
 //MENU OVERLAY
 .menu-login {margin-bottom: 60px;}
-	.menu-login a {font-size: 20px !important; display: inline-block !important;}
+	.menu-login a {font-size: 20px; display: inline-block !important;}
 
-.menu-small-links {margin-top: 60px;}
-	.menu-small-links a {font-size: 20px !important;}
+.overlay-content .menu-small-links {margin-top: 60px;}
+	.overlay-content .menu-small-links a {font-size: 16px; letter-spacing: .03em; font-weight: 400;}
 
         
 //Roll Up

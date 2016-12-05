@@ -1,9 +1,20 @@
 <div class = 'header'>
     <div class="wrap">
-    <div class = 'header-left'>
-        <div class = 'header-logo inline'><%= link_to image_tag("header_footer/cbz-logo-us-color.svg"), root_path %></div>
-    </div>
-    <div class = 'header-right'>
+    <div class = 'header-left inline'>
+        <div class = 'header-logo inline'><%= link_to image_tag("header_footer/cbz-logo-color.svg"), root_path %></div>
+    </div> <!-- END HEADER LEFT -->
+
+    <div class = 'header-center inline'>
+
+        <!--search-->
+        <form class="navbar-form" role="search" method="get" action = '/search'>
+            <input type="text" class="form-control input-lg" name='query' id ='searchQuery' placeholder="What can we help you find..." autocomplete='on'>
+            <input type = 'submit' id = 'searchButton' onclick = 'search()' class = "btn btn-default btn-green-touching" value = 'Search' />
+        </form>
+        
+    </div> <!-- END HEADER CENTER -->
+    
+    <div class = 'header-right inline'>
         <div class = 'header-login'>
             
             <p><span onclick = "openMenuNav()" style = "cursor:pointer">Menu</span> | 
@@ -12,27 +23,18 @@
             <% else %>
                 <%= link_to 'Log In', login_path %> <%= link_to 'Sign Up', signup_path, :class => 'signup-button' %></p>
             <% end %>
-        </div>
-    </div>
-
-    <div class = 'header-center'>
-
-        <!--search-->
-        <form class="navbar-form" role="search" method="get" action = '/search'>
-            <input type="text" class="form-control input-lg" name='query' id ='searchQuery' placeholder="What can we help you find..." autocomplete='on'>
-            <input type = 'submit' id = 'searchButton' onclick = 'search()' class = "btn btn-default btn-green-touching" value = 'Search' />
-        </form>
-        
-    </div>
-    </div>
-</div>
+        </div> <!-- END HEADER LOGIN -->
+    </div> <!-- END HEADER RIGHT -->
+    
+    </div> <!-- END WRAP -->
+</div> <!-- END HEADER -->
 
 
 <!-- State Overlay -->
 <div id="state-overlay" class="overlay">
 
   <!-- Button to close the overlay navigation -->
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="closeIcon">&times;</span><span class='closeText'>Close</span></a>
 
     <div class="overlay-content">
         <% State.all.order("name ASC").each do |state| %>
@@ -48,7 +50,7 @@
 <div id="category-overlay" class="overlay">
 
   <!-- Button to close the overlay navigation -->
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="closeIcon">&times;</span><span class='closeText'>Close</span></a>
 
     <div class="overlay-content">
         <% SortOption.all.order("name ASC").each do |option| %>
@@ -82,7 +84,7 @@
 <div id="menu-overlay" class="overlay">
 
   <!-- Button to close the overlay navigation -->
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="closeIcon">&times;</span><span class='closeText'>Close</span></a>
 
     <div class="overlay-content">
         <div class = 'menu-login'>

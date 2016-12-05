@@ -33,40 +33,40 @@
     </div>
 <% end %>
 
-
-<div class = 'source-drawer'>
-    <% if @state != nil || @category != nil || @source != nil %>
-        <%= render 'pages/sidebar' %>
-    <% else %>
-    	<%= render 'sidebar' %>
-    <% end %>
-</div>
-
-
-<div class = 'wrap'>
-
-    <div class = 'article-index'>
-    	<% if @state != nil || @category != nil || @source != nil%>
-        	<%= render 'pages/article_loop' %>
+<div class="home-display">
+    <div class = 'source-drawer'>
+        <% if @state != nil || @category != nil || @source != nil %>
+            <%= render 'pages/sidebar' %>
         <% else %>
-        	<%= render 'article_loop' %>
+        	<%= render 'sidebar' %>
         <% end %>
     </div>
     
-    <div class = 'article-index-views'>
-    	<% if @state != nil || @category != nil || @source != nil%>
-        	<%= render 'pages/article_loop2' %>
-        <% else %>
-        	<%= render 'article_loop2' %>
-        <% end %>
+    
+    <div class = 'wrap'>
+    
+        <div class = 'article-index'>
+        	<% if @state != nil || @category != nil || @source != nil%>
+            	<%= render 'pages/article_loop' %>
+            <% else %>
+            	<%= render 'article_loop' %>
+            <% end %>
+        </div>
+        
+        <div class = 'article-index-views'>
+        	<% if @state != nil || @category != nil || @source != nil%>
+            	<%= render 'pages/article_loop2' %>
+            <% else %>
+            	<%= render 'article_loop2' %>
+            <% end %>
+        </div>
+        
+        <%= paginate @articles %>
+        <%= paginate @articles_viewed %>
+        
+        
     </div>
-    
-    <%= paginate @articles %>
-    <%= paginate @articles_viewed %>
-    
-    
-</div>
-
+</div> <!-- END HOME DISPLAY -->
 
 <!--dont hide if it is the search page-->
 <% if @query == nil %>

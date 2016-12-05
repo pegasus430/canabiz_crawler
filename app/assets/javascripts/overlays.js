@@ -2,26 +2,34 @@
 
 /* Open when someone clicks on the span element */
 function openStateNav() {
-    document.getElementById("state-overlay").style.width = "100%";
+    document.getElementById("state-overlay").style.visibility = 'visible';
+    document.getElementById("state-overlay").style.opacity = '1';
 }
 
 /* Open when someone clicks on the span element */
 function openCategoryNav() {
-    document.getElementById("category-overlay").style.width = "100%";
+    document.getElementById("category-overlay").style.visibility = 'visible';
+    document.getElementById("category-overlay").style.opacity = '1';
 }
 
 function openSidebarNav() {
-    document.getElementById("sidebar-overlay").style.width = "100%";
+    document.getElementById("sidebar-overlay").style.visibility = 'visible';
+    document.getElementById("sidebar-overlay").style.opacity = '1';
 }
 
 function openMenuNav() {
-    document.getElementById("menu-overlay").style.width = "100%";
+    document.getElementById("menu-overlay").style.visibility = 'visible';
+    document.getElementById("menu-overlay").style.opacity = '1';
 }
 
 /* Close when someone clicks on the "x" symbol inside the overlay */
 function closeNav() {
-    document.getElementById("state-overlay").style.width = "0%";
-    document.getElementById("category-overlay").style.width = "0%";
-    document.getElementById("menu-overlay").style.width = "0%";
-    document.getElementById("sidebar-overlay").style.width = "0%";
+    document.getElementById("state-overlay").style.visibility = "hidden";
+    document.getElementById("state-overlay").style.opacity = "0";
+    document.getElementById("category-overlay").style.visibility = "hidden";
+    document.getElementById("category-overlay").style.opacity = "0";
+    document.getElementById("menu-overlay").style.visibility = "hidden";
+    document.getElementById("menu-overlay").style.opacity = "0";
+    document.getElementById("sidebar-overlay").style.visibility = "hidden";
+    document.getElementById("sidebar-overlay").style.opacity = "0";
 }

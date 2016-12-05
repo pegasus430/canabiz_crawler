@@ -34,30 +34,33 @@
 <% end %>
 
 
-<div class = 'source-drawer'>
-    <% if @state != nil || @category != nil %>
-        <%= render 'pages/sidebar' %>
-    <% else %>
-    	<%= render 'sidebar' %>
-    <% end %>
-</div>
 
-
-
-
-<div class = 'wrap'>
-
-    <div class = 'article-index'>
-    	
-        <%= render 'article_loop' %>
-    	
+<div class="home-display">
+    <div class = 'source-drawer'>
+        <% if @state != nil || @category != nil %>
+            <%= render 'pages/sidebar' %>
+        <% else %>
+        	<%= render 'sidebar' %>
+        <% end %>
     </div>
     
-</div>
-
-<div class = 'paginate-local' style = 'clear: both; width: 20%; margin: 0 auto;'>
-    <%= paginate @articles %>
-</div>
+    
+    
+    
+    <div class = 'wrap'>
+    
+        <div class = 'article-index'>
+        	
+            <%= render 'article_loop' %>
+        	
+        </div>
+        
+    </div>
+    
+    <div class = 'paginate-local' style = 'clear: both; width: 20%; margin: 0 auto;'>
+        <%= paginate @articles %>
+    </div>
+</div> <!-- END HOME DISPLAY -->
 
 <% @articles_to_hide.each do |item| %>
     <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>

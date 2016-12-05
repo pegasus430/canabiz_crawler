@@ -1,5 +1,5 @@
 .article-page-heading {
-	height: 300px;
+	height: 250px;
 	background-color: rgb(20,175,124); /* Old browsers */
 	background-color: -moz-linear-gradient(-45deg,  rgba(20,175,124,1) 0%, rgba(149,47,146,1) 100%); /* FF3.6-15 */
 	background-color: -webkit-linear-gradient(-45deg,  rgba(20,175,124,1) 0%,rgba(149,47,146,1) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -12,12 +12,17 @@
 
 
 //article
+	.article-ind {
+		padding-bottom: 150px;
+	}
+
 	.article-main {
 		width: 60%;
 		margin-top: -150px;
 	}
 
 	.article-main-image {
+		background: url(../assets/homepage/CBZ_News_Placeholder.jpg);
 		width: 100%;
 		min-height: 400px;
 		background-size: cover!important;
@@ -74,7 +79,15 @@
 //bottom
 .article-ind-source a {color: #93278F;}
 	.article-ind-source img {width: 150px; height: auto;}
-	
+
+.article-source-logo {
+	width: 23%;
+}	
+
+.article-source-link {
+	width: 70%;
+}
+
 .article-section-title {border-bottom: 1px solid #333; margin: 30px 0 10px;}
 	.article-section-title h2 {
 		font-weight: 900;
@@ -82,8 +95,11 @@
 		color: #333333;
 		letter-spacing: 0.05em;
 	}
-
-.article-tags .tags a {padding: 10px 20px; border: 1px solid #666; color: #666; border-radius: 50px; display: inline-block; text-decoration: none;}
+.article-tags .tags {
+	display: inline-block;
+	margin: 5px 5px 5px 0;
+}
+.article-tags .tags a {padding: 10px 20px; border: 1px solid #666; color: #666; border-radius: 50px; display: block; text-decoration: none;}
 	.article-tags .tags a:hover {
 		background: #93278F;
 		color: #FFF;
@@ -92,3 +108,10 @@
 	}
 
 .article-back {margin: 40px 0;}
+
+
+
+// Attempt to hide unwanted content within article
+
+.article-body .post-meta-social-links,
+.article-body img {display: none;}
