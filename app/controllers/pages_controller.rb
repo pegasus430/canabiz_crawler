@@ -53,7 +53,6 @@ class PagesController < ApplicationController
             NewsHighTimes.perform_later()
             NewsDopeMagazine.perform_later()
             NewsFourTwentyTimes.perform_later()
-            
         end
         
     end 
