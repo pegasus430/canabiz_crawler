@@ -37,7 +37,7 @@
                     <img src = "<%= asset_path(@article.source.article_logo) if @article.source %>">
                 </div> <!--END SOURCE LOGO-->
                 <div class= 'article-source-link inline vam'>
-                    <%= link_to @article.title, @article.web_url, target: "_blank", controller: "articles", action: "add_view" %>
+                    <%= link_to @article.title, @article.web_url, target: "_blank", :id= "article" %>
                 </div> <!-- END SOURCE LINK -->
             </div> <!-- END SOURCES -->
             <div class = 'article-tags'>
@@ -56,6 +56,23 @@
             </div>
         </div>
     </div><!-- END ARTICLE MAIN -->
+    
+    <script type="text/javascript">
+        $("#article").click(function(){
+            $.ajax({
+                type: "get",
+                url: "<%= article_path(article), method: :test) %>",
+                data: {p1: val1, p2: val2},   // you may pass parameter
+                dataType:'script',
+                beforeSend: function(){
+                    // code if you need 
+                },
+                success: function(response){
+                    // code if you need
+                }
+            });
+        });
+</script>
 
 <div class = 'sidebar article-right-sidebar inline'>
     <div class= 'article-section-title'><h2>Related News</h2></div>

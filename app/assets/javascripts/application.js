@@ -11,10 +11,12 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
 //= require jquery.infinitescroll
+//= require turbolinks
 
 
 //method used to display a stock image in the article index

@@ -9,7 +9,7 @@ gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a string and output it as a link
 gem 'kaminari', '~> 0.17.0' #Infinite Scrolling
-
+gem 'jquery-turbolinks', '~> 2.1' #also needed for Infinite Scrolling so it works with Links
 
 #TWITTER GEMS
 gem 'twitter' #TWITTER
