@@ -27,3 +27,49 @@
     
         
 <% end %>
+
+
+//JS NOTES HAVE BEEN MOVED:
+
+if $('#infinite-scrolling').size() > 0
+    $(window).on 'scroll', ->
+      more_posts_url = $('.pagination .next_page a').attr('href')
+        if more_posts_url && $(window).scrollTop() > $(document).height() - $(window).height() - 60
+            $('.pagination').html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />')
+            $.getScript more_posts_url
+        return
+      return
+      
+      
+      removed:
+      
+      #$('.pagination').html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..."/>')
+      
+      
+      //coffee script removed
+      alert $('#infinite-scrolling').size()
+if $('#infinite-scrolling').size() > 0
+	$(window).on 'scroll', ->
+	more_posts_url = $('.pagination .next_page a').attr('href')
+	alert more_posts_url
+	if more_posts_url && $(window).scrollTop() > $(document).height() - $(window).height() - 200
+		
+		$.getScript more_posts_url
+	return
+return
+
+
+
+//THIS IS THE WORKING CODE:
+
+$(document).ready ->
+  $(".wrap .article-index").infinitescroll
+    navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
+    nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
+    itemSelector: ".wrap .article" # selector for all items you'll retrieve
+
+$(document).ready ->
+  $(".wrap .article-index-views").infinitescroll
+    navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
+    nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
+    itemSelector: ".wrap .article" # selector for all items you'll retrieve   
