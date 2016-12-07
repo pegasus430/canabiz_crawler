@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require bootstrap
 //= require_tree .
 //= require jquery.infinitescroll
 //= require turbolinks
