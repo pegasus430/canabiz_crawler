@@ -37,7 +37,7 @@
                     <img src = "<%= asset_path(@article.source.article_logo) if @article.source %>">
                 </div> <!--END SOURCE LOGO-->
                 <div class= 'article-source-link inline vam'>
-                    <%= link_to @article.title, @article.web_url, target: "_blank", :id= "article" %>
+                    <%= link_to @article.title, @article.web_url, target: "_blank" %>
                 </div> <!-- END SOURCE LINK -->
             </div> <!-- END SOURCES -->
             <div class = 'article-tags'>
@@ -61,7 +61,7 @@
         $("#article").click(function(){
             $.ajax({
                 type: "get",
-                url: "<%= article_path(article), method: :test) %>",
+                url: "",
                 data: {p1: val1, p2: val2},   // you may pass parameter
                 dataType:'script',
                 beforeSend: function(){
