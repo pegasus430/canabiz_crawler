@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get 'contact_us', to: 'pages#contact_us'
   get 'submit_contact_form', to: 'pages#submit_contact_form'
   
+  get 'feedback', to: 'pages#feedback'
+  get 'submit_feedback_form', to: 'pages#submit_feedback_form'
+  
   #DIFF STYLING
   get 'test', to: 'diff_layouts#test'
   

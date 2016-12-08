@@ -145,6 +145,13 @@ class PagesController < ApplicationController
         redirect_to root_path
     end
     
+    def submit_feedback_form
+        Feedback.email(params[:firstTime], params[:primaryReason], params[:findEverything], params[:reasonDidntFind], params[:easyInformation], params[:likelihood]).deliver 
+       
+        flash[:success] = 'Thank you for submitting Feedback!'
+        redirect_to root_path
+    end
+    
     
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
     def prepare_access_token(oauth_token, oauth_token_secret)

@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require_tree .
 //= require jquery.infinitescroll
+//= require social-share-button
 
 
 

@@ -1,0 +1,78 @@
+<div class = "wrap">
+	<form id="contact-form" role="search" method="get" action = '/submit_feedback_form'>
+	    <div class="controls">
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_radio">Is this your first time visiting this site?</label>
+	                    <label class="radio"><input type="radio" name="firstTime">Yes</label>
+						<label class="radio"><input type="radio" name="firstTime">No</label>
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_message">What is the primary reason you came to this site?</label>
+	                    <textarea id="form_message" name="primaryReason" class="form-control" rows="4"></textarea>
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_radio_2">Did you find everything you were looking for?</label>
+	                    <label class="radio"><input type="radio" name="findEverything">Yes, all of it</label>
+	                    <label class="radio"><input type="radio" name="findEverything">Yes, some of it</label>
+						<label class="radio"><input type="radio" name="findEverything">No</label>
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_message">If you did not find any or all of what you needed, please tell us what information you were looking for.</label>
+	                    <textarea id="form_message" name="reasonDidntFind" class="form-control" rows="4"></textarea>
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_radio_2">Please tell us how easy it is to find information on the site.</label>
+	                    <label class="radio"><input type="radio" name="easyInformation">Very Easy</label>
+	                    <label class="radio"><input type="radio" name="easyInformation">Easy</label>
+						<label class="radio"><input type="radio" name="easyInformation">Average</label>
+						<label class="radio"><input type="radio" name="easyInformation">Difficult</label>
+						<label class="radio"><input type="radio" name="easyInformation">Very Difficult</label>
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_radio_2">What is the likelihood that you will visit this site again?</label>
+	                    <label class="radio"><input type="radio" name="likelihood">Very Easy</label>
+	                    <label class="radio"><input type="radio" name="likelihood">Easy</label>
+						<label class="radio"><input type="radio" name="likelihood">Average</label>
+						<label class="radio"><input type="radio" name="likelihood">Difficult</label>
+						<label class="radio"><input type="radio" name="likelihood">Very Difficult</label>
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>	        
+	        <div class = "row">
+	        	<div class="col-md-12">
+	                <input type="submit" class="btn btn-send" value="Send Message">
+	            </div>
+	        </div>
+	    </div>
+	</form>
+</div>
+
+

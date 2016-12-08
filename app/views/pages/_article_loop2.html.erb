@@ -33,6 +33,9 @@
                         <%= article.source.name %>
                     </div>
                 </div>
+                <div class = 'social-sharing' style = 'position: absolute; botton: 20px; right: 20px'>
+                    <%= social_share_button_tag(article.title, :url => "https://cannabiz-news.herokuapp.com/articles/#{article.id}", :image => "#{article.image}") %>
+                </div>
                 <% if @current_user && @current_user.admin? %>
                     <div class = 'admin-twitter-share'>
                         <p class = 'admin-twitter-share-button'><%= link_to "SHARE", tweet_path(article) %></p>
