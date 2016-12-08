@@ -1,12 +1,12 @@
 # app/assets/javascripts/articles.js.coffee
 
-ready = ->
+$(document).ready = ->
   $(".wrap .article-index").infinitescroll
     navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
     nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
     itemSelector: ".wrap .article" # selector for all items you'll retrieve
     
-ready2 = ->
+$(document).ready = ->
   $(".wrap .article-index-views").infinitescroll
     navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
     nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
