@@ -14,10 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
-//= require_tree .
 //= require jquery.infinitescroll
 //= require social-share-button
-
+//= require_tree .
 
 
 //method used to display a stock image in the article index
