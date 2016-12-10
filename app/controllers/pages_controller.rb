@@ -151,7 +151,7 @@ class PagesController < ApplicationController
                         params[:suggestion]).deliver 
        
         flash[:success] = 'Thank you for submitting Feedback!'
-        redirect_to feedback_path
+        redirect_to root_path
     end
     
     
