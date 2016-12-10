@@ -146,10 +146,12 @@ class PagesController < ApplicationController
     end
     
     def submit_feedback_form
-        Feedback.email(params[:firstTime], params[:primaryReason], params[:findEverything], params[:reasonDidntFind], params[:easyInformation], params[:likelihood]).deliver 
+        Feedback.email(params[:firstTime], params[:primaryReason], params[:findEverything], 
+                        params[:reasonDidntFind], params[:easyInformation], params[:likelihood],
+                        params[:suggestion]).deliver 
        
         flash[:success] = 'Thank you for submitting Feedback!'
-        redirect_to root_path
+        redirect_to feedback_path
     end
     
     

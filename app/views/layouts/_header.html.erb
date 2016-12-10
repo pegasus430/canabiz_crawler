@@ -61,24 +61,6 @@
 
 </div>
 
-<script>
-    function changeSort(elem) {
-        if (elem.innerHTML == 'Most Popular') {
-            $(".article-index-views").css("display", "block");
-            $(".article-index").css("display", "none");
-            $(".sort-button").html("Most Popular");
-        } else if (elem.innerHTML == 'Newest') {
-            $(".article-index-views").css("display", "none");
-            $(".article-index").css("display", "block");
-            $(".sort-button").html("Newest");
-        }
-        //hide the overlay
-        closeNav();
-    }
-    
-</script>
-
-
 
 <!--Menu Overlay-->
 <div id="menu-overlay" class="overlay">
@@ -102,7 +84,8 @@
         <% end %>
         
         <a href="#">About</a>
-        <a href="<%= contact_us_path%>">Contact</a>
+        <a href="<%= contact_us_path%>">Contact Us</a>
+        <a href="<%= feedback_path%>">Leave Feedback</a>
         
         <div class = "menu-small-links">
             <a href="#">Terms & Conditions</a>

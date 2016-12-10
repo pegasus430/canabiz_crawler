@@ -25,3 +25,18 @@ function dispIndexImageError(image) {
   image.src = "<%= asset_path 'homepage/news-substitute.jpg' %>"
   return true;
 }
+
+//change the sorting method
+function changeSort(elem) {
+    if (elem.innerHTML == 'Most Popular') {
+        $(".article-index-views").css("display", "block");
+        $(".article-index").css("display", "none");
+        $(".sort-button").html("Most Popular");
+    } else if (elem.innerHTML == 'Newest') {
+        $(".article-index-views").css("display", "none");
+        $(".article-index").css("display", "block");
+        $(".sort-button").html("Newest");
+    }
+    //hide the overlay
+    closeNav();
+}

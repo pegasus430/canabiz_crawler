@@ -5,8 +5,8 @@
 	            <div class="col-md-6">
 	                <div class="form-group">
 	                    <label for="form_radio">Is this your first time visiting this site?</label>
-	                    <label class="radio"><input type="radio" name="firstTime">Yes</label>
-						<label class="radio"><input type="radio" name="firstTime">No</label>
+	                    <br/><%= radio_button_tag(:firstTime, "Yes") %> <%= label_tag(:firstTime, "Yes") %> 
+	                    <br/><%= radio_button_tag(:firstTime, "No") %> <%= label_tag(:firstTime, "No") %>
 	                    <div class="help-block with-errors"></div>
 	                </div>
 	            </div>
@@ -24,9 +24,9 @@
 	            <div class="col-md-6">
 	                <div class="form-group">
 	                    <label for="form_radio_2">Did you find everything you were looking for?</label>
-	                    <label class="radio"><input type="radio" name="findEverything">Yes, all of it</label>
-	                    <label class="radio"><input type="radio" name="findEverything">Yes, some of it</label>
-						<label class="radio"><input type="radio" name="findEverything">No</label>
+	                    <br/><%= radio_button_tag(:findEverything, "Yes, all of it") %> <%= label_tag(:findEverything, "Yes, all of it") %> 
+	                    <br/><%= radio_button_tag(:findEverything, "Yes, some of it") %> <%= label_tag(:findEverything, "Yes, some of it") %> 
+	                    <br/><%= radio_button_tag(:findEverything, "No") %> <%= label_tag(:findEverything, "No") %> 
 	                    <div class="help-block with-errors"></div>
 	                </div>
 	            </div>
@@ -43,12 +43,12 @@
 	        <div class="row">
 	            <div class="col-md-6">
 	                <div class="form-group">
-	                    <label for="form_radio_2">Please tell us how easy it is to find information on the site.</label>
-	                    <label class="radio"><input type="radio" name="easyInformation">Very Easy</label>
-	                    <label class="radio"><input type="radio" name="easyInformation">Easy</label>
-						<label class="radio"><input type="radio" name="easyInformation">Average</label>
-						<label class="radio"><input type="radio" name="easyInformation">Difficult</label>
-						<label class="radio"><input type="radio" name="easyInformation">Very Difficult</label>
+	                    <label for="form_radio_2">How easy is it to navigate this site?</label>
+	                    <br/><%= radio_button_tag(:easyInformation, "Very Easy") %> <%= label_tag(:easyInformation, "Very Easy") %> 
+	                    <br/><%= radio_button_tag(:easyInformation, "Easy") %> <%= label_tag(:easyInformation, "Easy") %>
+	                    <br/><%= radio_button_tag(:easyInformation, "Average") %> <%= label_tag(:easyInformation, "Average") %>
+	                    <br/><%= radio_button_tag(:easyInformation, "Difficult") %> <%= label_tag(:easyInformation, "Difficult") %>
+	                    <br/><%= radio_button_tag(:easyInformation, "Very Difficult") %> <%= label_tag(:easyInformation, "Very Difficult") %>
 	                    <div class="help-block with-errors"></div>
 	                </div>
 	            </div>
@@ -57,11 +57,18 @@
 	            <div class="col-md-6">
 	                <div class="form-group">
 	                    <label for="form_radio_2">What is the likelihood that you will visit this site again?</label>
-	                    <label class="radio"><input type="radio" name="likelihood">Very Easy</label>
-	                    <label class="radio"><input type="radio" name="likelihood">Easy</label>
-						<label class="radio"><input type="radio" name="likelihood">Average</label>
-						<label class="radio"><input type="radio" name="likelihood">Difficult</label>
-						<label class="radio"><input type="radio" name="likelihood">Very Difficult</label>
+	                    <br/><%= radio_button_tag(:likelihood, "Very Likely") %> <%= label_tag(:likelihood, "Very Likely") %>
+	                    <br/><%= radio_button_tag(:likelihood, "Likely") %> <%= label_tag(:likelihood, "Likely") %>
+	                    <br/><%= radio_button_tag(:likelihood, "Not Likely") %> <%= label_tag(:likelihood, "Not Likely") %>
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_message">Please add any comments you have for improving the website. We welcome suggestions on specific areas for improvements, features you would like to see added to the site, and examples of what you consider good websites.</label>
+	                    <textarea id="form_message" name="suggestion" class="form-control" rows="4"></textarea>
 	                    <div class="help-block with-errors"></div>
 	                </div>
 	            </div>
