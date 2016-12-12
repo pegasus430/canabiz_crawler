@@ -40,7 +40,8 @@ class PagesController < ApplicationController
           format.js # add this line for your js template
         end
         
-        
+        #removed from marijuana stocks line 9 #import urllib3
+        NewsMarijuanaStocks.perform_later()
         # news background jobs:
         if Rails.env.production?
             NewsMarijuanaStocks.perform_later()

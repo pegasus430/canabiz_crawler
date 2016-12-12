@@ -3,7 +3,7 @@
 
 import requests
 import json
-import urllib3
+
 from lxml import html
 from datetime import datetime
 
