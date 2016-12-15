@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   get 'article-admin', to: 'articles#admin'
   get 'digest', to: 'articles#digest'
   get 'tweet/:id', to: 'articles#tweet', as: 'tweet'
+  put 'save_visit/:id', to: 'articles#save_visit', as: 'save_visit'
   get 'send_tweet', to: 'articles#send_tweet'
   
   

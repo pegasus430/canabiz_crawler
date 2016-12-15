@@ -30,12 +30,26 @@
                 <a href = "<%=root_path%>"><span></span>Back to News</a>
             </div>
             
+            <script>
+                function saveExternalArticleClick(articleId, articleURL) {
+    	            console.log(articleId);
+                	console.log(articleURL);
+                	$.ajax({
+            	      type: "PUT",
+            	      url: "/save_visit/" + articleId
+            	    });
+            	    //open new link
+            	    window.open(articleURL,'_blank');
+                }
+            </script>
+            
             <div class = 'article-ind-source'>
                 <div class = 'article-section-title'><h2>Source</h2></div>
                 <div class='article-source-logo inline vam'>
                     <img src = "<%= asset_path(@article.source.article_logo) if @article.source %>">
                 </div> <!--END SOURCE LOGO-->
                 <div class= 'article-source-link inline vam'>
+                    <p onclick = "saveExternalArticleClick('<%=@article.id%>', '<%=@article.web_url%>')"><%=@article.title%></p>
                     <%= link_to @article.title, @article.web_url, target: "_blank" %>
                 </div> <!-- END SOURCE LINK -->
             </div> <!-- END SOURCES -->

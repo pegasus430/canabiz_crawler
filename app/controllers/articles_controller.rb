@@ -46,6 +46,23 @@ class ArticlesController < ApplicationController
 	   	end
     end
     
+    def save_visit
+
+        if params[:id].present?
+            
+           #query for article
+           @article = Article.find(params[:id])
+           @article.increment(:external_visits, by = 1)
+           @article.save
+        
+           @source = @article.source
+           @source.increment(:external_article_visits, by = 1)
+           @source.save
+        else
+            redirect_to root_path     
+        end
+    end
+    
     def send_tweet
         
        	require 'rubygems'
