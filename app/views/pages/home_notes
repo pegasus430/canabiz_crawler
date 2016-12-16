@@ -1,3 +1,11 @@
+//DELETED THIS MIGRATION FILE:
+class ArticlesChange < ActiveRecord::Migration
+  def change
+    add_column :articles, :remote_image_url, :string
+  end
+end
+
+
 //CODE NOT BEING USED
 
 <div class = 'col-md-3'>
