@@ -33,11 +33,15 @@
   <table class = 'table' id = 'admin-table'>
       <th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
       <th><%= sortable "title" %></th>
+      <th><%= sortable "body" %></th>
       <th><%= sortable "web_url" %></th>
+      <th><%= sortable "image" %></th>
       <th><%= sortable "include_in_digest" %></th>
       <th><%= sortable "created_at" %></th>
       <th><%= sortable "num_views" %></th>
+      <th><%= sortable "date" %></th>
       <th><%= sortable "source_id" %></th>
+      <th><%= sortable "external_visits" %></th>
       <th>States</th>
       <th>Categories</th>
       <th>Edit</th>
@@ -47,11 +51,15 @@
           <tr>
               <td><%= check_box_tag "articles[]", article.id %></td>
               <td style = 'width: 300px'><%= article.title %></td>
-              <td><%= article.web_url %></td> <!--.truncate(30) if article.image-->
+              <td><%= article.body.truncate(30) if article.body %></td>
+              <td><%= article.web_url.truncate(30) if article.web_url %></td>
+              <td><%= article.image.to_s.truncate(30) if article.image %></td>
               <td><%= article.include_in_digest %></td>
-              <td><%= article.created_at %></td>
+              <td><%= article.created_at.strftime("%B %d, %Y | %I:%M %p") %></td>
               <td><%= article.num_views %></td>
+              <td><%= article.date.strftime("%B %d, %Y | %I:%M %p") %></td>
               <td><%= article.source.name if article.source %></td>
+              <td><%= article.external_visits %></td>
               
               <td><% if article.states.any? %>
                   <%= render article.states %>

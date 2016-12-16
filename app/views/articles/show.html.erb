@@ -50,7 +50,6 @@
                 </div> <!--END SOURCE LOGO-->
                 <div class= 'article-source-link inline vam'>
                     <p onclick = "saveExternalArticleClick('<%=@article.id%>', '<%=@article.web_url%>')"><%=@article.title%></p>
-                    <%= link_to @article.title, @article.web_url, target: "_blank" %>
                 </div> <!-- END SOURCE LINK -->
             </div> <!-- END SOURCES -->
             <div class = 'article-tags'>
@@ -85,7 +84,7 @@
                 }
             });
         });
-</script>
+    </script>
 
 <div class = 'sidebar article-right-sidebar inline'>
     <div class= 'article-section-title'><h2>Related News</h2></div>
