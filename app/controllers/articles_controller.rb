@@ -157,7 +157,7 @@ class ArticlesController < ApplicationController
         @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").limit(3)
         
         if Rails.env.production? 
-           #@same_source_articles = @same_source_articles.where(created_at: (now - 1.week.ago)) 
+           @same_source_articles = @same_source_articles.where(created_at: (now - 1.week.ago)) 
         end
                                         
                                         
