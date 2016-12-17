@@ -12,6 +12,9 @@ class Article < ActiveRecord::Base
     validates :title, presence: true, length: {minimum: 3, maximum: 300}
     validates_uniqueness_of :title
     
+    #set the default value of queries
+    default_scope {order(created_at: :desc)}
+    
     #photo aws storage
     #mount_uploader :image, PhotoUploader
     mount_uploader :image, PhotoUploader

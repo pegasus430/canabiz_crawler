@@ -4,7 +4,8 @@ class ArticlesController < ApplicationController
 
     #--------ADMIN PAGE-------------------------
     def admin
-        @articles = Article.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 25)
+        @articles = Article.order(sort_column + " " + sort_direction)
+                        .paginate(page: params[:page], per_page: 25)
     
         #for csv downloader
         respond_to do |format|
@@ -22,8 +23,9 @@ class ArticlesController < ApplicationController
     
     def search
         @q = "%#{params[:query]}%"
-        @articles = Article.where("title LIKE ? or abstract LIKE ?", @q, @q).order(sort_column + " " + 
-                                    sort_direction).paginate(page: params[:page], per_page: 50)
+        @articles = Article.where("title LIKE ? or abstract LIKE ?", @q, @q)
+                            .order(sort_column + " " + sort_direction)
+                            .paginate(page: params[:page], per_page: 50)
         render 'admin'
     end
     
@@ -37,7 +39,8 @@ class ArticlesController < ApplicationController
 	    #testing link
 	    link = URI::encode("http://cannabiz-news.herokuapp.com/articles/#{@article.id}")
 	    
-	   	bitlyResponse = HTTParty.get("https://api-ssl.bitly.com/v3/shorten?access_token=6a88d948272321a232f973370fd36ebafce5d121&longUrl=#{link}")
+	   	bitlyResponse = HTTParty.get("https://api-ssl.bitly.com/v3/shorten?" + 
+	   	                "access_token=6a88d948272321a232f973370fd36ebafce5d121&longUrl=#{link}")
 	   	
 	   	@bitlyLink = ''
 	   	
@@ -46,6 +49,7 @@ class ArticlesController < ApplicationController
 	   	end
     end
     
+    #method saves an external click of an article link (goes to external page)
     def save_visit
 
         if params[:id].present?
@@ -102,38 +106,50 @@ class ArticlesController < ApplicationController
     
     #--------ADMIN PAGE-------------------------
     
-    def index
-        @top_articles = Article.where('image IS NOT NULL').limit(4)
-        @categories = Category.order("RANDOM()").limit(4) #randomize the categories that are returned
-    end
 
-    #-----------------------------------
     def new
       @article = Article.new
     end
+    
     def create
-      @article = Article.new(article_params)
-      if @article.save
-         flash[:success] = 'Article was successfully created'
-         redirect_to article_admin_path
-      else 
-         render 'new'
-      end
+        @article = Article.new(article_params)
+        
+        if @article.save
+            flash[:success] = 'Article was successfully created'
+            redirect_to article_admin_path
+        else 
+            render 'new'
+        end
     end 
     #-----------------------------------
     
     def show
         #related articles
         if @article.states.present?
-            @related_articles = @article.states[0].articles.order("RANDOM()").limit(3) 
+            
+            @related_articles = @article.states.sample.articles.order("RANDOM()").limit(3)
+            
+            if Rails.env.production?
+                @related_articles = @related_articles.where('created_at >= ?', 1.week.ago) 
+            end
+
         elsif @article.categories.present?
-            @related_articles = @article.categories[0].articles.order("RANDOM()").limit(3) 
+        
+            @related_articles = @article.categories.sample.articles.order("RANDOM()").limit(3)
+                                        
+            if Rails.env.production?
+               @related_articles = @related_articles.where('created_at >= ?', 1.week.ago)
+            end
+                                        
         else
             @related_articles = Article.all.order("RANDOM()").limit(3)
+                                        .where('created_at >= ?', 1.week.ago)
         end
         
         #same source articles
-        @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").limit(3)
+        @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").
+                                        where('created_at >= ?', 1.week.ago).limit(3)
+                                        
         
         #add view to article for sorting
         @article.increment(:num_views, by = 1)
@@ -145,9 +161,6 @@ class ArticlesController < ApplicationController
         end
     end
     
-    def add_view
-       logger.info ("THE LINK HAS BEEN CLICKED") 
-    end
     
     #-----------------------------------
     def edit
@@ -188,7 +201,8 @@ class ArticlesController < ApplicationController
             end
         end
         def article_params
-            params.require(:article).permit(:title, :abstract, :body, :date, :image, :remote_image_url, :remote_file_url, :source_id, :include_in_digest, state_ids: [], category_ids: [])
+            params.require(:article).permit(:title, :abstract, :body, :date, :image, :remote_image_url, 
+                                    :source_id, :include_in_digest, state_ids: [], category_ids: [])
         end
       
         def sort_column

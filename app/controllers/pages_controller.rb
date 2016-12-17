@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     def home
         if current_user != nil
             
-            @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)
+            @articles = Article.page(params[:page]).per_page(24) #order("created_at DESC")
             @articles_viewed = Article.order("num_views DESC").page(params[:page]).per_page(24)
             
             if current_user.sources.any?
