@@ -31,7 +31,7 @@ class PagesController < ApplicationController
             end
             
         else 
-            @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)
+            @articles = Article.page(params[:page]).per_page(24)
             @articles_viewed = Article.order("num_views DESC").page(params[:page]).per_page(24)
         end    
         
@@ -44,15 +44,15 @@ class PagesController < ApplicationController
 
         # news background jobs:
         if Rails.env.production?
-            NewsMarijuanaStocks.perform_later()
-            NewsTheCannabist.perform_later()
+            #NewsMarijuanaStocks.perform_later()
+            #NewsTheCannabist.perform_later()
             NewsLeafly.perform_later()
-            NewsMarijuana.perform_later()
-            NewsCannabisCulture.perform_later()
-            NewsCannaLawBlog.perform_later()
-            NewsMjBizDaily.perform_later()
-            NewsHighTimes.perform_later()
-            NewsDopeMagazine.perform_later()
+            #NewsMarijuana.perform_later()
+            #NewsCannabisCulture.perform_later()
+            #NewsCannaLawBlog.perform_later()
+            #NewsMjBizDaily.perform_later()
+            #NewsHighTimes.perform_later()
+            #NewsDopeMagazine.perform_later()
             NewsFourTwentyTimes.perform_later()
         end
         
@@ -96,14 +96,17 @@ class PagesController < ApplicationController
         if params[:query].present? 
             @query = "%#{params[:query]}%"
             
-            @articles = Article.where("title LIKE ? or body LIKE ?", @query, @query).order("created_at DESC").page(params[:page]).per_page(24)
-            @articles_viewed = Article.where("title LIKE ? or body LIKE ?", @query, @query).order("num_views DESC").page(params[:page]).per_page(24)
+            @articles = Article.where("title LIKE ? or body LIKE ?", @query, @query).page(params[:page]).per_page(24)
+            
+            @articles_viewed = Article.where("title LIKE ? or body LIKE ?", @query, @query)
+                                        .order("num_views DESC").page(params[:page]).per_page(24)
 
         else 
             redirect_to root_path
         end
     end
     
+    #user signs up to the weekly digest
     def save_email
         if params[:email].present?
             DigestEmail.create(email: params[:email], active: true)
@@ -115,6 +118,7 @@ class PagesController < ApplicationController
         end
     end
     
+    #unsubscribe from weekly digest
     def unsubscribe
         if params[:id].present?
         
@@ -157,18 +161,18 @@ class PagesController < ApplicationController
     
     
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
-    def prepare_access_token(oauth_token, oauth_token_secret)
+    #def prepare_access_token(oauth_token, oauth_token_secret)
 
-        consumer = OAuth::Consumer.new("PeKIPXsMPl80fKm6SipbqrRVL", "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO", 
-                                        { :site => "https://api.twitter.com", :scheme => :header })
+    #    consumer = OAuth::Consumer.new("PeKIPXsMPl80fKm6SipbqrRVL", "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO", 
+    #                                    { :site => "https://api.twitter.com", :scheme => :header })
          
         # now create the access token object from passed values
-        token_hash = { :oauth_token => oauth_token, :oauth_token_secret => oauth_token_secret }
-        access_token = OAuth::AccessToken.from_hash(consumer, token_hash )
+    #    token_hash = { :oauth_token => oauth_token, :oauth_token_secret => oauth_token_secret }
+    #    access_token = OAuth::AccessToken.from_hash(consumer, token_hash )
      
-        return access_token
-    end
-    helper_method :prepare_access_token
+    #    return access_token
+    #end
+    #helper_method :prepare_access_token
     
     private
         def require_admin
