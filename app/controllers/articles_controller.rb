@@ -124,6 +124,9 @@ class ArticlesController < ApplicationController
     #-----------------------------------
     
     def show
+        
+        now = Time.now
+        
         #related articles
         if @article.states.present?
             
