@@ -138,17 +138,21 @@ class ArticlesController < ApplicationController
             @related_articles = @article.categories.sample.articles.order("RANDOM()").limit(3)
                                         
             if Rails.env.production?
-               @related_articles = @related_articles.where('created_at >= ?', 1.week.ago)
+               @related_articles = @related_articles.where(created_at >=, 1.week.ago)
             end
                                         
         else
             @related_articles = Article.all.order("RANDOM()").limit(3)
-                                        .where('created_at >= ?', 1.week.ago)
+                                        .where(created_at >= 1.week.ago)
         end
         
         #same source articles
-        @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").
-                                        where('created_at >= ?', 1.week.ago).limit(3)
+        @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").limit(3)
+        
+        if Rails.env.production? 
+           @same_source_articles = @same_source_articles.where(created_at >= 1.week.ago) 
+        end
+                                        
                                         
         
         #add view to article for sorting
