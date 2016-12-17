@@ -133,7 +133,7 @@ class ArticlesController < ApplicationController
             @related_articles = @article.states.sample.articles.order("RANDOM()").limit(3)
             
             if Rails.env.production?
-                @related_articles = @related_articles.where(created_at: (now - 1.week.ago)) 
+                #@related_articles = @related_articles.where(created_at: (now - 1.week.ago)) 
             end
 
         elsif @article.categories.present?
@@ -141,14 +141,14 @@ class ArticlesController < ApplicationController
             @related_articles = @article.categories.sample.articles.order("RANDOM()").limit(3)
                                         
             if Rails.env.production?
-               @related_articles = @related_articles.where(created_at: (now - 1.week.ago))
+               #@related_articles = @related_articles.where(created_at: (now - 1.week.ago))
             end
                                         
         else
             @related_articles = Article.all.order("RANDOM()").limit(3)
             
             if Rails.env.production?
-                @related_articles = @related_articles.where(created_at: (now - 1.week.ago))
+                #@related_articles = @related_articles.where(created_at: (now - 1.week.ago))
             end
                                         
         end
@@ -157,7 +157,7 @@ class ArticlesController < ApplicationController
         @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").limit(3)
         
         if Rails.env.production? 
-           @same_source_articles = @same_source_articles.where(created_at: (now - 1.week.ago)) 
+           #@same_source_articles = @same_source_articles.where(created_at: (now - 1.week.ago)) 
         end
                                         
                                         
