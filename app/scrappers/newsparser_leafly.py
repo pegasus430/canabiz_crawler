@@ -39,7 +39,7 @@ class NPLeafly(INewsParser):
             body_html = None
             body_text = None
             body_html_raw = article.xpath('//div[@class="leafly-legacy-article"]')
-            if len(body_html_raw):
+            if len(body_html_raw) >= 1:
                 body_html = html.tostring(body_html_raw[0])
             else:
                 body_html_raw = article.xpath('//div[@class="post-content style-light"]/div[2]//div[@class="uncode_text_column"]')

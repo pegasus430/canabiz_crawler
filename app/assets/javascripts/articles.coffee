@@ -1,22 +1,25 @@
 # app/assets/javascripts/articles.js.coffee
 
 ready = ->
-  $(".wrap .article-index").infinitescroll
-    navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
-    nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
-    itemSelector: ".wrap .article" # selector for all items you'll retrieve
+    $(".wrap .article-index").infinitescroll
+      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
+      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
+      itemSelector: ".wrap .article" # selector for all items you'll retrieve
     
 ready2 = ->
-  $(".wrap .article-index-views").infinitescroll
-    navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
-    nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
-    itemSelector: ".wrap .article" # selector for all items you'll retrieve    
+    $(".wrap .article-index-views").infinitescroll
+      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
+      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
+      itemSelector: ".wrap .article" # selector for all items you'll retrieve    
 
-$(document).ready(ready)
+images = ->
+  $document.imagesLoad(ready)
+
+$(document).ready(images)
 $(document).on('page:load', ready)
 $(document).on('turbolinks:load', ready)
 
-$(document).ready(ready2)
+$(document).ready(images)
 $(document).on('page:load', ready2)
 $(document).on('turbolinks:load', ready2)
 

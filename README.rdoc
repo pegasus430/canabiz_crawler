@@ -26,3 +26,8 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 //NOTES: add longitude and latitude to dispensaries <%= #HTTParty.get(“rubygems.org/api/v1/versions/httparty.json”) %>
+
+
+https://github.com/metafizzy/isotope/issues/1152 --> change the loading text and image of infinitescroll
+https://github.com/heel/scrollinity --> another gem for infinitescroll - maybe try this if we cant figure out CSS
+https://richonrails.com/articles/endless-scrolling -> more endless scrolling

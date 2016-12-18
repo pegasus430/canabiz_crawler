@@ -1,2 +1,5 @@
-$(".wrap").append("<div class='article-index'><%= escape_javascript() %></div>");
-$(".wrap").append("<div class='article-index-views'><%= escape_javascript() %></div>");
+$('.wrap').imagesLoaded( function() {
+	$(".wrap").append("<div class='article-index'><%= escape_javascript() %></div>");
+	$(".wrap").append("<div class='article-index-views'><%= escape_javascript() %></div>");
+});
+
