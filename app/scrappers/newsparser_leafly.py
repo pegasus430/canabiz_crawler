@@ -21,7 +21,7 @@ class NPLeafly(INewsParser):
 
         for excerpt in excerpts:
             title = excerpt.xpath('.//span[@class="leafly-title"]/text()')[0]
-            print u'Processing article: {}'.format(title)
+            #print u'Processing article: {}'.format(title)
             url = excerpt.xpath('./@href')[0]
             article_raw = requests.get(url, headers = self.headers)
             article = html.fromstring(article_raw.content)
