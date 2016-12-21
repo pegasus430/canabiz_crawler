@@ -45,31 +45,20 @@
     
     <div class = 'wrap'>
     
-        <div class = 'article-index'>
-        	<% if @state != nil || @category != nil || @source != nil%>
-            	<%= render 'pages/article_loop' %>
-            <% else %>
-            	<%= render 'article_loop' %>
-            <% end %>
+        <div id = 'article-index'>
+            <%= render @recents %>
+            
+        </div>
+        <div id = 'article-index-views'>
+            <%= render @mostviews %>
+            
         </div>
         
-        <div class = 'article-index-views'>
-        	<% if @state != nil || @category != nil || @source != nil%>
-            	<%= render 'pages/article_loop2' %>
-            <% else %>
-            	<%= render 'article_loop2' %>
-            <% end %>
+        <div class = 'article-index-pagination'>
+            <%= will_paginate @recents %>
         </div>
         
-        <%= paginate @articles %>
-        <%= paginate @articles_viewed %>
+        
         
     </div>
 </div> <!-- END HOME DISPLAY -->
-
-<!--dont hide if it is the search page-->
-<% if @query == nil %>
-    <% @articles_to_hide.each do |item| %>
-        <script>showOrHideArticles(document.getElementById("<%=item.name.downcase.tr(" ", "_") + '_checkbox' %>"));</script>
-    <% end %>
-<% end %>

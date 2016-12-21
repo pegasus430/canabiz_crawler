@@ -1,12 +1,3 @@
-<script>
-    function dispIndexImageError(image) {
-      image.onerror = "";
-      image.src = "<%= asset_path 'homepage/news-substitute.jpg' %>"
-      return true;
-    }
-</script>
-
-
 <% @articles.each_with_index  do |article, i| %>
     
         <div class = 'article <%=article.source.name.downcase.tr(" ", "_") if article.source 

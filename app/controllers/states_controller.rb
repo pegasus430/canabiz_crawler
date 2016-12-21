@@ -35,10 +35,8 @@ class StatesController < ApplicationController
     end 
     
     def show
-        
-        @articles = @state.articles.order("created_at DESC").page(params[:page]).per_page(24)
-        @articles_viewed = @state.articles.order("num_views DESC").page(params[:page]).per_page(24) 
-        
+        @recents = @state.articles.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @mostviews = @state.articles.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)  
     end
     
    def edit

@@ -21,7 +21,7 @@ class NPLeafly(INewsParser):
 
         for excerpt in excerpts:
             title = excerpt.xpath('.//span[@class="leafly-title"]/text()')[0]
-            
+            print u'Processing article: {}'.format(title)
             url = excerpt.xpath('./@href')[0]
             article_raw = requests.get(url, headers = self.headers)
             article = html.fromstring(article_raw.content)
@@ -39,14 +39,16 @@ class NPLeafly(INewsParser):
             body_html = None
             body_text = None
             body_html_raw = article.xpath('//div[@class="leafly-legacy-article"]')
-            if len(body_html_raw) >= 1:
+            if len(body_html_raw):
                 body_html = html.tostring(body_html_raw[0])
             else:
                 body_html_raw = article.xpath('//div[@class="post-content style-light"]/div[2]//div[@class="uncode_text_column"]')
-                body_html = html.tostring(body_html_raw[0])
-            body_text = body_html_raw[0].text_content().strip()
+                if len(body_html_raw):
+                    body_html = html.tostring(body_html_raw[0])
 
-            site.add_article(title, url, image_url, date, body_html, body_text)
+            if len(body_html_raw):
+                body_text = body_html_raw[0].text_content().strip()
+                site.add_article(title, url, image_url, date, body_html, body_text)
 
         return site.to_dict()
 

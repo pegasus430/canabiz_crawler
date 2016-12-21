@@ -46,8 +46,8 @@ class SourcesController < ApplicationController
     #-------------------------------------------
     
     def show
-        @articles = @source.articles.order("created_at DESC").page(params[:page]).per_page(24)
-        @articles_viewed = @source.articles.order("num_views DESC").page(params[:page]).per_page(24) 
+        @recents = @source.articles.order("created_at DESC").page(params[:page]).per_page(24)
+        @mostviews = @source.articles.order("num_views DESC").page(params[:page]).per_page(24) 
     end
 
     #-------------------------------------------

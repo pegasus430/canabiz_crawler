@@ -29,14 +29,35 @@ function dispIndexImageError(image) {
 //change the sorting method
 function changeSort(elem) {
     if (elem.innerHTML == 'Most Popular') {
-        $(".article-index-views").css("display", "block");
-        $(".article-index").css("display", "none");
+        $("#article-index-views").css("display", "block");
+        $("#article-index").css("display", "none");
         $(".sort-button").html("Most Popular");
     } else if (elem.innerHTML == 'Newest') {
-        $(".article-index-views").css("display", "none");
-        $(".article-index").css("display", "block");
+        $("#article-index-views").css("display", "none");
+        $("#article-index").css("display", "block");
         $(".sort-button").html("Newest");
     }
     //hide the overlay
     closeNav();
 }
+
+
+//endless scrolling?
+$(document).ready(function() {
+  if ($('.article-index-pagination .pagination').length) {
+    $(window).scroll(function() {
+      var url = $('.article-index-pagination .pagination li.next.next_page a').attr('href');
+      
+      if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 350) {
+        $('.article-index-pagination .pagination').text("Repacking The Bong...");
+        return $.getScript(url);
+      }
+    });
+    return $(window).scroll();
+  }
+});
+
+
+// console.log('URL: ' + url);
+// console.log('$(window).scrollTop() ' + $(window).scrollTop());
+// console.log('$(document).height() - $(window).height() - 50:   ' + ($(document).height() - $(window).height() - 50));

@@ -5,6 +5,9 @@ class ArticlesChange < ActiveRecord::Migration
   end
 end
 
+	<!--$('#article-index-views').append('<%= escape_javascript render(@mostviews) %>');-->
+	<!--$('.pagination').replaceWith('<%= escape_javascript will_paginate(@mostviews) %>');-->
+
 
 //CODE NOT BEING USED
 

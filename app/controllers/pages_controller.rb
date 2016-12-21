@@ -5,20 +5,20 @@ class PagesController < ApplicationController
     def home
         if current_user != nil
             
-            @articles = Article.page(params[:page]).per_page(24) #order("created_at DESC")
-            @articles_viewed = Article.order("num_views DESC").page(params[:page]).per_page(24)
+            @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+            @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
             
             if current_user.sources.any?
-                 @articles = @articles.where(source_id: current_user.sources)
-                 @articles_viewed = @articles_viewed.where(source_id: current_user.sources)
+                 @recents = @recents.where(source_id: current_user.sources)
+                 @mostviews = @mostviews.where(source_id: current_user.sources)
             end
             
             if current_user.states.any?
                 #add a where clause to only be user states
                 state_ids = current_user.states.pluck(:id)
                 article_ids = ArticleState.where(state_id: state_ids).pluck(:article_id)
-                @articles = @articles.where(id: article_ids)
-                @articles_viewed = @articles_viewed.where(id: article_ids)
+                @recents = @recents.where(id: article_ids)
+                @mostviews = @mostviews.where(id: article_ids)
                 
             end
             
@@ -26,13 +26,13 @@ class PagesController < ApplicationController
                #add a where clause to only be user categories
                 category_ids = current_user.categories.pluck(:id)
                 article_ids = ArticleCategory.where(category_id: category_ids).pluck(:article_id)
-                @articles = @articles.where(id: article_ids)
-                @articles_viewed = @articles_viewed.where(id: article_ids)
+                @recents = @recents.where(id: article_ids)
+                @mostviews = @mostviews.where(id: article_ids)
             end
             
         else 
-            @articles = Article.page(params[:page]).per_page(24)
-            @articles_viewed = Article.order("num_views DESC").page(params[:page]).per_page(24)
+            @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+            @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
         end    
         
         respond_to do |format|
@@ -41,53 +41,22 @@ class PagesController < ApplicationController
         end
         
         #removed from marijuana stocks line 9 #import urllib3
-        #NewsLeafly.perform_later()
+        NewsLeafly.perform_later()
 
         # news background jobs:
         if Rails.env.production?
-            NewsMarijuanaStocks.perform_later()
-            NewsTheCannabist.perform_later()
-            NewsMarijuana.perform_later()
-            NewsCannabisCulture.perform_later()
-            NewsCannaLawBlog.perform_later()
-            NewsMjBizDaily.perform_later()
-            NewsHighTimes.perform_later()
-            NewsDopeMagazine.perform_later()
-            NewsFourTwentyTimes.perform_later()
+            #NewsMarijuanaStocks.perform_later()
+            ##NewsTheCannabist.perform_later()
+            #NewsMarijuana.perform_later()
+            #NewsCannabisCulture.perform_later()
+            #NewsCannaLawBlog.perform_later()
+            #NewsMjBizDaily.perform_later()
+            #NewsHighTimes.perform_later()
+            #NewsDopeMagazine.perform_later()
+            #NewsFourTwentyTimes.perform_later()
         end
         
     end 
-    
-    def other
-        #@articles = Article.order("created_at DESC").page(params[:page]).per_page(24)
-        
-        #@articles_viewed = Article.order("num_clicks DESC").page(params[:page]).per_page(24)
-        
-        #sort by the option selected by user
-        if params[:option] != nil
-            @sort_option = SortOption.find(params[:option])
-            
-            if @sort_option != nil
-                #add a click to the sort option
-                @sort_option.increment(:num_clicks, by = 1)
-                @sort_option.save
-                
-                @articles = Article.order(@sort_option.query + " " + @sort_option.direction).page(params[:page]).per_page(24)
-            else 
-                @articles = Article.order("created_at DESC").page(params[:page]).per_page(24)    
-            end
-        else
-
-        end
-        
-        respond_to do |format|
-          format.html
-          format.js
-        end
-        
-
-        
-    end
     
     def admin
     end

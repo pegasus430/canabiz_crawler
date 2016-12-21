@@ -47,10 +47,8 @@ class CategoriesController < ApplicationController
     #-------------------------------------------
     
     def show
-        
-        @articles = @category.articles.order("created_at DESC").page(params[:page]).per_page(24)
-        @articles_viewed = @category.articles.order("num_views DESC").page(params[:page]).per_page(24)        
-        
+        @recents = @category.articles.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @mostviews = @category.articles.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)     
     end
 
     #-------------------------------------------

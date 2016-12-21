@@ -20,13 +20,13 @@ ready2 = ->
         msgText: "Repacking the Bong"
       }
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
-$(document).on('turbolinks:load', ready)
+# $(document).ready(ready)
+#$(document).on('page:load', ready)
+#$(document).on('turbolinks:load', ready)
 
-$(document).ready(ready2)
-$(document).on('page:load', ready2)
-$(document).on('turbolinks:load', ready2)
+#$(document).ready(ready2)
+#$(document).on('page:load', ready2)
+#$(document).on('turbolinks:load', ready2)
 
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
