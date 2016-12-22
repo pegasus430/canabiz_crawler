@@ -37,7 +37,7 @@ function changeSort(elem) {
         $(".sort-button").html("Most Popular");
     } else if (elem.innerHTML == 'Newest') 
     {
-        $(".article-index-views").css("display", "none");
+        $("#article-index-views").css("display", "none");
         $(".article-index-views-pagination").css("display", "none");
         $("#article-index-new").css("display", "block");
         $(".article-index-new-pagination").css("display", "block");
@@ -49,34 +49,40 @@ function changeSort(elem) {
 
 
 //endless scrolling?
-$(document).ready(function() {
+// $(document).ready(function() {
     
-    if ($('.pagination').length) {
-        $(window).scroll(function() {
-            
-            var url;
+        
+    $(window).scroll(function() {
+        
+        if ($('.pagination').length) {  
+            // var url;
             if ($('#article-index-new').css('display') == 'block') {
                 
-                url = $('.article-index-new-pagination .pagination li.next.next_page a').attr('href');
+                var url = $('.article-index-new-pagination .pagination li.next.next_page a').attr('href');
                 console.log('new');
+                console.log('URL: ' + url);
+                
+                if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
+                    $('.article-index-new-pagination .pagination').text("Repacking The Bong...");
+                    return $.getScript(url);
+                }
             }
             else if ($('#article-index-views').css('display') == 'block') {
                 
-                url = $('.article-index-views-pagination .pagination li.next.next_page a').attr('href');
+                var url = $('.article-index-views-pagination .pagination li.next.next_page a').attr('href');
                 console.log('views');
+                console.log('URL: ' + url);
+                
+                if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
+                    $('.article-index-views-pagination .pagination').text("Repacking The Bong...");
+                    return $.getScript(url);
+                }
             }
-            
-            console.log('URL: ' + url);
-            
-            if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
-                $('.pagination').text("Repacking The Bong...");
-                return $.getScript(url);
-            }
-        });
-        
-        return $(window).scroll();
-    }
-});
+        }
+        // return $(window).scroll();
+    });
+
+// });
 
 
 

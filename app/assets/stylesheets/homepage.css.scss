@@ -21,7 +21,7 @@ body {
 
 #article-index-new, #article-index-views {min-height: 500px;}
     #article-index-views, .article-index-views-pagination {display: none;}
-    // .pagination {display: none;}
+    ul.pagination {display: none;}
 
 //infinite scroll
 #infscr-loading {
