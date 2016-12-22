@@ -19,10 +19,9 @@ body {
     text-align: center;
 }
 
-#article-index, #article-index-views {min-height: 500px;}
-    #article-index-views {display: none;}
-    
-    .pagination {display: none;}
+#article-index-new, #article-index-views {min-height: 500px;}
+    #article-index-views, .article-index-views-pagination {display: none;}
+    // .pagination {display: none;}
 
 //infinite scroll
 #infscr-loading {

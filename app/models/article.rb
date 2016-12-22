@@ -11,10 +11,10 @@ class Article < ActiveRecord::Base
     
     validates :title, presence: true, length: {minimum: 3, maximum: 300}
     validates_uniqueness_of :title
+    validates_uniqueness_of :web_url
     
     
     #photo aws storage
-    #mount_uploader :image, PhotoUploader
     mount_uploader :image, PhotoUploader
     
     #import CSV files

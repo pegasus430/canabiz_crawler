@@ -45,16 +45,17 @@
     
     <div class = 'wrap'>
     
-        <div id = 'article-index'>
+        <div id = 'article-index-new'>
             <%= render @recents %>
-            
         </div>
         <div id = 'article-index-views'>
             <%= render @mostviews %>
-            
         </div>
         
-        <div class = 'article-index-pagination'>
+        <div class = 'article-index-new-pagination'>
+            <%= will_paginate @recents %>
+        </div>
+        <div class = 'article-index-views-pagination'>
             <%= will_paginate @recents %>
         </div>
         

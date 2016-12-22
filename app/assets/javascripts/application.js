@@ -28,13 +28,19 @@ function dispIndexImageError(image) {
 
 //change the sorting method
 function changeSort(elem) {
-    if (elem.innerHTML == 'Most Popular') {
+    if (elem.innerHTML == 'Most Popular') 
+    {
         $("#article-index-views").css("display", "block");
-        $("#article-index").css("display", "none");
+        $(".article-index-views-pagination").css("display", "block");
+        $("#article-index-new").css("display", "none");
+        $(".article-index-new-pagination").css("display", "none");
         $(".sort-button").html("Most Popular");
-    } else if (elem.innerHTML == 'Newest') {
-        $("#article-index-views").css("display", "none");
-        $("#article-index").css("display", "block");
+    } else if (elem.innerHTML == 'Newest') 
+    {
+        $(".article-index-views").css("display", "none");
+        $(".article-index-views-pagination").css("display", "none");
+        $("#article-index-new").css("display", "block");
+        $(".article-index-new-pagination").css("display", "block");
         $(".sort-button").html("Newest");
     }
     //hide the overlay
@@ -44,20 +50,69 @@ function changeSort(elem) {
 
 //endless scrolling?
 $(document).ready(function() {
-  if ($('.article-index-pagination .pagination').length) {
-    $(window).scroll(function() {
-      var url = $('.article-index-pagination .pagination li.next.next_page a').attr('href');
-      
-      if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 350) {
-        $('.article-index-pagination .pagination').text("Repacking The Bong...");
-        return $.getScript(url);
-      }
-    });
-    return $(window).scroll();
-  }
+    
+    if ($('.pagination').length) {
+        $(window).scroll(function() {
+            
+            var url;
+            if ($('#article-index-new').css('display') == 'block') {
+                
+                url = $('.article-index-new-pagination .pagination li.next.next_page a').attr('href');
+                console.log('new');
+            }
+            else if ($('#article-index-views').css('display') == 'block') {
+                
+                url = $('.article-index-views-pagination .pagination li.next.next_page a').attr('href');
+                console.log('views');
+            }
+            
+            console.log('URL: ' + url);
+            
+            if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
+                $('.pagination').text("Repacking The Bong...");
+                return $.getScript(url);
+            }
+        });
+        
+        return $(window).scroll();
+    }
 });
 
 
-// console.log('URL: ' + url);
-// console.log('$(window).scrollTop() ' + $(window).scrollTop());
-// console.log('$(document).height() - $(window).height() - 50:   ' + ($(document).height() - $(window).height() - 50));
+
+// $(document).ready(function() {
+//     if ($('#article-index-new').css('display') == 'block') {
+
+//         if ($('.pagination').length) {
+//             $(window).scroll(function() {
+//                 var url = $('article-index-new-pagination .pagination li.next.next_page a').attr('href');
+//                 console.log('new');
+                
+//                 if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
+//                     $('.article-index-pagination .pagination').text("Repacking The Bong...");
+//                     return $.getScript(url);
+//                 }
+//             });
+            
+//             return $(window).scroll();
+//         }        
+//     }
+//     else if ($('article-index-views-pagination .pagination').length) {
+//         $(window).scroll(function() {
+//             var url = $('article-index-views-pagination .pagination li.next.next_page a').attr('href');
+//             console.log('new');
+            
+//             if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
+//                 $('.article-index-pagination .pagination').text("Repacking The Bong...");
+//                 return $.getScript(url);
+//             }
+//         });
+        
+//         return $(window).scroll();    
+//     }
+// });
+
+
+      // console.log('URL: ' + url);
+      // console.log('$(window).scrollTop() ' + $(window).scrollTop());
+      // console.log('$(document).height() - $(window).height() - 50:   ' + ($(document).height() - $(window).height() - 50));

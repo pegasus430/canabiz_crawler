@@ -1,6 +1,14 @@
+if ($('#article-index-new').css('display') == 'block') {
+	console.log('in the article new home.js thing');
+	$('#article-index-new').append('<%= escape_javascript render(@recents) %>');
+	$('.article-index-new-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@recents) %>');
+}
+if ($('#article-index-views').css('display') == 'block') {
+	console.log('in the article view home.js thing');
+	$('#article-index-views').append('<%= escape_javascript render(@mostviews) %>');
+	$('.article-index-views-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@mostviews) %>');
+}
 
-$('#article-index').append('<%= escape_javascript render(@recents) %>');
-$('.article-index-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@recents) %>');
 
 
 
