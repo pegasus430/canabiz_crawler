@@ -2,7 +2,9 @@
     <h2 align = 'center'>Weekly Digest Emails</h2>
     <h3 align = 'center'><%= link_to 'Admin Home', admin_path %></h3>
     <h3 align = 'center'><%= link_to 'Add New email', new_digest_email_path %></h3>
-    
+
+    <div class = 'center'><%= will_paginate %></div>
+
     <!--Import CSV File-->
     <div align = 'center'>
         <h3>Import Weekly Digest Emails</h3>
@@ -18,6 +20,7 @@
         <h3>Export Emails</h3>
         <%=link_to "CSV File", digest_emails_admin_path(format: "csv"), class: 'btn btn-default' %>
     </div>
+ 
     
 
     <%= form_tag destroy_multiple_digest_emails_path, method: :delete do %> 
@@ -42,4 +45,6 @@
         </table>
         <%= submit_tag "Delete selected" %>
     <% end %>
+    
+    <div class = 'center'><%= will_paginate %></div>
 </div>

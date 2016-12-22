@@ -3,6 +3,8 @@
     <h3 align = 'center'><%= link_to 'Admin Home', admin_path %></h3>
     <h3 align = 'center'><%= link_to 'Add Hashtag', new_hashtag_path %></h3>
     
+    <div class = 'center'><%= will_paginate %></div>
+    
     <!--Import CSV File-->
     <div align = 'center'>
         <h3>Import Hashtags</h3>
@@ -46,4 +48,6 @@
         </table>
         <%= submit_tag "Delete selected" %>
     <% end %>
+    
+    <div class = 'center'><%= will_paginate %></div>
 </div>

@@ -5,7 +5,7 @@ class DigestEmailsController < ApplicationController
 
     #--------ADMIN PAGE-------------------------
     def admin
-        @digest_emails = DigestEmail.all.order(sort_column + " " + sort_direction)
+        @digest_emails = DigestEmail.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 100)
     
         #for csv downloader
         respond_to do |format|

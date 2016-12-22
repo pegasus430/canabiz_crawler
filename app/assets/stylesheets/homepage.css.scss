@@ -19,23 +19,25 @@ body {
     text-align: center;
 }
 
+//pagination
 #article-index-new, #article-index-views {min-height: 500px;}
     #article-index-views, .article-index-views-pagination {display: none;}
     ul.pagination {display: none;}
-
+    .center ul.pagination {display: block;}
+        
 //infinite scroll
-#infscr-loading {
-  position: fixed;
-  bottom: 200px;
-  left: 42%;
-  z-index: 100;
-  background: white;
-  background: hsla( 0, 0%, 100%, 0.9 );
-  padding: 20px;
-  color: #222;
-  font-size: 15px;
-  font-weight: bold;
-}
+// #infscr-loading {
+//   position: fixed;
+//   bottom: 200px;
+//   left: 42%;
+//   z-index: 100;
+//   background: white;
+//   background: hsla( 0, 0%, 100%, 0.9 );
+//   padding: 20px;
+//   color: #222;
+//   font-size: 15px;
+//   font-weight: bold;
+// }
 
 .home-display {
     position: relative;

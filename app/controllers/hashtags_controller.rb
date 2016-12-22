@@ -5,7 +5,7 @@ class HashtagsController < ApplicationController
 
     #--------ADMIN PAGE-------------------------
     def admin
-        @hashtags = Hashtag.all.order(sort_column + " " + sort_direction)
+        @hashtags = Hashtag.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 100)
     
         #for csv downloader
         respond_to do |format|

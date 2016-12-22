@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
     #--------ADMIN PAGE-------------------------
     def admin
         @articles = Article.order(sort_column + " " + sort_direction)
-                        .paginate(page: params[:page], per_page: 25)
+                        .paginate(page: params[:page], per_page: 100)
     
         #for csv downloader
         respond_to do |format|
@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
         @q = "%#{params[:query]}%"
         @articles = Article.where("title LIKE ? or abstract LIKE ?", @q, @q)
                             .order(sort_column + " " + sort_direction)
-                            .paginate(page: params[:page], per_page: 50)
+                            .paginate(page: params[:page], per_page: 100)
         render 'admin'
     end
     

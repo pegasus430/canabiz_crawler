@@ -3,7 +3,7 @@
     <h3 align = 'center'><%= link_to 'Admin Home', admin_path %></h3>
     <h3 align = 'center'><%= link_to 'Create New User', signup_path %></h3>
     
-
+    <div class = 'center'><%= will_paginate %></div>
     </br>
     
     <%= form_tag destroy_multiple_users_path, method: :delete do %> 
@@ -39,8 +39,6 @@
                     <% end %></td> 
                     
 					<td></td>
-					<td></td>
-					<td></td>
                     <td><%= link_to "Edit", edit_user_path(user), class: "btn" %></td>
                     <td><%= link_to "Delete", user_path(user), method: :delete,
                                 data: { confirm: "Are you sure you want to delete this category?"},
@@ -50,4 +48,6 @@
         </table>
         <%= submit_tag "Delete selected" %>
     <% end %>
+    
+    <div class = 'center'><%= will_paginate %></div>
 </div>

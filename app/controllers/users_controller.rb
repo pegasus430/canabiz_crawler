@@ -3,12 +3,9 @@ class UsersController < ApplicationController
   before_action :require_same_user, only: [:edit, :update, :destroy, :show]
   #before_action :require_admin, only: [:destroy]
   
-  def index
-    @users = User.paginate(page: params[:page], per_page: 5)
-  end
   
   def admin
-      @users = User.all
+      @users = User.paginate(page: params[:page], per_page: 100)
       
       #method is used for csv file upload
       def import
