@@ -216,6 +216,19 @@ body {
                 font-weight: 300;
              }
             
+    .article .social-sharing {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        opacity: 0;
+        transition: opacity ease .2s;
+    }
+    
+    .article:hover .social-sharing {
+        opacity: 1;
+        transition: opacity ease .5s;
+    }
+    
     //twitter sharing
     .admin-twitter-share {
         position: absolute;

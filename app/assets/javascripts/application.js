@@ -48,75 +48,50 @@ function changeSort(elem) {
 }
 
 
-//endless scrolling?
-// $(document).ready(function() {
+//endless scrolling
+$(window).scroll(function() {
     
-        
-    $(window).scroll(function() {
-        
-        if ($('.pagination').length) {  
-            // var url;
-            if ($('#article-index-new').css('display') == 'block') {
-                
+    if ($('.pagination').length) {  
+
+        if ($('#article-index-new').css('display') == 'block') {
+            
+            if ($('.article-index-new-pagination .pagination li.next.next_page').hasClass('disabled'))
+            {
+                $('.article-index-new-pagination .pagination').text("Houston, we are out of Weed!");
+            } 
+            else 
+            {
                 var url = $('.article-index-new-pagination .pagination li.next.next_page a').attr('href');
-                console.log('new');
-                console.log('URL: ' + url);
                 
-                if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
+                if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) 
+                {
                     $('.article-index-new-pagination .pagination').text("Repacking The Bong...");
                     return $.getScript(url);
-                }
+                }                
             }
-            else if ($('#article-index-views').css('display') == 'block') {
-                
+
+        }
+        else if ($('#article-index-views').css('display') == 'block') {
+            
+            if ($('.article-index-views-pagination .pagination li.next.next_page').hasClass('disabled'))
+            {
+                $('.article-index-views-pagination .pagination').text("Houston, we are out of Weed!");
+            }
+            else 
+            {
                 var url = $('.article-index-views-pagination .pagination li.next.next_page a').attr('href');
-                console.log('views');
-                console.log('URL: ' + url);
-                
-                if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
+
+                if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) 
+                {
                     $('.article-index-views-pagination .pagination').text("Repacking The Bong...");
                     return $.getScript(url);
                 }
             }
+            
         }
-        // return $(window).scroll();
-    });
+    }
+});
 
-// });
-
-
-
-// $(document).ready(function() {
-//     if ($('#article-index-new').css('display') == 'block') {
-
-//         if ($('.pagination').length) {
-//             $(window).scroll(function() {
-//                 var url = $('article-index-new-pagination .pagination li.next.next_page a').attr('href');
-//                 console.log('new');
-                
-//                 if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
-//                     $('.article-index-pagination .pagination').text("Repacking The Bong...");
-//                     return $.getScript(url);
-//                 }
-//             });
-            
-//             return $(window).scroll();
-//         }        
-//     }
-//     else if ($('article-index-views-pagination .pagination').length) {
-//         $(window).scroll(function() {
-//             var url = $('article-index-views-pagination .pagination li.next.next_page a').attr('href');
-//             console.log('new');
-            
-//             if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) {
-//                 $('.article-index-pagination .pagination').text("Repacking The Bong...");
-//                 return $.getScript(url);
-//             }
-//         });
-        
-//         return $(window).scroll();    
-//     }
-// });
 
 
       // console.log('URL: ' + url);
