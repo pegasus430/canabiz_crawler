@@ -100,7 +100,6 @@ class ArticlesController < ApplicationController
     
     def digest
         #not on admin page but admin functionality
-        
         WeeklyDigestJob.perform_later()
     end
     
@@ -130,7 +129,7 @@ class ArticlesController < ApplicationController
         #related articles
         if @article.states.present?
             
-            @related_articles = @article.states.sample.articles.order("RANDOM()").limit(3)
+            @related_articles = @article.states.sample.articles.order("RANDOM()").limit(3).where.not(id: @article.id)
             
             if Rails.env.production?
                 #@related_articles = @related_articles.where(created_at: (now - 1.week.ago)) 
@@ -138,14 +137,14 @@ class ArticlesController < ApplicationController
 
         elsif @article.categories.present?
         
-            @related_articles = @article.categories.sample.articles.order("RANDOM()").limit(3)
+            @related_articles = @article.categories.sample.articles.order("RANDOM()").limit(3).where.not(id: @article.id)
                                         
             if Rails.env.production?
                #@related_articles = @related_articles.where(created_at: (now - 1.week.ago))
             end
                                         
         else
-            @related_articles = Article.all.order("RANDOM()").limit(3)
+            @related_articles = Article.all.order("RANDOM()").limit(3).where.not(id: @article.id)
             
             if Rails.env.production?
                 #@related_articles = @related_articles.where(created_at: (now - 1.week.ago))
@@ -154,7 +153,7 @@ class ArticlesController < ApplicationController
         end
         
         #same source articles
-        @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").limit(3)
+        @same_source_articles = Article.where(source_id: @article.source).order("RANDOM()").limit(3).where.not(id: @article.id)
         
         if Rails.env.production? 
            #@same_source_articles = @same_source_articles.where(created_at: (now - 1.week.ago)) 
