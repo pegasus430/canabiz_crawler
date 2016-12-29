@@ -59,6 +59,13 @@ group :development, :test do
   gem 'byebug'
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+  
+  gem 'rspec-rails', '3.1.0' #for test methods
+end
+
+#for test methods
+group :test do
+  gem 'capybara', '2.7.1'
 end
 
 group :development do

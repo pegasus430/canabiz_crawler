@@ -32,8 +32,6 @@
             
             <script>
                 function saveExternalArticleClick(articleId, articleURL) {
-    	            console.log(articleId);
-                	console.log(articleURL);
                 	$.ajax({
             	      type: "PUT",
             	      url: "/save_visit/" + articleId
