@@ -16,6 +16,8 @@
     <%= render 'shared/messages' %>
     <%= yield %>
     <!--removed footer rendering on all pages-->
-    <%= render 'layouts/footer' %>
+    <% if @recents == nil %>
+      <%= render 'layouts/footer' %>
+    <% end %>
   </body>
 </html>

@@ -1,4 +1,4 @@
-<div class = 'article col-md-3' style = "<% if article.image %>background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else 
+<div class = 'article' style = "<% if article.image %>background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else 
         %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
 
     <a href = '<%= article_path(article)%>'>
