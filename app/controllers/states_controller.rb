@@ -3,6 +3,9 @@ class StatesController < ApplicationController
     before_action :set_state, only: [:edit, :update, :destroy, :show]
     
 
+    def index
+    end
+
     def admin
         @states = State.all
         

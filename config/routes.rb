@@ -46,7 +46,6 @@ Rails.application.routes.draw do
   resources :states do
     collection {post :import}
   end
-  get 'news', to: 'states#news' #the state news page
   get 'states-admin', to: 'states#admin'
   
   
