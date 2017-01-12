@@ -6,13 +6,13 @@ RSpec.feature "View Source News" do
 		@source2 = Source.create(name: "Test Source 2")
 		
 		@article1 = Article.create(title: "The first article",
-		body: "Lorem ipsum dolor sit amet, consectetur.", source_id: @source1.id) 
+		body: "Lorem ipsum dolor sit amet, consectetur.", source_id: @source1.id, web_url: 'source.com/1') 
 
 		@article2 = Article.create(title: "The second article",
-		body: "Pellentesque ac ligula in tellus feugiat.", source_id: @source1.id)
+		body: "Pellentesque ac ligula in tellus feugiat.", source_id: @source1.id, web_url: 'source.com/2') 
 		
 		@article3 = Article.create(title: "The third article",
-		body: "Pellentesque ac ligula in tellus feugiat.", source_id: @source2.id)
+		body: "Pellentesque ac ligula in tellus feugiat.", source_id: @source2.id, web_url: 'source.com/3') 
 		
 	end	
 	
@@ -24,7 +24,7 @@ RSpec.feature "View Source News" do
 		visit "/sources/#{@source1.id}"
 		
 		expect(page).to have_content(@article1.title) 
-		#expect(page).to have_content(@article2.title) --> why the hell is this failing? 
+		expect(page).to have_content(@article2.title) 
 		expect(page).to have_no_content(@article3.title) 
 	end
 end
