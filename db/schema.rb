@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214223301) do
+ActiveRecord::Schema.define(version: 20170112211819) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -89,6 +89,16 @@ ActiveRecord::Schema.define(version: 20161214223301) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "logo"
+  end
+
+  create_table "user_articles", force: :cascade do |t|
+    t.integer  "article_id"
+    t.integer  "user_id"
+    t.boolean  "saved"
+    t.boolean  "viewed_internally"
+    t.boolean  "viewed_externally"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_categories", force: :cascade do |t|
