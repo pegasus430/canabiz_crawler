@@ -1,6 +1,11 @@
 <div class = 'article' style = "<% if article.image %>background: url('<%= article.image %>'), url('<%= asset_path 'homepage/news-substitute.jpg' %>'); <% else 
         %> background: url('<%= asset_path 'homepage/news-substitute.jpg' %>') <% end %>;">
 
+    <!--SA - temp dev is just in views-> articles -> _article.html.erb -->
+    <div class = 'article-save' style = 'float: right;'>
+        <p style = 'cursor: pointer; color: white; font-weight: bold' onclick= "userArticleSave('<%= article.id %>')">Save</p>
+    </div>
+    
     <a href = '<%= article_path(article)%>'>
     
         <div class = 'article-date'>

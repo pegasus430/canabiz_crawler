@@ -43,6 +43,19 @@
     </div>
     
     
+    <script>
+        function userArticleSave(articleId) {
+            <% if !logged_in? %>
+                window.open('/login', '_self');
+            <% else %>
+                $.ajax({
+                    type: "PUT",
+                    url: "/user_article_save/" + articleId
+    	        });
+            <% end %>
+        }
+    </script>
+    
     <div class = 'wrap'>
     
         <div id = 'article-index-new'>
@@ -58,8 +71,6 @@
         <div class = 'article-index-views-pagination'>
             <%= will_paginate @recents %>
         </div>
-        
-        
         
     </div>
 </div> <!-- END HOME DISPLAY -->

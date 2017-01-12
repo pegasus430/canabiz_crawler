@@ -67,6 +67,17 @@ class ArticlesController < ApplicationController
         end
     end
     
+    #user saves an article for later
+    def user_article_save
+
+        if !logged_in?
+            redirect_to login_path
+        end 
+        if params[:id].present? 
+            UserArticle.create(user_id: current_user.id, article_id: params[:id], saved: true)
+        end
+    end     
+    
     def send_tweet
         
        	require 'rubygems'
