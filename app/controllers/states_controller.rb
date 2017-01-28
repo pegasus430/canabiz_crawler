@@ -65,7 +65,7 @@ class StatesController < ApplicationController
          @state = State.friendly.find(params[:id])
       end
       def state_params
-        params.require(:state).permit(:name, :abbreviation, :timezone_id, :keywords, :logo)
+        params.require(:state).permit(:name, :abbreviation, :timezone_id, :keywords, :logo, :slug)
       end    
     
 end
