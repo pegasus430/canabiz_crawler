@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   
     def show
         #show the saved articles
-        @recents = user.articles.where(saved: true)
+        #@recents = user.articles.where(saved: true)
     end
   
     def destroy
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
         end
         
         def set_user
-            @user = User.friendly.find(params[:id])
+            @user = User.friendly.find(params[:id]) 
         end
         
         def require_same_user

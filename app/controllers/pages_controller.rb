@@ -66,9 +66,10 @@ class PagesController < ApplicationController
         if params[:query].present? 
             @query = "%#{params[:query]}%"
             
-            @articles = Article.where("title LIKE ? or body LIKE ?", @query, @query).page(params[:page]).per_page(24)
+            @recents = Article.where("title LIKE ? or body LIKE ?", @query, @query)
+                                .order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
             
-            @articles_viewed = Article.where("title LIKE ? or body LIKE ?", @query, @query)
+            @mostviews = Article.where("title LIKE ? or body LIKE ?", @query, @query)
                                         .order("num_views DESC").page(params[:page]).per_page(24)
 
         else 
