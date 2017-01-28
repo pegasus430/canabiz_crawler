@@ -214,6 +214,8 @@ GEM
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
     formatador (0.2.5)
+    friendly_id (5.0.5)
+      activerecord (>= 4.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     http (1.0.4)
@@ -392,6 +394,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   figaro (~> 1.1, >= 1.1.1)
   fog (~> 1.38)
+  friendly_id (~> 5.0.0)
   httparty (~> 0.13.7)
   jbuilder (~> 2.0)
   jquery-rails

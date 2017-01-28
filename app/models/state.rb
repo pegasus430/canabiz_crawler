@@ -11,6 +11,10 @@ class State < ActiveRecord::Base
     validates_uniqueness_of :name
     validates_uniqueness_of :abbreviation
     
+    #friendly url
+    extend FriendlyId
+    friendly_id :name, use: :slugged
+    
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true) do |row|

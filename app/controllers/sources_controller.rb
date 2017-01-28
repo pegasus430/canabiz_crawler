@@ -1,6 +1,6 @@
 class SourcesController < ApplicationController
     
-    before_action :set_source, only: [:edit, :update, :destroy, :show]
+    before_action :set_source, only: [:edit, :update, :destroy, :show] #
     before_action :require_admin, except: [:show]
 
     #--------ADMIN PAGE-------------------------
@@ -90,7 +90,7 @@ class SourcesController < ApplicationController
         end
         
         def set_source
-          @source = Source.find(params[:id])
+          @source = Source.friendly.find(params[:id])
         end
         
         def source_params

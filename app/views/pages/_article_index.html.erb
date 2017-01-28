@@ -44,15 +44,21 @@
     
     
     <script>
-        function userArticleSave(articleId) {
-            <% if !logged_in? %>
-                window.open('/login', '_self');
-            <% else %>
-                $.ajax({
-                    type: "PUT",
-                    url: "/user_article_save/" + articleId
-    	        });
-            <% end %>
+        function userArticleSave(elem, articleId) {
+            /*
+                <% if !logged_in? %>
+                    window.open('/login', '_self');
+                <% else %>
+                    $.ajax({
+                        type: "PUT",
+                        url: "/user_article_save/" + articleId
+        	        });
+                <% end %>
+            */
+            console.log(elem.innerHTML);
+            elem.innerHtml = 'Saved';
+            
+            
         }
     </script>
     

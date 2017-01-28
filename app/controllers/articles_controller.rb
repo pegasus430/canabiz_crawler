@@ -73,8 +73,18 @@ class ArticlesController < ApplicationController
         if !logged_in?
             redirect_to login_path
         end 
-        if params[:id].present? 
-            UserArticle.create(user_id: current_user.id, article_id: params[:id], saved: true)
+        if params[:id].present?
+            
+            #if a user has already saved or viewed this article, just use the same record
+            if UserArticle.where(:article_id => article.id, :user_id => current_user.id).any?
+                @current_user_article = UserArticle.where(:article_id => article.id, :user_id => current_user.id)
+                @current_user_article.saved = @current_user_article.saved == true ? false : true
+                @current_user_article.save
+            else 
+                UserArticle.create(user_id: current_user.id, article_id: params[:id], saved: true)
+            end
+
+            
         end
     end     
     
@@ -216,7 +226,7 @@ class ArticlesController < ApplicationController
         end
         
         def set_article
-            @article = Article.find(params[:id])
+            @article = Article.friendly.find(params[:id])
             if @article.blank?
                 redirect_to root_path 
             end

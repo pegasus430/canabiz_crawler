@@ -11,6 +11,10 @@ class Source < ActiveRecord::Base
     validates :name, presence: true, length: { minimum: 3, maximum: 25 }
     validates_uniqueness_of :name
     
+    #friendly url
+    extend FriendlyId
+    friendly_id :name, use: :slugged
+    
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true) do |row|

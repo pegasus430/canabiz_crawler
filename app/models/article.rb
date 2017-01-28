@@ -13,6 +13,10 @@ class Article < ActiveRecord::Base
     validates_uniqueness_of :title
     validates_uniqueness_of :web_url
     
+    #friendly url
+    extend FriendlyId
+    friendly_id :title, use: :slugged
+    
     
     #photo aws storage
     mount_uploader :image, PhotoUploader

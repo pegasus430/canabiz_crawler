@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
     has_many :articles, through: :categories
     has_many :articles, through: :states
     
+    #friendly url
+    extend FriendlyId
+    friendly_id :username, use: :slugged
+    
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true) do |row|

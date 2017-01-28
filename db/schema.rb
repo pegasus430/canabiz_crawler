@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112211819) do
+ActiveRecord::Schema.define(version: 20170128152240) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -41,7 +41,10 @@ ActiveRecord::Schema.define(version: 20170112211819) do
     t.boolean  "include_in_digest"
     t.string   "remote_image_url"
     t.integer  "external_visits",   default: 0
+    t.string   "slug"
   end
+
+  add_index "articles", ["slug"], name: "index_articles_on_slug", unique: true
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -49,7 +52,10 @@ ActiveRecord::Schema.define(version: 20170112211819) do
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
+
+  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true
 
   create_table "digest_emails", force: :cascade do |t|
     t.string  "email"
@@ -80,7 +86,10 @@ ActiveRecord::Schema.define(version: 20170112211819) do
     t.string   "article_logo"
     t.string   "sidebar_logo"
     t.integer  "external_article_visits", default: 0
+    t.string   "slug"
   end
+
+  add_index "sources", ["slug"], name: "index_sources_on_slug", unique: true
 
   create_table "states", force: :cascade do |t|
     t.string   "name"
@@ -89,7 +98,10 @@ ActiveRecord::Schema.define(version: 20170112211819) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "logo"
+    t.string   "slug"
   end
+
+  add_index "states", ["slug"], name: "index_states_on_slug", unique: true
 
   create_table "user_articles", force: :cascade do |t|
     t.integer  "article_id"
@@ -129,6 +141,9 @@ ActiveRecord::Schema.define(version: 20170112211819) do
     t.boolean  "admin"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
+
+  add_index "users", ["slug"], name: "index_users_on_slug", unique: true
 
 end
