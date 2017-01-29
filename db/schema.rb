@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128152240) do
+ActiveRecord::Schema.define(version: 20170128223155) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -142,8 +142,10 @@ ActiveRecord::Schema.define(version: 20170128152240) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.string   "password_reset_token"
   end
 
+  add_index "users", ["password_reset_token"], name: "index_users_on_password_reset_token"
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true
 
 end

@@ -34,5 +34,10 @@ class User < ActiveRecord::Base
                 csv << user.attributes.values_at(*column_names)
             end
         end
-    end    
+    end 
+    
+    #password reset token
+    def generate_password_reset_token!
+        update_attribute(:password_reset_token, SecureRandom.urlsafe_base64(48))  
+    end
 end

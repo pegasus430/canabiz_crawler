@@ -1,3 +1,6 @@
+#password reset:
+https://teamtreehouse.com/library/user-authentication-with-rails/password-resets-and-testing/adding-the-password-reset-token
+
 == README
 
 This README would normally document whatever steps are necessary to get the

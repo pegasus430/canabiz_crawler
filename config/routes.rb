@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   end
   get 'users-admin', to: 'users#admin'
   
+  #RESET PASSWORD
+  resources :password_resets, only: [:new, :create]
   
   #DIGEST EMAILS
   resources :digest_emails do
