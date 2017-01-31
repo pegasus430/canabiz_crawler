@@ -1,5 +1,5 @@
 class PasswordReset < ApplicationMailer
-	default_url_options[:host] = "localhost:3000"
+	default_url_options[:host] = "https://cannabiz-news.herokuapp.com"
 	default from: "noreply@cannabiznetwork.com"
 	
 	def email(user)
