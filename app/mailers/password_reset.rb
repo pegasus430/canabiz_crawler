@@ -1,4 +1,5 @@
 class PasswordReset < ApplicationMailer
+	default_url_options[:host] = "localhost:3000"
 	default from: "noreply@cannabiznetwork.com"
 	
 	def email(user)

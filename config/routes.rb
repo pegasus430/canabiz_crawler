@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   get 'users-admin', to: 'users#admin'
   
   #RESET PASSWORD
-  resources :password_resets, only: [:new, :create]
+  resources :password_resets, only: [:new, :create, :edit, :update]
   
   #DIGEST EMAILS
   resources :digest_emails do
