@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   
-  
   #USER
   get 'signup', to: 'users#new'
   resources :users, except: [:new] do 
@@ -30,6 +29,8 @@ Rails.application.routes.draw do
     end
   end
   get 'users-admin', to: 'users#admin'
+  get 'change_password/:id', to: 'users#change_password', as: 'change_password'
+  get 'submit_password_change', to: 'users#submit_password_change' 
   
   #RESET PASSWORD
   resources :password_resets, only: [:new, :create, :edit, :update]

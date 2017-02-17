@@ -87,6 +87,10 @@
         <a href="<%= contact_us_path%>">Contact Us</a>
         <a href="<%= feedback_path%>">Leave Feedback</a>
         
+        <% if current_user %>
+            <a href="<%= change_password_path(current_user) %>">Change Password</a>
+        <% end %>
+        
         <div class = "menu-small-links">
             <a href="#">Terms & Conditions</a>
             <a href="#">Privacy Policy</a>
