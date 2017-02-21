@@ -16,7 +16,7 @@ class NewsMjBizDaily < ActiveJob::Base
         require 'open-uri'
         
         #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_mjbizdaily.py"]) #cmd,
+        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_mjbizdaily.py"]) #cmd,
         contents = JSON.parse(output.read)
         
         #call method:

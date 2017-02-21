@@ -1,103 +1,179 @@
-<div class = 'header'>
-    <div class="wrap">
-    <div class = 'header-left inline'>
-        <div class = 'header-logo inline'><%= link_to image_tag("header_footer/cbz-logo-color.svg"), root_path %></div>
-    </div> <!-- END HEADER LEFT -->
-
-    <div class = 'header-center inline'>
-
-        <!--search-->
-        <form class="navbar-form" role="search" method="get" action = '/search'>
-            <input type="text" class="form-control input-lg" name='query' id ='searchQuery' placeholder="What can we help you find..." autocomplete='on'>
-            <input type = 'submit' id = 'searchButton' onclick = 'search()' class = "btn btn-default btn-green-touching" value = 'Search' />
-        </form>
-        
-    </div> <!-- END HEADER CENTER -->
-    
-    <div class = 'header-right inline'>
-        <div class = 'header-login'>
-            
-            <p><span onclick = "openMenuNav()" style = "cursor:pointer">Menu</span> | 
-            <% if logged_in? %>
-                <%= link_to 'Logout', logout_path, method: :delete %></p>
-            <% else %>
-                <%= link_to 'Log In', login_path %> <%= link_to 'Sign Up', signup_path, :class => 'signup-button' %></p>
-            <% end %>
-        </div> <!-- END HEADER LOGIN -->
-    </div> <!-- END HEADER RIGHT -->
-    
-    </div> <!-- END WRAP -->
-</div> <!-- END HEADER -->
-
-
-<!-- State Overlay -->
-<div id="state-overlay" class="overlay">
-
-  <!-- Button to close the overlay navigation -->
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="closeIcon">&times;</span><span class='closeText'>Close</span></a>
-
-    <div class="overlay-content">
-        <% State.all.order("name ASC").each do |state| %>
-            <a href="<%=state_path(state)%>"><%=state.name%></a>
-        <% end %>
-    </div>
-
-</div>
-
-
-    
-<!-- Sort Overlay -->
-<div id="category-overlay" class="overlay">
-
-  <!-- Button to close the overlay navigation -->
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="closeIcon">&times;</span><span class='closeText'>Close</span></a>
-
-    <div class="overlay-content">
-        <% SortOption.all.order("name ASC").each do |option| %>
-            <p onclick = 'changeSort(this)'><%=option.name%></p>
-            
-        <% end %>
-    </div>
-
-</div>
-
-
-<!--Menu Overlay-->
-<div id="menu-overlay" class="overlay">
-
-  <!-- Button to close the overlay navigation -->
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="closeIcon">&times;</span><span class='closeText'>Close</span></a>
-
-    <div class="overlay-content">
-        <div class = 'menu-login'>
-            <% if logged_in? %>
-                <%= link_to 'Logout', logout_path, method: :delete %></p>
-            <% else %>
-                <%= link_to 'Log In', login_path %> <%= link_to 'Sign Up', signup_path, :class => 'signup-button' %></p>
-            <% end %>
-        </div> 
-        
-        <% if current_user %>
-            <a href="<%= user_path(current_user)%>">My Page</a>
-        <% else %>
-            <a href="<%= login_path %>">My Page</a>
-        <% end %>
-        
-        <a href="#">About</a>
-        <a href="<%= contact_us_path%>">Contact Us</a>
-        <a href="<%= feedback_path%>">Leave Feedback</a>
-        
-        <% if current_user %>
-            <a href="<%= change_password_path(current_user) %>">Change Password</a>
-        <% end %>
-        
-        <div class = "menu-small-links">
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Privacy Policy</a>
+<div class = "wrapper">
+    <header  class="header-area header-wrapper bg-white clearfix">
+        <div class="header-top-bar bg-dark ptb-10">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7  hidden-xs">
+                        <div class="header-top-left">
+                            <nav class="header-top-menu zm-secondary-menu">
+                                <ul>
+                                    <li><a href="#">Currently 1,098,909 Users Online</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">
+                        <div class="header-top-right clierfix text-right">
+                            <div class="zmaga-calendar topbar-sblock">
+                                <span class="calendar uppercase">Sunday, July 31, 2016 </span>
+                            </div>
+                            <div class="user-accoint topbar-sblock">
+                                <span class="login-btn uppercase">Login</span>
+                                <span class="uppercase"> | </span>
+                                <span class="login-btn uppercase"><a href="registration.html">Register</a></span>
+                                <div class="login-form-wrap bg-white">
+                                    <form class="zm-signin-form text-left">
+                                        <input type="text" class="zm-form-control username" placeholder="Username or Email">
+                                        <input type="password" class="zm-form-control password" placeholder="Password">
+                                        <input type="checkbox" value=" Remember Me" class="remember"> &nbsp;Remember Me<br>
+                                        <div class="zm-submit-box clearfix  mt-20">
+                                            <input type="submit" value="Login">
+                                            <a href="registration.html">Register</a>
+                                        </div>
+                                        <a href="#" class="zm-forget">Forget username/password?</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-    </div>
-
+        <div class="header-middle-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12 header-mdh">
+                        <div class="global-table">
+                            <div class="global-row">
+                                <div class="global-cell">
+                                    <div class="logo">
+                                        <a href="index.html">
+                                            <img src="images/logo/1.png" alt="main logo">
+                                        </a>
+                                        <p class="site-desc"> </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-7 col-sm-7 col-xs-12 col-lg-offset-1 header-mdh hidden-xs">
+                        <div class="global-table">
+                            <div class="global-row">
+                                <div class="global-cell">
+                                    <div class="advertisement text-right">
+                                       <a href="#" class="block"><img src="images/ad/1.jpg" alt="ad img"></a>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom-area  bg-theme hidden-sm hidden-xs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="menu-wrapper clearfix">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <div class="mainmenu-area">
+                                        <nav class="primary-menu uppercase">
+                                            <ul class="clearfix customnavfont">
+                                                <li><a href="index.html">Home</a></li>
+                                                <li class="drop current"><a href="#">News</a>
+                                                    <ul class="dropdown">
+                                                        <li class="drop"><a href="#">Sorted News</a>
+                                                            <ul class="dropdown level2">
+                                                                <li><a href="source.html">Source</a></li>
+                                                                <li><a href="category.html">Category</a></li>
+                                                                <li><a href="state.html">State</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li><a href="allnews.html">All News</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="deals.html">Deals</a></li>
+                                                <li><a href="vaporizors.html">Vaporizors</a></li>
+                                                <li><a href="dispensaries.html">Dispensaries</a></li>                                                    
+                                                <li><a href="contact.html">Contact</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="search-wrap pull-right">
+                                        <div class="search-btn"><i class="fa fa-search"></i></div>
+                                        <div class="search-form">
+                                            <form action="#">
+                                                <input type="search" placeholder="Search">
+                                                <button type="submit"><i class='fa fa-search'></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- mobile-menu-area start -->
+        <div class="mobile-menu-area hidden-md hidden-lg">
+            <div class="fluid-container">
+                <div class="mobile-menu clearfix">
+                    <div class="search-wrap mobile-search">
+                        <div class="mobile-search-btn"><i class="fa fa-search"></i></div>
+                        <div class="mobile-search-form">
+                            <form action="#">
+                                <input type="text" placeholder="Search">
+                                <button type="submit"><i class='fa fa-search'></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <nav id="mobile_dropdown">
+                        <ul class="customnavfont">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="#">News</a>
+                                <ul>
+                                    <li><a href="#">Sort</a>
+                                        <ul>
+                                            <li><a href="source.html">Sort By Source</a></li>
+                                            <li><a href="category.html">Sort By Category</a></li>
+                                            <li><a href="state.html">Sort By State</a></li>
+                                        </ul>
+                                            <li><a href="allnews.html">All News</a></li>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="index.html">Deals</a></li>
+                            <li><a href="index.html">Vaporizors</a></li>
+                            <li><a href="index.html">Dispensaries</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>       
+            </div>
+        </div>
+        <!-- mobile-menu-area end -->   
+        <div class="breakingnews-wrapper bg-gray hidden-xs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <div class="breakingnews clearfix fix">
+                            <div class="bn-title">
+    <!--                                     <h6 class="uppercase">BREAKING NEWS</h6>
+    -->                                </div>
+                            <div class="news-wrap">
+    <!--                                     <ul class="bkn clearfix" id="bkn">
+                                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.   |   Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.   |   Ut enim ad minim ut labre et dolore qui magna mini.</li>
+                                    <li>Nilartstudio dolor amet, consectetur adipisicing elit.   |   Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.   |   Ut enim ad minim ut labre et dolore qui magna mini.</li>
+                                </ul>
+    -->                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 </div>
-    
-

@@ -15,7 +15,7 @@ class NewsFourTwentyTimes < ActiveJob::Base
         require 'open-uri'
         
         #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrappers/newsparser_the420times.py"]) #cmd,
+        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_the420times.py"]) #cmd,
         contents = JSON.parse(output.read)
         
         #call method:
