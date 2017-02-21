@@ -28,12 +28,16 @@
             <div class="preloader-wave-effect"></div>
         </div>
         <!-- THEME PRELOADER AREA END -->
-    
-        <%= render 'shared/messages' %>
-        <%= yield %>
-        <!--removed footer rendering on all pages-->
-        <% if @recents == nil %>
-        <%= render 'layouts/footer' %>
-        <% end %>
+        
+        <!--wrapper for all pages including header-->
+        <div class="wrapper">
+            <%= render 'layouts/header' %>
+            <%= render 'shared/messages' %>
+            <%= yield %>
+            <!--removed footer rendering on all pages-->
+            <% if @recents == nil %>
+                <%= render 'layouts/footer' %>
+            <% end %>
+        </div>
     </body>
 </html>
