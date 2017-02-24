@@ -14,7 +14,7 @@
                     <% end %>
                     <!--<a href="#" class="bg-cat-3 cat-btn"></a>-->
                 </div>
-                <h2 class="zm-post-title"><a href="blog-single-image.html"><%= article.title.truncate(60) if article.title %></a></h2>
+                <h2 class="zm-post-title"><a href="<%= article_path(article) %>"><%= article.title.truncate(60) if article.title %></a></h2>
                 <div class="zm-post-meta">
                     <ul>
                         <li class="s-meta">
