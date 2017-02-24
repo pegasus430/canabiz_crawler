@@ -1,36 +1,77 @@
-<div class = "wrap">
-	<form id="contact-form" role="search" method="get" action = '/submit_contact_form'>
-	    <div class="controls">
-	        <div class="row">
-	            <div class="col-md-6">
-	                <div class="form-group">
-	                    <label for="form_name">Name *</label>
-	                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
-	                    <div class="help-block with-errors"></div>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="row">
-	            <div class="col-md-6">
-	                <div class="form-group">
-	                    <label for="form_email">Email *</label>
-	                    <input id="form_email" type="email" name="email" class="form-control" placeholder="Please enter your email *" required="required" data-error="Valid email is required.">
-	                    <div class="help-block with-errors"></div>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="row">
-	            <div class="col-md-6">
-	                <div class="form-group">
-	                    <label for="form_message">Message *</label>
-	                    <textarea id="form_message" name="message" class="form-control" placeholder="Message for us *" rows="4" required="required" data-error="Please,leave us a message."></textarea>
-	                    <div class="help-block with-errors"></div>
-	                </div>
-	            </div>
-	            <div class="col-md-12">
-	                <input type="submit" class="btn btn-send" value="Send Message">
-	            </div>
-	        </div>
-	    </div>
-	</form>
-</div>
+<!-- Start page content -->
+<section id="page-content" class="page-wrapper">
+    <!-- Start contact message area -->
+    <div class="zm-section bg-white pt-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="section-title-2 mb-40  text-center">
+                        <h3 class="inline-block uppercase">Contact Us</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="message-box">
+                <form action="mail.php"  id="contact-form" method="post">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 0 auto; float: none;">
+                            <input type="text" name="name" placeholder="Full Name*" required="required">
+                            <input type="email" name="email" placeholder="Email Address*" required="required">
+                            <textarea id="form_message" name="message" placeholder="Message*" rows="4" required="required"></textarea>
+                            <button class="submit-button" type="submit">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+                <p class="form-messege"></p>
+            </div>
+        </div>
+    </div>
+    <!-- End contact message area -->
+</section>
+<!-- End page content -->
+
+
+
+
+
+
+
+
+<!--old-->
+
+
+<!--<div class = "wrap">-->
+<!--	<form id="contact-form" role="search" method="get" action = '/submit_contact_form'>-->
+<!--	    <div class="controls">-->
+<!--	        <div class="row">-->
+<!--	            <div class="col-md-6">-->
+<!--	                <div class="form-group">-->
+<!--	                    <label for="form_name">Name *</label>-->
+<!--	                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">-->
+<!--	                    <div class="help-block with-errors"></div>-->
+<!--	                </div>-->
+<!--	            </div>-->
+<!--	        </div>-->
+<!--	        <div class="row">-->
+<!--	            <div class="col-md-6">-->
+<!--	                <div class="form-group">-->
+<!--	                    <label for="form_email">Email *</label>-->
+<!--	                    <input id="form_email" type="email" name="email" class="form-control" placeholder="Please enter your email *" required="required" data-error="Valid email is required.">-->
+<!--	                    <div class="help-block with-errors"></div>-->
+<!--	                </div>-->
+<!--	            </div>-->
+<!--	        </div>-->
+<!--	        <div class="row">-->
+<!--	            <div class="col-md-6">-->
+<!--	                <div class="form-group">-->
+<!--	                    <label for="form_message">Message *</label>-->
+<!--	                    <textarea id="form_message" name="message" class="form-control" placeholder="Message for us *" rows="4" required="required" data-error="Please,leave us a message."></textarea>-->
+<!--	                    <div class="help-block with-errors"></div>-->
+<!--	                </div>-->
+<!--	            </div>-->
+<!--	            <div class="col-md-12">-->
+<!--	                <input type="submit" class="btn btn-send" value="Send Message">-->
+<!--	            </div>-->
+<!--	        </div>-->
+<!--	    </div>-->
+<!--	</form>-->
+<!--</div>-->

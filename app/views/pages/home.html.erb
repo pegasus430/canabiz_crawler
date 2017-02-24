@@ -1,63 +1,7 @@
-<!-- Start page content -->
-<section id="page-content" class="page-wrapper archive">
-    <div class="zm-section single-post-wrap archive-2 bg-white ptb-65">
-        <div class="container">
-            <div class="row">
-                <!-- Start left side -->
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 columns">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="archive-inner">
-                                <div class="archive-filter">
-                                    <form action="#">
-                                        <div class="sing-option zm-trending">
-                                            <select name="Trending" class="selectpicker" data-live-search="true">
-                                                  <option>Select Category</option>
-                                                  <option>State By State</option>
-                                                  <option>World</option>
-                                            </select>
-                                        </div>
-                                        <div class="sing-option zm-state">
-                                            <select name="State" class="selectpicker" data-live-search="true">
-                                                  <option>Select State</option>
-                                                  <option>AK</option>
-                                                  <option>AL</option>
-                                                  <option>AR</option>
-                                            </select>
-                                        </div>
-                                        <div class="sing-option zm-state">
-                                            <select name="Source" class="selectpicker" data-live-search="true">
-                                                  <option>Select Source</option>
-                                                  <option>Marijuana.com</option>
-                                                  <option>CannabisCulture</option>
-                                                  <option>Other</option>
-                                            </select>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-40">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="row mb-40">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="section-title">
-                                        <h2 class="h6 header-color inline-block uppercase">Newest</h2>
-                                        <h2 class="h6 header-color inline-block uppercase">Most Viewed</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="zm-posts clearfix">
-                                   <%= render @recents %>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End left side -->
-        </div>
-    </div>
-</section>
-<!-- End page content -->
+<!--
+http://stackoverflow.com/questions/25463144/ruby-on-rails-pages-are-initially-blank-but-load-properly-on-refresh
+
+-->
+
+<%= render 'article_index' %>
+

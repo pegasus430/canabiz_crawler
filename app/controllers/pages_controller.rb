@@ -31,8 +31,8 @@ class PagesController < ApplicationController
             end
             
         else 
-            @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-            @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+            @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 12)
+            @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 12)
         end    
         
         respond_to do |format|

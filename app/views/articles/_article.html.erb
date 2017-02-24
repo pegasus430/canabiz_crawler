@@ -6,17 +6,22 @@
         </div>
         <div class="zm-post-dis">
             <div class="zm-post-header">
-                <div class="zm-category"><a href="#" class="bg-cat-3 cat-btn"><%= article.categories.first.name %></a></div>
-                <h2 class="zm-post-title h2"><a href="blog-single-image.html"><%= article.title.truncate(60) if article.title %></a></h2>
+                <div class="zm-category">
+                    <% article.categories.each do |category| %>
+                        <a class="bg-cat-3 cat-btn" href="<%=category_path(category)%>"><%=category.name%></a>
+                    <% end %>
+                    <!--<a href="#" class="bg-cat-3 cat-btn"></a>-->
+                </div>
+                <h2 class="zm-post-title"><a href="blog-single-image.html"><%= article.title.truncate(60) if article.title %></a></h2>
                 <div class="zm-post-meta">
                     <ul>
                         <li class="s-meta">
-                            <img class='inline' style='width: 40px; height: auto' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
+                            <img class='inline' style='width: 40px; height: auto; display: none;' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
                             <a href="#" class="zm-author"><%= article.source.name %></a>
                         </li>
                         <li class="s-meta"><a href="#" class="zm-date"><%= time_ago_in_words(article.created_at) %> ago</a></li>
                     </ul>
-                    <div class = 'social-sharing'>
+                    <div class = 'social-sharing' style="display: none;">
                         <%= social_share_button_tag(article.title, :url => "https://cannabiz-news.herokuapp.com/articles/#{article.id}", :image => "#{article.image}") %>
                     </div>
                 </div>

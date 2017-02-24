@@ -1,34 +1,32 @@
-<div class = 'container'>
-    <h1 align="center">Log in</h1>
-    
-    <%= form_for(:session, :html => {class: "form-horizontal", role: "form"}, url: login_path) do |f| %>
-        <div class="form-group">
-            <div class="control-label col-sm-2">
-                <%= f.label :username %>
+<!-- Start page content -->
+<section id="page-content" class="page-wrapper">
+    <!-- Start contact message area -->
+    <div class="zm-section bg-white pt-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="section-title-2 mb-40  text-center">
+                        <h3 class="inline-block uppercase">Login</h3>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-8">
-                <%= f.text_field :username, class: "form-control", placeholder: "Username", autofocus: true %>
+            <div class="message-box">
+                
+                <%= form_for(:session, :html => {class: "form-horizontal", role: "form"}, url: login_path) do |f| %>
+                
+                 <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 0 auto; float: none;">
+                        <%= f.text_field :username, placeholder: "Username", autofocus: true %>
+                        <%= f.password_field :password, placeholder: "Password", autocomplete: "off" %>
+                        <button class="submit-button" type="submit">Login</button>
+                    </div>
+                </div>
+                <% end %>
+                <p class="form-messege"></p>
+                
             </div>
         </div>
-        <div class="form-group">    
-            <div class="control-label col-sm-2">
-                <%= f.label :password %>
-            </div>
-            <div class="col-sm-8">
-                <%= f.password_field :password, class: "form-control", placeholder: "Password", autocomplete: "off" %>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <%= f.submit "Log in", class: 'btn btn-primary btn-lg' %>
-                <%= link_to "Forgot Password", new_password_reset_path %>
-            </div>
-        </div>
-    <% end %>
-    
-    <div class="col-xs-4 col-xs-offset-4">
-    
-        [ <%= link_to "Return to Home Page", root_path %> ]
-    
     </div>
-</div>
+    <!-- End contact message area -->
+</section>
+<!-- End page content -->

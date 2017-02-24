@@ -303,13 +303,23 @@ label {
 .zm-pagination .page-numbers li .page-numbers.prev::before,
 .page-numbers.prev::before {
     content: "\f177";
-    font-family: fontawesome;
+    font-family: 'fontawesome';
+      src:url('fontawesome-webfont.eot');
+      src:url('fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+        url('fontawesome-webfont.svg#icomoon') format('svg'),
+        url('fontawesome-webfont.woff') format('woff'),
+        url('fontawesome-webfont.ttf') format('truetype');
     padding-right: 15px;
 }
 .zm-pagination .page-numbers li .page-numbers.next::after,
 .page-numbers.next::after {
     content: "\f178";
-    font-family: fontawesome;
+    font-family: 'fontawesome';
+      src:url('fontawesome-webfont.eot');
+      src:url('fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+        url('fontawesome-webfont.svg#icomoon') format('svg'),
+        url('fontawesome-webfont.woff') format('woff'),
+        url('fontawesome-webfont.ttf') format('truetype');
     padding-left: 15px;
 }
 .zm-pagination .page-numbers li .page-numbers.current,
@@ -545,7 +555,12 @@ label {
     border-radius: 100%;
     content: "\f106";
     display: inline-block;
-    font-family: fontawesome;
+    font-family: 'fontawesome';
+      src:url('fontawesome-webfont.eot');
+      src:url('fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+        url('fontawesome-webfont.svg#icomoon') format('svg'),
+        url('fontawesome-webfont.woff') format('woff'),
+        url('fontawesome-webfont.ttf') format('truetype');
     height: 20px;
     line-height: 18px;
     position: absolute;

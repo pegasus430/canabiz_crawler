@@ -7,7 +7,7 @@
                     <div class="header-top-left">
                         <nav class="header-top-menu zm-secondary-menu">
                             <ul>
-                                <li><a href="#">Currently 1,098,909 Users Online</a></li>
+                                <li><%= link_to 'Cannabiz Network', root_path %></li>
                             </ul>
                         </nav>
                     </div>
@@ -15,24 +15,35 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">
                     <div class="header-top-right clierfix text-right">
                         <div class="zmaga-calendar topbar-sblock">
-                            <span class="calendar uppercase">Sunday, July 31, 2016 </span>
+                            <!--<span class="calendar uppercase">Sunday, July 31, 2016 </span>-->
                         </div>
                         <div class="user-accoint topbar-sblock">
-                            <span class="login-btn uppercase">Login</span>
-                            <span class="uppercase"> | </span>
-                            <span class="login-btn uppercase"><a href="registration.html">Register</a></span>
-                            <div class="login-form-wrap bg-white">
-                                <form class="zm-signin-form text-left">
-                                    <input type="text" class="zm-form-control username" placeholder="Username or Email">
-                                    <input type="password" class="zm-form-control password" placeholder="Password">
-                                    <input type="checkbox" value=" Remember Me" class="remember"> &nbsp;Remember Me<br>
-                                    <div class="zm-submit-box clearfix  mt-20">
-                                        <input type="submit" value="Login">
-                                        <a href="registration.html">Register</a>
-                                    </div>
-                                    <a href="#" class="zm-forget">Forget username/password?</a>
-                                </form>
-                            </div>
+                            <% if logged_in? %>
+                                <span class="login-btn uppercase"><%= link_to 'Logout', logout_path, method: :delete %></span>
+                                <span class="uppercase"> | </span>
+                                <span class="login-btn uppercase"><%= link_to 'Change Password', change_password_path(current_user) %></span>
+                            <% else %>
+                                <span class="login-btn uppercase"><%= link_to 'Login', login_path %></span>
+                                <span class="uppercase"> | </span>
+                                <span class="login-btn uppercase"><%= link_to 'Register', signup_path %></span>
+                            <% end %>
+                            
+                            <!--<<li><a href="#">Terms & Conditions</a></li>-->
+                                            <!--<li><a href="#">Privacy Policy</a></li>-->
+                            
+                            
+                            <!--<div class="login-form-wrap bg-white">-->
+                            <!--    <form class="zm-signin-form text-left">-->
+                            <!--        <input type="text" class="zm-form-control username" placeholder="Username or Email">-->
+                            <!--        <input type="password" class="zm-form-control password" placeholder="Password">-->
+                            <!--        <input type="checkbox" value=" Remember Me" class="remember"> &nbsp;Remember Me<br>-->
+                            <!--        <div class="zm-submit-box clearfix  mt-20">-->
+                            <!--            <input type="submit" value="Login">-->
+                            <!--            <a href="registration.html">Register</a>-->
+                            <!--        </div>-->
+                            <!--        <a href="#" class="zm-forget">Forget username/password?</a>-->
+                            <!--    </form>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
@@ -80,12 +91,20 @@
                                 <div class="mainmenu-area">
                                     <nav class="primary-menu uppercase">
                                         <ul class="clearfix customnavfont">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="deals.html">News</a></li>
-                                            <li><a href="deals.html">Deals</a></li>
-                                            <li><a href="vaporizors.html">Vaporizors</a></li>
-                                            <li><a href="dispensaries.html">Dispensaries</a></li>                                                    
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><%= link_to 'Home', root_path %></li>
+                                            
+                                            <li>
+                                                <% if current_user %>
+                                                    <a href="<%= user_path(current_user)%>">My Page</a>
+                                                <% else %>
+                                                    <a href="<%= login_path %>">My Page</a>
+                                                <% end %>
+                                            </li>
+                                            <li><a href="#">About</a></li>
+                                            <li><a href="<%= contact_us_path %>">Contact Us</a></li>
+                                            <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
+                                            <!--<li><a href="#">Terms & Conditions</a></li>-->
+                                            <!--<li><a href="#">Privacy Policy</a></li>-->
                                         </ul>
                                     </nav>
                                 </div>
@@ -94,9 +113,9 @@
                                 <div class="search-wrap pull-right">
                                     <div class="search-btn"><i class="fa fa-search"></i></div>
                                     <div class="search-form">
-                                        <form action="#">
-                                            <input type="search" placeholder="Search">
-                                            <button type="submit"><i class='fa fa-search'></i></button>
+                                       <form class="navbar-form" role="search" method="get" action = '/search'>
+                                            <input type="search" placeholder="Search" autocomplete='on'>
+                                            <input type = 'submit' id = 'searchButton' onclick = 'search()' class = "btn btn-default btn-green-touching" value = 'Search' />
                                         </form>
                                     </div>
                                 </div>
@@ -145,24 +164,26 @@
         </div>
     </div>
     <!-- mobile-menu-area end -->   
-    <div class="breakingnews-wrapper bg-gray hidden-xs">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                    <div class="breakingnews clearfix fix">
-                        <div class="bn-title">
-<!--                                     <h6 class="uppercase">BREAKING NEWS</h6>
--->                                </div>
-                        <div class="news-wrap">
-<!--                                     <ul class="bkn clearfix" id="bkn">
-                                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.   |   Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.   |   Ut enim ad minim ut labre et dolore qui magna mini.</li>
-                                <li>Nilartstudio dolor amet, consectetur adipisicing elit.   |   Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.   |   Ut enim ad minim ut labre et dolore qui magna mini.</li>
-                            </ul>
--->                                </div>
+    <% if @state != nil || @category != nil || @source != nil || @user != nil %>
+        <div class="breakingnews-wrapper bg-gray hidden-xs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <div class="breakingnews clearfix fix">
+                            <div class="bn-title">
+    <!--                                     <h6 class="uppercase">BREAKING NEWS</h6>
+    -->                                </div>
+                            <div class="news-wrap">
+    <!--                                     <ul class="bkn clearfix" id="bkn">
+                                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.   |   Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.   |   Ut enim ad minim ut labre et dolore qui magna mini.</li>
+                                    <li>Nilartstudio dolor amet, consectetur adipisicing elit.   |   Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.   |   Ut enim ad minim ut labre et dolore qui magna mini.</li>
+                                </ul>
+    -->                                </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <% end %>
 </header>
     

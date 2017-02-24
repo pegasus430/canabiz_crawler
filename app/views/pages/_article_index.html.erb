@@ -1,82 +1,103 @@
-<% @articles_to_hide = [] %>
-
-<div class = 'search-filters'>
-<!--header sorting-->
-    <div class = "under-search">
-        <p>
-            Choose Your State 
-            <span class = "under-search-button" onclick="openStateNav()">
-                <% if @state.present? %>
-                    <%= @state.name %>
-                <% else %>
-                    All News
-                <% end %>
-            </span>    
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            
-            Sort By 
-            <span class = "under-search-button sort-button" onclick="openCategoryNav()">
-                <% if @sort_option.present? %>
-                    <%= @sort_option.name %>
-                <% else %>
-                    Newest
-                <% end %>
-            </span>
-        </p>
-    </div>
-</div>
-
-<!--state logo-->
-<% if @state != nil %>
-    <div class = 'state-logo'>
-        <img src = "<%=asset_path(@state.logo)%>">
-    </div>
-<% end %>
-
-<div class="home-display">
-    <div class = 'source-drawer'>
-        <% if @state != nil || @category != nil || @source != nil || @user != nil %>
-            <%= render 'pages/sidebar' %>
-        <% else %>
-        	<%= render 'sidebar' %>
-        <% end %>
-    </div>
-    
-    
-    <script>
-        function userArticleSave(elem, articleId) {
-            /*
-                <% if !logged_in? %>
-                    window.open('/login', '_self');
-                <% else %>
-                    $.ajax({
-                        type: "PUT",
-                        url: "/user_article_save/" + articleId
-        	        });
-                <% end %>
-            */
-            console.log(elem.innerHTML);
-            elem.innerHtml = 'Saved';
-            
-            
-        }
-    </script>
-    
-    <div class = 'wrap'>
-    
-        <div id = 'article-index-new'>
-            <%= render @recents %>
-        </div>
-        <div id = 'article-index-views'>
-            <%= render @mostviews %>
-        </div>
+<script>
+    function userArticleSave(elem, articleId) {
+        /*
+            <% if !logged_in? %>
+                window.open('/login', '_self');
+            <% else %>
+                $.ajax({
+                    type: "PUT",
+                    url: "/user_article_save/" + articleId
+    	        });
+            <% end %>
+        */
+        console.log(elem.innerHTML);
+        elem.innerHtml = 'Saved';
         
-        <div class = 'article-index-new-pagination'>
-            <%= will_paginate @recents %>
-        </div>
-        <div class = 'article-index-views-pagination'>
-            <%= will_paginate @recents %>
-        </div>
         
+    }
+</script>
+
+<style>
+    /*temp to hide most recents*/
+    #article-index-views, .article-index-views-pagination {display: none;}
+</style>
+
+<!-- Start page content -->
+<section id="page-content" class="page-wrapper archive">
+    <div class="zm-section single-post-wrap archive-2 bg-white ptb-15">
+        <div class="container">
+            <div class="row">
+                <!-- Start left side -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 columns">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="archive-inner">
+                                <div class="archive-filter">
+                                    <form action="#">
+                                        <div class="sing-option zm-trending">
+                                            <select name="Category" class="selectDropdown" data-live-search="true">
+                                                <option>Select Category</option>
+                                                <% Category.all.order("name ASC").each do |state| %>
+                                            	    <option><a href="<%=state_path(state)%>"><%=state.name%></a></option>
+									        	<% end %>
+                                            </select>
+                                        </div>
+                                        <div class="sing-option zm-state">
+                                            <select name="State" class="selectDropdown" data-live-search="true">
+                                            	<option>Select State</option>
+                                            	<% State.all.order("name ASC").each do |state| %>
+                                            	    <option><a href="<%=state_path(state)%>"><%=state.name%></a></option>
+									        	<% end %>
+                                            </select>
+                                        </div>
+                                        <div class="sing-option zm-state">
+                                            <select name="Source" class="selectDropdown" data-live-search="true">
+                                                <option>Select Source</option>
+                                                <% Source.all.order("name ASC").each do |state| %>
+                                            	    <option><a href="<%=state_path(state)%>"><%=state.name%></a></option>
+									        	<% end %>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-40">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row mb-40">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="section-title">
+                                        <h2 class="h6 header-color inline-block uppercase">Newest</h2>
+                                        <h2 class="h6 header-color inline-block uppercase">Most Viewed</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="zm-posts clearfix">
+                                    <div id = 'article-index-new'>
+                                        <%= render @recents %>
+                                    </div>
+                                    <div id = 'article-index-views'>
+                                        <%= render @mostviews %>
+                                    </div>
+                                    
+                                    <div class = 'article-index-new-pagination'>
+                                        <%= will_paginate @recents %>
+                                    </div>
+                                    <div class = 'article-index-views-pagination'>
+                                        <%= will_paginate @recents %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End left side -->
+        </div>
     </div>
-</div> <!-- END HOME DISPLAY -->
+</section>
+<!-- End page content -->
+    
+    
+        
