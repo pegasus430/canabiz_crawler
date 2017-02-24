@@ -25,6 +25,16 @@
 	    //open new link
 	    window.open(articleURL,'_blank');
     }
+    
+    function clicked(elem) {
+        console.log('click');
+        console.log(elem);
+        var val = $('.switch').val();
+        console.log(val);
+    }
+    function changed(elem) {
+        console.log('change');
+    }
 </script>
 
 <!-- Start page content -->
@@ -50,7 +60,7 @@
                                     <div>
                                         <label class="switch pull-right">
                                           <input type="checkbox" unchecked>
-                                          <div class="slider round"></div>
+                                          <div class="slider round" onchange="changed(this);" onclick="clicked(this);"></div>
                                         </label>                                                    
                                     </div>
                                     <div class="meta-list pull-right">

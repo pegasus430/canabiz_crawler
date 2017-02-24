@@ -1,187 +1,28 @@
-/side bar
+<!-- track article visit --> 
+<script type="text/javascript">
+    $("#article").click(function(){
+        $.ajax({
+            type: "get",
+            url: "",
+            data: {p1: val1, p2: val2},   // you may pass parameter
+            dataType:'script',
+            beforeSend: function(){
+                // code if you need 
+            },
+            success: function(response){
+                // code if you need
+            }
+        });
+    });
+</script>   
 
-<div class = 'article-right-sidebar'>
-    <h1>Related News</h1>
-    
-    <% @related_articles.each do |article| %>
-        <div class = 'related-article'>
-            <div class = 'homepage-article-image'>
-                <% if article.source && article.source.name == 'Marijuana Business Daily' %>
-                    <%= link_to image_tag("homepage/news-substitute.jpg"), article_path(article) %> <!-- , :class => "img-thumbnail rounded" -->
-                <% else %>
-                    <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
-                <% end %>
-            </div>
-            
-            <div class = 'homepage-article-date'>
-                <%= time_ago_in_words(article.created_at) %> ago
-            </div>
-            
-            <div class = 'homepage-article-bottom'>
-                <div class = 'homepage-article-title'>
-                    <h1><%= article.title.truncate(60) if article.title %></h1>
-                </div>
-                <div class = 'homepage-article-source'>
-                    <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
-                </div>
-                <div class = 'homepage-article-category'>
-                    
-                </div>
-            </div>            
-        </div>
-    <% end %>
-        
-</div>
-
-<p><%= #@article.body.gsub('<br/>', '<br/>') %></p>
-
-
-//tweet
-   	<%= form_for(@article, :url => url_for(:controller => 'articles', :action => 'send_tweet'))%>
-	 <%= tweet_form.text_area :tweet_content, :id => "tweet" %>
-	 <%= tweet_form.submit "Tweet" %>
-	<% end %>
-	
-//tweet form_for
-	<div class="form-group">
-		<!--http://cannabiznetwork.com/articles/@article.id -->
-	 	<textarea class="form-control" rows="5" id="tweet-textbody" onkeyup = "characterCount()"
-		><%=@article.source.name%>: <%=@article.title.truncate(60)%> <%=bitlyLink%>
-		</textarea>
-	</div>
-	
-	
-//send tweet method
-       	require 'rubygems'
-		require 'oauth'
-		require 'json'
-		
-		# You will need to set your application type to
-		# read/write on dev.twitter.com and regenerate your access
-		# token.  Enter the new values here:
-		consumer_key = OAuth::Consumer.new(
-		    "PeKIPXsMPl80fKm6SipbqrRVL",
-		    "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO")
-		access_token = OAuth::Token.new(
-		    "418377285-HfXt8G0KxvBhNXQJRnnysTvt7yGAM0jWyfaIKSIU",
-		    "3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez")
-		
-		# Note that the type of request has changed to POST.
-		# The request parameters have also moved to the body
-		# of the request instead of being put in the URL.
-		baseurl = "https://api.twitter.com"
-		path    = "/1.1/statuses/update.json"
-		address = URI("#{baseurl}#{path}")
-		request = Net::HTTP::Post.new address.request_uri
-		request.set_form_data(
-		  "status" => "this is a tweet",
-		)
-		
-		# Set up HTTP.
-		http             = Net::HTTP.new address.host, address.port
-		http.use_ssl     = true
-		http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-		
-		# Issue the request.
-		request.oauth! http, consumer_key, access_token
-		http.start
-		response = http.request request
-		
-		# Parse and print the Tweet if the response code was 200
-		tweet = nil
-		if response.code == '200' then
-		  tweet = JSON.parse(response.body)
-		  puts "Successfully sent #{tweet["text"]}"
-		else
-		  puts "Could not send the Tweet! " +
-		  "Code:#{response.code} Body:#{response.body}"
-		end
-		
-		
-//tried with image as well
-
-    		consumer_key = OAuth::Consumer.new(
-    		    "PeKIPXsMPl80fKm6SipbqrRVL",
-    		    "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO")
-    		access_token = OAuth::Token.new(
-    		    "418377285-HfXt8G0KxvBhNXQJRnnysTvt7yGAM0jWyfaIKSIU",
-    		    "3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez")
-    		
-    
-            #upload image
-            
-            #base64 image
-            
-            
-            baseurl = "https://upload.twitter.com"
-    		path    = "/1.1/media/upload.json"
-    		address = URI("#{baseurl}#{path}")
-    		request = Net::HTTP::Post.new address.request_uri
-    		request.set_form_data(
-    		    "media" => '',
-    		    "media_data" => ActiveSupport::Base64.encode64(open("http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg")),
-    		)
-            
-            #upload status
-    		baseurl = "https://api.twitter.com"
-    		path    = "/1.1/statuses/update.json"
-    		address = URI("#{baseurl}#{path}")
-    		request = Net::HTTP::Post.new address.request_uri
-    		request.set_form_data(
-    		  "status" => params[:tweet_body],
-    		  #media_ids --> this is the parameter to reference an image - have to upload the image first
-    		)
-    		
-    		# Set up HTTP.
-    		http             = Net::HTTP.new address.host, address.port
-    		http.use_ssl     = true
-    		http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-    		
-    		# Issue the request.
-    		request.oauth! http, consumer_key, access_token
-    		http.start
-    		response = http.request request
-    		
-    		if response.code == '200' then
-    		  flash[:success] = 'Tweet Sent'
-    		else
-    		  flash[:danger] = 'No Tweet Sent'
-    		end
-		
-            
-            redirect_to root_path
-            
-            
-//imgkit notes
-Now install wkhtmltoimage binaries:
-Global: sudo `which imgkit` --install-wkhtmltoimage
-        rvmsudo imgkit --install-wkhtmltoimage
-(installs to default /usr/local/bin/wkhtmltoimage)
-
-inside RVM folder: export TO=`which imgkit | sed 's:/imgkit:/wkhtmltoimage:'` && imgkit --install-wkhtmltoimage
-(you'll have to configure the location of the binary if you do this!)
-
-(run imgkit --help to see more options)
-
-
-
-//TRYING TO USE IMAGE KIT TO CREATE A FILE: 
-
-            kit = IMGKit.new("http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg")
-            img = kit.to_img(:png)
-            
-            file  = Tempfile.new(img)
-            #file = kit.to_file("/assets/images/tweetImages/#{kit}")
-            
-            client.update_with_media(params[:tweet_body], File.new(file))
-            
-
-
-                'background: url(<%= image_url(@article.image) %>);'>
-                </div>
-            <% else %>
-                <div class = 'article-main-image' style= 'background: url('<%= asset_path 'homepage/CBZ_News_Placeholder.jpg' %>');'>
-                </div>
-            <% end %>
-            
-            <% if @article.image != nil%>
+<script>
+    function saveExternalArticleClick(articleId, articleURL) {
+    	$.ajax({
+	      type: "PUT",
+	      url: "/save_visit/" + articleId
+	    });
+	    //open new link
+	    window.open(articleURL,'_blank');
+    }
+</script>

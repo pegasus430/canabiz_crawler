@@ -16,26 +16,24 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         	<label for="form_radio">Is this your first time visiting this site?</label>
 		                    <%= radio_button_tag(:firstTime, "Yes") %> <%= label_tag(:firstTime, "Yes") %> 
-		                    <%= radio_button_tag(:firstTime, "No") %> <%= label_tag(:firstTime, "No") %>
+		                    <%= radio_button_tag(:firstTime, "No") %> <%= label_tag(:firstTime, "No") %> <br/>
 		                    
-		                    
-		                    <label for="form_message">What is the primary reason you came to this site?</label>
-	                    	<textarea id="form_message" name="primaryReason"></textarea>
-	                    	
-	                    	
+		                    <label for="form_radio_2">What is the likelihood that you will visit this site again?</label>
+		                    <%= radio_button_tag(:likelihood, "Very Likely") %> <%= label_tag(:likelihood, "Very Likely") %>
+		                    <%= radio_button_tag(:likelihood, "Likely") %> <%= label_tag(:likelihood, "Likely") %>
+		                    <%= radio_button_tag(:likelihood, "Not Likely") %> <%= label_tag(:likelihood, "Not Likely") %>
+		          
 	                    	<label for="form_radio_2">Did you find everything you were looking for?</label>
 		                    <%= radio_button_tag(:findEverything, "Yes, all of it") %> <%= label_tag(:findEverything, "Yes, all of it") %> 
 		                    <%= radio_button_tag(:findEverything, "Yes, some of it") %> <%= label_tag(:findEverything, "Yes, some of it") %> 
-		                    <%= radio_button_tag(:findEverything, "No") %> <%= label_tag(:findEverything, "No") %> 
+		                    <%= radio_button_tag(:findEverything, "No") %> <%= label_tag(:findEverything, "No") %> <br/>
 		                    
+		                    <label for="form_message">What is the primary reason you came to this site?</label>
+	                    	<textarea id="form_message" name="primaryReason"></textarea>
 		                    
-		                    <label for="form_message">If there was anything you didn't find, please tell us</label>
-	                    	<textarea id="form_message" name="reasonDidntFind"></textarea>
-	                    
-                            <!--<input type="text" name="name" placeholder="Full Name*">-->
-                            <!--<input type="email" name="email" placeholder="Email Address*">-->
-                            <!--<input type="text" name="phone" placeholder="Phone Number">-->
-                            <!--<input type="text" name="website" placeholder="Website">-->
+		                    <!--<label for="form_message">If there was anything you didn't find, please tell us</label>-->
+	                    	<!--<textarea id="form_message" name="reasonDidntFind"></textarea>-->
+
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         	
@@ -46,13 +44,8 @@
 		                    <%= radio_button_tag(:easyInformation, "Difficult") %> <%= label_tag(:easyInformation, "Difficult") %>
 		                    <%= radio_button_tag(:easyInformation, "Very Difficult") %> <%= label_tag(:easyInformation, "Very Difficult") %>
 	                    
-	                    	<label for="form_radio_2">What is the likelihood that you will visit this site again?</label>
-		                    <%= radio_button_tag(:likelihood, "Very Likely") %> <%= label_tag(:likelihood, "Very Likely") %>
-		                    <%= radio_button_tag(:likelihood, "Likely") %> <%= label_tag(:likelihood, "Likely") %>
-		                    <%= radio_button_tag(:likelihood, "Not Likely") %> <%= label_tag(:likelihood, "Not Likely") %>
-		                    
 		                    <label for="form_message">Please add any comments you have for improving the website. We welcome suggestions on specific areas for improvements, features you would like to see added to the site, and examples of what you consider good websites.</label>
-	                    	<textarea id="form_message" name="suggestion"></textarea>
+	                    	<textarea id="form_message" name="suggestion" style="height: 163px;"></textarea>
                         	
                             <!--<textarea name="message" placeholder="Type your message..."></textarea>-->
                             <button class="submit-button" type="submit">Leave Feedback</button>
