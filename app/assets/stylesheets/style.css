@@ -651,6 +651,11 @@ label {
 .message-box .submit-button {
     margin-top: 27px;
 }
+
+.message-box label {
+    margin-top: 20px;    
+}
+
 #bodyContent {
     text-align: center;
 }

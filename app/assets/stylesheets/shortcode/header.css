@@ -119,17 +119,17 @@ nav.zm-secondary-menu ul li:last-child {
     position: relative;
 }
 .search-form {
-    background: #fff none repeat scroll 0 0;
-    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.15);
-    height: 90px;
-    padding: 20px;
-    position: absolute;
-    right: 0;
+    /*background: #fff none repeat scroll 0 0;*/
+    /*box-shadow: 0 7px 15px rgba(0, 0, 0, 0.15);*/
+    /*height: 90px;*/
+    /*padding: 20px;*/
+    /*position: absolute;*/
+    /*right: 0;*/
     text-align: right;
     top: 100%;
     width: 500px;
     z-index: 99;
-    display: none;
+    /*display: none;*/
 }
 .search-form input[type="search"] {
     border: 1px solid #e6e6e6;
@@ -140,11 +140,12 @@ nav.zm-secondary-menu ul li:last-child {
     width: 85%;
 }
 .search-form button {
-    background: #2ab081 none repeat scroll 0 0;
-    border: 1px solid #2ab081;
+    background: #8A2A88 none repeat scroll 0 0;
+    border: 1px solid #8A2A88;
     float: left;
     height: 50px;
     width: 15%;
+    color: #fff;
 }
 
 /*Breaking news*/

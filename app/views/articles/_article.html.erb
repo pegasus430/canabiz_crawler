@@ -2,7 +2,9 @@
     <article class="zm-post-lay-a1">
         <div class="zm-post-thumb">
             <!--actual article image is failing right now-->
-            <a href="blog-single-image.html"><%= image_tag("post/a/a1/9.jpg") %></a>
+            <a href="<%= article_path(article) %>">
+                <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+            </a> <!--"post/a/a1/9.jpg" -->
         </div>
         <div class="zm-post-dis">
             <div class="zm-post-header">

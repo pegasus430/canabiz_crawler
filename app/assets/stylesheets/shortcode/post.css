@@ -34,6 +34,7 @@
 }
 .zm-post-thumb img {
     width: 100%;
+    height: 230px;
 }
 .zm-post-thumb a {
     display: block;
