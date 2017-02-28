@@ -14,8 +14,8 @@
         <!--tether-->
         <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
         
-        <%= stylesheet_link_tag    'application', media: 'all'%> <!--, 'data-turbolinks-track' => true || , 'data-turbolinks-track' => true-->
-        <%= javascript_include_tag 'application' %>
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true%> <!--, 'data-turbolinks-track' => true || , 'data-turbolinks-track' => true-->
+        
         <%= csrf_meta_tags %>
         <!--<base target="_blank">-->
         <!--for use with lazy loading-->
@@ -42,5 +42,7 @@
                 <%= render 'layouts/footer' %>
             <% end %>
         </div>
+        
+        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     </body>
 </html>

@@ -60,6 +60,11 @@
 .zm-post-title.text-white:hover a {
     color: #2ab081;
 }
+
+.zm-post-title {
+    min-height: 68px;    
+}
+
 .zm-posts .col-md-12 + .col-md-12 .zm-post-lay-a {
     margin-top: 65px;
 }

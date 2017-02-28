@@ -26,15 +26,13 @@
 	    window.open(articleURL,'_blank');
     }
     
-    function clicked(elem) {
-        console.log('click');
-        console.log(elem);
-        var val = $('.switch').val();
-        console.log(val);
+    function saveArticle(elem, articleId) {
+        var tf = elem.checked;
+        console.log(tf);
+        console.log(articleId);
+        
     }
-    function changed(elem) {
-        console.log('change');
-    }
+
 </script>
 
 <!-- Start page content -->
@@ -58,10 +56,18 @@
                             </div>
                                 <div class="entry-meta-small clearfix mtb-20">
                                     <div>
+                                        
                                         <label class="switch pull-right">
-                                          <input type="checkbox" unchecked>
-                                          <div class="slider round" onchange="changed(this);" onclick="clicked(this);"></div>
-                                        </label>                                                    
+                                            <!--check if article is already saved-->
+                                            <% if current_user && UserArticle.where(:article_id => article.id, :user_id => current_user.id).any? %>
+                                                <input type="checkbox" checked onclick="saveArticle(this, <%=@article.id%>);">
+                                            <% else %>
+                                                <input type="checkbox" unchecked onclick="saveArticle(this, <%=@article.id%>);"> 
+                                            <% end %>
+                                        
+                                            <div class="slider round" ></div> 
+                                        </label>  
+                                                                                            
                                     </div>
                                     <div class="meta-list pull-right">
                                         <span class="post-title">SAVE THIS ARTICLE:</span> 

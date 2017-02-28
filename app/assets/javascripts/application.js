@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-
+//= require jquery-ui
 //= require bootstrap
 //= require jquery.infinitescroll
 //= require social-share-button
@@ -35,7 +35,8 @@ function changeSort(elem) {
         $("#article-index-new").css("display", "none");
         $(".article-index-new-pagination").css("display", "none");
         $(".sort-button").html("Most Popular");
-    } else if (elem.innerHTML == 'Newest') 
+    } 
+    else if (elem.innerHTML == 'Newest') 
     {
         $("#article-index-views").css("display", "none");
         $(".article-index-views-pagination").css("display", "none");
@@ -44,7 +45,7 @@ function changeSort(elem) {
         $(".sort-button").html("Newest");
     }
     //hide the overlay
-    closeNav();
+    //closeNav();
 }
 
 
