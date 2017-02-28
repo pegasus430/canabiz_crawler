@@ -430,27 +430,27 @@
     // /*-------------------------------------------
     //     19. Mobile Search
     // --------------------------------------------- */
-    // $('.mobile-search-btn').on('click', function(){
-    //     if($(this).siblings('.mobile-search-form').hasClass('active')){
-    //         $(this).siblings('.mobile-search-form').removeClass('active').slideUp();
-    //         $(this).removeClass('active');
+    $('.mobile-search-btn').on('click', function(){
+        if($(this).siblings('.mobile-search-form').hasClass('active')){
+            $(this).siblings('.mobile-search-form').removeClass('active').slideUp();
+            $(this).removeClass('active');
 
-    //         if ( $(this).find("i").hasClass('fa-search')){
-    //             $(this).find("i").removeClass('fa-search').addClass('fa-times');
-    //           }else{
-    //             $(this).find("i").removeClass('fa-times').addClass('fa-search');
-    //           }
-    //     }
-    //     else{
-    //         $('.mobile-search-btn .mobile-search-form').removeClass('active').slideUp();
-    //         $('.mobile-search-btn .mobile-search-form').removeClass('active');
-    //         $(this).addClass('active');
-    //         $(this).siblings('.mobile-search-form').addClass('active').slideDown();
-    //         if ( $(this).find("i").hasClass('fa-search')){
-    //             $(this).find("i").removeClass('fa-search').addClass('fa-times');
-    //           }
-    //     }
-    // });
+            if ( $(this).find("i").hasClass('fa-search')){
+                $(this).find("i").removeClass('fa-search').addClass('fa-times');
+              }else{
+                $(this).find("i").removeClass('fa-times').addClass('fa-search');
+              }
+        }
+        else{
+            $('.mobile-search-btn .mobile-search-form').removeClass('active').slideUp();
+            $('.mobile-search-btn .mobile-search-form').removeClass('active');
+            $(this).addClass('active');
+            $(this).siblings('.mobile-search-form').addClass('active').slideDown();
+            if ( $(this).find("i").hasClass('fa-search')){
+                $(this).find("i").removeClass('fa-search').addClass('fa-times');
+              }
+        }
+    });
 
     // /*-------------------------------------------
     //     20. Treeview active

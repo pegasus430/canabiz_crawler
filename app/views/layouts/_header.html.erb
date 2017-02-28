@@ -103,8 +103,6 @@
                                             <li><a href="#">About</a></li>
                                             <li><a href="<%= contact_us_path %>">Contact Us</a></li>
                                             <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
-                                            <!--<li><a href="#">Terms & Conditions</a></li>-->
-                                            <!--<li><a href="#">Privacy Policy</a></li>-->
                                         </ul>
                                     </nav>
                                 </div>
@@ -139,33 +137,46 @@
         <div class="fluid-container">
             <div class="mobile-menu clearfix">
                 <div class="search-wrap mobile-search">
-                    <div class="mobile-search-btn"><i class="fa fa-search"></i></div>
+                    <div class="mobile-search-btn">Search</div>
                     <div class="mobile-search-form">
-                        <form action="#">
-                            <input type="text" placeholder="Search">
-                            <button type="submit"><i class='fa fa-search'></i></button>
+                        <form class="navbar-form" role="search" method="get" action = '/search'>
+                            <input type="search" name="query" placeholder="What can we help you find..." autocomplete='on'>
+                            <button type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
                 <nav id="mobile_dropdown">
                     <ul class="customnavfont">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#">News</a>
-                            <ul>
-                                <li><a href="#">Sort</a>
-                                    <ul>
-                                        <li><a href="source.html">Sort By Source</a></li>
-                                        <li><a href="category.html">Sort By Category</a></li>
-                                        <li><a href="state.html">Sort By State</a></li>
-                                    </ul>
-                                        <li><a href="allnews.html">All News</a></li>
-                                </li>
-                            </ul>
+                        
+                        <li><%= link_to 'Home', root_path %></li>
+                        <li>
+                            <% if current_user %>
+                                <a href="<%= user_path(current_user)%>">My Page</a>
+                            <% else %>
+                                <a href="<%= login_path %>">My Page</a>
+                            <% end %>
                         </li>
-                        <li><a href="index.html">Deals</a></li>
-                        <li><a href="index.html">Vaporizors</a></li>
-                        <li><a href="index.html">Dispensaries</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="<%= contact_us_path %>">Contact Us</a></li>
+                        <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
+                                            
+                        <!--<li><a href="index.html">Home</a></li>-->
+                        <!--<li><a href="#">News</a>-->
+                        <!--    <ul>-->
+                        <!--        <li><a href="#">Sort</a>-->
+                        <!--            <ul>-->
+                        <!--                <li><a href="source.html">Sort By Source</a></li>-->
+                        <!--                <li><a href="category.html">Sort By Category</a></li>-->
+                        <!--                <li><a href="state.html">Sort By State</a></li>-->
+                        <!--            </ul>-->
+                        <!--                <li><a href="allnews.html">All News</a></li>-->
+                        <!--        </li>-->
+                        <!--    </ul>-->
+                        <!--</li>-->
+                        <!--<li><a href="index.html">Deals</a></li>-->
+                        <!--<li><a href="index.html">Vaporizors</a></li>-->
+                        <!--<li><a href="index.html">Dispensaries</a></li>-->
+                        <!--<li><a href="contact.html">Contact</a></li>-->
                     </ul>
                 </nav>
             </div>       
