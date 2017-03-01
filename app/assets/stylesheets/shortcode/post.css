@@ -169,6 +169,22 @@
 .zm-posts .zm-post-lay-a1 {
     margin-bottom: 30px;
 }
+
+.zm-post-lay-a1 .zm-post-content p, .zm-post-lay-a1 .zm-post-content h2,
+.zm-post-lay-a1 .zm-post-content h3, .zm-post-lay-a1 .zm-post-content h4,
+.zm-post-lay-a1 .zm-post-content h5, .zm-post-lay-a1 .zm-post-content h6
+.zm-post-lay-a1 .zm-post-content {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #3b5265;
+    font-weight: 400;
+    line-height: 1.7rem;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+
 /*----------------------------------------*/
 /*  single post
 /*----------------------------------------*/

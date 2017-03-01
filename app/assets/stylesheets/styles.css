@@ -31,6 +31,25 @@ footer a{
    border-bottom:1px dotted #888;
 }
 
+.footer-image a {
+    border-bottom: none;
+} 
+
+.footer-image {
+    text-align: center;
+}
+
+.footer-image img {
+    width: 50%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .footer-image img {
+        width: 90%;
+    }
+}
+
 footer a:hover{
    color:#aaa;
    text-decoration:none;

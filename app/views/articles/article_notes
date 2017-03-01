@@ -26,3 +26,7 @@
 	    window.open(articleURL,'_blank');
     }
 </script>
+
+
+
+

@@ -1,21 +1,3 @@
-<!-- track article visit --> 
-<script type="text/javascript">
-    $("#article").click(function(){
-        $.ajax({
-            type: "get",
-            url: "",
-            data: {p1: val1, p2: val2},   // you may pass parameter
-            dataType:'script',
-            beforeSend: function(){
-                // code if you need 
-            },
-            success: function(response){
-                // code if you need
-            }
-        });
-    });
-</script>   
-
 <script>
     function saveExternalArticleClick(articleId, articleURL) {
     	$.ajax({
@@ -26,13 +8,16 @@
 	    window.open(articleURL,'_blank');
     }
     
-    function saveArticle(elem, articleId) {
-        var tf = elem.checked;
-        console.log(tf);
-        console.log(articleId);
-        
+    function userArticleSave(elem, articleId) {
+        <% if !logged_in? %>
+            window.open('/login', '_self');
+        <% else %>
+            $.ajax({
+                type: "PUT",
+                url: "/user_article_save/" + articleId
+	        });
+        <% end %>
     }
-
 </script>
 
 <!-- Start page content -->
@@ -59,10 +44,10 @@
                                         
                                         <label class="switch pull-right">
                                             <!--check if article is already saved-->
-                                            <% if current_user && UserArticle.where(:article_id => article.id, :user_id => current_user.id).any? %>
-                                                <input type="checkbox" checked onclick="saveArticle(this, <%=@article.id%>);">
+                                            <% if current_user && UserArticle.where(:article_id => @article.id, :user_id => current_user.id, :saved => true).any? %>
+                                                <input type="checkbox" checked onclick="userArticleSave(this, <%=@article.id%>);">
                                             <% else %>
-                                                <input type="checkbox" unchecked onclick="saveArticle(this, <%=@article.id%>);"> 
+                                                <input type="checkbox" unchecked onclick="userArticleSave(this, <%=@article.id%>);"> 
                                             <% end %>
                                         
                                             <div class="slider round" ></div> 
@@ -98,7 +83,12 @@
                                     <div class="entry-meta-small clearfix ptb-40 mtb-40 border-top border-bottom">
                                         <div>
                                             <label class="switch pull-right">
-                                              <input type="checkbox" unchecked>
+                                                <!--check if article is already saved-->
+                                                <% if current_user && UserArticle.where(:article_id => @article.id, :user_id => current_user.id, :saved => true).any? %>
+                                                    <input type="checkbox" checked onclick="userArticleSave(this, <%=@article.id%>);">
+                                                <% else %>
+                                                    <input type="checkbox" unchecked onclick="userArticleSave(this, <%=@article.id%>);"> 
+                                                <% end %>
                                               <div class="slider round"></div>
                                             </label>                                                    
                                         </div>
@@ -133,7 +123,7 @@
                                                 </div>
                                                 <div class="zm-post-dis">
                                                     <div class="zm-post-header">
-                                                        <h2 class="zm-post-title h2"><a href="blog-single-image.html">Lorem ipsum dolor sit amet consectetur.</a></h2>
+                                                        <h2 class="zm-post-title h2"><a href="#">Lorem ipsum dolor sit amet consectetur.</a></h2>
                                                         <div class="zm-post-meta">
                                                             <ul>
                                                                 <li class="s-meta"><a href="#" class="zm-author">Thomson Smith</a></li>
@@ -151,7 +141,7 @@
                                                 </div>
                                                 <div class="zm-post-dis">
                                                     <div class="zm-post-header">
-                                                        <h2 class="zm-post-title h2"><a href="blog-single-image.html">Lorem ipsum dolor sit amet consectetur.</a></h2>
+                                                        <h2 class="zm-post-title h2"><a href="#">Lorem ipsum dolor sit amet consectetur.</a></h2>
                                                         <div class="zm-post-meta">
                                                             <ul>
                                                                 <li class="s-meta"><a href="#" class="zm-author">Thomson Smith</a></li>
@@ -169,7 +159,7 @@
                                                 </div>
                                                 <div class="zm-post-dis">
                                                     <div class="zm-post-header">
-                                                        <h2 class="zm-post-title h2"><a href="blog-single-image.html">Lorem ipsum dolor sit amet consectetur.</a></h2>
+                                                        <h2 class="zm-post-title h2"><a href="#">Lorem ipsum dolor sit amet consectetur.</a></h2>
                                                         <div class="zm-post-meta">
                                                             <ul>
                                                                 <li class="s-meta"><a href="#" class="zm-author">Thomson Smith</a></li>
@@ -209,7 +199,7 @@
                                             </div>
                                             <div class="zm-post-dis">
                                                 <div class="zm-post-header">
-                                                    <h2 class="zm-post-title h2"><a href="blog-single-image.html">Consectetur adipisicing elit sed eiusmod tempor incididunt.</a></h2>
+                                                    <h2 class="zm-post-title h2"><a href="#">Consectetur adipisicing elit sed eiusmod tempor incididunt.</a></h2>
                                                     <div class="zm-post-meta">
                                                         <ul>
                                                             <li class="s-meta"><a href="#" class="zm-author">Thomson Smith</a></li>

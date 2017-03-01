@@ -13,6 +13,11 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a strin
 gem 'social-share-button', '~> 0.8.5' #social sharing
 gem 'friendly_id', '~> 5.0.0' #use the titles as the urls
 
+#html safe truncation
+gem "nokogiri"
+gem "htmlentities"
+gem 'truncate_html', '~> 0.9.3'
+
 
 #TWITTER GEMS
 gem 'twitter' #TWITTER

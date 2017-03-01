@@ -76,10 +76,15 @@ class ArticlesController < ApplicationController
         if params[:id].present?
             
             #if a user has already saved or viewed this article, just use the same record
-            if UserArticle.where(:article_id => article.id, :user_id => current_user.id).any?
-                @current_user_article = UserArticle.where(:article_id => article.id, :user_id => current_user.id)
-                @current_user_article.saved = @current_user_article.saved == true ? false : true
-                @current_user_article.save
+            if UserArticle.where(:article_id => params[:id], :user_id => current_user.id).any?
+                @current_user_article = UserArticle.where(:article_id => params[:id], :user_id => current_user.id)
+                if (@current_user_article[0].saved = true) 
+                    @current_user_article[0].update_attribute :saved, false
+                else 
+                    @current_user_article[0].update_attribute :saved, true
+                end
+                #@current_user_article.saved = @current_user_article.saved == true ? false : true
+                #@current_user_article.save
             else 
                 UserArticle.create(user_id: current_user.id, article_id: params[:id], saved: true)
             end
