@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get 'feedback', to: 'pages#feedback'
   get 'submit_feedback_form', to: 'pages#submit_feedback_form'
   
+  get 'privacy_policy', to: 'pages#privacy_policy'
+  get 'terms_conditions', to: 'pages#terms_conditions'
+  
   #DIFF STYLING
   get 'test', to: 'diff_layouts#test'
   

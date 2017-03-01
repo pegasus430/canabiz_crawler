@@ -168,6 +168,7 @@
 }
 .zm-posts .zm-post-lay-a1 {
     margin-bottom: 30px;
+    max-height: 484px;
 }
 
 .zm-post-lay-a1 .zm-post-content p, .zm-post-lay-a1 .zm-post-content h2,
