@@ -437,9 +437,9 @@
 
             if ( $(this).find("i").hasClass('fa-search')){
                 $(this).find("i").removeClass('fa-search').addClass('fa-times');
-              }else{
+            }else{
                 $(this).find("i").removeClass('fa-times').addClass('fa-search');
-              }
+            }
         }
         else{
             $('.mobile-search-btn .mobile-search-form').removeClass('active').slideUp();
@@ -448,7 +448,10 @@
             $(this).siblings('.mobile-search-form').addClass('active').slideDown();
             if ( $(this).find("i").hasClass('fa-search')){
                 $(this).find("i").removeClass('fa-search').addClass('fa-times');
-              }
+            }
+            
+            // remove the image and add the x
+            // $('.mobile-search-btn active').replace(/<img[^>]*>/g,"");
         }
     });
 

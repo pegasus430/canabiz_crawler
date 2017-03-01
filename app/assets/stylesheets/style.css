@@ -885,10 +885,17 @@ a.submit-button {
     color: #fff;
     height: 45px;
     position: absolute;
-    right: 0;
+    right: 15px;
     top: 0;
     width: 45px;
 }
+
+@media all and (max-width: 767px) {
+    .mobile-search-form form button {
+        top: 10px;
+    }
+}
+
 .mobile-search-form form {
     position: relative;
 }

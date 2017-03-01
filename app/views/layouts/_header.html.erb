@@ -137,11 +137,11 @@
         <div class="fluid-container">
             <div class="mobile-menu clearfix">
                 <div class="search-wrap mobile-search">
-                    <div class="mobile-search-btn">Search</div>
+                    <div class="mobile-search-btn"><%=image_tag("icons/search.png")%></div>
                     <div class="mobile-search-form">
                         <form class="navbar-form" role="search" method="get" action = '/search'>
-                            <input type="search" name="query" placeholder="What can we help you find..." autocomplete='on'>
-                            <button type="submit">Submit</button>
+                            <input type="text" name="query" placeholder="What can we help you find..." autocomplete='on'>
+                            <button type="submit"><%=image_tag("icons/search.png")%></button>
                         </form>
                     </div>
                 </div>
