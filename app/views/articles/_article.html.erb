@@ -8,12 +8,18 @@
         </div>
         <div class="zm-post-dis">
             <div class="zm-post-header">
+                
+                <!--display article tags-->
                 <div class="zm-category">
                     <% article.categories.each do |category| %>
                         <a class="bg-cat-3 cat-btn" href="<%=category_path(category)%>"><%=category.name%></a>
                     <% end %>
-                    <!--<a href="#" class="bg-cat-3 cat-btn"></a>-->
+                    <% article.states.each do |state| %>
+                        <a class="bg-cat-3 cat-btn" href="<%=state_path(state)%>"><%=state.name%></a>
+                    <% end %>
                 </div>
+                <!--display article tags-->
+                
                 <h2 class="zm-post-title"><a href="<%= article_path(article) %>"><%= article.title.truncate(60) if article.title %></a></h2>
                 <div class="zm-post-meta">
                     <ul>

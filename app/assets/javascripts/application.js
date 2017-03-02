@@ -27,22 +27,30 @@ function dispIndexImageError(image) {
 }
 
 //change the sorting method
-function changeSort(elem) {
-    if (elem.innerHTML == 'Most Popular') 
+function changeSort(stringValue) {
+    if (stringValue == 'Popular') 
     {
         $("#article-index-views").css("display", "block");
         $(".article-index-views-pagination").css("display", "block");
         $("#article-index-new").css("display", "none");
         $(".article-index-new-pagination").css("display", "none");
-        $(".sort-button").html("Most Popular");
+        // $(".sort-button").html("Most Popular");
+        $("#newest-button").removeClass('active-header-button');
+        $("#newest-button").addClass('inactive-header-button');
+        $("#popular-button").removeClass('inactive-header-button');
+        $("#popular-button").addClass('active-header-button');
     } 
-    else if (elem.innerHTML == 'Newest') 
+    else if (stringValue == 'Newest') 
     {
         $("#article-index-views").css("display", "none");
         $(".article-index-views-pagination").css("display", "none");
         $("#article-index-new").css("display", "block");
         $(".article-index-new-pagination").css("display", "block");
-        $(".sort-button").html("Newest");
+        // $(".sort-button").html("Newest");
+        $("#newest-button").removeClass('inactive-header-button');
+        $("#newest-button").addClass('active-header-button');
+        $("#popular-button").removeClass('active-header-button');
+        $("#popular-button").addClass('inactive-header-button');
     }
     //hide the overlay
     //closeNav();

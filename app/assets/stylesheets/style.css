@@ -164,11 +164,33 @@ label {
     position: relative;
     z-index: 2;
 }
+
+.section-title h2.header-button {
+    padding: 5px 10px;
+    height: auto;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-right: -4px;
+}
+
+.section-title h2.active-header-button {
+    background-color: #8A2A88;
+    color: #fff;
+}
+
+.section-title h2.inactive-header-button {
+    border: 1px solid #8A2A88;
+    color: #8A2A88;
+}
+
 /*advertisement*/
 
 .advertisement a {
     display: block;
 }
+
+
+
 /*----------------------------------------*/
 /*  5. Subcribe form area
 /*----------------------------------------*/

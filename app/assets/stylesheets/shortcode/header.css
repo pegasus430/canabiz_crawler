@@ -32,6 +32,20 @@ nav.zm-secondary-menu ul li:last-child {
     padding: 0 10px;
     text-align: right;
 }
+@media all and (max-width: 768px) {
+    .header-top-right .topbar-sblock {
+        padding: 0;
+    }
+}
+.not-on-mobile {
+    display: inline-block;
+}
+@media all and (max-width: 490px) {
+    .not-on-mobile {
+        display: none;
+    }
+}
+
 .topbar-sblock a:not(.social-btn):hover, .topbar-sblock a:not(.social-btn):hover i{
 	color: #2ab081;
 }
@@ -284,12 +298,14 @@ nav.zm-secondary-menu ul li:last-child {
     color: #2ab081;
 }
 .zm-forget{
-    margin: 15px 0;
+    margin: 0;
     display: block;
-}
-.bg-dark .zm-signin-form .zm-forget, .bg-white .zm-signin-form .zm-forget, .bg-gray .zm-signin-form .zm-forget{
+    text-align: center;
     color: #2ab081;
 }
+/*.bg-dark .zm-signin-form .zm-forget, .bg-white .zm-signin-form .zm-forget, .bg-gray .zm-signin-form .zm-forget{*/
+/*    color: #2ab081;*/
+/*}*/
 
 
 

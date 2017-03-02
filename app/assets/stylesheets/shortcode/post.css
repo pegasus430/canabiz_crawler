@@ -169,6 +169,7 @@
 .zm-posts .zm-post-lay-a1 {
     margin-bottom: 30px;
     max-height: 484px;
+    overflow: hidden;
 }
 
 .zm-post-lay-a1 .zm-post-content p, .zm-post-lay-a1 .zm-post-content h2,
@@ -208,7 +209,7 @@
 
 .zm-post-lay-single .zm-post-thumb img {
     width: 100%;
-    height: 450px;
+    height: auto;
 }
 
 .zm-post-content blockquote {
@@ -320,8 +321,10 @@
     margin-bottom: 0;
 }
 .zm-posts .zm-post-lay-a2 .zm-post-title {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 28px;
+    height: 68px;
+    overflow: hidden;
 }
 .zm-posts .zm-post-lay-a2 .zm-post-header {
     padding: 15px 0 0px;
@@ -330,13 +333,15 @@
     padding: 25px 0 0;
 }
 .single-post-wrap .zm-post-lay-a2 .zm-post-meta {
-    margin-top: 6px;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
 .single-post-wrap .zm-posts .zm-post-lay-a2 .zm-post-meta .s-meta a {
     font-size: 13px;
 }
 .zm-posts .zm-post-lay-a2 .zm-post-meta .s-meta {
     padding: 0;
+    margin: 0;
 }
 /*----------------------------------------*/
 /*  Trending post layout A4
@@ -425,6 +430,8 @@
 }
 .zm-category {
     line-height: 1;
+    height: 28px;
+    overflow: hidden;
 }
 .zm-post-lay-c .zm-post-title {
     font-size: 18px;

@@ -110,66 +110,40 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="post-title mb-40">
-                                            <h2 class="h6 inline-block">Similar Posts For You</h2>
+                                            <h2 class="h6 inline-block">Other Posts By <%= @article.source.name %></h2>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="zm-posts clearfix">
-                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                                            <article class="zm-post-lay-a2">
-                                                <div class="zm-post-thumb">
-                                                    <a href="blog-single-image.html"><img src="images/post/a/a2/11.jpg" alt="img"></a>
-                                                </div>
-                                                <div class="zm-post-dis">
-                                                    <div class="zm-post-header">
-                                                        <h2 class="zm-post-title h2"><a href="#">Lorem ipsum dolor sit amet consectetur.</a></h2>
-                                                        <div class="zm-post-meta">
-                                                            <ul>
-                                                                <li class="s-meta"><a href="#" class="zm-author">Thomson Smith</a></li>
-                                                                <li class="s-meta"><a href="#" class="zm-date">April 18, 2016</a></li>
-                                                            </ul>
+                                        
+                                        <!--loop through @same_source_articles -->
+                                        <% @same_source_articles.each do |article| %>
+                                        
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                                <article class="zm-post-lay-a2">
+                                                    <div class="zm-post-thumb">
+                                                        <a href="<%= article_path(article) %>">
+                                                            <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="zm-post-dis">
+                                                        <div class="zm-post-header">
+                                                            <h2 class="zm-post-title h2"><%= link_to article.title.truncate(60), article_path(article)%></h2>
+                                                            <div class="zm-post-meta">
+                                                                <ul>
+                                                                    <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
+                                                                    <li class="s-meta" style = "float: right;"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </article>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                                            <article class="zm-post-lay-a2">
-                                                <div class="zm-post-thumb">
-                                                    <a href="blog-single-image.html"><img src="images/post/a/a2/12.jpg" alt="img"></a>
-                                                </div>
-                                                <div class="zm-post-dis">
-                                                    <div class="zm-post-header">
-                                                        <h2 class="zm-post-title h2"><a href="#">Lorem ipsum dolor sit amet consectetur.</a></h2>
-                                                        <div class="zm-post-meta">
-                                                            <ul>
-                                                                <li class="s-meta"><a href="#" class="zm-author">Thomson Smith</a></li>
-                                                                <li class="s-meta"><a href="#" class="zm-date">April 18, 2016</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 hidden-md hidden-sm">
-                                            <article class="zm-post-lay-a2">
-                                                <div class="zm-post-thumb">
-                                                    <a href="blog-single-image.html"><img src="images/post/a/a2/13.jpg" alt="img"></a>
-                                                </div>
-                                                <div class="zm-post-dis">
-                                                    <div class="zm-post-header">
-                                                        <h2 class="zm-post-title h2"><a href="#">Lorem ipsum dolor sit amet consectetur.</a></h2>
-                                                        <div class="zm-post-meta">
-                                                            <ul>
-                                                                <li class="s-meta"><a href="#" class="zm-author">Thomson Smith</a></li>
-                                                                <li class="s-meta"><a href="#" class="zm-date">April 18, 2016</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </div>
+                                                </article>
+                                            </div>
+                                            
+                                        <% end %>
+                                        <!--loop through @same_source_articles-->
+                                        
                                     </div>
                                 </div>
                             </aside>
@@ -186,45 +160,54 @@
                             <div class="row mb-40">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="section-title">
-                                         <h2 class="h6 header-color inline-block uppercase">Today’s Tips</h2> 
+                                         <h2 class="h6 header-color inline-block uppercase">Related Articles</h2> 
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="zm-posts">
-                                        <article class="zm-post-lay-a sidebar">
-                                            <div class="zm-post-thumb">
-                                                <a href="blog-single-image.html"><img src="images/post/b/1.jpg" alt="img"></a>
-                                            </div>
-                                            <div class="zm-post-dis">
-                                                <div class="zm-post-header">
-                                                    <h2 class="zm-post-title h2"><a href="#">Consectetur adipisicing elit sed eiusmod tempor incididunt.</a></h2>
-                                                    <div class="zm-post-meta">
-                                                        <ul>
-                                                            <li class="s-meta"><a href="#" class="zm-author">Thomson Smith</a></li>
-                                                            <li class="s-meta"><a href="#" class="zm-date">April 18, 2016</a></li>
-                                                        </ul>
+                                
+                                <!--loop through related articles-->
+                                <% @related_articles.each do |article| %>
+                                
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="zm-posts">
+                                            <article class="zm-post-lay-a sidebar">
+                                                <div class="zm-post-thumb">
+                                                    <a href="<%= article_path(article) %>">
+                                                        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="zm-post-dis">
+                                                    <div class="zm-post-header">
+                                                        <h2 class="zm-post-title h2"><%= link_to article.title.truncate(60), article_path(article)%></h2>
+                                                        <div class="zm-post-meta" style="margin-bottom: 15px;">
+                                                            <ul>
+                                                                <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
+                                                                <li class="s-meta" style = "float: right;"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </article>
+                                            </article>
+                                        </div>
                                     </div>
-                                </div>
+                                <% end %>
+                                <!--loop through related articles-->
                             </div>
                         </aside>
+                        
                         <!-- Start Subscribe From -->
-                        <div class="col-md-6 col-sm-6 col-lg-12 mt-60 sm-mb-50">
-                            <aside class="subscribe-form bg-dark text-center sidebar hidden-md">
-                                <h3 class="uppercase zm-post-title">Get Email Updates</h3>
-                                <p>Join 80,000+ awesome subscribers and update yourself with our exclusive news.</p>
-                                <form action="#">
-                                    <input placeholder="Enter your full name" type="text">
-                                    <input placeholder="Enter email address" required="" type="email">
-                                    <input value="Subscribe" type="submit">
-                                </form>
-                            </aside>
-                        </div>
+                        <!--<div class="col-md-6 col-sm-6 col-lg-12 mt-60 sm-mb-50">-->
+                        <!--    <aside class="subscribe-form bg-dark text-center sidebar hidden-md">-->
+                        <!--        <h3 class="uppercase zm-post-title">Get Email Updates</h3>-->
+                        <!--        <p>Join 80,000+ awesome subscribers and update yourself with our exclusive news.</p>-->
+                        <!--        <form action="#">-->
+                        <!--            <input placeholder="Enter your full name" type="text">-->
+                        <!--            <input placeholder="Enter email address" required="" type="email">-->
+                        <!--            <input value="Subscribe" type="submit">-->
+                        <!--        </form>-->
+                        <!--    </aside>-->
+                        <!--</div>-->
                         <!-- End Subscribe From -->
                     </div>
                 </div>
