@@ -25,9 +25,11 @@
                     <ul>
                         <li class="s-meta">
                             <img class='inline' style='width: 40px; height: auto; display: none;' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
-                            <a href="#" class="zm-author"><%= article.source.name %></a>
+                            <%= link_to article.source.name, source_path(article.source), class: 'zm-author' %>
+                           
                         </li>
-                        <li class="s-meta"><a href="#" class="zm-date"><%= time_ago_in_words(article.created_at) %> ago</a></li>
+                        <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
+                        <!--<li class="s-meta"><a href="#" class="zm-date"></a></li>-->
                     </ul>
                     <div class = 'social-sharing' style="display: none;">
                         <%= social_share_button_tag(article.title, :url => "https://cannabiz-news.herokuapp.com/articles/#{article.id}", :image => "#{article.image}") %>

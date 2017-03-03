@@ -889,6 +889,7 @@ a.submit-button {
     text-align: center;
     width: 50px;
     z-index: 2147483647;
+    top: 0;
 }
 .mobile-menu {
     position: relative;

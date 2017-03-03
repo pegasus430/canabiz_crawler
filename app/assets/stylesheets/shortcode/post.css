@@ -36,6 +36,16 @@
     width: 100%;
     height: 230px;
 }
+@media (max-width: 991px) {
+    .zm-post-thumb img {
+        height: auto;
+    }
+    
+    .zm-posts .zm-post-lay-a1 {
+        max-height: none !important;
+    }
+}
+
 .zm-post-thumb a {
     display: block;
 }
