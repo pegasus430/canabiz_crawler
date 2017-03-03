@@ -77,12 +77,12 @@
     // /*-------------------------------------------
     //     05. ScrollUp jquery
     // --------------------------------------------- */
-    // $.scrollUp({
-    //     scrollText: '<i class="fa fa-angle-up"></i>',
-    //     easingType: 'linear',
-    //     scrollSpeed: 900,
-    //     animation: 'slide'
-    // });
+    $.scrollUp({
+        scrollText: '<p class="up-carrot">^</i>',
+        easingType: 'linear',
+        scrollSpeed: 900,
+        animation: 'slide'
+    });
 
     // /*-------------------------------------------
     //     06. Tooltip

@@ -802,6 +802,12 @@ a.submit-button {
     color: #fff;
     height: 40px;
 } 
+.up-carrot {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 @-webkit-keyframes scroll-to-top {
     0% {
         opacity: 0;
