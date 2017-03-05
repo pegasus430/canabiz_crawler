@@ -130,11 +130,15 @@ nav.zm-secondary-menu ul li:last-child {
 }*/
 
 .search-wrap {
-    /*position: relative;*/
+    position: relative;
+}
+
+.search-wrap.mobile-search {
     position: absolute;
     top: 0;
     width: 100%;
 }
+
 .search-form {
     /*background: #fff none repeat scroll 0 0;*/
     /*box-shadow: 0 7px 15px rgba(0, 0, 0, 0.15);*/

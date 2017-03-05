@@ -62,6 +62,8 @@
   overflow: hidden;
   margin-bottom: 30px;
 }
+
+
 .followus-area.small-columns .social-btn .btn_text{
   font-size:11px;
 }
@@ -82,9 +84,10 @@
 .header-mdh {
   height: 120px;
 }
-.primary-menu ul li a {
+
+.primary-menu > ul > li > a {
   font-size: 12px;
-  padding: 0 12px;
+  padding: 0 12px !important;
 }
 .breakingnews {
   line-height: 24PX;

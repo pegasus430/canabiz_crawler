@@ -1,10 +1,33 @@
 <div class="col-md-4">
     <article class="zm-post-lay-a1">
+        
+        <!--save article-->
+        <div class = "article-index-save">
+                                        
+            <label class="switch pull-right">
+                <!--check if article is already saved-->
+                <% if current_user && UserArticle.where(:article_id => article.id, :user_id => current_user.id, :saved => true).any? %>
+                    <input type="checkbox" checked onclick="userArticleSave(this, <%=article.id%>);">
+                <% else %>
+                    <input type="checkbox" unchecked onclick="userArticleSave(this, <%=article.id%>);"> 
+                <% end %>
+            
+                <div class="slider round" ></div> 
+            </label>  
+            
+            <div class="meta-list pull-right">
+                <span class="post-title">SAVE THIS ARTICLE:</span> 
+            </div>
+                                                                
+        </div>
+        
+        <!--save article-->
+        
         <div class="zm-post-thumb">
             <!--actual article image is failing right now-->
             <a href="<%= article_path(article) %>">
                 <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
-            </a> <!--"post/a/a1/9.jpg" -->
+            </a>
         </div>
         <div class="zm-post-dis">
             <div class="zm-post-header">

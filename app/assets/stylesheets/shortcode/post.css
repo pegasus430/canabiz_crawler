@@ -180,6 +180,24 @@
     margin-bottom: 30px;
     max-height: 484px;
     overflow: hidden;
+    position: relative;
+}
+
+.article-index-save {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+}
+
+.article-index-save .slider.round {
+    background-color: transparent;
+    border: 1px solid #ccc;
+}
+
+.article-index-save .meta-list span {
+    /*color: #fff;*/
+    margin-right: 7px;
+    line-height: 35px;
 }
 
 .zm-post-lay-a1 .zm-post-content p, .zm-post-lay-a1 .zm-post-content h2,
@@ -353,6 +371,20 @@
     padding: 0;
     margin: 0;
 }
+
+@media (max-width: 767px) {
+    .zm-posts .zm-post-lay-a2 .zm-post-title {
+        font-size: 24px;
+        line-height: 34px;
+        height: auto;
+        overflow: visible;
+    }
+     .zm-posts .zm-post-lay-a2 .zm-post-meta {
+         margin-bottom: 15px;
+     }
+    
+}
+
 /*----------------------------------------*/
 /*  Trending post layout A4
 /*----------------------------------------*/
