@@ -1,58 +1,311 @@
+<!-- Modal for are you sure message -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Remove Article</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you would like to remover this article from My Saved Articles?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default whitehover" data-dismiss="modal">Delete</button>
+          <button type="button" class="btn btn-default whitehover" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+</div>    
+    
+    
+<!-- Body main wrapper start -->
+<div class="wrapper bg-gray">
 
-<div class = "wrap">
-	<h1>Hey <%=@user.username %>! Choose The News You Would Like To See</h1>
-	
-	<%= render 'shared/errors', obj: @user %>
+    <!-- Start page content -->
 
-	<div class='row'>
-	    <div class='col-xs-12'>
-	        <%= form_for(@user, :html => {class:"form-horizontal", role: "form"}) do |f| %>
+    <div class="container margintop">
+    	<div class="row">
 
-	            <div class="form-group">
-	             <div class="row">
-	                 <div class="control-label col-sm-2">
-	                    <b>Select Sources to Follow</b>
-	                </div>
-	               <div class="col-sm-8">
-	                 <%= f.collection_check_boxes :source_ids, Source.all, :id, :name do |cb| %>
-	                   <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
-	                 <% end %>
-	               </div>
-	             </div>
-	           </div>
-	           <div class="form-group">
-	             <div class="row">
-	                 <div class="control-label col-sm-2">
-	                    <b>Select States to Follow</b>
-	                </div>
-	               <div class="col-sm-8">
-	                 <%= f.collection_check_boxes :state_ids, State.all, :id, :name do |cb| %>
-	                   <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
-	                 <% end %>
-	               </div>
-	             </div>
-	           </div>
-	            <div class="form-group">
-	             <div class="row">
-	                 <div class="control-label col-sm-2">
-	                    <b>Select Categories to Follow</b>
-	                </div>
-	               <div class="col-sm-8">
-	                 <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
-	                   <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
-	                 <% end %>
-	               </div>
-	             </div>
-	           </div>
-	            <div class="form-group">
-	                <div class="col-sm-offset-2 col-sm-10">
-	                    <%= f.submit "Save Preferences"%>
-	                </div>
-	            </div>
-	        <% end %>
-	    </div>
+			<div class="col-md-12 col-lg-9 col-xs-12 col-sm-12">
+				<ul class="tabs">
+					<li class="tab-link current " data-tab="tab-1">My Feed</li>
+					<li class="tab-link" data-tab="tab-2">My Saved Articles</li>
+					<li class="tab-link" data-tab="tab-3">Settings</li>
+				</ul>
+				
+				<!--MY FEED TAB-->
+				<div id="tab-1" class="tab-content ">
+
+					<% @recents.each do |article| %>
+					
+						<!-- Start single post layout A1 -->
+	                    <div class="col margin">
+	                        <article class="zm-post-lay-a1 my-feed">
+	                            <div class="zm-post-thumb">
+	                            	<a href="<%= article_path(article) %>">
+						                <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+						            </a>
+	                            </div>
+	                            <div class="zm-post-dis">
+	                                <div class="zm-post-header">
+	                                    <div class="zm-category">
+	                                    	<% article.categories.each do |category| %>
+						                        <a class="bg-cat-3 cat-btn" href="<%=category_path(category)%>"><%=category.name%></a>
+						                    <% end %>
+						                    <% article.states.each do |state| %>
+						                        <a class="bg-cat-3 cat-btn" href="<%=state_path(state)%>"><%=state.name%></a>
+						                    <% end %>
+	                                    </div>
+	                                    <h2 class="zm-post-title h2"><a href="<%= article_path(article) %>"><%= article.title %></a></h2>
+	                                    <div class="zm-post-meta">
+	                                        <ul>
+	                                            <li class="s-meta"><%= link_to article.source.name, source_path(article.source), class: 'zm-author' %></li>
+	                                            <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
+	                                        </ul>
+	                                    </div>
+	                                </div>
+	                                <div class="zm-post-content">
+	                                    <%frag = Nokogiri::HTML(article.body)%>
+						                <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
+						                <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
+						                <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
+						                <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
+						                <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
+						                <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
+						                
+						                <%= truncate_html frag, :length => 300 %>
+	                                </div>
+	                            </div>
+	                        </article>
+	                    </div>
+	                    <!-- End single post layout A1 -->
+	                    <hr style="margin: 0;">
+					
+					<% end %>
+                    
+
+				</div>
+				<!--END MY FEED TAB-->
+
+                <!-- Start Tab 2 - Saved Articles -->
+
+				<div id="tab-2" class="tab-content current">
+                	<table data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable">
+						<thead>
+							<tr>
+								<th>Article</th>
+								<th data-priority="1">Source</th>
+								<th data-priority="3">Date</th>
+								<th data-priority="1" class="delbtn">Remove</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--loop through saved articles and add to row-->
+							<% @savedArticles.each do |article| %>
+								<tr>
+									<td style="padding: 0 4px;"><%=link_to article.title, article_path(article)%></td>
+									<td style="padding: 0 4px;"><%=link_to article.source.name, source_path(article.source)%></td>
+									<td style="padding: 0 4px;"><%= article.created_at.strftime("%B %d, %Y") %></td>
+									<td class="delbtn">
+										<span class="btn btn-default btn-sm">
+											<button type="button" class="close" data-toggle="modal" data-target="#myModal">&times;</button>
+										</span>
+									</td>          
+								</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+
+                <!-- Start tab 3 - Settings -->
+
+				<div id="tab-3" class="tab-content">
+                    <div class="miniheader">Use the following settings to organize the information in your personal feed.</div>
+                    <div class="paddingsettings"></div>
+                    <div class="row">
+                        <div class="padding-bottom;">
+                        <div class="col-lg-12">
+                            <div class="section-title">
+                                <h2 class="h6 header-color inline-block uppercase">Source Subscription</h2>
+                            </div>      
+                        </div>
+                        <div class="marginbottom">&nbsp;</div>
+                        <div class="marginbottom">&nbsp;</div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
+                            <div class="sing-option zm-state">
+                                <style> /* Special Style for this page only for full width selectors */
+                                .bootstrap-select:not([rclass*=col-]):not([class*=form-control]):not(.input-group-btn) {
+                                    width: 100%;
+                                }
+                                </style>
+                                
+                                <select name="Source" class="selectpicker" data-live-search="true">
+                                    <option>Select Source</option>
+                                    <% Source.all.order("name ASC").each do |source| %>
+                                        <option><%=source.name%></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
+                            <button class="submit-button" type="submit">Add</button>
+                        </div>
+                        </div>
+                        <div class="paddingsettings">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="">
+                                <div class="zm-tagcloud">
+                                    <div class="paddingsettings">Currently Selected Sources (Click to Remove):</div>
+                                    
+                                    <!--loop through sources user has selects-->
+                                    <% current_user.sources.each do |source| %>
+                                    	<a href="#"><%=source.name%></a>
+                                    <% end %>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="paddingsettings"></div>
+                    <div class="row">
+                        <div class="padding-bottom;">
+                        <div class="col-lg-12">
+                            <div class="section-title">
+                                <h2 class="h6 header-color inline-block uppercase">Category Subscriptions</h2>
+                            </div>      
+                        </div>
+                        <div class="marginbottom">&nbsp;</div>
+                        <div class="marginbottom">&nbsp;</div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
+                            <div class="sing-option zm-state">
+                                <style> /* Special Style for this page only for full width selectors */
+                                .bootstrap-select:not([rclass*=col-]):not([class*=form-control]):not(.input-group-btn) {
+                                    width: 100%;
+                                }
+                                </style>
+                                
+                                <select name="Category" class="selectpicker" data-live-search="true">
+                                    <option>Select Category</option>
+                                    <% Category.all.order("name ASC").each do |category| %>
+                                        <option><%=category.name%></option>
+                                    <% end %>
+                                </select>
+
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
+                            <button class="submit-button" type="submit">Add</button>
+                        </div>
+                        </div>
+                        <div class="paddingsettings">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="">
+                                <div class="zm-tagcloud">
+                                    <div class="paddingsettings">Currently Selected Categories (Click to Remove):</div>
+
+                                    <!--loop through categories user has selects-->
+                                    <% current_user.categories.each do |category| %>
+                                    	<a href="#"><%=category.name%></a>
+                                    <% end %>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="paddingsettings"></div>
+                    <div class="row">
+                        <div class="padding-bottom;">
+                        <div class="col-lg-12">
+                            <div class="section-title">
+                                <h2 class="h6 header-color inline-block uppercase">State Subscriptions</h2>
+                            </div>      
+                        </div>
+                        <div class="marginbottom">&nbsp;</div>
+                        <div class="marginbottom">&nbsp;</div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
+                            <div class="sing-option zm-state">
+                                <style> /* Special Style for this page only for full width selectors */
+                                .bootstrap-select:not([rclass*=col-]):not([class*=form-control]):not(.input-group-btn) {
+                                    width: 100%;
+                                }
+                                </style>
+                                
+                                <select name="State" class="selectpicker" data-live-search="true">
+                                    <option>Select State</option>
+                                    <% State.all.order("name ASC").each do |state| %>
+                                        <option><%=state.name%></option>
+                                    <% end %>
+                                </select>
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
+                            <button class="submit-button" type="submit">Add</button>
+                        </div>
+                        </div>
+                        <div class="paddingsettings">&nbsp;</div>
+                        <div class="col-lg-12">
+                            <div class="">
+                                <div class="zm-tagcloud">
+                                    <div class="paddingsettings">Currently Selected States (Click to Remove):</div>
+                                    
+                                    <!--loop through categories user has selects-->
+                                    <% current_user.states.each do |state| %>
+                                    	<a href="#"><%=state.name%></a>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                <!-- End tab 3 -->
+
+			    </div>
+            </div>
+
+            <!-- Sidebars hidden on mobile -->
+
+            <div class="col-sm-1 col-md-1 col-lg-3 col-xs-3 col-sm-3">
+    		<div class="row mb-40">
+                <div class="col-lg-12 hidden-md hidden-sm hidden-xs">
+                    <div class="section-title">
+                        <h2 class="h6 header-color inline-block uppercase">Trending Articles</h2>
+                    </div>
+                </div>
+            </div>
+
+	        <ul class="miniarticlemenu hidden-md hidden-sm hidden-xs">
+	        	
+	        	<!--loop through trending articles-->
+	        	<% @trendingArticles.each do |article| %>
+		        	<li><%= link_to article.title.truncate(60), article_path(article) %></li>
+		        <% end %>
+	        </ul>
+
+		</div>
 	</div>
-	
-	<h1>Saved Articles: </h1>
-	<!--#render 'pages/article_index'-->
+
+   <!-- End Page Content --> 
 </div>
+<!-- Body main wrapper end -->
+
+<script>
+    //tabs
+	$('ul.tabs li').click(function(){
+		var tab_id = $(this).attr('data-tab');
+
+		$('ul.tabs li').removeClass('current');
+		$('.tab-content').removeClass('current');
+
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	})
+</script>

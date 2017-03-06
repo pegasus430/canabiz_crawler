@@ -94,8 +94,33 @@ class UsersController < ApplicationController
     end     
   
     def show
-        #show the saved articles
-        #@recents = user.articles.where(saved: true)
+        #my feed articles
+         @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+            
+        if current_user.sources.any?
+             @recents = @recents.where(source_id: current_user.sources)
+        end
+        
+        if current_user.states.any?
+            #add a where clause to only be user states
+            state_ids = current_user.states.pluck(:id)
+            article_ids = ArticleState.where(state_id: state_ids).pluck(:article_id)
+            @recents = @recents.where(id: article_ids)
+        end
+        
+        if current_user.categories.any?
+           #add a where clause to only be user categories
+            category_ids = current_user.categories.pluck(:id)
+            article_ids = ArticleCategory.where(category_id: category_ids).pluck(:article_id)
+            @recents = @recents.where(id: article_ids)
+        end
+       
+        #saved articles
+        article_ids = UserArticle.where(:user_id => current_user.id, :saved => true).pluck(:article_id)
+        @savedArticles = Article.where(id: article_ids)
+        
+        #trending articles for sidebar
+        @trendingArticles = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
     end
   
     def destroy

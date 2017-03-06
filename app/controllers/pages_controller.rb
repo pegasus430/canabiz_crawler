@@ -3,6 +3,38 @@ class PagesController < ApplicationController
     before_action :require_admin, only: [:admin]
     
     def home
+            
+        #only showing all articles on homepage now
+        @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+        
+        respond_to do |format|
+          format.html
+          format.js # add this line for your js template
+        end
+        
+        #removed from marijuana stocks line 9 #import urllib3
+        
+
+        # news background jobs:
+        if Rails.env.production?
+            NewsMarijuanaStocks.perform_later()
+            NewsLeafly.perform_later()
+            NewsTheCannabist.perform_later()
+            NewsMarijuana.perform_later()
+            NewsCannabisCulture.perform_later()
+            NewsCannaLawBlog.perform_later()
+            NewsMjBizDaily.perform_later()
+            NewsHighTimes.perform_later()
+            NewsDopeMagazine.perform_later()
+            NewsFourTwentyTimes.perform_later()
+        end
+        
+    end 
+    
+    def not_in_use
+       
+       #homepage only showing user articles
         if current_user != nil
             
             @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
@@ -31,33 +63,10 @@ class PagesController < ApplicationController
             end
             
         else 
-            @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 12)
-            @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 12)
-        end    
-        
-        respond_to do |format|
-          format.html
-          format.js # add this line for your js template
+            @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+            @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
         end
-        
-        #removed from marijuana stocks line 9 #import urllib3
-        
-
-        # news background jobs:
-        if Rails.env.production?
-            NewsMarijuanaStocks.perform_later()
-            NewsLeafly.perform_later()
-            NewsTheCannabist.perform_later()
-            NewsMarijuana.perform_later()
-            NewsCannabisCulture.perform_later()
-            NewsCannaLawBlog.perform_later()
-            NewsMjBizDaily.perform_later()
-            NewsHighTimes.perform_later()
-            NewsDopeMagazine.perform_later()
-            NewsFourTwentyTimes.perform_later()
-        end
-        
-    end 
+    end
     
     def admin
     end

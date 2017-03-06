@@ -4,7 +4,6 @@
         <!--save article-->
         
         <div class="zm-post-thumb">
-            <!--actual article image is failing right now-->
             <a href="<%= article_path(article) %>">
                 <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
             </a>

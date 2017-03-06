@@ -32,6 +32,11 @@
 .zm-trending-post {
     overflow: hidden;
 }
+
+article.zm-post-lay-a1.my-feed .zm-post-thumb img {
+    height: auto;
+}
+
 .zm-post-thumb img {
     width: 100%;
     height: 230px;
