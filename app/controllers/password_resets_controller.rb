@@ -34,7 +34,7 @@ class PasswordResetsController < ApplicationController
 				@user.update_attribute(:password_reset_token, nil)
 				session[:user_id] = @user.id
 				flash[:success] = 'Password has been updated'
-				redirect_to root_path
+				redirect_to user_path(user)
 			else
 				flash.now[:danger] = "Passwords do not match"
 				render action: 'edit'

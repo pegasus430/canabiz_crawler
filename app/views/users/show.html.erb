@@ -37,7 +37,7 @@
 				</ul>
 				
 				<!--MY FEED TAB-->
-				<div id="tab-1" class="tab-content ">
+				<div id="tab-1" class="tab-content current">
 
 					<% @recents.each do |article| %>
 					
@@ -92,8 +92,8 @@
 
                 <!-- Start Tab 2 - Saved Articles -->
 
-				<div id="tab-2" class="tab-content current">
-                	<table data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable">
+				<div id="tab-2" class="tab-content">
+                	<table data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable" style="width: 100%;">
 						<thead>
 							<tr>
 								<th>Article</th>
@@ -142,7 +142,7 @@
                                 }
                                 </style>
                                 
-                                <select name="Source" class="selectpicker" data-live-search="true">
+                                <select name="Source" class="selectDropdown" data-live-search="true">
                                     <option>Select Source</option>
                                     <% Source.all.order("name ASC").each do |source| %>
                                         <option><%=source.name%></option>
@@ -189,7 +189,7 @@
                                 }
                                 </style>
                                 
-                                <select name="Category" class="selectpicker" data-live-search="true">
+                                <select name="Category" class="selectDropdown" data-live-search="true">
                                     <option>Select Category</option>
                                     <% Category.all.order("name ASC").each do |category| %>
                                         <option><%=category.name%></option>
@@ -237,7 +237,7 @@
                                 }
                                 </style>
                                 
-                                <select name="State" class="selectpicker" data-live-search="true">
+                                <select name="State" class="selectDropdown" data-live-search="true">
                                     <option>Select State</option>
                                     <% State.all.order("name ASC").each do |state| %>
                                         <option><%=state.name%></option>
@@ -297,15 +297,15 @@
 </div>
 <!-- Body main wrapper end -->
 
-<script>
-    //tabs
-	$('ul.tabs li').click(function(){
-		var tab_id = $(this).attr('data-tab');
+// <script>
+//     //tabs
+// 	$('ul.tabs li').click(function(){
+// 		var tab_id = $(this).attr('data-tab');
 
-		$('ul.tabs li').removeClass('current');
-		$('.tab-content').removeClass('current');
+// 		$('ul.tabs li').removeClass('current');
+// 		$('.tab-content').removeClass('current');
 
-		$(this).addClass('current');
-		$("#"+tab_id).addClass('current');
-	})
-</script>
+// 		$(this).addClass('current');
+// 		$("#"+tab_id).addClass('current');
+// 	})
+// </script>
