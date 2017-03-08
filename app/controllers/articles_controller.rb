@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
     before_action :set_article, only: [:edit, :update, :destroy, :show, :tweet, :send_tweet]
     before_action :require_admin, only: [:edit, :update, :destroy, :admin, :digest, :tweet]
+    skip_before_action :verify_authenticity_token #for saving article via ajax
 
     #--------ADMIN PAGE-------------------------
     def admin
@@ -78,7 +79,7 @@ class ArticlesController < ApplicationController
             #if a user has already saved or viewed this article, just use the same record
             if UserArticle.where(:article_id => params[:id], :user_id => current_user.id).any?
                 @current_user_article = UserArticle.where(:article_id => params[:id], :user_id => current_user.id)
-                if (@current_user_article[0].saved = true) 
+                if (@current_user_article[0].saved == true) 
                     @current_user_article[0].update_attribute :saved, false
                 else 
                     @current_user_article[0].update_attribute :saved, true
