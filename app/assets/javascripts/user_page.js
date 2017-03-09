@@ -22,9 +22,14 @@ function removeSavedArticle() {
 	$.ajax({
         type: "PUT",
         url: "/user_article_save/" + articleId,
+        beforeSend: function() {
+			// start spinner
+			$(".ajax-spinner").css('display', 'block');
+		},
         success: function() {
         	$("#tab-2").load(location.href+" #tab-2>*", function() {
         		//remove the ajax spinner
+        		$(".ajax-spinner").css('display', 'none');
         	});
         }
     });

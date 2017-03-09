@@ -111,3 +111,18 @@ ul.tabs li.current{
 .margintop {
   margin-top: 20px !important;
 }
+
+/*ajax for tabs*/
+.ajax-spinner {
+	position: absolute;
+	top: 40px;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30px;
+	display: none;
+}
+#tab-2 {
+	position: relative;
+}
