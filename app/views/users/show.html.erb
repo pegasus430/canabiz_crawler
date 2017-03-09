@@ -2,21 +2,24 @@
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Remove Article</h4>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Remove Article</h4>
+            </div>
+        
+            <!--form-->
+            <div class="modal-body">
+                <p>Are you sure you would like to remove this article from My Saved Articles?</p>
+                <input type = "hidden" id="articleRemoveId" name = "articleId"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default whitehover" data-dismiss="modal" onclick="removeSavedArticle();">Remove</button>
+                <button type="button" class="btn btn-default whitehover" data-dismiss="modal">Cancel</button>
+            </div>
+            <!--form-->
         </div>
-        <div class="modal-body">
-          <p>Are you sure you would like to remove this article from My Saved Articles?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default whitehover" data-dismiss="modal">Delete</button>
-          <button type="button" class="btn btn-default whitehover" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-      
     </div>
 </div>    
     
@@ -111,7 +114,7 @@
 									<td style="padding: 0 4px;"><%= article.created_at.strftime("%B %d, %Y") %></td>
 									<td class="delbtn">
 										<span class="btn btn-default btn-sm">
-											<button type="button" class="close" data-toggle="modal" data-target="#myModal">&times;</button>
+											<button type="button" class="close" data-toggle="modal" data-target="#myModal" onclick="setRemoveArticleId('<%=article.id%>');" data-id="<%=article.id%>">&times;</button>
 										</span>
 									</td>          
 								</tr>
@@ -296,16 +299,3 @@
    <!-- End Page Content --> 
 </div>
 <!-- Body main wrapper end -->
-
-// <script>
-//     //tabs
-// 	$('ul.tabs li').click(function(){
-// 		var tab_id = $(this).attr('data-tab');
-
-// 		$('ul.tabs li').removeClass('current');
-// 		$('.tab-content').removeClass('current');
-
-// 		$(this).addClass('current');
-// 		$("#"+tab_id).addClass('current');
-// 	})
-// </script>

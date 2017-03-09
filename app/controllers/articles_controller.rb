@@ -84,8 +84,6 @@ class ArticlesController < ApplicationController
                 else 
                     @current_user_article[0].update_attribute :saved, true
                 end
-                #@current_user_article.saved = @current_user_article.saved == true ? false : true
-                #@current_user_article.save
             else 
                 UserArticle.create(user_id: current_user.id, article_id: params[:id], saved: true)
             end

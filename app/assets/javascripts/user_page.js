@@ -8,3 +8,24 @@ $('ul.tabs li').click(function(){
 	$(this).addClass('current');
 	$("#"+tab_id).addClass('current');
 })
+
+
+//set the articleId on the close modal
+function setRemoveArticleId(articleId) {
+	jQuery('[id$=articleRemoveId]').val(articleId);
+}
+
+//remove the saved article
+function removeSavedArticle() {
+	var articleId = document.getElementById('articleRemoveId').value;
+	console.log(articleId);
+	$.ajax({
+        type: "PUT",
+        url: "/user_article_save/" + articleId,
+        success: function() {
+        	$("#tab-2").load(location.href+" #tab-2>*", function() {
+        		//remove the ajax spinner
+        	});
+        }
+    });
+}
