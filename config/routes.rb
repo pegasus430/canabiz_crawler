@@ -35,6 +35,11 @@ Rails.application.routes.draw do
   get 'change_password/:id', to: 'users#change_password', as: 'change_password'
   get 'submit_password_change', to: 'users#submit_password_change' 
   
+  put 'user_source_save/:source_id', to: 'users#user_source_save', as: 'user_source_save'
+  put 'user_category_save/:category_id', to: 'users#user_category_save', as: 'user_category_save'
+  put 'user_state_save/:state_id', to: 'users#user_state_save', as: 'user_state_save'
+  
+  
   #RESET PASSWORD
   resources :password_resets, only: [:new, :create, :edit, :update]
   

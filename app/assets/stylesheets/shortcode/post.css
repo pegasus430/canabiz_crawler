@@ -34,12 +34,13 @@
 }
 
 article.zm-post-lay-a1.my-feed .zm-post-thumb img {
-    height: auto;
+    /*height: auto;*/
 }
 
 .zm-post-thumb img {
     width: 100%;
     height: 230px;
+    border: .5px solid #7c8c99;
 }
 @media (max-width: 991px) {
     .zm-post-thumb img {

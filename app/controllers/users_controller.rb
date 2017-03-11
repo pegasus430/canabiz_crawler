@@ -2,6 +2,7 @@ class UsersController < ApplicationController
     before_action :set_user, only: [:edit, :update, :show, :change_password]
     before_action :require_same_user, only: [:edit, :update, :destroy, :show, :change_password]
     #before_action :require_admin, only: [:destroy]
+    skip_before_action :verify_authenticity_token #for ajax
   
   
     def admin
@@ -95,7 +96,7 @@ class UsersController < ApplicationController
   
     def show
         #my feed articles
-        @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24) #have to paginate the feed page eventually
         
         state_article_ids = []
         category_article_ids = []
@@ -120,14 +121,77 @@ class UsersController < ApplicationController
             #@recents = @recents.where(id: article_ids)
         end
         
-        @recents = @recents.where("id IN (?) OR id IN (?) OR source_id IN (?)", state_article_ids, category_article_ids, source_ids)
+        if (state_article_ids.any? || category_article_ids.any? || source_ids.any?)
+            @recents = @recents.where("id IN (?) OR id IN (?) OR source_id IN (?)", state_article_ids, category_article_ids, source_ids)
+        end
        
         #saved articles
         article_ids = UserArticle.where(:user_id => current_user.id, :saved => true).pluck(:article_id)
         @savedArticles = Article.where(id: article_ids)
         
         #trending articles for sidebar
-        @trendingArticles = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+        @trendingArticles = Article.order("num_views DESC").limit(24)
+        #@trendingArticles = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+    end
+    
+    #user adds or removes source from saved sources
+    def user_source_save
+
+        if !logged_in?
+            redirect_to login_path
+        end 
+        if params[:source_id].present?
+            
+            #see if record already exists
+            if UserSource.where(:source_id => params[:source_id], :user_id => current_user.id).any?
+                #delete existing
+                UserSource.where(:source_id => params[:source_id], :user_id => current_user.id).destroy_all
+            else 
+                #create new
+                UserSource.create(user_id: current_user.id, source_id: params[:source_id])
+            end
+            
+        end
+    end 
+    
+    #user adds or removes category from saved categories
+    def user_category_save
+
+        if !logged_in?
+            redirect_to login_path
+        end 
+        if params[category_id].present?
+            
+            #see if record already exists
+            if UserCategory.where(:category_id => params[:category_id], :user_id => current_user.id).any?
+                #delete existing
+                UserCategory.where(:category_id => params[:category_id], :user_id => current_user.id).destroy_all
+            else 
+                #create new
+                UserCategory.create(user_id: current_user.id, category_id: params[:category_id])
+            end
+            
+        end
+    end 
+    
+    #user adds or removes category from saved categories
+    def user_state_save
+
+        if !logged_in?
+            redirect_to login_path
+        end 
+        if params[:state_id].present?
+            
+            #see if record already exists
+            if UserState.where(:state_id => params[:state_id], :user_id => current_user.id).any?
+                #delete existing
+                UserState.where(:state_id => params[:state_id], :user_id => current_user.id).destroy_all
+            else 
+                #create new
+                UserState.create(user_id: current_user.id, state_id: params[state_id])
+            end
+            
+        end
     end
   
     def destroy
