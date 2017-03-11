@@ -77,6 +77,31 @@
                             </div>
                         </div>
                     </div>
+                    <% if @state != nil || @category != nil || @source != nil || @searchQuery != nil %>
+                        
+                        <!--show what we are viewing-->
+                        <div class="news-viewing-title-div" style="text-align: center; margin: 20px 0;">
+                            <h3>Viewing news for: 
+                                <span style = 'color: #2ab081;'>
+                                    <% if @state != nil %> 
+                                        <%= @state.name %> 
+                                    <% end %> 
+                                    <% if @category != nil %> 
+                                        <%= @category.name %> 
+                                    <% end %> 
+                                    <% if @source != nil %> 
+                                        <%= @source.name %> 
+                                    <% end %> 
+                                    <% if @searchQuery != nil %> 
+                                        <%= @searchQuery %> 
+                                    <% end %> 
+                    
+                                </span>
+                            </h3>
+                        </div>
+                    
+                    <% end %>
+                    
                     <div class="row mt-40">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="row mb-40">

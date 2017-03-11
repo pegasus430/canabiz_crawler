@@ -74,6 +74,7 @@ class PagesController < ApplicationController
     def search
         if params[:query].present? 
             @query = "%#{params[:query]}%"
+            @searchQuery = params[:query]
             
             @recents = Article.where("title LIKE ? or body LIKE ?", @query, @query)
                                 .order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
