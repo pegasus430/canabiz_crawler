@@ -32,7 +32,7 @@
                                     <form action="#">
                                         <div class="sing-option zm-trending">
                                             <select name="Category" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
-                                                <option value = "<%= root_path %>">Select Category</option>
+                                                <option value = "<%= root_path %>">Category</option>
                                                 <% Category.all.order("name ASC").each do |category| %>
                                                     
                                                     <% if @category != nil && @category.name == category.name %>
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="sing-option zm-state">
                                             <select name="State" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
-                                            	<option value = "<%= root_path %>">Select State</option>
+                                            	<option value = "<%= root_path %>">State</option>
                                             	<% State.all.order("name ASC").each do |state| %>
                                             	
                                             	    <% if @state != nil && @state.name == state.name %>
@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="sing-option zm-state">
                                             <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
-                                                <option value = "<%= root_path %>">Select Source</option>
+                                                <option value = "<%= root_path %>">Source</option>
                                                 <% Source.all.order("name ASC").each do |source| %>
                                                 
                                                     <% if @source != nil && @source.name == source.name %>

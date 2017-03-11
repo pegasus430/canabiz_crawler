@@ -113,9 +113,8 @@ ul.tabs li.current{
 }
 
 /*ajax for tabs*/
-.ajax-spinner {
+.ajax-spinner, .ajax-spinner-source, .ajax-spinner-category, .ajax-spinner-state {
 	position: absolute;
-	top: 40px;
 	left: 0;
 	right: 0;
 	margin-left: auto;
@@ -123,6 +122,26 @@ ul.tabs li.current{
 	width: 30px;
 	display: none;
 }
-#tab-2 {
+.ajax-spinner {
+	top: 40px;
+}
+.ajax-spinner-source, .ajax-spinner-category, .ajax-spinner-state {
+	top: 140px;
+}
+
+
+#tab-2, .tab-content.row {
 	position: relative;
+	/*, .sing-option.zm-source, .sing-option.zm-category, .sing-option.zm-state*/
+}
+
+
+
+
+
+/*feed instructions*/
+@media all and (max-width: 410px) {
+	.feed-instructions p {
+		font-size: 16px;
+	}
 }

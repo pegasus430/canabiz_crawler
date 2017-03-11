@@ -160,7 +160,7 @@ class UsersController < ApplicationController
         if !logged_in?
             redirect_to login_path
         end 
-        if params[category_id].present?
+        if params[:category_id].present?
             
             #see if record already exists
             if UserCategory.where(:category_id => params[:category_id], :user_id => current_user.id).any?
@@ -188,7 +188,7 @@ class UsersController < ApplicationController
                 UserState.where(:state_id => params[:state_id], :user_id => current_user.id).destroy_all
             else 
                 #create new
-                UserState.create(user_id: current_user.id, state_id: params[state_id])
+                UserState.create(user_id: current_user.id, state_id: params[:state_id])
             end
             
         end

@@ -162,12 +162,15 @@
                 <!-- Start tab 3 - Settings -->
 
 				<div id="tab-3" class="tab-content">
-				    <div class = 'ajax-spinner'>
-				        <%= image_tag("icons/ajax-loader.gif") %>
-				    </div>
+				    
                     <div class="miniheader">Use the following settings to organize the information in your personal feed.</div>
                     <div class="paddingsettings"></div>
-                    <div class="row">
+                    <div class="row" style="position:relative;">
+                        
+                        <div class = 'ajax-spinner-source'>
+    				        <%= image_tag("icons/ajax-loader.gif") %>
+    				    </div>
+            				    
                         <div class="padding-bottom;">
                         <div class="col-lg-12">
                             <div class="section-title">
@@ -177,29 +180,32 @@
                         <div class="marginbottom">&nbsp;</div>
                         <div class="marginbottom">&nbsp;</div>
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
-                            <div class="sing-option zm-state">
+                            <div class="sing-option zm-source">
                                 <style> /* Special Style for this page only for full width selectors */
                                 .bootstrap-select:not([rclass*=col-]):not([class*=form-control]):not(.input-group-btn) {
                                     width: 100%;
                                 }
                                 </style>
                                 
-                                <select name="Source" class="selectDropdown" data-live-search="true">
+                                <select name="Source" class="selectDropdown" data-live-search="true" onChange="setSelectedSourceSave(this.value)">
                                     <option>Select Source</option>
                                     <!--only display sources user is not currently following-->
                                     <% Source.all.order("name ASC").each do |source| %>
                                         
                                         <% if current_user && !UserSource.where(:source_id => source.id, :user_id => current_user.id).any? %>
-                                            <option><%=source.name%></option>
+                                            <option value="<%= source.id %>"><%=source.name%></option>
                                         <% end %>
                                         
                                     <% end %>
                                 </select>
+                                
                             </div>
                         </div>
                     
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
-                            <button class="submit-button" type="submit">Add</button>
+                            <!--hidden input to store the value adding-->
+                            <input type = "hidden" id="sourceAddId" name = "sourceId"/>
+                            <button class="submit-button" type="submit" onclick="addSavedSource();">Add</button>
                         </div>
                         </div>
                         <div class="paddingsettings">&nbsp;</div>
@@ -211,7 +217,7 @@
                                     <!--loop through sources user has saved-->
                                     <% current_user.sources.each do |source| %>
                                         <button type="button" data-toggle="modal" data-target="#removeSettingModal" 
-                                            onclick="setRemoveSourceSettingId('<%=source.id%>');" data-id="<%=source.id%>"><%=source.name%></button>
+                                            onclick="setRemoveSourceSettingId('<%=source.id%>', '<%=source.name%>');" data-id="<%=source.id%>"><%=source.name%></button>
                                     <% end %>
 
                                 </div>
@@ -220,7 +226,12 @@
                     </div>
                     <hr>
                     <div class="paddingsettings"></div>
-                    <div class="row">
+                    <div class="row" style="position:relative;">
+                        
+                        <div class = 'ajax-spinner-category'>
+    				        <%= image_tag("icons/ajax-loader.gif") %>
+    				    </div>
+    				    
                         <div class="padding-bottom;">
                         <div class="col-lg-12">
                             <div class="section-title">
@@ -230,20 +241,20 @@
                         <div class="marginbottom">&nbsp;</div>
                         <div class="marginbottom">&nbsp;</div>
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
-                            <div class="sing-option zm-state">
+                            <div class="sing-option zm-source">
                                 <style> /* Special Style for this page only for full width selectors */
                                 .bootstrap-select:not([rclass*=col-]):not([class*=form-control]):not(.input-group-btn) {
                                     width: 100%;
                                 }
                                 </style>
                                 
-                                <select name="Category" class="selectDropdown" data-live-search="true">
+                                <select name="Category" class="selectDropdown" data-live-search="true" onChange="setSelectedCategorySave(this.value)">
                                     <option>Select Category</option>
                                     <!--only display categories user is not currently following-->
                                     <% Category.all.order("name ASC").each do |category| %>
                                         
                                         <% if current_user && !UserCategory.where(:category_id => category.id, :user_id => current_user.id).any? %>
-                                            <option><%=category.name%></option>
+                                            <option value="<%=category.id%>"><%=category.name%></option>
                                         <% end %>
                                         
                                     <% end %>
@@ -254,7 +265,9 @@
                         </div>
                     
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
-                            <button class="submit-button" type="submit">Add</button>
+                            <!--hidden input to store the value adding-->
+                            <input type = "hidden" id="categoryAddId" name = "categoryId"/>
+                            <button class="submit-button" type="submit" onclick="addSavedCategory();">Add</button>
                         </div>
                         </div>
                         <div class="paddingsettings">&nbsp;</div>
@@ -275,7 +288,12 @@
                     </div>
                     <hr>
                     <div class="paddingsettings"></div>
-                    <div class="row">
+                    <div class="row" style="position:relative;">
+                        
+                        <div class = 'ajax-spinner-state'>
+    				        <%= image_tag("icons/ajax-loader.gif") %>
+    				    </div>
+    				    
                         <div class="padding-bottom;">
                         <div class="col-lg-12">
                             <div class="section-title">
@@ -285,20 +303,20 @@
                         <div class="marginbottom">&nbsp;</div>
                         <div class="marginbottom">&nbsp;</div>
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
-                            <div class="sing-option zm-state">
+                            <div class="sing-option zm-source">
                                 <style> /* Special Style for this page only for full width selectors */
                                 .bootstrap-select:not([rclass*=col-]):not([class*=form-control]):not(.input-group-btn) {
                                     width: 100%;
                                 }
                                 </style>
                                 
-                                <select name="State" class="selectDropdown" data-live-search="true">
+                                <select name="State" class="selectDropdown" data-live-search="true" onChange="setSelectedStateSave(this.value)">
                                     <option>Select State</option>
                                     <!--only display states user is not currently following-->
                                     <% State.all.order("name ASC").each do |state| %>
                                         
                                         <% if current_user && !UserState.where(:state_id => state.id, :user_id => current_user.id).any? %>
-                                            <option><%=state.name%></option>
+                                            <option value="<%=state.id%>"><%=state.name%></option>
                                         <% end %>
                                         
                                     <% end %>
@@ -308,7 +326,9 @@
                         </div>
                     
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
-                            <button class="submit-button" type="submit">Add</button>
+                            <!--hidden input to store the value adding-->
+                            <input type = "hidden" id="stateAddId" name = "stateId"/>
+                            <button class="submit-button" type="submit" onclick="addSavedState();">Add</button>
                         </div>
                         </div>
                         <div class="paddingsettings">&nbsp;</div>
