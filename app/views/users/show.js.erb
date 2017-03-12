@@ -1,5 +1,4 @@
 if ($('#article-index-new').css('display') == 'block') {
-	console.log('js.erb file');
 	$('#article-index-new').append('<%= escape_javascript(render :partial => "feeditem", :collection => @recents, :as => :article) %>');
 	$('.article-index-new-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@recents) %>');
 }

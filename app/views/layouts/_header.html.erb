@@ -69,12 +69,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 col-lg-7 col-sm-7 col-xs-12 col-lg-offset-1 header-mdh hidden-xs">
+                <div class="col-md-8 col-lg-7 col-sm-7 col-xs-12 col-lg-offset-1 header-mdh hidden-991">
                     <div class="global-table">
                         <div class="global-row">
                             <div class="global-cell">
-                                <div class="advertisement text-right">
-                                   <a href="#" class="block"></a>
+                                <div style="background-color: #2f2f2f;">
+                                    
+                                    <div class="subscribe-form subscribe-footer" style="width: 90%; margin: 0 auto; padding-bottom: 10px;"> 
+                                        <h2 class="h6 zm-widget-title uppercase text-white" style="color: #fff; padding: 10px 0 5px">
+                                            Subscribe To Weekly Digest</h2>
+                                        <form role="search" method="get" action = '/save_email'>
+                                            <input type="email" name='email' placeholder="Enter email address" required="required">
+                                            <input type="submit" value="Subscribe">
+                                        </form>
+                                    </div>
                                </div>
                             </div>
                         </div>
@@ -161,6 +169,17 @@
                         <li><a href="#">About</a></li>
                         <li><a href="<%= contact_us_path %>">Contact Us</a></li>
                         <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
+                        
+                        <!--weekly digest signup-->
+                        <li class ="mobile-digest-signup">
+                            
+                            <form class="mobile-digest-form" role="search" method="get" action = '/save_email'>
+            		            <input type="email" class="form-control input-lg" name='email' id ='emailTextBox' placeholder="Email for Weekly Digest" autocomplete='on' required=true>
+            		            <button type="submit">Sign Up</button>
+            		        </form>
+                		    
+                        </li>
+                    	
                                             
                     </ul>
                 </nav>
@@ -168,6 +187,7 @@
         </div>
     </div>
     <!-- mobile-menu-area end -->   
+    <!--below here is the breaking news thing - probably add back in future-->
     <% if @state != nil || @category != nil || @source != nil || @user != nil %>
     <!--    <div class="breakingnews-wrapper bg-gray hidden-xs">-->
     <!--        <div class="container">-->

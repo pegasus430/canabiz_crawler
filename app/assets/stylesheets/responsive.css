@@ -291,6 +291,8 @@ article.zm-post-lay-a1.my-feed {
   width:100%;
 }
 
+
+
 /*Page not found*/
 .page-notfound-wrap {
   padding: 150px 0 180px;
@@ -673,4 +675,37 @@ article.zm-post-lay-a1.my-feed {
 }
 
 }
+
+/*mobile weekly digest form*/
+/*mobile menu weekly digest*/
+li.mobile-digest-signup.mean-last {
+  
+}
+
+form.mobile-digest-form input[type="email"] {
+    margin: 0;
+    padding: 0 5%;
+    font-size: 12px;
+    height: 35px;
+    width: 90%;
+}
+
+form.mobile-digest-form button{
+    background: #2ab081 none repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+    height: 32px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10%;
+}
+
+/*hide desktop subscribe*/
+@media all and (max-width: 991px) {
+    .hidden-991 {
+        display: none !important;
+    }
+}
+
  
