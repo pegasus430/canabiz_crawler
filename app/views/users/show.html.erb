@@ -74,54 +74,13 @@
                         <p>Visit the settings tab to control what articles appear in your feed</p>
                     </div>
                     
-                    
-					<% @recents.each do |article| %>
-					
-						<!-- Start single post layout A1 -->
-	                    <div class="col-md-6 margin">
-	                        <article class="zm-post-lay-a1 my-feed">
-	                            <div class="zm-post-thumb">
-	                            	<a href="<%= article_path(article) %>">
-						                <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
-						            </a>
-	                            </div>
-	                            <div class="zm-post-dis">
-	                                <div class="zm-post-header">
-	                                    <div class="zm-category">
-	                                    	<% article.categories.each do |category| %>
-						                        <a class="bg-cat-3 cat-btn" href="<%=category_path(category)%>"><%=category.name%></a>
-						                    <% end %>
-						                    <% article.states.each do |state| %>
-						                        <a class="bg-cat-3 cat-btn" href="<%=state_path(state)%>"><%=state.name%></a>
-						                    <% end %>
-	                                    </div>
-	                                    <h2 class="zm-post-title h2"><a href="<%= article_path(article) %>"><%= article.title.truncate(60) if article.title %></a></h2>
-	                                    <div class="zm-post-meta">
-	                                        <ul>
-	                                            <li class="s-meta"><%= link_to article.source.name, source_path(article.source), class: 'zm-author' %></li>
-	                                            <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
-	                                        </ul>
-	                                    </div>
-	                                </div>
-	                                <div class="zm-post-content">
-	                                    <%frag = Nokogiri::HTML(article.body)%>
-						                <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
-						                <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
-						                <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
-						                <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
-						                <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
-						                <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
-						                
-						                <%= truncate_html frag, :length => 300 %>
-	                                </div>
-	                            </div>
-	                        </article>
-	                    </div>
-	                    <!-- End single post layout A1 -->
-	                    <!--<hr style="margin: 0;">-->
-					
-					<% end %>
-                    
+                    <div id = 'article-index-new'>
+                        <%= render :partial => "feeditem", :collection => @recents, :as => :article %>
+    				</div>
+    				
+    				<div class = 'article-index-new-pagination'>
+                        <%= will_paginate @recents %>
+                    </div>
 
 				</div>
 				<!--END MY FEED TAB-->

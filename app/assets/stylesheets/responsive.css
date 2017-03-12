@@ -62,6 +62,9 @@
   overflow: hidden;
   margin-bottom: 30px;
 }
+article.zm-post-lay-a1.my-feed {
+  min-height: 572px;
+}
 
 
 .followus-area.small-columns .social-btn .btn_text{
