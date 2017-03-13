@@ -7,11 +7,9 @@
     
      <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 0 auto; float: none;">
-            <%= f.text_field :username, placeholder: "Username", autofocus: true %>
-            <%= f.email_field :email, placeholder: "Enter email" %>
+            <%= f.email_field :username, placeholder: "Email" %>
             <%= f.password_field :password, placeholder: "Password", autocomplete: "off" %>
             <%= f.submit(@user.new_record? ? "Sign up" : "Update account", class: 'submit-button') %>
-            <!--<button class="submit-button" type="submit">Login</button>-->
         </div>
     </div>
     <% end %>

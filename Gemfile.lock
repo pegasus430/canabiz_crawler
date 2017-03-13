@@ -74,6 +74,8 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
+    css_parser (1.4.10)
+      addressable
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     domain_name (0.5.20161021)
@@ -265,6 +267,10 @@ GEM
       mini_portile2 (~> 2.1.0)
     oauth (0.5.1)
     pg (0.19.0)
+    premailer (1.10.2)
+      addressable
+      css_parser (>= 1.4.10)
+      htmlentities (>= 4.0.0)
     public_suffix (2.0.4)
     rack (1.6.5)
     rack-test (0.6.3)
@@ -405,6 +411,7 @@ DEPENDENCIES
   nokogiri
   oauth (~> 0.5.1)
   pg
+  premailer (~> 1.10, >= 1.10.2)
   rails (= 4.2.5)
   rails_12factor
   rails_autolink (~> 1.1, >= 1.1.6)

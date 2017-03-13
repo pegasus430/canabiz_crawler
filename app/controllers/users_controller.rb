@@ -37,8 +37,9 @@ class UsersController < ApplicationController
         @user = User.new(user_params)
         if @user.save
             session[:user_id] = @user.id
+            #@user.update_attribute(:email, @user.username)
             flash[:success] = "Welcome to the Cannabiz Network #{@user.username}"
-            redirect_to root_path(@user)
+            redirect_to user_path(@user)
         else
             render 'new'
         end

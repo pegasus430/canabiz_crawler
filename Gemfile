@@ -12,6 +12,7 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a strin
 #gem 'jquery-turbolinks', '~> 2.1' #also needed for Infinite Scrolling so it works with Links
 gem 'social-share-button', '~> 0.8.5' #social sharing
 gem 'friendly_id', '~> 5.0.0' #use the titles as the urls
+gem 'premailer', '~> 1.10', '>= 1.10.2' #to styling emails
 
 #html safe truncation
 gem "nokogiri"
