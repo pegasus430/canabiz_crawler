@@ -271,6 +271,9 @@ GEM
       addressable
       css_parser (>= 1.4.10)
       htmlentities (>= 4.0.0)
+    premailer-rails (1.9.5)
+      actionmailer (>= 3, < 6)
+      premailer (~> 1.7, >= 1.7.9)
     public_suffix (2.0.4)
     rack (1.6.5)
     rack-test (0.6.3)
@@ -411,7 +414,7 @@ DEPENDENCIES
   nokogiri
   oauth (~> 0.5.1)
   pg
-  premailer (~> 1.10, >= 1.10.2)
+  premailer-rails (~> 1.9, >= 1.9.5)
   rails (= 4.2.5)
   rails_12factor
   rails_autolink (~> 1.1, >= 1.1.6)
