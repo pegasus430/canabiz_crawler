@@ -1,9 +1,26 @@
 <!--query the articles where include_in_digest = true, set them to false-->
 
+<!--visit test page: paste this at end of URL: /rails/mailers/weekly_digest/sample_mail_preview -->
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+		
+		<meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>CannabizNetwork</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        
+        <!--tether-->
+        <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+        
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true%> <!--, 'data-turbolinks-track' => true || , 'data-turbolinks-track' => true-->
 		
 		<!-- have to style right on the page-->
 		<style>
@@ -13,60 +30,118 @@
 		</style>
 	</head>
 	<body>
-		<div class = 'digest-header'>
-			<h1>The Cannabiz Network Weekly Roll Up</h1>
-		</div>
-		<div class = 'digest-body'>
-			<% Article.where(include_in_digest: true).each do |article| %>
-    		
-	    		<a href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank">
-			        <div class = 'homepage-article <%=article.source.name.downcase.tr(" ", "_") if article.source 
-			            %><%article.categories.each do |category| 
-			                %> <%=category.name.downcase.tr(" ", "_")
-			                %><%end
-			            %><%article.states.each do |state|
-			                %> <%=state.name.downcase.tr(" ", "_")
-			                %><%end%>'>
-			    
-			            
-			            <div class = 'homepage-article-image'>
-			                <% if article.source && article.source.name == 'Marijuana Business Daily' %>
-			                    <%= image_tag("homepage/news-substitute.jpg") %>
-			                <% else %>
-			                    <img src="<%= article.image %>" onError="dispIndexImageError(this);"> <!--class="img-thumbnail rounded" alt="..." -->
-			                <% end %>
-			            </div>
-			            
-			            <div class = 'homepage-article-date'>
-			                <%= time_ago_in_words(article.created_at) %> ago
-			            </div>
-			            
-			            <div class = 'homepage-article-bottom'>
-			                <div class = 'homepage-article-title'>
-			                    <h1><%= article.title.truncate(60) if article.title %></h1>
-			                </div>
-			                <div class = 'homepage-article-source'>
-			                    <img src = "<%= asset_path(article.source.article_logo) if article.source %>">
-			                </div>
-			                <div class = 'homepage-article-category'>
-			                        
-			                </div>
-			            </div>
-			        </div>
-			    </a>
-			    
-			    <!--set the article to include in digest false -->
-			    <!--this is breaking the digest for some reason (maybe I need to do this after the fact)-->
-			    <% 
-			    	#article.include_in_digest = false 
-			    	#article.save	
-			    %>
-			    
-  			<% end %>
-		</div>
 		
-		<div class = 'unsubscribe'>
-			<p>To Unsubscribe from this Digest, <%= link_to "Click Here", "cannabiz-news.herokuapp.com/unsubscribe?id=A43d#{@user.id}G2f4" %> </p>
-		</div>
+		<div class="wrapper">
+			
+<!-- Start page content -->
+<section id="page-content" class="page-wrapper archive">
+    <div class="zm-section single-post-wrap archive-2 bg-white ptb-15">
+        <div class="container">
+            <div class="row">
+                <!-- Start left side -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 columns">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="archive-inner">
+                                <div class="archive-filter">
+                                    <h3>The Cannabiz Network Weekly Roll Up</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row mt-40">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row mb-40">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="section-title">
+                                        <!--<h2 class="h6 inline-block uppercase header-button active-header-button" id = 'newest-button' >&nbsp;</h2>-->
+                                        <!--<h2 class="h6 inline-block uppercase header-button inactive-header-button" id = 'popular-button'>&nbsp;</h2>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="zm-posts clearfix">
+                                    <% Article.where(include_in_digest: true).each do |article| %>
+                                    
+                                        <div class="col-md-4">
+                                            <article class="zm-post-lay-a1">
+                                                
+                                                <!--save article-->
+                                                
+                                                <div class="zm-post-thumb">
+                                                    <a href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank">
+                                                        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="zm-post-dis">
+                                                    <div class="zm-post-header">
+                                                        
+                                                        <!--display article tags-->
+                                                        <div class="zm-category">
+                                                            <% article.categories.each do |category| %>
+                                                                <a class="bg-cat-3 cat-btn" href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=category.name%></a>
+                                                            <% end %>
+                                                            <% article.states.each do |state| %>
+                                                                <a class="bg-cat-3 cat-btn" href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=state.name%></a>
+                                                            <% end %>
+                                                        </div>
+                                                        <!--display article tags-->
+                                                        
+                                                        <h2 class="zm-post-title"><a href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%= article.title.truncate(60) if article.title %></a></h2>
+                                                        <div class="zm-post-meta">
+                                                            <ul>
+                                                                <li class="s-meta">
+                                                                    <img class='inline' style='width: 40px; height: auto; display: none;' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
+                                                                     <a class="zm-author" href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=article.source.name%></a>
+                                                                </li>
+                                                                <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="zm-post-content">
+                                                        
+                                                        <%frag = Nokogiri::HTML(article.body)%>
+                                                        <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
+                                                        <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
+                                                        <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
+                                                        <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
+                                                        <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
+                                                        <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
+                                                        
+                                                        <%= truncate_html frag, :length => 175 %>
+                        
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>          
+                                        
+                                    <% end %>
+                                </div>
+                                <div class = 'unsubscribe' style="border-top: 1px solid #e6e6e6; width: 98%; margin: 0 auto;">
+									<p>To Unsubscribe from this Digest, <%= link_to "Click Here", "cannabiz-news.herokuapp.com/unsubscribe?id=A43d#{@user.id}G2f4" %> </p>
+								</div>
+                            </div> <!-- end article display row
+                        </div>
+                    </div>
+                </div>
+                <!-- End left side -->
+        </div>
+    </div>
+</section>
+<!-- End page content -->			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</div> <!-- end wrapper -->
+		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	</body>
 </html>
