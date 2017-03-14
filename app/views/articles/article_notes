@@ -50,5 +50,8 @@
         </div>
 
 
-
+//old article share
+ <div class="share-social-link pull-left" style="margin-top: 5px;">
+                                        	<%= social_share_button_tag(@article.title, :url => "https://cannabiz-news.herokuapp.com/articles/#{@article.id}", :image => "#{@article.image}") %>
+                                        </div>
 

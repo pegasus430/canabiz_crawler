@@ -15,7 +15,7 @@
                 <%= form_for(:session, :html => {class: "form-horizontal", role: "form"}, url: login_path) do |f| %>
                 
                  <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 0 auto; float: none;">
+                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 20px auto; float: none;">
                         <%= f.text_field :username, placeholder: "Username", autofocus: true %>
                         <%= f.password_field :password, placeholder: "Password", autocomplete: "off" %>
                         <%= link_to 'Forgot username/password?', new_password_reset_path, class: "zm-forget" %> 

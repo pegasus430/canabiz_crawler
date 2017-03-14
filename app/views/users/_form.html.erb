@@ -3,7 +3,7 @@
 
 <div class="message-box">
     
-    <%= form_for(:session, :html => {class: "form-horizontal", role: "form"}, url: login_path) do |f| %>
+    <%= form_for(@user, :html => {class: "form-horizontal", role: "form"}) do |f| %>
     
      <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 0 auto; float: none;">
