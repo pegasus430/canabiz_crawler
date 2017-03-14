@@ -59,33 +59,21 @@ function changeSort(stringValue) {
 
 //endless scrolling
 $(window).scroll(function() {
-    
-    // console.log('scrolling');
+
     if ($('.pagination').length) {  
-        // console.log('pagination length');
 
         if ($('#article-index-new').css('display') == 'block') {
             
-            // console.log('article index new');
-            
             if ($('.article-index-new-pagination .pagination li.next.next_page').hasClass('disabled'))
             {
-                console.log('if');
                 $('.article-index-new-pagination .pagination').text("Houston, we are out of Weed!");
             } 
             else 
             {
-                console.log('else');
                 var url = $('.article-index-new-pagination .pagination li.next.next_page a').attr('href');
-                console.log('url ' + url);
-                console.log('window scroll top ' + $(window).scrollTop());
-                console.log('document heightformula ' + $(document).height() - $(window).height() - 150);
-                // console.log('url ' + url);
-                
                 
                 if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) 
                 {
-                    console.log('scroll top');
                     $('.article-index-new-pagination .pagination').text("Repacking The Bong...");
                     return $.getScript(url);
                 }                
@@ -112,9 +100,3 @@ $(window).scroll(function() {
         }
     }
 });
-
-
-
-      // console.log('URL: ' + url);
-      // console.log('$(window).scrollTop() ' + $(window).scrollTop());
-      // console.log('$(document).height() - $(window).height() - 50:   ' + ($(document).height() - $(window).height() - 50));
