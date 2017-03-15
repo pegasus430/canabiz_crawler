@@ -121,11 +121,18 @@
                                         </div>
                                         <div class="meta-list pull-right">
                                             <span class="post-title">SAVE THIS ARTICLE:</span> 
-                                        </div>
-                                        
+                                        </div> 
                                          <div class="share-social-link pull-left" style="margin-top: 5px;">
                                         	<%= social_share_button_tag(@article.title, :url => "https://cannabiz-news.herokuapp.com/articles/#{@article.id}", :image => "#{@article.image}") %>
                                         </div>
+                                        <!--
+                                        <ul class="share-buttons">
+                                            <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcannabiznetwork.com&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Facebook.png") %></a></li>
+                                            <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fcannabiznetwork.com&text=:%20http%3A%2F%2Fcannabiznetwork.com&via=CannabizNetwork" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Twitter.png") %></a></li>
+                                            <li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.png") %></a></li>
+                                            <li><a href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fcannabiznetwork.com&title=&summary=&source=http%3A%2F%2Fcannabiznetwork.com" target="_blank" title="Share on LinkedIn" onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/LinkedIn.png") %></a></li>
+                                            <li><a href="mailto:?subject=&body=:%20http%3A%2F%2Fcannabiznetwork.com" target="_blank" title="Send email" onclick="window.open('mailto:?subject=' + encodeURIComponent(document.title) + '&body=' +  encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Email.png") %></li>
+                                        </ul> -->
                                     </div>
                                 </div>
                             </article>
