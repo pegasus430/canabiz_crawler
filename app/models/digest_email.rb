@@ -1,5 +1,6 @@
 class DigestEmail < ActiveRecord::Base
     
+    validates_uniqueness_of :email
     
     #import CSV file
     def self.import(file)

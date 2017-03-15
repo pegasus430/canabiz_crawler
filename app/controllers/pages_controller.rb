@@ -76,7 +76,12 @@ class PagesController < ApplicationController
             @query = "%#{params[:query]}%"
             @searchQuery = params[:query]
             
-            @recents = Article.where("title LIKE ? or body LIKE ?", @query, @query)
+            #@recents = Article.search(@query).order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+            #@mostviews = Article.search(@query).order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+            
+            @queryArray = @query.split
+            
+            @recents = Article.where("title IN (?) or body IN (?)", @query.split, @query.split)
                                 .order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
             
             @mostviews = Article.where("title LIKE ? or body LIKE ?", @query, @query)
@@ -90,9 +95,16 @@ class PagesController < ApplicationController
     #user signs up to the weekly digest
     def save_email
         if params[:email].present?
-            DigestEmail.create(email: params[:email], active: true)
-            flash[:success] = 'Thank you for signing up to the Weekly Roll Up!'
-            redirect_to root_path
+            #make sure email does not exist
+            if DigestEmail.where(email: params[:email]).any?
+               flash[:danger] = 'Email already subscribed to Roll Up'
+               redirect_to root_path
+            else
+                DigestEmail.create(email: params[:email], active: true)
+                #flash.now[:message] = 'Thank you for signing up to the Weekly Roll Up!'
+                flash[:success] = 'Thank you for signing up to the Weekly Roll Up!'
+                redirect_to root_path
+            end
         else
             flash[:danger] = 'No Email Provided'
             redirect_to root_path

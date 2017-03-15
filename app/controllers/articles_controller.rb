@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
         @q = "%#{params[:query]}%"
         @articles = Article.where("title LIKE ? or abstract LIKE ?", @q, @q)
                             .order(sort_column + " " + sort_direction)
-                            .paginate(page: params[:page], per_page: 100)
+                            .paginate(page: params[:page], per_page: 24)
         render 'admin'
     end
     

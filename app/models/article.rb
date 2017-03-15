@@ -37,4 +37,9 @@ class Article < ActiveRecord::Base
             end
         end
     end
+    
+    #search records
+    #def self.search(search)
+      # all :conditions =>  (search ? { :title => search.split} : []) 
+    #end
 end

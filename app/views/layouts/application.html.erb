@@ -8,6 +8,8 @@
             <title>CannabizNetwork</title>
         <% else %>
             <title><%=@article.title%></title>
+            <meta property="og:image" content="<%=@article.image%>" />
+            <meta name="twitter:image" content="<%=@article.image%>" />
         <% end %>
         
         <meta name="description" content="">

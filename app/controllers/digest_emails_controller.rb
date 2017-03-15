@@ -57,7 +57,7 @@ class DigestEmailsController < ApplicationController
     end   
     def update
         if @digest_email.update(digest_email_params)
-            flash[:success] = 'Emails was successfully updated'
+            flash[:success] = 'Email was successfully updated'
             redirect_to digest_emails_admin_path
         else 
             render 'edit'
