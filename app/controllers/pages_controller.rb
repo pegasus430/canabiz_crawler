@@ -81,11 +81,20 @@ class PagesController < ApplicationController
             
             @queryArray = @query.split
             
-            @recents = Article.where("title IN (?) or body IN (?)", @query.split, @query.split)
-                                .order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+            if Rails.env.production?
             
-            @mostviews = Article.where("title LIKE ? or body LIKE ?", @query, @query)
-                                        .order("num_views DESC").page(params[:page]).per_page(24)
+                @recents = Article.where("title iLIKE ANY (array[?]) or body  iLIKE ANY (array[?]) ", @queryArray,@queryArray).order("num_views DESC").page(params[:page]).per_page(24)
+                @mostviews = Article.where("title iLIKE ANY (array[?]) or body  iLIKE ANY (array[?]) ", @queryArray,@queryArray).order("num_views DESC").page(params[:page]).per_page(24)
+                
+            else 
+                @recents = Article.where("title LIKE ? or body LIKE ?", @query, @query).order("created_at DESC").paginate(:page => params[:page], :per_page => 24) 
+                @mostviews = Article.where("title LIKE ? or body LIKE ?", @query, @query).order("created_at DESC").paginate(:page => params[:page], :per_page => 24) 
+            end
+            
+            
+            
+            #@mostviews = Article.where("title LIKE ? or body LIKE ?", @query, @query)
+                                        
 
         else 
             redirect_to root_path
