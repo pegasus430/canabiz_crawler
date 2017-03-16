@@ -18,16 +18,16 @@ class PagesController < ApplicationController
 
         # news background jobs:
         if Rails.env.production?
-            #NewsMarijuanaStocks.perform_later()
-            #NewsLeafly.perform_later()
-            #NewsTheCannabist.perform_later()
-            #NewsMarijuana.perform_later()
-            #NewsCannabisCulture.perform_later()
-            #NewsCannaLawBlog.perform_later()
-            #NewsMjBizDaily.perform_later()
-            #NewsHighTimes.perform_later()
-            #NewsDopeMagazine.perform_later()
-            #NewsFourTwentyTimes.perform_later()
+            NewsMarijuanaStocks.perform_later()
+            NewsLeafly.perform_later()
+            NewsTheCannabist.perform_later()
+            NewsMarijuana.perform_later()
+            NewsCannabisCulture.perform_later()
+            NewsCannaLawBlog.perform_later()
+            NewsMjBizDaily.perform_later()
+            NewsHighTimes.perform_later()
+            NewsDopeMagazine.perform_later()
+            NewsFourTwentyTimes.perform_later()
         end
         
     end 
