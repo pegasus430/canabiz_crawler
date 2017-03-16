@@ -7,13 +7,18 @@
         <% if @article == nil %>
             <title>CannabizNetwork</title>
         <% else %>
+
             <title><%=@article.title%></title>
             <meta property="og:title" content="<%=@article.title%>" />
             <meta property="og:image" content="<%=@article.image%>" />
+            <meta property="og:url" content="https://cannbiz-news.herokuapp.com" />
+            <meta property="og:type"               content="article" />
+
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:site" content="@CannabizNetwork" />
             <meta name="twitter:title" content="<%=@article.title%>"/>
-            
+            <meta name="twitter:image" content="<%=@article.image%>" />
+            <meta name="twitter:url" content="https://cannbiz-news.herokuapp.com" />
             
             <%frag = Nokogiri::HTML(@article.body)%>
             <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
@@ -23,10 +28,9 @@
             <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
             <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
             
+            <meta property="og:description" content="<%= truncate_html frag, :length => 100 %>" />
             <meta name="twitter:description" content="<%= truncate_html frag, :length => 100 %>" />
             
-            <meta name="twitter:image" content="<%=@article.image%>" />
-            <meta name="twitter:url" content="https://cannbiz-news.herokuapp.com" />
             
         <% end %>
         
