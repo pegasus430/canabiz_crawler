@@ -15,7 +15,7 @@
             <meta name="twitter:title" content="<%=@article.title%>"/>
             
             
-            <%frag = Nokogiri::HTML(article.body)%>
+            <%frag = Nokogiri::HTML(@article.body)%>
             <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
             <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
             <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
