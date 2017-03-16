@@ -10,21 +10,30 @@
             <title><%=@article.title%></title>
             <meta property="og:title" content="<%=@article.title%>" />
             <meta property="og:image" content="<%=@article.image%>" />
-            <!--<meta name="twitter:card" content="photo" />-->
-            <!--<meta name="twitter:site" content="@CannabizNetwork" />-->
-            <!--<meta name="twitter:image" content="" />-->
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@CannabizNetwork" />
+            <meta name="twitter:title" content="<%=@article.title%>"/>
+            
+            
+            <%frag = Nokogiri::HTML(article.body)%>
+            <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
+            <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
+            <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
+            <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
+            <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
+            <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
+            
+            <meta name="twitter:description" content="<%= truncate_html frag, :length => 100 %>" />
+            
+            <meta name="twitter:image" content="http://farm8.staticflickr.com/7334/11858349453_e3f18e5881_z.jpg" />
+            <meta name="twitter:url" content="https://www.flickr.com/photos/reza-sina/11858349453/" />
+            
         <% end %>
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@flickr" />
-        <meta name="twitter:title" content="Mountain sunset" />
-        <meta name="twitter:description" content="this is the description" />
-        <meta name="twitter:image" content="http://farm8.staticflickr.com/7334/11858349453_e3f18e5881_z.jpg" />
-        <meta name="twitter:url" content="https://www.flickr.com/photos/reza-sina/11858349453/" />
-        
+
         <!-- Place favicon.ico in the root directory -->
         <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
