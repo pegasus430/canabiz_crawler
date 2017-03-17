@@ -701,6 +701,13 @@ form.mobile-digest-form button{
     width: 10%;
 }
 
+/*make button padding smaller*/
+@media all and (max-width: 420px) {
+    form.mobile-digest-form button{
+        padding: 2.5px 0;
+    }
+}
+
 /*hide desktop subscribe*/
 @media all and (max-width: 991px) {
     .hidden-991 {

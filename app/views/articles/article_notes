@@ -1,3 +1,33 @@
+//old tag cloud on show page
+<div class="section-title">
+				                
+    <% @article.states.each do |state| %>
+        <h2 class="h6 header-color inline-block uppercase"><a href="<%=state_path(state)%>"><%=state.name%></a></h2>
+    <% end %>
+    <% @article.categories.each do |category| %>
+		<h2 class="h6 header-color inline-block uppercase"><a href="<%=category_path(category)%>"><%=category.name%></a></h2>
+    <% end %>
+
+</div>
+
+//untouched tom tag cloud 
+<div class="tagcloudpad">
+    <div class="zm-tagcloud">
+        <a href="#">All News</a>
+        <a href="#">The Cannabist</a>
+        <a href="#">MJ Biz Daily</a>
+        <a href="#">Marijuana Stocks</a>
+        <a href="#">Marijuana.com</a>
+        <a href="#">High Times</a>
+        <a href="#">Dope Magazine</a>
+        <a href="#">Canna Law Blog</a>
+        <a href="#">The 420 Times</a>
+        <a href="#">Leafly</a>
+        <a href="#">Cannabis Culture</a>
+    </div>
+</div>
+
+
 <!-- track article visit --> 
 <script type="text/javascript">
     $("#article").click(function(){
