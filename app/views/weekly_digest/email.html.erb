@@ -20,40 +20,41 @@
 		<style>
 		
 		    body {
-		        font-family: 'Open Sans', sans-serif;
-		        font-size: 12px;
-		        color: #3b5265;
-		        line-height: 1.7rem;
-		        font-weight: 400;
-		        -webkit-font-smoothing: antialiased;
-		    }
-		    
-		    h1, h2, h3, h4, h5, h6, p, ul, a {
-		        margin: 0;
-		        padding: 0;
-		    }
-		    
-		    .ptb-15 { padding: 15px 0 }
+                font-family: 'Open Sans', sans-serif;
+                font-size: 12px;
+                color: #3b5265;
+                line-height: 1.7rem;
+                font-weight: 400;
+                -webkit-font-smoothing: antialiased;
+            }
+            
+            h1, h2, h3, h4, h5, h6, p, ul, a {
+                margin: 0;
+                padding: 0;
+            }
+            
+            a {
+                text-decoration: none;
+            }
+            h2 {
+                font-variant-ligatures: common-ligatures;
+                margin-top: 0;
+                margin-bottom: 0;
+                font-weight: 700;
+            }
+            
+            .ptb-15 { padding: 15px 0 }
             .mt-40 { margin-top: 40px }
             .mb-40 { margin-bottom: 40px }
             
             .bg-white {
                 background: #fff !important;
             }
-            .bg-white p,
-            .bg-white span,
-            .bg-white ul,
-            .bg-white a:not(.cat-btn), {
+            .bg-white p, .bg-white span, .bg-white ul, .bg-white a:not(.cat-btn), {
                 color: #3b5265;
             }
             
-            .bg-white h1:not(.header-color),
-            .bg-white h2:not(.header-color),
-            .bg-white h3:not(.header-color),
-            .bg-white h4:not(.header-color),
-            .bg-white h5:not(.header-color),
-            .bg-white h6:not(.header-color),
-            .bg-white i :not(.header-color){
+            .bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4, .bg-white h5, .bg-white h6, .bg-white i {
                 color: #2f2f2f;
             }
             
@@ -64,8 +65,7 @@
                 margin-left: auto;
             }
             
-            .container:before,
-            .container:after {
+            .container:before, .container:after, .row:before, .row:after {
                 display: table;
                 content: " ";
             }
@@ -73,29 +73,46 @@
             .container:after {
                 clear: both;
             }
-  
+            
+            /*container width*/
+            @media (min-width: 768px) {
+                .container {
+                    width: 750px;
+                }
+            }
+            @media (min-width: 992px) {
+                .container {
+                    width: 970px;
+                }
+            }
+            @media (min-width: 1200px) {
+                .container {
+                    width: 1170px;
+                }
+            }
+            @media (min-width: 1400px) {
+                .container {
+                    width: 1370px;
+                }
+            }
+            @media (min-width: 1366px) {
+                .container {
+                    width: 1350px;
+                }
+            }
+            
             .page-content > .row {
                 margin-left: 0px !important;
                 margin-right: 0px !important;
                 margin-top: 30px;
             }
             
-            
             .row {
                 margin-right: -15px;
                 margin-left: -15px;
             }
             
-            .row:before, .row:after {
-                display: table;
-                content: " ";
-            }
-            
-            .col-md-4,
-            .col-xs-12,
-            .col-sm-12,
-            .col-md-12,
-            .col-lg-12 {
+            .col-md-4, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
                 position: relative;
                 min-height: 1px;
                 padding-right: 15px;
@@ -210,15 +227,6 @@
             .zm-post-title a {
                 color: inherit !important;
             }
-            a {
-                text-decoration: none;
-            }
-            h2 {
-                font-variant-ligatures: common-ligatures;
-                margin-top: 0;
-                margin-bottom: 0;
-                font-weight: 700;
-            }
             
             .zm-post-lay-a1 .zm-post-meta {
                 margin-top: 10px;
@@ -257,7 +265,49 @@
                 display: inline-block;
             }
             
+            .zm-posts .zm-post-lay-a1 {
+                margin-bottom: 30px;
+                max-height: 488px;
+                overflow: hidden;
+                position: relative;
+            }
             
+            .unsubscribe {
+                border-top: 1px solid #e6e6e6; 
+                width: 98%; 
+                margin: 20px auto;
+                clear: both;
+                text-align: center;
+                padding-top: 10px;
+            }
+            .archive-image {
+                float: left;
+                width: 300px;
+            } 
+            .archive-filter {
+                float: right;
+                text-align: right;
+                margin-top: 40px;
+            }
+            
+            /*make the header 2 rows*/
+            @media (max-width: 580px) {
+                .archive-image {
+                    float: none !important;
+                    width: 100% !important;
+                    text-align: center;
+                }
+                .archive-image img {
+                    width: 75%;
+                }
+                .archive-filter {
+                    float: none !important;
+                    width: 100% !important;
+                    text-align: center !important;
+                }
+            }
+            
+            /*make the articles responsive*/
             .col-md-4 {
                 width: 30%;
                 float: left;
@@ -267,14 +317,17 @@
                 padding-left: 15px;
             }
             
-            .zm-posts .zm-post-lay-a1 {
-                margin-bottom: 30px;
-                max-height: 488px;
-                overflow: hidden;
-                position: relative;
+            @media (max-width: 1218px) {
+                .col-md-4 {
+                    width: 46% !important;
+                }
             }
             
             @media (max-width: 784px) {
+                .col-md-4 {
+                    width: 95% !important;
+                    margin: 0 auto;
+                }
                 .zm-post-thumb img {
                     height: auto !important;
                 }
@@ -283,43 +336,7 @@
                     max-height: none !important;
                 }
             }
-            
-            /*responsive?*/
-            @media (min-width: 768px) {
-                .container {
-                    width: 750px;
-                }
-            }
-            @media (min-width: 992px) {
-                .container {
-                    width: 970px;
-                }
-            }
-            @media (min-width: 1200px) {
-                .container {
-                    width: 1170px;
-                }
-            }
-            @media (min-width: 1400px) {
-                .container {
-                    width: 1370px;
-                }
-            }
-            @media (min-width: 1366px) {
-                .container {
-                    width: 1350px;
-                }
-            }
-            
-            .unsubscribe {
-                border-top: 1px solid #e6e6e6; 
-                width: 98%; 
-                margin: 20px auto;
-                clear: both;
-            }
-           
-			
-			
+
 		</style>
 	</head>
 	<body>
@@ -336,7 +353,10 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="archive-inner">
-                                            <div class="archive-filter" style="text-align: center">
+                                            <div class = "archive-image">
+                                                <%= link_to image_tag("header_footer/cbz-logo-color.svg"), root_path %>
+                                            </div>
+                                            <div class="archive-filter">
                                                 <h3>The Cannabiz Network Weekly Roll Up</h3>
                                             </div>
                                         </div>
@@ -363,7 +383,7 @@
                                                             <!--save article-->
                                                             
                                                             <div class="zm-post-thumb">
-                                                                <a href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank">
+                                                                <a href = 'https://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank">
                                                                     <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
                                                                 </a>
                                                             </div>
@@ -373,20 +393,20 @@
                                                                     <!--display article tags-->
                                                                     <div class="zm-category">
                                                                         <% article.categories.each do |category| %>
-                                                                            <a class="bg-cat-3 cat-btn" href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=category.name%></a>
+                                                                            <a class="bg-cat-3 cat-btn" href = 'https://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=category.name%></a>
                                                                         <% end %>
                                                                         <% article.states.each do |state| %>
-                                                                            <a class="bg-cat-3 cat-btn" href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=state.name%></a>
+                                                                            <a class="bg-cat-3 cat-btn" href = 'https://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=state.name%></a>
                                                                         <% end %>
                                                                     </div>
                                                                     <!--display article tags-->
                                                                     
-                                                                    <h2 class="zm-post-title"><a href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%= article.title.truncate(60) if article.title %></a></h2>
+                                                                    <h2 class="zm-post-title"><a href = 'https://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%= article.title.truncate(60) if article.title %></a></h2>
                                                                     <div class="zm-post-meta">
                                                                         <ul>
                                                                             <li class="s-meta">
                                                                                 <img class='inline' style='width: 40px; height: auto; display: none;' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
-                                                                                 <a class="zm-author" href = 'http://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=article.source.name%></a>
+                                                                                 <a class="zm-author" href = 'https://cannabiz-news.herokuapp.com/articles/<%= article.id%>' target="_blank"><%=article.source.name%></a>
                                                                             </li>
                                                                             <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
                                                                         </ul>

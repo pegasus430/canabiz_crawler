@@ -1,1 +1,13 @@
-Sample mail sent using smtp.
+Welcome to the Cannabiz Network Weekly Roll Up
+
+Featured Articles:
+<% Article.where(include_in_digest: true).each do |article| %>
+
+<%= article.title%>
+Link: <%= "https://cannabiz-news.herokuapp.com/articles/#{article.id}" %>
+	
+
+<% end %>
+
+
+To Unsubscribe from this Digest, <%= link_to "Click Here", "cannabiz-news.herokuapp.com/unsubscribe?id=A43d#{@user.id}G2f4" %>
