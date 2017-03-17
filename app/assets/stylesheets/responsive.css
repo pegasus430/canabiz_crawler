@@ -705,7 +705,8 @@ form.mobile-digest-form button{
 /*make button padding smaller*/
 @media all and (max-width: 420px) {
     form.mobile-digest-form button{
-        width: 15%;
+        width: 18%;
+        height: 35px;
     }
 }
 
