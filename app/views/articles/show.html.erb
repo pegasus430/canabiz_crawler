@@ -9,6 +9,7 @@
     }
     
     function userArticleSave(elem, articleId) {
+        console.log(elem.checked);
         <% if !logged_in? %>
             window.open('/login', '_self');
         <% else %>
@@ -16,6 +17,16 @@
                 type: "PUT",
                 url: "/user_article_save/" + articleId
 	        });
+	        
+	        //change the checkboxes appropriately
+	        if (elem.checked) {
+	            document.getElementById("top-checkbox").checked = true;
+	            document.getElementById("bottom-checkbox").checked = true;
+	        }
+	        else {
+	            document.getElementById("top-checkbox").checked = false;
+	            document.getElementById("bottom-checkbox").checked = false;
+	        }
         <% end %>
     }
 </script>
@@ -73,9 +84,9 @@
                                     <label class="switch pull-right">
                                         <!--check if article is already saved-->
                                         <% if current_user && UserArticle.where(:article_id => @article.id, :user_id => current_user.id, :saved => true).any? %>
-                                            <input type="checkbox" checked onclick="userArticleSave(this, <%=@article.id%>);">
+                                            <input type="checkbox" id = "top-checkbox" checked onclick="userArticleSave(this, <%=@article.id%>);">
                                         <% else %>
-                                            <input type="checkbox" unchecked onclick="userArticleSave(this, <%=@article.id%>);"> 
+                                            <input type="checkbox" id = "top-checkbox" unchecked onclick="userArticleSave(this, <%=@article.id%>);"> 
                                         <% end %>
                                     
                                         <div class="slider round" ></div> 
@@ -124,9 +135,9 @@
                                             <label class="switch pull-right">
                                                 <!--check if article is already saved-->
                                                 <% if current_user && UserArticle.where(:article_id => @article.id, :user_id => current_user.id, :saved => true).any? %>
-                                                    <input type="checkbox" checked onclick="userArticleSave(this, <%=@article.id%>);">
+                                                    <input type="checkbox" id = "bottom-checkbox" checked onclick="userArticleSave(this, <%=@article.id%>);">
                                                 <% else %>
-                                                    <input type="checkbox" unchecked onclick="userArticleSave(this, <%=@article.id%>);"> 
+                                                    <input type="checkbox" id = "bottom-checkbox" unchecked onclick="userArticleSave(this, <%=@article.id%>);"> 
                                                 <% end %>
                                               <div class="slider round"></div>
                                             </label>                                                    

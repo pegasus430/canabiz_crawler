@@ -510,6 +510,7 @@ article.zm-post-lay-a1.my-feed {
   float: left !important;
   margin-top: 30px;
 }
+
 .administrator-avatar {
   text-align: center;
   width: 100%;
@@ -704,7 +705,7 @@ form.mobile-digest-form button{
 /*make button padding smaller*/
 @media all and (max-width: 420px) {
     form.mobile-digest-form button{
-        padding: 2.5px 0;
+        width: 15%;
     }
 }
 
@@ -715,4 +716,24 @@ form.mobile-digest-form button{
     }
 }
 
- 
+/*responsive and regular styling for social sharing*/
+#twitter-widget-0, #twitter-widget-1 {
+    float: left;   
+    margin-top: 7px;
+}
+.fb-share-button.fb_iframe_widget {
+    float: left;
+}
+@media all and (max-width: 768px) {
+    #twitter-widget-0, #twitter-widget-1 {
+        margin-top: 3px;
+    }
+}
+
+@media all and (max-width: 425px) {
+    
+    .entry-meta-small .meta-list.pull-right {
+        float: none !important;
+    }
+}
+
