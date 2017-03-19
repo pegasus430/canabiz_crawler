@@ -35,11 +35,13 @@ class NPDopeMagazine(INewsParser):
             image_raw = article.xpath('.//meta[@property="og:image"]/@content')
             if len(image_raw):
                 image_url = image_raw[0]
-            date_raw = article.xpath('//div[@class="metathings"]//time/@datetime')[0]
-            date = datetime.strptime(date_raw.strip()[:10], "%Y-%m-%d")
-            body_html_raw = article.xpath('//div[@class="entry-content"]')[0]
-            body_html = html.tostring(body_html_raw)
-            body_text = body_html_raw.text_content().strip()
+            if len (article.xpath('//div[@class="metathings"]//time/@datetime')):
+                date_raw = article.xpath('//div[@class="metathings"]//time/@datetime')[0]
+                date = datetime.strptime(date_raw.strip()[:10], "%Y-%m-%d")
+            if len (article.xpath('//div[@class="entry-content"]')):    
+                body_html_raw = article.xpath('//div[@class="entry-content"]')[0]
+                body_html = html.tostring(body_html_raw)
+                body_text = body_html_raw.text_content().strip()
 
             site.add_article(title, url, image_url, date, body_html, body_text)
 

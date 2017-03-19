@@ -55,6 +55,10 @@
     /*    width: 1px;*/
     /*    overflow: hidden;*/
     /*}*/
+    .article-link {
+        cursor: pointer;
+        color: #2ab081;
+    }
     
 </style>
 
@@ -123,12 +127,25 @@
                                         <div class="zm-post-meta">
                                             <ul>
                                                 <li class="s-meta"><a href="<%= source_path(@article.source) %>" class="zm-author"><%=@article.source.name%></a></li>
-                                                <li class="s-meta"><%= @article.created_at.strftime("%B %d, %Y | %I:%M %p") %></li>
+                                                <li class="s-meta" style="color: #7c8c99;"><%= @article.created_at.strftime("%B %d, %Y | %I:%M %p") %></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="zm-post-content">
-                                        <%= simple_format(@article.body) %>
+                                        <%frag = Nokogiri::HTML(@article.body)%>
+                                        <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
+                                        
+                                        <%= truncate_html frag, :length => 10000 %>
+                                        
+                                        
+                                        <br/>
+                                        <br/>
+                                        <p>See Article on <%= @article.source.name %> <span class="article-link" onclick = "saveExternalArticleClick('<%=@article.id%>', '<%=@article.web_url%>')">HERE</span></p>
                                     </div>
                                     <div class="entry-meta-small clearfix ptb-40 mtb-40 border-top border-bottom">
                                         <div>

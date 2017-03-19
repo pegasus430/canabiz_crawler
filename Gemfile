@@ -73,7 +73,7 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   
-  gem 'rspec-rails', '3.1.0' #for test methods
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.2' #for test methods
 end
 
 #for test methods

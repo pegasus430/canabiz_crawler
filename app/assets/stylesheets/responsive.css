@@ -695,7 +695,7 @@ form.mobile-digest-form button{
     background: #2ab081 none repeat scroll 0 0;
     border: medium none;
     color: #fff;
-    height: 32px;
+    height: 95%;
     position: absolute;
     right: 0;
     top: 0;
@@ -705,7 +705,8 @@ form.mobile-digest-form button{
 /*make button padding smaller*/
 @media all and (max-width: 420px) {
     form.mobile-digest-form button{
-        width: 15%;
+        width: 18%;
+        height: 100%;
     }
 }
 
