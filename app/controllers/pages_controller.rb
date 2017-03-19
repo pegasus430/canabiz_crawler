@@ -141,9 +141,11 @@ class PagesController < ApplicationController
            
            flash[:success] = 'Thanks for your message! We look forward to responding soon'
            redirect_to root_path
+        else 
+            redirect_to root_path
         end
         
-        redirect_to root_path
+        
     end
     
     def submit_feedback_form
