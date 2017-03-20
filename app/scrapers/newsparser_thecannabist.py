@@ -18,6 +18,7 @@ class NPTheCannabist(INewsParser):
         home = html.fromstring(home_raw.content)
 
         excerpts = home.xpath('//article')
+        
 
         for excerpt in excerpts:
             title = excerpt.xpath('.//h2/a/text()')[0]
