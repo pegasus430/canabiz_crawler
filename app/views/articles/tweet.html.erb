@@ -46,7 +46,7 @@
 
 	<form class="navbar-form inline" role="search" method="get" action = '/send_tweet'>
         <textarea class="form-control" rows="5" id="tweet-textbody" name='tweet_body' onkeyup = "characterCount()"
-		><%=@article.source.name%>: <%=@article.title.truncate(60)%> <%=@bitlyLink%>
+		><%=@article.source.name%>: <%=@article.title.truncate(60).titlecase%> <%=@bitlyLink%>
 		</textarea>
 		<!--hidden article id-->
 		<input type = 'hidden' value = "<%=@article.id%>" name ='id'>

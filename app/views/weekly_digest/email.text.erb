@@ -3,7 +3,7 @@ Welcome to the Cannabiz Network Weekly Roll Up
 Featured Articles:
 <% Article.where(include_in_digest: true).each do |article| %>
 
-<%= article.title%>
+<%= article.title.titlecase%>
 Link: <%= "https://cannabiz-news.herokuapp.com/articles/#{article.id}" %>
 	
 
