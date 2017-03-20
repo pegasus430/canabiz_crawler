@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   post 'articles/search' => 'articles#search', as: 'search_articles'
   get 'article-admin', to: 'articles#admin'
   get 'digest', to: 'articles#digest'
+  get 'send_weekly_digest', to: 'articles#send_weekly_digest'
   get 'tweet/:id', to: 'articles#tweet', as: 'tweet'
   put 'save_visit/:id', to: 'articles#save_visit', as: 'save_visit'
   put 'user_article_save/:id', to: 'articles#user_article_save', as: 'user_article_save'

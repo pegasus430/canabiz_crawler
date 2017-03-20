@@ -123,9 +123,16 @@ class ArticlesController < ApplicationController
         end
     end
     
+    
+    #not on admin page but admin functionality
     def digest
-        #not on admin page but admin functionality
+       @articles = Article.where(include_in_digest: true)
+    end
+    
+    def send_weekly_digest
         WeeklyDigestJob.perform_later()
+        flash[:success] = 'Digest will be sent out soon'
+        redirect_to admin_path
     end
     
     #--------ADMIN PAGE-------------------------

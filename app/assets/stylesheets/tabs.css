@@ -128,6 +128,11 @@ ul.tabs li.current{
 .ajax-spinner-source, .ajax-spinner-category, .ajax-spinner-state {
 	top: 140px;
 }
+@media all and (max-width: 991px) {
+	.ajax-spinner-source, .ajax-spinner-category, .ajax-spinner-state {
+		top: 170px;
+	}
+}
 
 
 #tab-2, .tab-content.row {
