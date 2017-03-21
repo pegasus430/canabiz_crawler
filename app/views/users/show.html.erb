@@ -95,7 +95,7 @@
 						<thead>
 							<tr>
 								<th>Article</th>
-								<th data-priority="1">Source</th>
+								<!--<th data-priority="1">Source</th>-->
 								<th data-priority="3">Date</th>
 								<th data-priority="1" class="delbtn">Remove</th>
 							</tr>
@@ -105,9 +105,9 @@
 							<% @savedArticles.each do |article| %>
 								<tr>
 									<td style="padding: 4px 4px; border-bottom: 1px solid #7c8c99"><%=link_to article.title.titlecase, article_path(article)%></td>
-									<td style="padding: 4px 4px; border-bottom: 1px solid #7c8c99"><%=link_to article.source.name, source_path(article.source)%></td>
+									
 									<td style="padding: 4px 4px; border-bottom: 1px solid #7c8c99"><%= article.created_at.strftime("%B %d, %Y") %></td>
-									<td class="delbtn" style="padding: 4px 4px;">
+									<td class="delbtn" style="padding: 4px 4px; border-bottom: 1px solid #7c8c99">
 										<span class="btn btn-default btn-sm">
 											<button type="button" class="close" data-toggle="modal" data-target="#removeSavedArticleModal" onclick="setRemoveArticleId('<%=article.id%>');" data-id="<%=article.id%>">&times;</button>
 										</span>
