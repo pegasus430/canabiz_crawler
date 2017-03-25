@@ -3,8 +3,10 @@
 class PhotoUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
-  
+  include CarrierWave::ImageOptimizer
   include Sprockets::Rails::Helper
+  
+  process :optimize
   
   storage :fog #fog connects application and AWS
   
