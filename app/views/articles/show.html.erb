@@ -136,16 +136,16 @@
                                     </div>
                                     <div class="zm-post-content">
                                         <%frag = Nokogiri::HTML(@article.body)%>
+                                       
                                         <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//a").each { |div|  div.name= "p"}%>
                                         
-                                        <%= truncate_html frag, :length => 10000 %>
-                                        
-                                        
+                                        <%= simple_format(frag.text) %>
                                         <br/>
                                         <br/>
                                         <p>See Article on <%= @article.source.name %> <span class="article-link" onclick = "saveExternalArticleClick('<%=@article.id%>', '<%=@article.web_url%>')">HERE</span></p>
