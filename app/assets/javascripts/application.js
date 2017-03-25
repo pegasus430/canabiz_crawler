@@ -66,7 +66,7 @@ $(window).scroll(function() {
             
             if ($('.article-index-new-pagination .pagination li.next.next_page').hasClass('disabled'))
             {
-                $('.article-index-new-pagination .pagination').text("Houston, we are out of Weed!");
+                $('.article-index-new-pagination .pagination').text("No More Content");
             } 
             else 
             {
@@ -74,7 +74,7 @@ $(window).scroll(function() {
                 
                 if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) 
                 {
-                    $('.article-index-new-pagination .pagination').text("Repacking The Bong...");
+                    $('.article-index-new-pagination .pagination').text("Loading More News...");
                     return $.getScript(url);
                 }                
             }
@@ -84,7 +84,7 @@ $(window).scroll(function() {
             
             if ($('.article-index-views-pagination .pagination li.next.next_page').hasClass('disabled'))
             {
-                $('.article-index-views-pagination .pagination').text("Houston, we are out of Weed!");
+                $('.article-index-views-pagination .pagination').text("No More Content");
             }
             else 
             {
@@ -92,7 +92,7 @@ $(window).scroll(function() {
 
                 if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 150) 
                 {
-                    $('.article-index-views-pagination .pagination').text("Repacking The Bong...");
+                    $('.article-index-views-pagination .pagination').text("Loading More News...");
                     return $.getScript(url);
                 }
             }

@@ -220,6 +220,9 @@ article.zm-post-lay-a1.my-feed .zm-post-thumb img {
     display: inline-block;
 }
 
+.zm-post-lay-a1 .zm-post-content {
+    min-height: 81px;
+}
 
 /*----------------------------------------*/
 /*  single post
