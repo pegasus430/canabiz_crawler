@@ -21,13 +21,13 @@ class ApplicationController < ActionController::Base
   end 
   
   #redirect to homepage on error
-  #rescue_from ActionView::MissingTemplate, :with => :template_not_found
-  #rescue_from ActiveRecord::RecordNotFound, :with => :template_not_found
-  #rescue_from ActiveRecord::StatementInvalid, :with => :template_not_found
+  rescue_from ActionView::MissingTemplate, :with => :handle_error
+  rescue_from ActiveRecord::RecordNotFound, :with => :handle_error
+  rescue_from ActiveRecord::StatementInvalid, :with => :handle_error
 
   private
   
-    def template_not_found
+    def handle_error
       redirect_to root_path
     end
 end
