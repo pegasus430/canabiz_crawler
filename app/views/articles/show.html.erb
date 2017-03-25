@@ -144,7 +144,7 @@
                                         <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//a").each { |div|  div.name= "p"}%>
-                                        <%frag.xpath("//br").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//br").each { |div|  div.remove}%>
                                         
                                         <%= simple_format(frag.text) %>
                                         <br/>
