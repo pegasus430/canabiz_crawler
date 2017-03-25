@@ -15,14 +15,15 @@ class PagesController < ApplicationController
         
         #removed from marijuana stocks line 9 #import urllib3
         
-        #NewsTheCannabist.perform_later()
+        #set articles
+        SetArticlesJob.perform_later()
 
         # news background jobs:
         if Rails.env.production?
             NewsDopeMagazine.perform_later()
             NewsMarijuanaStocks.perform_later()
             NewsLeafly.perform_later()
-            
+            NewsTheCannabist.perform_later()
             NewsMarijuana.perform_later()
             NewsCannabisCulture.perform_later()
             NewsCannaLawBlog.perform_later()

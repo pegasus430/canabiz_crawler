@@ -75,6 +75,7 @@ Rails.application.routes.draw do
   put 'save_visit/:id', to: 'articles#save_visit', as: 'save_visit'
   put 'user_article_save/:id', to: 'articles#user_article_save', as: 'user_article_save'
   get 'send_tweet', to: 'articles#send_tweet'
+  get 'update_states_categories', to: 'articles#update_states_categories'
   
   
   #CATEGORIES  

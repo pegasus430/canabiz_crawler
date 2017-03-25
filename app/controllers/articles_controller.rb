@@ -135,6 +135,11 @@ class ArticlesController < ApplicationController
         redirect_to admin_path
     end
     
+    def update_states_categories
+        SetArticlesJob.perform_later() 
+    end
+        
+    
     #--------ADMIN PAGE-------------------------
     
 
