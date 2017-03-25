@@ -146,7 +146,7 @@
                                         <%frag.xpath("//a").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//br").each { |div|  div.remove}%>
                                         
-                                        <%= simple_format(frag.text) %>
+                                        <%= simple_format(frag.text.gsub(/<br\s*\/?>/, '')) %>
                                         <br/>
                                         <br/>
                                         <p>See Article on <%= @article.source.name %> <span class="article-link" onclick = "saveExternalArticleClick('<%=@article.id%>', '<%=@article.web_url%>')">HERE</span></p>

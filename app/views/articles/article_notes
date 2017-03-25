@@ -6,6 +6,7 @@
                 <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
                 <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
                 
+                <%frag.xpath("//br").each { |div|  div.remove}%>
                 <%= truncate_html frag, :length => 175 %>
 
 //old tag cloud on show page
