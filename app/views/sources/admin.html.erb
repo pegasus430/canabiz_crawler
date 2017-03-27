@@ -38,6 +38,7 @@
             <th><%= sortable "url" %></th>
             <th><%= sortable "article_logo" %></th>
             <th><%= sortable "sidebar_logo" %></th>
+            <th>Last Scraper Run</th>
             <th>Hashtags</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -51,6 +52,7 @@
                     <td><%= source.url%></td>
                     <td><%= source.article_logo if source.article_logo%></td>
                     <td><%= source.sidebar_logo if source.sidebar_logo%></td>
+                    <td><%= source.last_run %></td>
                     
                     <td><% if source.hashtags.any? %>
 						<%= render source.hashtags %>

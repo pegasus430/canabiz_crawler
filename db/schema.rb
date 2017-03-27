@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128223155) do
+ActiveRecord::Schema.define(version: 20170326035356) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20170128223155) do
     t.string   "sidebar_logo"
     t.integer  "external_article_visits", default: 0
     t.string   "slug"
+    t.datetime "last_run"
   end
 
   add_index "sources", ["slug"], name: "index_sources_on_slug", unique: true

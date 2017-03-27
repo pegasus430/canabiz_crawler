@@ -14,6 +14,7 @@ class PagesController < ApplicationController
         end
         
         #removed from marijuana stocks line 9 #import urllib3
+        NewsCannaLawBlog.perform_later()
 
         # news background jobs:
         if Rails.env.production?

@@ -19,6 +19,14 @@
             </div>
             <div class="form-group">
                 <div class="control-label col-sm-2">
+                    <b>Last Run</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.datetime_select(:last_run, :order => [:month, :day, :year]) %>
+                </div>
+            </div>            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
                     <%= f.label :article_logo %>
                 </div>
                 <div class="col-sm-8">

@@ -94,7 +94,7 @@ class SourcesController < ApplicationController
         end
         
         def source_params
-          params.require(:source).permit(:name, :source_type, :article_logo, :sidebar_logo, :url, :slug)
+          params.require(:source).permit(:name, :source_type, :article_logo, :sidebar_logo, :url, :slug, :last_run)
         end  
         
         def sort_column
