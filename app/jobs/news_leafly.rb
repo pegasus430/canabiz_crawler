@@ -100,5 +100,8 @@ class NewsLeafly < ActiveJob::Base
 	        
 	   end #end of article loop
 	   
+	   #update last run date of scraper
+	   source.update_attribute(:last_run, DateTime.now)
+	   
     end #end of add article method
 end
