@@ -196,11 +196,17 @@ class UsersController < ApplicationController
     end
   
     def destroy
-        @user = User.find(params[:id])
+        @user = User.friendly.find(params[:id]) 
         @user.destroy
         flash[:danger] = "User has been deleted"
         redirect_to users_admin_path
     end
+    
+    def destroy_multiple
+      User.destroy(params[:users])
+      flash[:success] = 'Users were successfully deleted'
+      redirect_to users_admin_path        
+    end 
   
     private
     
@@ -212,8 +218,9 @@ class UsersController < ApplicationController
             @user = User.friendly.find(params[:id]) 
         end
         
+        #also allow admin to perform actions
         def require_same_user
-            if current_user != @user
+            if current_user != @user && current_user.admin? == false
                 flash[:danger] = "You can only edit your own account"
                 redirect_to root_path
             end

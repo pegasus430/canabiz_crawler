@@ -19,17 +19,31 @@
         <% else %>
 
             <title><%=@article.title%></title>
+            
+            <!--facebook-->
             <meta property="og:title" content="<%=@article.title%>" />
-            <meta property="og:image" content="<%=@article.image%>" />
+            
             <meta property="og:url" content="https://cannabiznetwork.com" />
-            <meta property="og:type"               content="article" />
+            <meta property="og:type" content="article" />
 
+            <!--twitter-->
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:site" content="@CannabizNetwork" />
             <meta name="twitter:title" content="<%=@article.title%>"/>
-            <meta name="twitter:image" content="<%=@article.image%>" />
+            
             <meta name="twitter:url" content="https://cannabiznetwork.com" />
             
+            <!--images-->
+            <% if @article.image != nil && @article.image != ''%>
+                <meta name="twitter:image" content="<%=@article.image%>" />
+                <meta property="og:image" content="<%=@article.image%>" />
+            <% else %>
+                <meta name="twitter:image" content="<%= asset_path(@article.source.sidebar_logo) if @article.source %>" />
+                <meta property="og:image" content="<%= asset_path(@article.source.sidebar_logo) if @article.source %>" />
+            <% end %>
+            
+            
+            <!--description-->
             <%frag = Nokogiri::HTML(@article.body)%>
             <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
             <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
@@ -43,10 +57,8 @@
             
             
         <% end %>
-        
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         
         <!--tether-->
@@ -72,22 +84,6 @@
     </head>
     
     <body>
-        
-        <!--facebook share-->
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=863173663775042";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-    
-        <!--  THEME PRELOADER AREA -->
-        <!--<div id="preloader-wrapper">-->
-        <!--    <div class="preloader-wave-effect"></div>-->
-        <!--</div>-->
-        <!-- THEME PRELOADER AREA END -->
         
         <!--wrapper for all pages including header-->
         <div class="wrapper">
