@@ -6,8 +6,16 @@
         
         <%= favicon_link_tag 'favicon.ico' %>
         
+        <!--universal meta tags-->
+        <meta name="robots" content="index, follow"/>
+        <meta name="keywords" content="weed, marijuana, cannabis, cannabiz, hemp, cbd, cannabiz network" />
+        
         <% if @article == nil %>
             <title>CannabizNetwork</title>
+            
+            <!--meta tags set only on no article-->
+            <meta name ="description" 
+                content="Providing you with the most up to date news aggregated from the most trusted cannabis resources in the industry."/>
         <% else %>
 
             <title><%=@article.title%></title>
