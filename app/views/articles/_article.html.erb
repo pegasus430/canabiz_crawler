@@ -5,7 +5,7 @@
         
         <div class="zm-post-thumb">
             <a href="<%= article_path(article) %>">
-                <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
             </a>
         </div>
         <div class="zm-post-dis">
