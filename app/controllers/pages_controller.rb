@@ -157,6 +157,11 @@ class PagesController < ApplicationController
         redirect_to root_path
     end
     
+    def sitemap
+        @sources = Source.all.order("name ASC")
+        @categories = Category.all.order("name ASC")
+        @states = State.all.order("name ASC")
+    end
     
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
     #def prepare_access_token(oauth_token, oauth_token_secret)
