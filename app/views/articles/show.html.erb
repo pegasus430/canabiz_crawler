@@ -107,11 +107,16 @@
                                 	
                                 	<% if @current_user && @current_user.admin? %>
                                 	    <!--only show facebook if admin for now-->
-                                    	<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" 
-                                    	    data-size="small" data-mobile-iframe="true">
-                                    	        <a class="fb-xfbml-parse-ignore" target="_blank" 
-                                    	            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
-                                    	</div>
+                                    	<!--<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" -->
+                                    	<!--    data-size="small" data-mobile-iframe="true">-->
+                                    	<!--        <a class="fb-xfbml-parse-ignore" target="_blank" -->
+                                    	<!--            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>-->
+                                    	<!--</div>-->
+                                    	
+                                    	<!--reddit-->
+                                    	<a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" 
+                                    	onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.gif") %></a>
+                                    	
                                     <% end %>
                                 </div>
                             </div>                                    

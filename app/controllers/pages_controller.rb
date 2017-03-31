@@ -32,40 +32,25 @@ class PagesController < ApplicationController
         
     end 
     
-    def not_in_use
-       
-       #homepage only showing user articles
-        if current_user != nil
-            
-            @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-            @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
-            
-            if current_user.sources.any?
-                 @recents = @recents.where(source_id: current_user.sources)
-                 @mostviews = @mostviews.where(source_id: current_user.sources)
-            end
-            
-            if current_user.states.any?
-                #add a where clause to only be user states
-                state_ids = current_user.states.pluck(:id)
-                article_ids = ArticleState.where(state_id: state_ids).pluck(:article_id)
-                @recents = @recents.where(id: article_ids)
-                @mostviews = @mostviews.where(id: article_ids)
+    def scrapersetup
+       if Rails.env.production?
+            Source.all do |source|
+                if source.name == 'Dope Maganize' && source.last_run <= DateTime.now
+                    NewsDopeMagazine.perform_later()
+                end
                 
             end
             
-            if current_user.categories.any?
-               #add a where clause to only be user categories
-                category_ids = current_user.categories.pluck(:id)
-                article_ids = ArticleCategory.where(category_id: category_ids).pluck(:article_id)
-                @recents = @recents.where(id: article_ids)
-                @mostviews = @mostviews.where(id: article_ids)
-            end
-            
-        else 
-            @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-            @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
-        end
+            NewsMarijuanaStocks.perform_later()
+            NewsLeafly.perform_later()
+            NewsTheCannabist.perform_later()
+            NewsMarijuana.perform_later()
+            NewsCannabisCulture.perform_later()
+            NewsCannaLawBlog.perform_later()
+            NewsMjBizDaily.perform_later()
+            NewsHighTimes.perform_later()
+            NewsFourTwentyTimes.perform_later()
+        end 
     end
     
     def admin

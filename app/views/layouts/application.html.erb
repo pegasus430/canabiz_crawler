@@ -8,7 +8,9 @@
         
         <!--universal meta tags-->
         <meta name="robots" content="index, follow"/>
-        <meta name="keywords" content="weed, marijuana, cannabis, cannabiz, hemp, cbd, cannabiz network, medical, legal, pot, recreational, strain, dispensary, vape, decriminalize, medicinal, cannabusiness, news, ganja, hydroponics, legalization" />
+        <meta name="keywords" content="weed, marijuana, cannabis, cannabiz, hemp, cbd, cannabiz network, medical, legal, pot, recreational, strain, 
+        dispensary, vape, decriminalize, medicinal, cannabusiness, news, ganja, hydroponics, legalization, THC, terpene, cannabinoid, collective, MMJ, 
+        medical marijuana, Bong, dab, Vaporizer, medicinal, charlottes web" />
         
         <% if @article == nil %>
             <title>CannabizNetwork</title>
@@ -41,7 +43,6 @@
                 <meta name="twitter:image" content="<%= asset_url(@article.source.sidebar_logo) if @article.source %>" />
                 <meta property="og:image" content="<%= asset_url(@article.source.sidebar_logo) if @article.source %>" />
             <% end %>
-            
             
             <!--description-->
             <%frag = Nokogiri::HTML(@article.body)%>
