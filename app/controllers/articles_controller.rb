@@ -136,6 +136,9 @@ class ArticlesController < ApplicationController
     end
     
     def update_states_categories
+    end
+    
+    def update_article_tags
         SetArticlesJob.perform_later() 
     end
         
