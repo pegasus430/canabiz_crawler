@@ -100,11 +100,11 @@
                                     <span class="post-title">SAVE THIS ARTICLE:</span> 
                                 </div>
                                 <div class="share-social-link pull-left" style="margin-top: 5px;">
-                                    <a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false" target="_blank">
-                                        Tweet
-                                    </a>
-                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                                     
+                                    <ul class="share-buttons">
+                                        <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fcannabiznetwork.com&text=:%20http%3A%2F%2Fcannabiznetwork.com&via=CannabizNetwork" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Twitter.png") %></a></li>
+                                        <li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.png") %></a></li>
+                                    </ul>
                                 	
                                 	<% if @current_user && @current_user.admin? %>
                                 	    <!--only show facebook if admin for now-->
@@ -115,10 +115,7 @@
                                     	<!--</div>-->
                                     	
                                     	<!--reddit again-->
-                                    	<ul class="share-buttons">
-                                            <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fcannabiznetwork.com&text=:%20http%3A%2F%2Fcannabiznetwork.com&via=CannabizNetwork" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Twitter.png") %></a></li>
-                                             <li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.png") %></a></li>
-                                        </ul>
+                                    	
 
                                     <% end %>
                                 </div>
@@ -178,18 +175,18 @@
                                             <span class="post-title">SAVE THIS ARTICLE:</span> 
                                         </div> 
                                         <div class="share-social-link pull-left" style="margin-top: 5px;">
-                                            <a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false" target="_blank">
-                                                Tweet
-                                            </a>
-                                            <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                            <ul class="share-buttons">
+                                                <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fcannabiznetwork.com&text=:%20http%3A%2F%2Fcannabiznetwork.com&via=CannabizNetwork" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Twitter.png") %></a></li>
+                                                <li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.png") %></a></li>
+                                            </ul>
                                         	
                                         	<% if @current_user && @current_user.admin? %>
                                 	            <!--only show facebook if admin for now-->
-                                            	<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" 
-                                            	    data-size="small" data-mobile-iframe="true">
-                                            	        <a class="fb-xfbml-parse-ignore" target="_blank" 
-                                            	            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
-                                            	</div>
+                                            	<!--<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" -->
+                                            	<!--    data-size="small" data-mobile-iframe="true">-->
+                                            	<!--        <a class="fb-xfbml-parse-ignore" target="_blank" -->
+                                            	<!--            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>-->
+                                            	<!--</div>-->
                                             <% end %>
                                         </div>
                                     </div>
