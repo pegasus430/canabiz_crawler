@@ -113,6 +113,9 @@
                                     	<!--            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>-->
                                     	<!--</div>-->
                                     	
+                                    	<!--reddit again-->
+                                    	<%= social_share_button_tag(@article.title, :'data-type' => 'title') %>
+                                    	
                                     	<!--reddit-->
                                     	<a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" 
                                     	onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.gif") %></a>

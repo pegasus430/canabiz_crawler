@@ -14,28 +14,48 @@ class PagesController < ApplicationController
         end
         
         #removed from marijuana stocks line 9 #import urllib3
-        #NewsCannaLawBlog.perform_later()
-
-        # news background jobs:
         if Rails.env.production?
-            NewsDopeMagazine.perform_later()
-            NewsMarijuanaStocks.perform_later()
-            NewsLeafly.perform_later()
-            NewsTheCannabist.perform_later()
-            NewsMarijuana.perform_later()
-            NewsCannabisCulture.perform_later()
-            NewsCannaLawBlog.perform_later()
-            NewsMjBizDaily.perform_later()
-            NewsHighTimes.perform_later()
-            NewsFourTwentyTimes.perform_later()
+            Source.where("name IS NOT NULL").each do |source|
+    
+                if source.name == 'Marijuana.com' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsDopeMagazine.perform_later()
+                end
+                if source.name == 'Marijuana Stocks' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsMarijuanaStocks.perform_later()
+                end
+                if source.name == 'Leafly' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsLeafly.perform_later()
+                end
+                if source.name == 'The Cannabist' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsTheCannabist.perform_later()
+                end
+                if source.name == 'Marijuana.com' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsMarijuana.perform_later()
+                end
+                if source.name == 'Cannabis Culture' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsCannabisCulture.perform_later()
+                end
+                if source.name == 'Canna Law Blog' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsCannaLawBlog.perform_later()
+                end
+                if source.name == 'MJ Biz Daily' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsMjBizDaily.perform_later()
+                end
+                if source.name == 'HighTimes' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsHighTimes.perform_later()
+                end
+                if source.name == 'The 420 Times' && (source.last_run + 2.hours) <= DateTime.now
+                    NewsFourTwentyTimes.perform_later()
+                end
+                
+            end
         end
-        
     end 
     
     def scrapersetup
        if Rails.env.production?
             Source.all do |source|
-                if source.name == 'Dope Maganize' && source.last_run <= DateTime.now
+                if source.name == 'Dope Maganize' && source.last_run + (2/24.0) <= DateTime.now
                     NewsDopeMagazine.perform_later()
                 end
                 
