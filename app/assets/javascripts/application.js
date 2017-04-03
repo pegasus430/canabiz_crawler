@@ -56,6 +56,16 @@ function changeSort(stringValue) {
     //closeNav();
 }
 
+//sticky header on article pages
+        var stick = document.getElementById("mobile-sticky-header");
+        $(window).scroll(function() {
+          if (this.scrollTop > 147) {
+            stick.addClass("fix-search");
+          } else {
+            stick.removeClass("fix-search");
+          }            
+        });
+
 
 //endless scrolling
 $(window).scroll(function() {

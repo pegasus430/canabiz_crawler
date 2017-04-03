@@ -52,7 +52,7 @@
                     <td><%= source.url%></td>
                     <td><%= source.article_logo if source.article_logo%></td>
                     <td><%= source.sidebar_logo if source.sidebar_logo%></td>
-                    <td><%= source.last_run %></td>
+                    <td><%= source.last_run.strftime("%B %d, %Y %H %M") if source.last_run %></td>
                     
                     <td><% if source.hashtags.any? %>
 						<%= render source.hashtags %>
