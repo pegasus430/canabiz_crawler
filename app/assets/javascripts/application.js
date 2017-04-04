@@ -34,7 +34,7 @@ function changeSort(stringValue) {
         $(".article-index-views-pagination").css("display", "block");
         $("#article-index-new").css("display", "none");
         $(".article-index-new-pagination").css("display", "none");
-        // $(".sort-button").html("Most Popular");
+        
         $("#newest-button").removeClass('active-header-button');
         $("#newest-button").addClass('inactive-header-button');
         $("#popular-button").removeClass('inactive-header-button');
@@ -46,7 +46,7 @@ function changeSort(stringValue) {
         $(".article-index-views-pagination").css("display", "none");
         $("#article-index-new").css("display", "block");
         $(".article-index-new-pagination").css("display", "block");
-        // $(".sort-button").html("Newest");
+        
         $("#newest-button").removeClass('inactive-header-button');
         $("#newest-button").addClass('active-header-button');
         $("#popular-button").removeClass('active-header-button');
@@ -57,13 +57,27 @@ function changeSort(stringValue) {
 }
 
 //sticky header on article pages
-var stick = document.getElementById("mobile-sticky-header");
+var stick = $("#mobile-sticky-header");
+var header = $(".header-area");
+var meanBar = $(".mean-bar");
+console.log(stick);
+
+
 $(window).scroll(function() {
-  if (this.scrollTop > 147) {
-    stick.addClass("fix-search");
-  } else {
-    stick.removeClass("fix-search");
-  }            
+    if (meanBar != null && $(window).scrollTop() > (header.height() - 52)) {
+        stick.addClass('fix-search');
+        meanBar.addClass('fix-bar');
+        $(".mobile-search-form").css({"position": "fixed"});
+        $(".mobile-search-btn").css({"position": "fixed"});
+        // console.log('lock here');
+    }
+    else {
+        stick.removeClass('fix-search');
+        meanBar.removeClass('fix-bar');
+        $(".mobile-search-form").css({"position": "absolute"});
+        $(".mobile-search-btn").css({"position": "absolute"});
+        // console.log('unlock here');
+    }
 });
 
 
