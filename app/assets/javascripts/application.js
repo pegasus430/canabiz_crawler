@@ -57,26 +57,26 @@ function changeSort(stringValue) {
 }
 
 //sticky header on article pages
-var stick = $("#mobile-sticky-header");
-var header = $(".header-area");
-var meanBar = $(".mean-bar");
-console.log(stick);
-
-
 $(window).scroll(function() {
-    if (meanBar != null && $(window).scrollTop() > (header.height() - 52)) {
-        stick.addClass('fix-search');
-        meanBar.addClass('fix-bar');
-        $(".mobile-search-form").css({"position": "fixed"});
-        $(".mobile-search-btn").css({"position": "fixed"});
-        // console.log('lock here');
-    }
-    else {
-        stick.removeClass('fix-search');
-        meanBar.removeClass('fix-bar');
-        $(".mobile-search-form").css({"position": "absolute"});
-        $(".mobile-search-btn").css({"position": "absolute"});
-        // console.log('unlock here');
+    
+    var stick = $("#mobile-sticky-header");
+    var header = $(".header-area");
+    var meanBar = $(".mean-bar");
+
+    if (stick != null && meanBar != null) {
+
+        if ($(window).scrollTop() > (header.height() - 52)) {
+            stick.addClass('fix-search');
+            meanBar.addClass('fix-bar');
+            $(".mobile-search-form").css({"position": "fixed"});
+            $(".mobile-search-btn").css({"position": "fixed"});
+        }
+        else {
+            stick.removeClass('fix-search');
+            meanBar.removeClass('fix-bar');
+            $(".mobile-search-form").css({"position": "absolute"});
+            $(".mobile-search-btn").css({"position": "absolute"});
+        }
     }
 });
 
