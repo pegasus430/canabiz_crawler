@@ -63,19 +63,19 @@ $(window).scroll(function() {
     var header = $(".header-area");
     var meanBar = $(".mean-bar");
 
-    if (stick != null && meanBar != null) {
+    if (stick.length && meanBar.length) {
 
         if ($(window).scrollTop() > (header.height() - 52)) {
             stick.addClass('fix-search');
             meanBar.addClass('fix-bar');
-            // $(".mobile-search-form").css({"position": "fixed"});
-            // $(".mobile-search-btn").css({"position": "fixed"});
+            $(".mobile-search-form").css({"position": "fixed"});
+            $(".mobile-search-btn").css({"position": "fixed"});
         }
         else {
             stick.removeClass('fix-search');
             meanBar.removeClass('fix-bar');
-            // $(".mobile-search-form").css({"position": "absolute"});
-            // $(".mobile-search-btn").css({"position": "absolute"});
+            $(".mobile-search-form").css({"position": "absolute"});
+            $(".mobile-search-btn").css({"position": "absolute"});
         }
     }
 });
