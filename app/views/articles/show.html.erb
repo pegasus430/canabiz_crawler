@@ -31,67 +31,12 @@
     }
 </script>
 
-<style>
-    /*
-        social sharing?
-        Code from here: https://simplesharingbuttons.com/#code
-    */
-    ul.share-buttons{
-        list-style: none;
-        padding: 0;
-    }
-    
-    ul.share-buttons li{
-        display: inline;
-    }
-    
-    ul.share-buttons .sr-only {
-        position: absolute;
-        clip: rect(1px 1px 1px 1px);
-        clip: rect(1px, 1px, 1px, 1px);
-        padding: 0;
-        border: 0;
-        height: 1px;
-        width: 1px;
-        overflow: hidden;
-    }
-    .article-link {
-        cursor: pointer;
-        color: #2ab081;
-    }
-    
-</style>
-
-
-
 <!--mobile sticky header-->
 <% if @current_user && @current_user.admin? %>
 
-    <style>
-        #mobile-sticky-header {
-            display: none;
-        }
-        
-        .fix-search {
-            box-shadow: 0px 1px 50px #5E5E5E;
-            position:fixed;
-            top:52px;
-            z-index: 10;
-            background-color: white;
-            width: 100%;
-            padding-bottom: 5px;
-            display: block !important;
-        }
-        
-        .fix-bar {
-            position: fixed !important;
-            top: 0px;
-        }
-        .archive-filter .sing-option {
-            margin-top: 5px;
-        }
-        
-    </style>
+    <div id = "mobile-sticky-logo">
+        <%= link_to image_tag("header_footer/mean-bar-logo.png"), root_path %>
+    </div>
     
     <div id = "mobile-sticky-header">
         <div class="col-xs-12">

@@ -60,6 +60,7 @@ function changeSort(stringValue) {
 $(window).scroll(function() {
     
     var stick = $("#mobile-sticky-header");
+    var logo = $("#mobile-sticky-logo"); 
     var header = $(".header-area");
     var meanBar = $(".mean-bar");
 
@@ -68,12 +69,14 @@ $(window).scroll(function() {
         if ($(window).scrollTop() > (header.height() - 52)) {
             stick.addClass('fix-search');
             meanBar.addClass('fix-bar');
+            logo.addClass('fix-logo');
             $(".mobile-search-form").css({"position": "fixed"});
             $(".mobile-search-btn").css({"position": "fixed"});
         }
         else {
             stick.removeClass('fix-search');
             meanBar.removeClass('fix-bar');
+            logo.removeClass('fix-logo');
             $(".mobile-search-form").css({"position": "absolute"});
             $(".mobile-search-btn").css({"position": "absolute"});
         }
