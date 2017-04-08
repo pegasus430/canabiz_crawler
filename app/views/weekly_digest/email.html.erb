@@ -15,10 +15,8 @@ https://github.com/InterNations/antwort
   <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- So that mobile will display zoomed in -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- enable media queries for windows phone 8 -->
   <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS -->
-  <title>Three columns with images</title>
-  <!--<link rel="stylesheet" type="text/css" href="styles.css">-->
-  <!--<link rel="stylesheet" type="text/css" href="responsive.css">-->
-  
+  <title>Cannabiz Network Weekly Digest</title>
+
   <style>
 .header,
 .title,
@@ -86,12 +84,18 @@ hr {
   font-size: 16px;
   line-height: 22px;
   font-weight: 600;
-  color: #2469A0;
   height: 72px;
 }
 .subtitle span {
   font-weight: 400;
   color: #999999;
+}
+.subtitle a {
+  text-decoration: none;
+  color: #2f2f2f;
+}
+.subtitle a:hover {
+  color: #2ab081;
 }
 
 .body-text {
@@ -284,7 +288,7 @@ img {
                             </table>
                             <table border="0" cellpadding="0" cellspacing="0">
                               <tr>
-                                <td class="subtitle" valign="top"><a href = 'http://cannabiznetwork.com/articles/<%= article.id%>' target="_blank"><%= article.title.truncate(60) if article.title %></a></td>
+                                <td class="subtitle" valign="top"><a href = 'http://cannabiznetwork.com/articles/<%= article.id%>' target="_blank"><%= article.title.titlecase.truncate(60) if article.title %></a></td>
                               </tr>
                             </table>
                             <div class="col-copy">
@@ -311,9 +315,10 @@ img {
         </tr>
         <tr>
           <td class="container-padding footer-text" align="center">
-            You are receiving this email because you opted in on our website. Click here to <a href="#">Unsubscribe</a>.
+            You are receiving this email because you opted in on our website. 
+            Click here to <%= link_to "Unsubscribe", "cannabiznetwork.com/unsubscribe?id=A43d#{@user.id}G2f4" %>.
             <br><br>
-            <a href="#">Register</a> to customize your own news feed consisting of anything in the industry
+            <a href="http://www.cannabiznetwork.com/signup">Register</a> to customize your own news feed consisting of anything in the industry
           </td>
         </tr>
       </table><!--/600px container -->

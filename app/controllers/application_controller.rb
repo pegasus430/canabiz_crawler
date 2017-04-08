@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActionView::MissingTemplate, :with => :handle_error
   rescue_from ActiveRecord::RecordNotFound, :with => :handle_error
   rescue_from ActiveRecord::StatementInvalid, :with => :handle_error
+  rescue_from ActionController::RoutingError, :with => :handle_error
 
   private
   
