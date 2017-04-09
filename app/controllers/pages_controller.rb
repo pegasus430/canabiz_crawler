@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     def home
             
         #only showing all articles on homepage now
-        @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @recents = Article.order("date DESC").paginate(:page => params[:page], :per_page => 24)
         @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
         
         respond_to do |format|
@@ -15,7 +15,7 @@ class PagesController < ApplicationController
         
         #NewsTheCannabist.perform_later()
         #NewsLeafly.perform_later()
-        NewsDopeMagazine.perform_later()
+        #NewsDopeMagazine.perform_later()
         
         #removed from marijuana stocks line 9 #import urllib3
         if Rails.env.production?
