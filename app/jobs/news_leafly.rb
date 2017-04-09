@@ -18,11 +18,14 @@ class NewsLeafly < ActiveJob::Base
         output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_leafly.py"]) #cmd,
         contents = JSON.parse(output.read)
         
+        logger.info 'output:  '
+        logger.info output.read
+        
         #call method:
         
-        if contents["articles"] != nil
-        	addArticles(contents["articles"])	
-        end
+        #if contents["articles"] != nil
+        #	addArticles(contents["articles"])	
+        #end
            	
     end    
 	

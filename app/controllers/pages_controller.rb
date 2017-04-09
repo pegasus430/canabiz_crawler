@@ -14,6 +14,8 @@ class PagesController < ApplicationController
         end
         
         #NewsTheCannabist.perform_later()
+        #NewsLeafly.perform_later()
+        NewsDopeMagazine.perform_later()
         
         #removed from marijuana stocks line 9 #import urllib3
         if Rails.env.production?
