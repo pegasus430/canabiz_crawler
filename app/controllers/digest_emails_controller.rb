@@ -32,7 +32,7 @@ class DigestEmailsController < ApplicationController
     
     #-------------------------------------------
     def new
-      @category = Category.new
+      @digest_email = DigestEmail.new
     end
     def create
         #render plain: params[:category].inspect

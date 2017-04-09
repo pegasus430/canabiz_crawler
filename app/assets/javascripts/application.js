@@ -52,8 +52,6 @@ function changeSort(stringValue) {
         $("#popular-button").removeClass('active-header-button');
         $("#popular-button").addClass('inactive-header-button');
     }
-    //hide the overlay
-    //closeNav();
 }
 
 //sticky header on article pages
@@ -123,7 +121,6 @@ $(window).scroll(function() {
                     return $.getScript(url);
                 }
             }
-            
         }
     }
 });

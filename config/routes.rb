@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+
+  get 'errors/internal_server_error'
+
   #GENERAL PAGES
   root 'pages#home'
   get 'admin', to: 'pages#admin'
@@ -40,6 +44,10 @@ Rails.application.routes.draw do
   put 'user_source_save/:source_id', to: 'users#user_source_save', as: 'user_source_save'
   put 'user_category_save/:category_id', to: 'users#user_category_save', as: 'user_category_save'
   put 'user_state_save/:state_id', to: 'users#user_state_save', as: 'user_state_save'
+  
+  #ERROR HANDLING
+  match "/404", :to => "errors#not_found", :via => :all
+  match "/500", :to => "errors#internal_server_error", :via => :all
   
   
   #RESET PASSWORD
