@@ -30,7 +30,7 @@ class NPCannaLawBlog(INewsParser):
             for style in article.xpath('//style'):
                 style.getparent().remove(style)
             image_url = None
-            image_raw = article.xpath('.//article/div/img/@src')
+            image_raw = article.xpath('.//article/div//img/@src')
             if len(image_raw):
                 image_url = image_raw[0]
             date_raw = article.xpath('//header//time/@datetime')[0]

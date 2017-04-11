@@ -13,9 +13,7 @@ class PagesController < ApplicationController
           format.js # add this line for your js template
         end
         
-        #NewsTheCannabist.perform_later()
-        #NewsLeafly.perform_later()
-        #NewsDopeMagazine.perform_later()
+        NewsCannaLawBlog.perform_later()
         
         #removed from marijuana stocks line 9 #import urllib3
         if Rails.env.production?
