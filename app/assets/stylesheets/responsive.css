@@ -617,6 +617,10 @@ article.zm-post-lay-a1.my-feed {
   margin-top: 20px;
   width: 100%;
 }
+#mobile-sticky-header .archive-filter .sing-option {
+  margin-top: 8px;
+}
+
 .zm-widget-title {
   letter-spacing: 2px;
   text-align: left;

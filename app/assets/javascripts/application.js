@@ -61,6 +61,9 @@ $(window).scroll(function() {
     var logo = $("#mobile-sticky-logo"); 
     var header = $(".header-area");
     var meanBar = $(".mean-bar");
+    
+    console.log('stick: ' + stick.length);
+    console.log('meanbar: ' + meanBar.length);
 
     if (stick.length && meanBar.length) {
 

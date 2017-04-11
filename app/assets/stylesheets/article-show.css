@@ -60,7 +60,7 @@ ul.share-buttons .sr-only {
 .fix-bar {
     position: fixed !important;
     top: 0px;
-    z-index: 10 !important;
+    z-index: 15 !important;
 }
 .archive-filter .sing-option {
     margin-top: 5px;

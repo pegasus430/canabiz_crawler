@@ -193,4 +193,62 @@
     <!--    </div>-->
     <% end %>
 </header>
+
+<!--mobile sticky header-->
+<div id = "mobile-sticky-logo">
+    <%= link_to image_tag("header_footer/mean-bar-logo.png"), root_path %>
+</div>
+
+<div id = "mobile-sticky-header">
+    <div class="col-xs-12">
+        <div class="archive-inner">
+            <div class="archive-filter">
+                <form action="#">
+                    <div class="sing-option zm-trending">
+                        <select name="Category" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
+                            <option value = "<%= root_path %>">Category</option>
+                            <% Category.all.order("name ASC").each do |category| %>
+                                
+                                <% if @category != nil && @category.name == category.name %>
+                                    <option value = "<%=category_path(category)%>" selected="selected"><%=category.name%></option>
+                                <% else %>
+                                    <option value = "<%=category_path(category)%>"><%=category.name%></option>
+                                <% end %>
+                                
+                        	<% end %>
+                        </select>
+                    </div>
+                    <div class="sing-option zm-state">
+                        <select name="State" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
+                        	<option value = "<%= root_path %>">State</option>
+                        	<% State.all.order("name ASC").each do |state| %>
+                        	
+                        	    <% if @state != nil && @state.name == state.name %>
+                                    <option value = "<%=state_path(state)%>" selected="selected"><%=state.name%></option>
+                                <% else %>
+                                    <option value = "<%=state_path(state)%>"><%=state.name%></option>
+                                <% end %>
+                
+                        	<% end %>
+                        </select>
+                    </div>
+                    <div class="sing-option zm-state">
+                        <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
+                            <option value = "<%= root_path %>">Source</option>
+                            <% Source.all.order("name ASC").each do |source| %>
+                            
+                                <% if @source != nil && @source.name == source.name %>
+                                    <option value = "<%=source_path(source)%>" selected="selected"><%=source.name%></option>
+                                <% else %>
+                                    <option value = "<%=source_path(source)%>"><%=source.name%></option>
+                                <% end %>
+                
+                        	<% end %>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>                        
+</div>
     
