@@ -15,14 +15,11 @@ class NewsTheCannabist < ActiveJob::Base
         output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_thecannabist.py"]) #cmd,
         contents = JSON.parse(output.read)
         
-        #logger.info 'content: '
-        #logger.info contents
-        
         #call method:
         
-        #if contents["articles"] != nil
-        #	addArticles(contents["articles"])	
-        #end
+        if contents["articles"] != nil
+        	addArticles(contents["articles"])	
+        end
            	
     end    
 	

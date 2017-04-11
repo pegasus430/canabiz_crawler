@@ -11,19 +11,22 @@ from news import NewsSite, INewsParser
 class NPTheCannabist(INewsParser):
     def __init__(self):
         self.url = 'http://www.thecannabist.co/category/news/'
+        self.headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144',
+              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+              'Accept-Encoding': 'gzip, deflate, sdch',
+              'Accept-Language': 'en-US,en;q=0.8'}
 
     def parse(self):
         site = NewsSite(self.url)
         home_raw = requests.get(self.url, headers = self.headers)
         home = html.fromstring(home_raw.content)
 
-        excerpts = home.xpath('//article')
-        return len(excerpts)
+        excerpts = home.xpath('//div[@class="site-content"]/div//article')        
 
         for excerpt in excerpts:
-            title = excerpt.xpath('.//h2/a/text()')[0]
+            title = excerpt.xpath('.//h2[@class="entry-title"]/a/text()')[0]
             
-            url = excerpt.xpath('.//h2/a/@href')[0]
+            url = excerpt.xpath('.//h2[@class="entry-title"]/a/@href')[0]
             article_raw = requests.get(url, headers = self.headers)
             article = html.fromstring(article_raw.content)
             for script in article.xpath('//script'):
