@@ -30,7 +30,7 @@ ul.share-buttons .sr-only {
     display: none;
 }
 #mobile-sticky-logo {
-    width: 200px;
+    width: 90px;
     height: auto;
     display: none;
 }
@@ -48,7 +48,7 @@ ul.share-buttons .sr-only {
 
 .fix-logo {
     position: fixed;
-    top: 5px;
+    top: -8px;
     left: 0;
     right: 0;
     display: block !important;
