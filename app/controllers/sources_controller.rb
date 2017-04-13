@@ -46,8 +46,12 @@ class SourcesController < ApplicationController
     #-------------------------------------------
     
     def show
-        @recents = @source.articles.order("created_at DESC").page(params[:page]).per_page(24)
-        @mostviews = @source.articles.order("num_views DESC").page(params[:page]).per_page(24) 
+        if (@source.active == true)
+            @recents = @source.articles.order("created_at DESC").page(params[:page]).per_page(24)
+            @mostviews = @source.articles.order("num_views DESC").page(params[:page]).per_page(24) 
+        else
+            redirect_to root_path
+        end
     end
 
     #-------------------------------------------
@@ -94,7 +98,7 @@ class SourcesController < ApplicationController
         end
         
         def source_params
-          params.require(:source).permit(:name, :source_type, :article_logo, :sidebar_logo, :url, :slug, :last_run)
+          params.require(:source).permit(:name, :source_type, :article_logo, :sidebar_logo, :url, :slug, :last_run, :active)
         end  
         
         def sort_column

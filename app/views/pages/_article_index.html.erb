@@ -62,7 +62,7 @@
                                         <div class="sing-option zm-state">
                                             <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                                                 <option value = "<%= root_path %>">Source</option>
-                                                <% Source.all.order("name ASC").each do |source| %>
+                                                <% Source.where(:active => true).order("name ASC").each do |source| %>
                                                 
                                                     <% if @source != nil && @source.name == source.name %>
                                                         <option value = "<%=source_path(source)%>" selected="selected"><%=source.name%></option>

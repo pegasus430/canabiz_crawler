@@ -33,6 +33,7 @@
         <table class = 'table' id = 'admin-table'>
             <th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
             <th><%= sortable "name" %></th>
+            <th>Active</th>
             <th>Num Users Tracking</th>
             <th>Num Articles</th>
             <th><%= sortable "url" %></th>
@@ -47,6 +48,7 @@
                 <tr>
                     <td><%= check_box_tag "sources[]", source.id %></td>
                     <td><%= source.name%></td>
+                    <td><%= source.active%></td>
                     <td><%= source.users.count%></td>
                     <td><%= source.articles.count%></td>
                     <td><%= source.url%></td>

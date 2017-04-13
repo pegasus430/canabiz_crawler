@@ -1,11 +1,3 @@
 This is the Code Base for CannabizNetwork.com ... 
 
 if you have any suggestions on how to make it better, let us know
-
-
-SSL
-http://www.joshwright.com/tips/setup-a-godaddy-ssl-certificate-on-heroku
-https://devcenter.heroku.com/articles/ssl-endpoint#acquire-ssl-certificate
-
-
-cat site.crt gd_bundle-g2-g1.crt > combined.crt

@@ -38,8 +38,9 @@ class StatesController < ApplicationController
     end 
     
     def show
-        @recents = @state.articles.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-        @mostviews = @state.articles.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)  
+        source_ids = Source.where(:active => true).pluck(:id)
+        @recents = @state.articles.where("source_id IN (?)", source_ids).order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @mostviews = @state.articles.where("source_id IN (?)", source_ids).order("num_views DESC").paginate(:page => params[:page], :per_page => 24)  
     end
     
    def edit

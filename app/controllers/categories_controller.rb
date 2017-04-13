@@ -47,8 +47,11 @@ class CategoriesController < ApplicationController
     #-------------------------------------------
     
     def show
-        @recents = @category.articles.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-        @mostviews = @category.articles.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)     
+        
+        #only show active sources
+        source_ids = Source.where(:active => true).pluck(:id)
+        @recents = @category.articles.where("source_id IN (?)", source_ids).order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @mostviews = @category.articles.where("source_id IN (?)", source_ids).order("num_views DESC").paginate(:page => params[:page], :per_page => 24)     
     end
 
     #-------------------------------------------

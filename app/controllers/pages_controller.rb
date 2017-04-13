@@ -4,9 +4,10 @@ class PagesController < ApplicationController
     
     def home
             
-        #only showing all articles on homepage now
-        @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-        @mostviews = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+        #only showing articles for active sources 
+        source_ids = Source.where(:active => true).pluck(:id)
+        @recents = Article.where("source_id IN (?)", source_ids).order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @mostviews = Article.where("source_id IN (?)", source_ids).order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
         
         respond_to do |format|
           format.html
@@ -81,13 +82,15 @@ class PagesController < ApplicationController
             @query = "%#{params[:query]}%"
             @searchQuery = params[:query]
             
+            source_ids = Source.where(:active => true).pluck(:id)
+            
             if Rails.env.production?
-                @recents = Article.where("title iLIKE ANY (array[?]) or body  iLIKE ANY (array[?]) ", @query.split,@query.split).order("created_at DESC").page(params[:page]).per_page(24)
-                @mostviews = Article.where("title iLIKE ANY (array[?]) or body  iLIKE ANY (array[?]) ", @query.split, @query.split).order("num_views DESC").page(params[:page]).per_page(24)
+                @recents = Article.where("source_id IN (?)", source_ids).where("title iLIKE ANY (array[?]) or body  iLIKE ANY (array[?]) ", @query.split,@query.split).order("created_at DESC").page(params[:page]).per_page(24)
+                @mostviews = Article.where("source_id IN (?)", source_ids).where("title iLIKE ANY (array[?]) or body  iLIKE ANY (array[?]) ", @query.split, @query.split).order("num_views DESC").page(params[:page]).per_page(24)
                 
             else 
-                @recents = Article.where("title LIKE ? or body LIKE ?", @query, @query).order("created_at DESC").paginate(:page => params[:page], :per_page => 24) 
-                @mostviews = Article.where("title LIKE ? or body LIKE ?", @query, @query).order("created_at DESC").paginate(:page => params[:page], :per_page => 24) 
+                @recents = Article.where("source_id IN (?)", source_ids).where("title LIKE ? or body LIKE ?", @query, @query).order("created_at DESC").paginate(:page => params[:page], :per_page => 24) 
+                @mostviews = Article.where("source_id IN (?)", source_ids).where("title LIKE ? or body LIKE ?", @query, @query).order("created_at DESC").paginate(:page => params[:page], :per_page => 24) 
             end
             
             

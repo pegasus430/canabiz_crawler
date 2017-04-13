@@ -164,6 +164,11 @@ class ArticlesController < ApplicationController
     
     def show
         
+        # go back if source not active
+        if @article.source.active == false
+            redirect_to root_path
+        end
+        
         now = Time.now
         
         #related articles

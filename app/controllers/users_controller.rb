@@ -96,8 +96,9 @@ class UsersController < ApplicationController
     end     
   
     def show
-        #my feed articles
-        @recents = Article.order("created_at DESC").paginate(:page => params[:page], :per_page => 24) #have to paginate the feed page eventually
+        #my feed articles - only for appropriate source for now
+        source_ids = Source.where(:active => true).pluck(:id)
+        @recents = Article.where("source_id IN (?)", source_ids).order("created_at DESC").paginate(:page => params[:page], :per_page => 24) #have to paginate the feed page eventually
         
         state_article_ids = []
         category_article_ids = []
@@ -105,21 +106,18 @@ class UsersController < ApplicationController
             
         if current_user.sources.any?
             source_ids = UserSource.where(source_id: current_user.sources).pluck(:source_id)
-            #@recents = @recents.where(source_id: current_user.sources)
         end
         
         if current_user.states.any?
             #add a where clause to only be user states
             state_ids = current_user.states.pluck(:id)
             state_article_ids = ArticleState.where(state_id: state_ids).pluck(:article_id)
-            #@recents = @recents.where(id: article_ids)
         end
         
         if current_user.categories.any?
            #add a where clause to only be user categories
             category_ids = current_user.categories.pluck(:id)
             category_article_ids = ArticleCategory.where(category_id: category_ids).pluck(:article_id)
-            #@recents = @recents.where(id: article_ids)
         end
         
         if (state_article_ids.any? || category_article_ids.any? || source_ids.any?)
@@ -130,9 +128,8 @@ class UsersController < ApplicationController
         article_ids = UserArticle.where(:user_id => current_user.id, :saved => true).pluck(:article_id)
         @savedArticles = Article.where(id: article_ids)
         
-        #trending articles for sidebar
-        @trendingArticles = Article.order("num_views DESC").limit(24)
-        #@trendingArticles = Article.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+        #trending articles for sidebar - only for active sources
+        @trendingArticles = Article.where("source_id IN (?)", source_ids).order("num_views DESC").limit(24)
     end
     
     #user adds or removes source from saved sources
