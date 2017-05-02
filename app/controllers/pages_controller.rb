@@ -14,6 +14,9 @@ class PagesController < ApplicationController
           format.js # add this line for your js template
         end
         
+        #test sidekiq background job
+        #HardWorker.perform_async()
+        
         #removed from marijuana stocks line 9 #import urllib3
         if Rails.env.production?
             Source.where("name IS NOT NULL").each do |source|

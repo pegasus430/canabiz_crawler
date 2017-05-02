@@ -5,7 +5,6 @@ gem 'will_paginate', '3.0.7' # PAGINATION
 gem 'bootstrap-will_paginate', '0.0.10' # BOOTSTRAP STYLING
 gem 'bootstrap-sass', '~> 3.3.6' # BOOTSTRAP STYLING
 gem 'httparty', '~> 0.13.7' #External API Integration
-gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a string and output it as a link
 #gem 'kaminari', '~> 0.17.0' #Infinite Scrolling
@@ -13,6 +12,11 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a strin
 gem 'social-share-button', '~> 0.9.0' #social sharing
 gem 'friendly_id', '~> 5.0.0' #use the titles as the urls
 gem "skylight" #app monitoring
+
+#BACKGROUND JOBS
+gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
+gem 'sidekiq', '~> 4.2', '>= 4.2.10' #background jobs - switching from sucker punch
+gem 'redis', '~> 3.3', '>= 3.3.3' #needed for sidekiq
 
 #html safe truncation
 gem "nokogiri"
