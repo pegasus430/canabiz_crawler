@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'errors/not_found'
-
-  get 'errors/internal_server_error'
+  #SIDEKIQ Maybe
+  require 'sidekiq/web'
+  mount Sidekiq::Web => "/sidekiq"
 
   #GENERAL PAGES
   root 'pages#home'
@@ -45,10 +45,13 @@ Rails.application.routes.draw do
   put 'user_category_save/:category_id', to: 'users#user_category_save', as: 'user_category_save'
   put 'user_state_save/:state_id', to: 'users#user_state_save', as: 'user_state_save'
   
+  #ERROR FILES
+  get 'errors/not_found'
+  get 'errors/internal_server_error'  
+  
   #ERROR HANDLING
   match "/404", :to => "errors#not_found", :via => :all
   match "/500", :to => "errors#internal_server_error", :via => :all
-  
   
   #RESET PASSWORD
   resources :password_resets, only: [:new, :create, :edit, :update]
@@ -98,7 +101,7 @@ Rails.application.routes.draw do
   end
   post 'categories/search' => 'categories#search', as: 'search_categories'
   get 'category-admin', to: 'categories#admin'
-  get 'python', to: 'categories#python'
+  get 'sidekiqtest', to: 'categories#sidekiqtest'
   
   
   #SOURCES  

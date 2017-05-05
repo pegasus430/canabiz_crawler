@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
     
     before_action :set_category, only: [:edit, :update, :destroy, :show]
-    before_action :require_admin, except: [:show, :python]
+    before_action :require_admin, except: [:show]
 
     #--------ADMIN PAGE-------------------------
     def admin
@@ -26,6 +26,11 @@ class CategoriesController < ApplicationController
         @categories = Category.where("name LIKE ? or keywords LIKE ?", @q, @q).order(sort_column + " " + 
                                     sort_direction).paginate(page: params[:page], per_page: 50)
         render 'admin'
+    end
+    
+    def sidekiqtest
+        #test sidekiq background job
+        HardWorker.perform_async()
     end
     #--------ADMIN PAGE-------------------------
     
