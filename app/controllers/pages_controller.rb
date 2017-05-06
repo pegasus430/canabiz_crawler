@@ -25,7 +25,8 @@ class PagesController < ApplicationController
                     NewsMarijuanaStocks.perform_later()
                 end
                 if source.name == 'Leafly' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsLeafly.perform_later()
+                    #NewsLeafly.perform_later()
+                    LeaflyWorker.perform_async()
                 end
                 if source.name == 'The Cannabist' && (source.last_run + 2.hours) <= DateTime.now
                     NewsTheCannabist.perform_later()
@@ -34,7 +35,8 @@ class PagesController < ApplicationController
                     NewsMarijuana.perform_later()
                 end
                 if source.name == 'Cannabis Culture' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsCannabisCulture.perform_later()
+                    #NewsCannabisCulture.perform_later()
+                    CannabisCultureWorker.perform_async()
                 end
                 if source.name == 'Canna Law Blog' && (source.last_run + 2.hours) <= DateTime.now
                     NewsCannaLawBlog.perform_later()

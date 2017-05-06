@@ -18,18 +18,15 @@ gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'sidekiq', '~> 4.2', '>= 4.2.10' #background jobs - switching from sucker punch
 gem 'redis', '~> 3.3', '>= 3.3.3' #needed for sidekiq
 gem 'sinatra', '~> 1.4', '>= 1.4.8' #needed for sidekiq
-#gem 'sinatra', github: 'sinatra/sinatra' #needed for sidekiq
 
 #html safe truncation
 gem "nokogiri"
 gem "htmlentities"
 gem 'truncate_html', '~> 0.9.3'
 
-
 #css for emails
 gem 'premailer-rails', '~> 1.9', '>= 1.9.5' # to style emails
 #gem 'premailer', '~> 1.10', '>= 1.10.2' #to styling email
-
 
 
 #TWITTER GEMS
@@ -43,6 +40,7 @@ gem 'fog', '~> 1.38'
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 gem 'unf', '~> 0.1.4'
 gem 'carrierwave-imageoptimizer', '~> 1.4'
+gem 'jpegoptim', '~> 0.2.1' #maybe?
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'

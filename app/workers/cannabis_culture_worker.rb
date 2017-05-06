@@ -1,21 +1,28 @@
-class NewsLeafly < ActiveJob::Base
-    include SuckerPunch::Job
- 
-    def perform()
-        logger.info "Leafly background job is running"
-        scrapeLeafly()
-    end    
+class CannabisCultureWorker
+  include Sidekiq::Worker
+
+def perform()
+        logger.info "Cannabis Culture background job is running"
+        scrapeCannabisCulture()
+
+    end
     
-    def scrapeLeafly()
-        
+    def scrapeCannabisCulture()
         #store image
         #https://github.com/savon40/Cannabiz-SecondAttempt/commit/f7e51bb4f5153f073d4ffeb8d888e78a463e63e2
         
         require "json"
         require 'open-uri'
         
+        #leafly removed here
+            #date_raw = article.xpath('(//div[@class="leafly-publish-date"])/text()')
+            #date = None
+            #if len(date_raw):
+                #date_raw = date_raw[0]
+                #date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
+        
         #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_leafly.py"]) #cmd,
+        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannabisculture.py"]) #cmd,
         contents = JSON.parse(output.read)
         
         #call method:
@@ -23,16 +30,15 @@ class NewsLeafly < ActiveJob::Base
         if contents["articles"] != nil
         	addArticles(contents["articles"])	
         end
-           	
-    end    
-	
-	    
+
+    end
+    
     def addArticles(articles)
 
         @random_category = Category.where(:name => 'Random')
         @categories = Category.where(:active => true)
         @states = State.all
-        source = Source.find_by name: 'Leafly'
+        source = Source.find_by name: 'Cannabis Culture'
         
         articles.each do |article|
         
@@ -69,11 +75,12 @@ class NewsLeafly < ActiveJob::Base
 
 	        	#CREATE ARTICLE
 	        	#missing abstract right now
+	        	puts "this is the image url: " + article["image_url"]
 	        	
 	        	if article["date"] != nil
-	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>'))	
+	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_html"])	#.gsub(/\n/, '<br/><br/>')
 	        	else 
-	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>'))
+	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>')
 	        	end
 	        #else 
 	    		#CREATE ARTICLE

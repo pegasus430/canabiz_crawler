@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   #SIDEKIQ Maybe
   require 'sidekiq/web'
-  mount Sidekiq::Web => "/sidekiq"
+  mount Sidekiq::Web => "/background"
 
   #GENERAL PAGES
   root 'pages#home'

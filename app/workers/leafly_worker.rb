@@ -1,6 +1,6 @@
-class NewsLeafly < ActiveJob::Base
-    include SuckerPunch::Job
- 
+class LeaflyWorker
+  include Sidekiq::Worker
+
     def perform()
         logger.info "Leafly background job is running"
         scrapeLeafly()
