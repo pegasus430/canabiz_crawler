@@ -14,49 +14,51 @@ class PagesController < ApplicationController
           format.js # add this line for your js template
         end
         
+        #NewsDopeMagazine.perform_later()
+        
         #removed from marijuana stocks line 9 #import urllib3
         if Rails.env.production?
             Source.where("name IS NOT NULL").each do |source|
     
                 if source.name == 'Dope Magazine' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsDopeMagazine.perform_later()
-                    DopeMagazineWorker.perform_async()
+                    NewsDopeMagazine.perform_later()
+                    #DopeMagazineWorker.perform_async()
                 end
                 if source.name == 'Marijuana Stocks' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsMarijuanaStocks.perform_later()
-                    MarijuanaStocksWorker.perform_async()
+                    NewsMarijuanaStocks.perform_later()
+                    #MarijuanaStocksWorker.perform_async()
                 end
                 if source.name == 'Leafly' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsLeafly.perform_later()
-                    LeaflyWorker.perform_async()
+                    NewsLeafly.perform_later()
+                    #LeaflyWorker.perform_async()
                 end
                 if source.name == 'The Cannabist' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsTheCannabist.perform_later()
-                    TheCannabistWorker.perform_async()
+                    NewsTheCannabist.perform_later()
+                    #TheCannabistWorker.perform_async()
                 end
                 if source.name == 'Marijuana.com' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsMarijuana.perform_later()
-                    MarijuanaWorker.perform_async()
+                    NewsMarijuana.perform_later()
+                    #MarijuanaWorker.perform_async()
                 end
                 if source.name == 'Cannabis Culture' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsCannabisCulture.perform_later()
-                    CannabisCultureWorker.perform_async()
+                    NewsCannabisCulture.perform_later()
+                    #CannabisCultureWorker.perform_async()
                 end
                 if source.name == 'Canna Law Blog' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsCannaLawBlog.perform_later()
-                    CannaLawBlogWorker.perform_async()
+                    NewsCannaLawBlog.perform_later()
+                    #CannaLawBlogWorker.perform_async()
                 end
                 if source.name == 'MJ Biz Daily' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsMjBizDaily.perform_later()
-                    MjBizDailyWorker.perform_async()
+                    NewsMjBizDaily.perform_later()
+                    #MjBizDailyWorker.perform_async()
                 end
                 if source.name == 'HighTimes' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsHighTimes.perform_later()
-                    HighTimesWorker.perform_async()
+                    NewsHighTimes.perform_later()
+                    #HighTimesWorker.perform_async()
                 end
                 if source.name == 'The 420 Times' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsFourTwentyTimes.perform_later()
-                    FourTwentyTimesWorker.perform_async()
+                    NewsFourTwentyTimes.perform_later()
+                    #FourTwentyTimesWorker.perform_async()
                 end
                 
             end
