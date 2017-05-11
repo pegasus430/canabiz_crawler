@@ -14,12 +14,15 @@ class PagesController < ApplicationController
           format.js # add this line for your js template
         end
 
-        
+    end 
+    
+    
+    def oldScraperSchedule
         if Rails.env.production?
             Source.where("name IS NOT NULL").each do |source|
     
                 if source.name == 'Dope Magazine' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsDopeMagazine.perform_later()
+                    #NewsDopeMagazine.perform_later()
                     #DopeMagazineWorker.perform_async()
                 end
                 if source.name == 'Marijuana Stocks' && (source.last_run + 2.hours) <= DateTime.now
@@ -60,28 +63,7 @@ class PagesController < ApplicationController
                 end
                 
             end
-        end
-    end 
-    
-    def scrapersetup
-       if Rails.env.production?
-            Source.all do |source|
-                if source.name == 'Dope Maganize' && source.last_run + (2/24.0) <= DateTime.now
-                    NewsDopeMagazine.perform_later()
-                end
-                
-            end
-            
-            NewsMarijuanaStocks.perform_later()
-            NewsLeafly.perform_later()
-            NewsTheCannabist.perform_later()
-            NewsMarijuana.perform_later()
-            NewsCannabisCulture.perform_later()
-            NewsCannaLawBlog.perform_later()
-            NewsMjBizDaily.perform_later()
-            NewsHighTimes.perform_later()
-            NewsFourTwentyTimes.perform_later()
-        end 
+        end    
     end
     
     def admin
