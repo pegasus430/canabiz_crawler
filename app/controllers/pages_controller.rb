@@ -23,39 +23,39 @@ class PagesController < ApplicationController
                     #DopeMagazineWorker.perform_async()
                 end
                 if source.name == 'Marijuana Stocks' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsMarijuanaStocks.perform_later()
+                    #NewsMarijuanaStocks.perform_later()
                     #MarijuanaStocksWorker.perform_async()
                 end
                 if source.name == 'Leafly' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsLeafly.perform_later()
+                    #NewsLeafly.perform_later()
                     #LeaflyWorker.perform_async()
                 end
                 if source.name == 'The Cannabist' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsTheCannabist.perform_later()
+                    #NewsTheCannabist.perform_later()
                     #TheCannabistWorker.perform_async()
                 end
                 if source.name == 'Marijuana.com' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsMarijuana.perform_later()
+                    #NewsMarijuana.perform_later()
                     #MarijuanaWorker.perform_async()
                 end
                 if source.name == 'Cannabis Culture' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsCannabisCulture.perform_later()
+                    #NewsCannabisCulture.perform_later()
                     #CannabisCultureWorker.perform_async()
                 end
                 if source.name == 'Canna Law Blog' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsCannaLawBlog.perform_later()
+                    #NewsCannaLawBlog.perform_later()
                     #CannaLawBlogWorker.perform_async()
                 end
                 if source.name == 'MJ Biz Daily' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsMjBizDaily.perform_later()
+                    #NewsMjBizDaily.perform_later()
                     #MjBizDailyWorker.perform_async()
                 end
                 if source.name == 'HighTimes' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsHighTimes.perform_later()
+                    #NewsHighTimes.perform_later()
                     #HighTimesWorker.perform_async()
                 end
                 if source.name == 'The 420 Times' && (source.last_run + 2.hours) <= DateTime.now
-                    NewsFourTwentyTimes.perform_later()
+                    #NewsFourTwentyTimes.perform_later()
                     #FourTwentyTimesWorker.perform_async()
                 end
                 
