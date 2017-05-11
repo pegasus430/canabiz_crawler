@@ -19,6 +19,7 @@ gem 'sidekiq', '~> 4.2', '>= 4.2.10' #background jobs - switching from sucker pu
 gem 'redis', '~> 3.3', '>= 3.3.3' #needed for sidekiq
 gem 'sinatra', '~> 1.4', '>= 1.4.8' #needed for sidekiq
 gem 'sidekiq-cron', '~> 0.6.0' #schedule sidekiq job
+gem 'sidekiq-failures', '~> 0.4.5' #see failed sidekiq jobs
 
 #html safe truncation
 gem "nokogiri"
