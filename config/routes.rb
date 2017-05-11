@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  #SIDEKIQ Maybe
+  #SIDEKIQ Routes
   require 'sidekiq/web'
+  require 'sidekiq/cron/web'
   mount Sidekiq::Web => "/background"
 
   #GENERAL PAGES

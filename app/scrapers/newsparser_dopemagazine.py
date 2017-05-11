@@ -12,32 +12,38 @@ class NPDopeMagazine(INewsParser):
     def __init__(self):
         self.url = 'http://www.dopemagazine.com/category/news/'
 
+    def clean_html_content(self, htmlDocument):
+        elementsToRemoveXpahs = ['//script', '//style', '//div[contains(@class, "essb_links")]']
+        for xpath in elementsToRemoveXpahs:
+            for element in htmlDocument.xpath(xpath):
+                element.getparent().remove(element)
+
     def parse(self):
         site = NewsSite(self.url)
-        home_raw = requests.get(self.url, headers = self.headers)
-        home = html.fromstring(home_raw.content)
 
-        excerpts = home.xpath('//div[contains(@class, "mp-container")]')
+        home_raw = requests.get(self.url)
+        home = html.fromstring(home_raw.content)
+        excerpts = home.xpath('//div[@id="content"]//article')
 
         for excerpt in excerpts:
             title = excerpt.xpath('.//h2/a/text()')[0].strip()
-            
             url = excerpt.xpath('.//h2/a/@href')[0]
-            article_raw = requests.get(url, headers = self.headers)
+
+            article_raw = requests.get(url)
             article = html.fromstring(article_raw.content)
-            for script in article.xpath('//script'):
-                script.getparent().remove(script)
-            for style in article.xpath('//style'):
-                style.getparent().remove(style)
-            for div in article.xpath('//div[contains(@class, "essb_links")]'):
-                div.getparent().remove(div)
+
+            self.clean_html_content(article)
+            
             image_url = None
             image_raw = article.xpath('.//meta[@property="og:image"]/@content')
             if len(image_raw):
                 image_url = image_raw[0]
-            if len (article.xpath('//div[@class="metathings"]//time/@datetime')):
-                date_raw = article.xpath('//div[@class="metathings"]//time/@datetime')[0]
+
+            dateXpath = '//div[@id="content"]//span/time[@itemprop="datePublished"]/@datetime'
+            if len (article.xpath(dateXpath)):
+                date_raw = article.xpath(dateXpath)[0]
                 date = datetime.strptime(date_raw.strip()[:10], "%Y-%m-%d")
+
             if len (article.xpath('//div[@class="entry-content"]')):    
                 body_html_raw = article.xpath('//div[@class="entry-content"]')[0]
                 body_html = html.tostring(body_html_raw)

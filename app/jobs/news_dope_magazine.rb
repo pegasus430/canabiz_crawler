@@ -21,9 +21,6 @@ class NewsDopeMagazine < ActiveJob::Base
         contents = JSON.parse(output.read)
         
         #call method:
-        logger.info "CONTENTS: "
-        logger.info contents
-        
         if contents["articles"] != nil
         	addArticles(contents["articles"])	
         end

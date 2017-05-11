@@ -18,6 +18,7 @@ gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'sidekiq', '~> 4.2', '>= 4.2.10' #background jobs - switching from sucker punch
 gem 'redis', '~> 3.3', '>= 3.3.3' #needed for sidekiq
 gem 'sinatra', '~> 1.4', '>= 1.4.8' #needed for sidekiq
+gem 'sidekiq-cron', '~> 0.6.0' #schedule sidekiq job
 
 #html safe truncation
 gem "nokogiri"
