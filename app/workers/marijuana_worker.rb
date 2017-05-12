@@ -48,7 +48,7 @@ class MarijuanaWorker
 	        @categories.each do |category|
 	            if category.keywords.present?
 	                category.keywords.split(',').each do |keyword|
-	                    if  (article["title"] != nil && article["title"].include?(keyword))
+	                    if  (article["title"] != nil && article["title"].downcase.include?(keyword.downcase))
 	                        relateCategoriesSet.add(category.id)
 	                        break
 	                    end
@@ -61,8 +61,13 @@ class MarijuanaWorker
 	        @states.each do |state|
 	            if state.keywords.present?
 	                state.keywords.split(',').each do |keyword|
+	                    #not using downcase cause i dont want to match state abbreviations that aren't capitalized
 	                    if  (article["title"] != nil && article["title"].include?(keyword))
 	                        relateStatesSet.add(state.id)
+	                        break
+	                    elsif (article["text_html"] != nil && article["text_html"].include?(keyword))
+	                    	relateStatesSet.add(state.id)
+	                    	break
 	                    end
 	                end
 	            end
