@@ -64,7 +64,7 @@ class DopeMagazineWorker
 	                    end
 	                end
 	            end
-	        endd
+	        end
 	        
 
 	        #if (article["image_url"] != nil)
