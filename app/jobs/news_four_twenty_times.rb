@@ -53,8 +53,13 @@ class NewsFourTwentyTimes < ActiveJob::Base
 	        @states.each do |state|
 	            if state.keywords.present?
 	                state.keywords.split(',').each do |keyword|
+	                    #not using downcase cause i dont want to match state abbreviations that aren't capitalized
 	                    if  (article["title"] != nil && article["title"].include?(keyword))
 	                        relateStatesSet.add(state.id)
+	                        break
+	                    elsif (article["text_html"] != nil && article["text_html"].include?(keyword))
+	                    	relateStatesSet.add(state.id)
+	                    	break
 	                    end
 	                end
 	            end

@@ -7,7 +7,7 @@ class StatesController < ApplicationController
     end
 
     def admin
-        @states = State.all
+        @states = State.all.order("name ASC")
         
         #method is used for csv file upload
         def import
