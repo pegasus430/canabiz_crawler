@@ -56,7 +56,7 @@ class FourTwentyTimesWorker
 	                    if  (article["title"] != nil && article["title"].include?(keyword))
 	                        relateStatesSet.add(state.id)
 	                        break
-	                    elsif (article["text_html"] != nil && article["text_html"].include?(keyword))
+	                    elsif (keyword.length > 2 && article["text_html"] != nil && article["text_html"].include?(keyword))
 	                    	relateStatesSet.add(state.id)
 	                    	break
 	                    end
