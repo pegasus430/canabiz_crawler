@@ -2,7 +2,11 @@
     <article class="zm-post-lay-a1 my-feed">
         <div class="zm-post-thumb">
         	<a href="<%= article_path(article) %>">
-                <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
+        	    <% if Rails.env.production? %>
+                    <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">'
+                <% else %>
+                    <img src = "">
+                <% end %>
             </a>
         </div>
         <div class="zm-post-dis">
