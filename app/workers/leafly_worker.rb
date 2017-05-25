@@ -55,8 +55,11 @@ class LeaflyWorker
 	            if state.keywords.present?
 	                state.keywords.split(',').each do |keyword|
 	                    #not using downcase cause i dont want to match state abbreviations that aren't capitalized
-	                    if  (article["title"] != nil && article["title"].split(" ").include?(keyword))
+	                    if  (keyword.length == 2 && article["title"] != nil && article["title"].split(" ").include?(keyword))
 	                        relateStatesSet.add(state.id)
+	                        break
+	                    elsif (keyword.length > 2 && article["title"] != nil && article["title"].include?(keyword))
+	                    	relateStatesSet.add(state.id)
 	                        break
 	                    elsif (keyword.length > 2 && article["text_html"] != nil && article["text_html"].include?(keyword))
 	                    	relateStatesSet.add(state.id)
