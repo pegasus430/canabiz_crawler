@@ -30,7 +30,7 @@ class NPDopeMagazine(INewsParser):
             url = excerpt.xpath('.//h2/a/@href')[0]
 
             article_raw = requests.get(url)
-            article = html.fromstring(article_raw.content)
+            article = html.fromstring(article_raw.content.decode(article_raw.encoding))
 
             self.clean_html_content(article)
             
