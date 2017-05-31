@@ -97,7 +97,11 @@
                         <div class="col-md-12">
                             <article class="zm-post-lay-single">
                                 <div class="zm-post-thumb">
-                                	<img src="<%=@article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                    <% if Rails.env.Production? %>
+                                    	<img src="<%=@article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                    <% else %>
+                                        <img src = ''>
+                                    <% end %>
                                 </div>
                                 <div class="zm-post-dis">
                                     <div class="zm-post-header">
@@ -122,7 +126,9 @@
                                         <%frag.xpath("//br").each { |div|  div.remove}%>
                                         
                                         
-                                        <%= sanitize simple_format(frag.text), tags: %w(p), attributes: %w() %>
+                                        <% frag = sanitize simple_format(frag.text), tags: %w(p), attributes: %w() %>
+                                        
+                                        <%= truncate_html frag, :length => 1000 %>
                                         
                                         
                                         <br/>
@@ -186,7 +192,11 @@
                                                 <article class="zm-post-lay-a2">
                                                     <div class="zm-post-thumb">
                                                         <a href="<%= article_path(article) %>">
-                                                            <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                            <% if Rails.env.Production? %>
+                                                            	 <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                            <% else %>
+                                                                <img src = ''>
+                                                            <% end %>
                                                         </a>
                                                     </div>
                                                     <div class="zm-post-dis">
@@ -236,7 +246,11 @@
                                             <article class="zm-post-lay-a sidebar">
                                                 <div class="zm-post-thumb">
                                                     <a href="<%= article_path(article) %>">
-                                                        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                        <% if Rails.env.Production? %>
+                                                        	 <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                        <% else %>
+                                                            <img src = ''>
+                                                        <% end %>
                                                     </a>
                                                 </div>
                                                 <div class="zm-post-dis">
