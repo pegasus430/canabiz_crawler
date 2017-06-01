@@ -4,9 +4,6 @@ class PagesController < ApplicationController
     
     def home
             
-        #test dope magazin
-        DopeMagazineWorker.perform_async()
-            
         #only showing articles for active sources 
         source_ids = Source.where(:active => true).pluck(:id)
         @recents = Article.where("source_id IN (?)", source_ids).order("created_at DESC").paginate(:page => params[:page], :per_page => 24)

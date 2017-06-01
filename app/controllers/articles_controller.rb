@@ -140,6 +140,8 @@ class ArticlesController < ApplicationController
     
     def update_article_tags
         SetArticlesJob.perform_later() 
+        flash[:success] = 'Articles will continue to update in the background'
+        redirect_to admin_path
     end
         
     
