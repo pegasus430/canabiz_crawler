@@ -111,3 +111,68 @@
     <li><a href="mailto:?subject=&body=:%20http%3A%2F%2Fcannabiznetwork.com" target="_blank" title="Send email" onclick="window.open('mailto:?subject=' + encodeURIComponent(document.title) + '&body=' +  encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Email.png") %></li>
 </ul>
 
+
+----------------------------------
+
+<div data-mantis-zone="article-replacement"></div>
+
+<div class="col-md-4">
+    <article class="zm-post-lay-a1">
+        
+        <!--save article-->
+        
+        <div class="zm-post-thumb">
+            <a href="<%= article_path(article) %>">
+                <% if Rails.env.production? %>
+                    <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
+                <% else %> 
+                    <img src="">
+                <% end %>
+            </a>
+        </div>
+        <div class="zm-post-dis">
+            <div class="zm-post-header">
+                
+                <!--display article tags-->
+                <div class="zm-category">
+                    <% article.categories.each do |category| %>
+                        <a class="bg-cat-3 cat-btn" href="<%=category_path(category)%>"><%=category.name%></a>
+                    <% end %>
+                    <% article.states.each do |state| %>
+                        <a class="bg-cat-3 cat-btn" href="<%=state_path(state)%>"><%=state.name%></a>
+                    <% end %>
+                </div>
+                <!--display article tags-->
+                
+                <h2 class="zm-post-title"><a href="<%= article_path(article) %>"><%= article.title.truncate(60).titlecase if article.title %></a></h2>
+                <div class="zm-post-meta">
+                    <ul>
+                        <li class="s-meta">
+                            <img class='inline' style='width: 40px; height: auto; display: none;' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
+                            <%= link_to article.source.name, source_path(article.source), class: 'zm-author' %>
+                           
+                        </li>
+                        <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
+                        <!--<li class="s-meta"><a href="#" class="zm-date"></a></li>-->
+                    </ul>
+                    <div class = 'social-sharing' style="display: none;">
+                        <%= social_share_button_tag(article.title, :url => "https://cannabiz-news.herokuapp.com/articles/#{article.id}", :image => "#{article.image}") %>
+                    </div>
+                </div>
+            </div>
+            <div class="zm-post-content">
+                
+                <%frag = Nokogiri::HTML(article.body)%>
+                <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
+                
+                <%= truncate_html frag, :length => 175 %>
+                
+            </div>
+        </div>
+    </article>
+</div>
