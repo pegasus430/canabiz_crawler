@@ -120,16 +120,17 @@
                                     
                                     <div id = 'article-index-new'>
                                         
+                                        <% random_integer = rand(5..10) %>
                                         <% @recents.each_with_index  do |article, i| %>
                                         
-                                            <% if @current_user && @current_user.admin? && (i == 5 || i == 10) %>
+                                            <% if i > 0 && (i == random_integer || i % random_integer == 0) %>
                                             
                                                 <div class="col-md-4">
                                                     <article class="zm-post-lay-a1">
                                                         <div class="zm-post-thumb">
-                                                            <% if i == 5 %>
+                                                            <% if i == random_integer %>
                                                                 <div data-mantis-zone="article-replacement" id = 'mantis'style="height: 230px; !important"></div>
-                                                            <% elsif i == 10 %>
+                                                            <% elsif i == random_integer * 2 %>
                                                                 <div data-mantis-zone="article-replacement-2" id = 'mantis-1' style="height: 230px; !important"></div>
                                                             <% end %>
                                                         </div>
