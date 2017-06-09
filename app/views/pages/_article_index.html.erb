@@ -123,7 +123,7 @@
                                         <% random_integer = rand(5..10) %>
                                         <% @recents.each_with_index  do |article, i| %>
                                         
-                                            <% if i > 0 && (i == random_integer || i % random_integer == 0) %>
+                                            <% if @current_user && @current_user.admin? && i > 0 && (i == random_integer || i % random_integer == 0) %>
                                             
                                                 <div class="col-md-4">
                                                     <article class="zm-post-lay-a1">
