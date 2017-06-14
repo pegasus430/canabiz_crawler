@@ -66,9 +66,7 @@
                         <div class="global-row">
                             <div class="global-cell">
                                 <div style="background-color: #2f2f2f;">
-                                    
                                     <div class="subscribe-form subscribe-footer" style="width: 90%; margin: 0 auto; padding-bottom: 10px;"> 
-
                                         <h2 class="h6 zm-widget-title uppercase text-white" style="color: #fff; padding: 10px 0 5px">
                                             Subscribe To Weekly Digest</h2>
                                         <form role="search" method="get" action = '/save_email'>
@@ -95,7 +93,6 @@
                                     <nav class="primary-menu uppercase">
                                         <ul class="clearfix customnavfont">
                                             <li><%= link_to 'Home', root_path %></li>
-                                            
                                             <li>
                                                 <% if current_user %>
                                                     <a href="<%= user_path(current_user)%>">My Page</a>
@@ -141,7 +138,6 @@
                 </div>
                 <nav id="mobile_dropdown">
                     <ul class="customnavfont">
-                        
                         <li><%= link_to 'Home', root_path %></li>
                         <li>
                             <% if current_user %>
@@ -153,53 +149,24 @@
                         <li><a href="<%= about_path %>">About</a></li>
                         <li><a href="<%= contact_us_path %>">Contact Us</a></li>
                         <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
-                        
-                        <!--weekly digest signup-->
                         <li class ="mobile-digest-signup">
-                            
                             <form class="mobile-digest-form" role="search" method="get" action = '/save_email'>
             		            <input type="email" class="form-control input-lg" name='email' id ='emailTextBox' placeholder="Email for Weekly Digest" autocomplete='on' required=true>
             		            <button type="submit">Sign Up</button>
             		        </form>
-                		    
                         </li>
-                    	
-                                            
                     </ul>
                 </nav>
             </div>       
         </div>
     </div>
     <!-- mobile-menu-area end -->   
-    <!--below here is the breaking news thing - probably add back in future-->
-    <% if @state != nil || @category != nil || @source != nil || @user != nil %>
-    <!--    <div class="breakingnews-wrapper bg-gray hidden-xs">-->
-    <!--        <div class="container">-->
-    <!--            <div class="row">-->
-    <!--                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">-->
-    <!--                    <div class="breakingnews clearfix fix">-->
-    <!--                        <div class="bn-title">-->
-    <!--                                     <h6 class="uppercase">BREAKING NEWS</h6>
-    <!--                                </div>-->
-    <!--                        <div class="news-wrap">-->
-    <!--                            <ul class="bkn clearfix" id="bkn">
-    <!--                                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.   |   Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.   |   Ut enim ad minim ut labre et dolore qui magna mini.</li>-->
-    <!--                                <li>Nilartstudio dolor amet, consectetur adipisicing elit.   |   Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.   |   Ut enim ad minim ut labre et dolore qui magna mini.</li>-->
-    <!--                            </ul>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <% end %>
 </header>
 
 <!--mobile sticky header-->
 <div id = "mobile-sticky-logo">
     <%= link_to image_tag("header_footer/mean-bar-logo.png"), root_path %>
 </div>
-
 <div id = "mobile-sticky-header">
     <div class="col-xs-12">
         <div class="archive-inner">
@@ -208,21 +175,19 @@
                     <div class="sing-option zm-trending">
                         <select name="Category" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                             <option value = "<%= root_path %>">Category</option>
-                            <% Category.all.order("name ASC").each do |category| %>
-                                
+                            <% @categories.each do |category| %>
                                 <% if @category != nil && @category.name == category.name %>
                                     <option value = "<%=category_path(category)%>" selected="selected"><%=category.name%></option>
                                 <% else %>
                                     <option value = "<%=category_path(category)%>"><%=category.name%></option>
                                 <% end %>
-                                
                         	<% end %>
                         </select>
                     </div>
                     <div class="sing-option zm-state">
                         <select name="State" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                         	<option value = "<%= root_path %>">State</option>
-                        	<% State.all.order("name ASC").each do |state| %>
+                        	<% @states.each do |state| %>
                         	
                         	    <% if @state != nil && @state.name == state.name %>
                                     <option value = "<%=state_path(state)%>" selected="selected"><%=state.name%></option>
@@ -237,13 +202,11 @@
                         <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                             <option value = "<%= root_path %>">Source</option>
                             <% Source.where(:active => true).order("name ASC").each do |source| %>
-                            
                                 <% if @source != nil && @source.name == source.name %>
                                     <option value = "<%=source_path(source)%>" selected="selected"><%=source.name%></option>
                                 <% else %>
                                     <option value = "<%=source_path(source)%>"><%=source.name%></option>
                                 <% end %>
-                
                         	<% end %>
                         </select>
                     </div>

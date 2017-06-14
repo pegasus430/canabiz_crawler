@@ -134,10 +134,53 @@
 /*}*/
 
 
-iframe {
-	height: 230px !important;
-	border: 1px solid black !important;
+/*DISPLAY ADS*/
+/*iframe {*/
+/*	height: 230px !important;*/
+/*	border: 1px solid black !important;*/
+/*}*/
+/*#mantis div, #mantis-1 div {*/
+/*	max-width: none !important;*/
+/*}*/
+
+
+/*RECOMMENDED CONTENT*/
+.mantis__recommended__header__title, .mantis__recommended__header {
+	display: none !important;
 }
-#mantis div, #mantis-1 div {
-	max-width: none !important;
+.mantis__recommended__item {
+	width: auto !important;
+}
+/*title*/
+.mantis__recommended__item__title {
+	color: #2f2f2f !important;
+	font-size: 24px !important;
+	line-height: 34px !important;
+	font-weight: 700 !important;
+	font-family: 'Roboto', sans-serif;
+	min-height: 68px;
+	padding-top: 0 !important;
+}
+
+.mantis__recommended__item__site {
+	border-radius: 2px !important;
+    display: inline-block !important;
+    font-family: roboto condensed !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    padding: 0 10px !important;
+    position: relative !important;
+    text-transform: uppercase !important;
+    transition: all 0.3s ease 0s !important;
+    z-index: 1 !important;
+    margin-bottom: 8px !important;
+    color: #fff !important;
+    margin-top: 25px !important;
+}
+
+/*need to stop responsive styling here*/
+.mantis__recommended__item__image {
+	
 }

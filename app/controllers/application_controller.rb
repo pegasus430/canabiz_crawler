@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
+  #set lists before all actions
+  before_action :populate_lists
+  
   helper_method :current_user, :logged_in?
   
   def current_user
@@ -19,6 +22,12 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end 
+  
+  def populate_lists
+    @categories = Category.all.order("name ASC")
+    @states = State.all.order("name ASC")
+    @sources = Source.where(:active => true).order("name ASC")
+  end
   
   #redirect to homepage on error
   rescue_from ActionView::MissingTemplate, :with => :handle_error

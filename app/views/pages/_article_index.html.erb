@@ -34,42 +34,36 @@
                                         <div class="sing-option zm-trending">
                                             <select name="Category" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                                                 <option value = "<%= root_path %>">Category</option>
-                                                <% Category.all.order("name ASC").each do |category| %>
-                                                    
+                                                <% @categories.each do |category| %>
                                                     <% if @category != nil && @category.name == category.name %>
                                                         <option value = "<%=category_path(category)%>" selected="selected"><%=category.name%></option>
                                                     <% else %>
                                                         <option value = "<%=category_path(category)%>"><%=category.name%></option>
                                                     <% end %>
-                                                    
 									        	<% end %>
                                             </select>
                                         </div>
                                         <div class="sing-option zm-state">
                                             <select name="State" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                                             	<option value = "<%= root_path %>">State</option>
-                                            	<% State.all.order("name ASC").each do |state| %>
-                                            	
+                                            	<% @states.each do |state| %>
                                             	    <% if @state != nil && @state.name == state.name %>
                                                         <option value = "<%=state_path(state)%>" selected="selected"><%=state.name%></option>
                                                     <% else %>
                                                         <option value = "<%=state_path(state)%>"><%=state.name%></option>
                                                     <% end %>
-   
 									        	<% end %>
                                             </select>
                                         </div>
                                         <div class="sing-option zm-state">
                                             <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                                                 <option value = "<%= root_path %>">Source</option>
-                                                <% Source.where(:active => true).order("name ASC").each do |source| %>
-                                                
+                                                <% @sources.order("name ASC").each do |source| %>
                                                     <% if @source != nil && @source.name == source.name %>
                                                         <option value = "<%=source_path(source)%>" selected="selected"><%=source.name%></option>
                                                     <% else %>
                                                         <option value = "<%=source_path(source)%>"><%=source.name%></option>
                                                     <% end %>
-    
 									        	<% end %>
                                             </select>
                                         </div>
@@ -117,47 +111,38 @@
                             </div>
                             <div class="row">
                                 <div class="zm-posts clearfix">
-                                    
                                     <div id = 'article-index-new'>
-                                        
                                         <% random_integer = rand(5..10) %>
                                         <% @recents.each_with_index  do |article, i| %>
-                                        
                                             <% if @current_user && @current_user.admin? && i > 0 && (i == random_integer || i % random_integer == 0) %>
-                                            
+                                                <!--mantis ad code-->
                                                 <div class="col-md-4">
                                                     <article class="zm-post-lay-a1">
                                                         <div class="zm-post-thumb">
                                                             <% if i == random_integer %>
-                                                                <div data-mantis-zone="article-replacement" id = 'mantis'style="height: 230px; !important"></div>
+                                                                <div id="recommended_mantis_1"></div>
                                                             <% elsif i == random_integer * 2 %>
-                                                                <div data-mantis-zone="article-replacement-2" id = 'mantis-1' style="height: 230px; !important"></div>
+                                                                <div id="recommended_mantis_2"></div>
                                                             <% end %>
                                                         </div>
                                                         <div class="zm-post-dis">
-                                                            <div class="zm-post-header">
-                                                                
-                                                                <!--display article tags-->
-                                                                <div class="zm-category">
-                                                                    <a class="bg-cat-3 cat-btn" href="#">Sponsored</a></a>
-                                                                </div>
-                                                                <!--display article tags-->
-                                                                
-                                                                <h2 class="zm-post-title">Add Sponsored By Mantis</h2>
+                                                            
+                                                            <div class="zm-post-header-mantis">
                                                                 <div class="zm-post-meta">
                                                                     <ul>
                                                                         <li class="s-meta"><p class="zm-date" style="color: #7c8c99;">Mantis</p></li>
                                                                         <li class="s-meta"><p class="zm-date" style="color: #7c8c99;">Now</p></li>
                                                                     </ul>
-                                                                    
                                                                 </div>
                                                             </div>
+                                                            
                                                             <div class="zm-post-content">
                                                                 Cannabiz Network is not affiliated with the sponsored content
                                                             </div>
                                                         </div>
                                                     </article>
                                                 </div>
+                                                
                                                 
                                                 <div class="col-md-4">
                                                     <article class="zm-post-lay-a1">
