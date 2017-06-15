@@ -1,139 +1,3 @@
-/*#recommended.amp{*/
-/*font-family:'Helvetica Neue', Helvetica;*/
-/*}*/
-/*.mantis__recommended__header{*/
-/*	padding-bottom: 10px;*/
-/*	margin-bottom: 20px;*/
-/*	position: relative;*/
-/*	border-bottom: 2px solid #f5f5f5;*/
-/*}*/
-
-/*.mantis__recommended__header__title{*/
-/*	font-size: 24px;*/
-/*	color: #666666;*/
-/*	display: block;*/
-/*}*/
-
-/*.mantis__recommended__header__powered{*/
-/*	font-size: 12px;*/
-/*	color: #7e7e7e;*/
-/*}*/
-
-/*.mantis__recommended__header__mantis{*/
-/*	font-weight: 500;*/
-/*}*/
-
-/*.mantis__recommended__item__site {*/
-/*	display: inline-block;*/
-/*	font-size: 11px;*/
-/*	text-transform: uppercase;*/
-/*	letter-spacing: .01em;*/
-/*	color: #939393;*/
-/*	margin-top: 10px;*/
-/*}*/
-
-/*.mantis__recommended__item__title {*/
-/*	display: block;*/
-/*	font-size: 18px;*/
-/*	line-height: 22px;*/
-/*	color: #1a1a1a;*/
-/*	padding-top: 5px;*/
-/*	font-weight: 500;*/
-/*}*/
-
-/*.mantis__recommended__item__image {*/
-/*	height: 0;*/
-/*	background-size: cover;*/
-/*	background-repeat: no-repeat;*/
-/*	background-position: center center;*/
-/*	display: block;*/
-/*}*/
-
-/*@media (max-width: 767px) {*/
-/*	.mantis__recommended__item__image {*/
-/*		float: left;*/
-/*		width: 30%;*/
-/*		height: 6em;*/
-/*		margin-right: .5em;*/
-/*	}*/
-
-/*	.mantis__recommended__item:after {*/
-/*		content: "";*/
-/*		display: table;*/
-/*		clear: both;*/
-/*	}*/
-
-/*	.mantis__recommended__header__powered, .mantis__recommended__item__site{*/
-/*		margin-top: 5px;*/
-/*	}*/
-
-/*	* + .mantis__recommended__item{*/
-/*		padding-top: 20px;*/
-/*	}*/
-
-/*	.mantis__recommended__item__title {*/
-/*		font-size: 15px;*/
-/*		line-height: 19px;*/
-/*	}*/
-/*}*/
-
-/*@media (min-width: 768px) {*/
-/*	.mantis__recommended{*/
-/*		margin: 0 -10px;*/
-/*	}*/
-
-/*	.mantis__recommended:after {*/
-/*		content: "";*/
-/*		display: table;*/
-/*		clear: both;*/
-/*	}*/
-
-/*	.mantis__recommended__header{*/
-/*		padding-bottom: 10px;*/
-/*		margin-left: 10px;*/
-/*		margin-right: 10px;*/
-/*	}*/
-
-/*	.mantis__recommended__header__powered{*/
-/*		position: absolute;*/
-/*		bottom: 10px;*/
-/*		right: 0;*/
-/*	}*/
-
-/*	.mantis__recommended__item__image {*/
-/*		padding-bottom: 65%;*/
-/*	}*/
-
-/*	.mantis__recommended__item {*/
-/*		width: 33.33%;*/
-/*		float: left;*/
-/*	}*/
-
-/*	.mantis__recommended__item:nth-child(4) {*/
-/*		clear: left;*/
-/*	}*/
-
-/*	.mantis__recommended__item__content {*/
-/*		padding: 0 10px;*/
-/*	}*/
-
-/*	.mantis__recommended__item__break {*/
-/*		display: block;*/
-/*		height: 30px;*/
-/*		clear: both;*/
-/*	}*/
-/*}*/
-
-/*#mantis__recommended__wordpress{*/
-/*	margin: 40px 0;*/
-/*}*/
-/*.mantis__recommended__item--sponsored .mantis__recommended__item__site{*/
-/*	background: #000;*/
-/*	color: white;*/
-/*	padding: 2px 4px;*/
-/*}*/
-
-
 /*DISPLAY ADS*/
 /*iframe {*/
 /*	height: 230px !important;*/
@@ -150,6 +14,7 @@
 }
 .mantis__recommended__item {
 	width: auto !important;
+	float: none !important;
 }
 /*title*/
 .mantis__recommended__item__title {
@@ -158,29 +23,34 @@
 	line-height: 34px !important;
 	font-weight: 700 !important;
 	font-family: 'Roboto', sans-serif;
-	min-height: 68px;
-	padding-top: 0 !important;
+	padding-top: 25px !important;
 }
-
 .mantis__recommended__item__site {
-	border-radius: 2px !important;
-    display: inline-block !important;
-    font-family: roboto condensed !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    height: 20px !important;
-    line-height: 20px !important;
-    padding: 0 10px !important;
-    position: relative !important;
-    text-transform: uppercase !important;
-    transition: all 0.3s ease 0s !important;
-    z-index: 1 !important;
-    margin-bottom: 8px !important;
-    color: #fff !important;
-    margin-top: 25px !important;
+	display: none !important;
 }
-
-/*need to stop responsive styling here*/
-.mantis__recommended__item__image {
-	
+@media (max-width: 991px) {
+    .mantis__recommended__item__image {
+        float: none !important;
+        width: 100% !important;
+    }
+}
+@media (max-width: 767px) {
+    .mantis__recommended__item__image {
+        height: 378px !important;        
+    }
+}
+@media (max-width: 550px) {
+    .mantis__recommended__item__image {
+        height: 300px !important;        
+    }
+}
+@media (max-width: 500px) {
+    .mantis__recommended__item__image {
+        height: 275px !important;        
+    }
+}
+@media (max-width: 450px) {
+    .mantis__recommended__item__image {
+        height: 250px !important;        
+    }
 }

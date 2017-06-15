@@ -200,6 +200,9 @@ class ArticlesController < ApplicationController
                                         
         end
         
+        logger.info 'RELATED ARTICLES: '
+        logger.info @related_articles.length
+        
         #same source articles
         @same_source_articles = Article.where(source_id: @article.source).
                                     includes(:source).includes(:states).includes(:categories).

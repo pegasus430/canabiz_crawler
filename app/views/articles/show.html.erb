@@ -187,29 +187,48 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <% @related_articles.each do |article| %>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="zm-posts">
-                                            <article class="zm-post-lay-a sidebar">
-                                                <div class="zm-post-thumb">
-                                                    <a href="<%= article_path(article) %>">
-                                                	    <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="zm-post-dis">
-                                                    <div class="zm-post-header">
-                                                        <h2 class="zm-post-title h2"><%= link_to article.title.truncate(60).titlecase, article_path(article)%></h2>
+                                <% random_integer = rand(1..2) %>
+                                <% @related_articles.each_with_index do |article, index| %>
+                                    <% if index == random_integer %>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="zm-posts">
+                                                <article class="zm-post-lay-a sidebar">
+                                                    <div id="recommended"></div>
+                                                    <div class="zm-post-dis">
                                                         <div class="zm-post-meta" style="margin-bottom: 15px;">
                                                             <ul>
-                                                                <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
-                                                                <li class="s-meta" style = "float: right;"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
+                                                                <li class="s-meta" style="color: #7c8c99;">Add Sponored By Mantis</li>
+                                                                <li class="s-meta" style = "float: right; color: #7c8c99;">Now</li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </article>
+                                                </article>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <% else %>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="zm-posts">
+                                                <article class="zm-post-lay-a sidebar">
+                                                    <div class="zm-post-thumb">
+                                                        <a href="<%= article_path(article) %>">
+                                                    	    <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="zm-post-dis">
+                                                        <div class="zm-post-header">
+                                                            <h2 class="zm-post-title h2" style="min-height: auto"><%= link_to article.title.truncate(60).titlecase, article_path(article)%></h2>
+                                                            <div class="zm-post-meta" style="margin-bottom: 15px;">
+                                                                <ul>
+                                                                    <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
+                                                                    <li class="s-meta" style = "float: right;"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </div>
+                                    <% end %>
                                 <% end %>
                             </div>
                         </aside>
@@ -220,3 +239,13 @@
         </div>
     </div>
 </div>
+<!--mantis ad network-->
+<script type="text/javascript">
+	var mantis = mantis || [];
+	mantis.push(['recommend', 'load', {
+		property: '59305c4bc75f3d8c11991945',
+		render: 'recommended',
+		css: 'https://assets.mantisadnetwork.com/recommend.3columns.css'
+	}]);
+</script>
+<script type="text/javascript" data-cfasync="false" src="https://assets.mantisadnetwork.com/recommend.min.js" async></script>
