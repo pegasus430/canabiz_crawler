@@ -707,20 +707,6 @@ a.submit-button {
     padding: 0 40px;
     text-align: center;
 }
-.page-notfound-inner a.submit-button {
-    padding: 0 150px;
-}
-.page-notfound-inner a.submit-button:hover {
-    background: #2ab081 none repeat scroll 0 0;
-    color: #fff;
-}
-.page-notfound-inner h1 {
-    font-size: 200px;
-    color: #333333;
-}
-.page-notfound-inner h1 span {
-    color: #2ab081;
-}
 @keyframes color {
     0% {
         color: #2ab081;
@@ -755,28 +741,6 @@ a.submit-button {
     100% {
         color: #ff9933;
     }
-}
-.page-notfound-inner h1 span {
-    animation-delay: 3s;
-    animation-duration: 33s;
-    animation-iteration-count: 10;
-    animation-name: color;
-}
-.page-notfound-inner h4 {
-    color: #336666;
-    font-family: roboto;
-    font-size: 50px;
-    font-weight: 400;
-    line-height: 1;
-}
-.page-notfound-inner p {
-    color: #336666;
-    font-size: 25px;
-    margin-bottom: 40px;
-    margin-top: 20px;
-}
-.page-notfound-wrap {
-    padding: 300px 0 330px 0;
 }
 /*----------------------------------------*/
 /*  15. Scroll To Top
@@ -924,26 +888,9 @@ a.submit-button {
         top: 10px;
     }
 }
-
 .mobile-search-form form {
     position: relative;
 }
-/*Audio player*/
-.audioplayer {
-    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top, #444, #222) repeat scroll 0 0;
-    background: rgba(0, 0, 0, 0) -webkit-linear-gradient(center top, #444, #222) repeat scroll 0 0;
-    background: rgba(0, 0, 0, 0) -ms-linear-gradient(center top, #444, #222) repeat scroll 0 0;
-    background: rgba(0, 0, 0, 0) -o-linear-gradient(center top, #444, #222) repeat scroll 0 0;
-    border: 1px solid #222;
-    border-radius: 2px;
-    box-shadow: none;
-}
-
-
-
-
-
-
 /*ajax form css*/
 p.form-messege{
   margin-top:15px;

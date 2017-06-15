@@ -1,25 +1,3 @@
-<script>
-    function userArticleSave(elem, articleId) {
-        <% if !logged_in? %>
-            window.open('/login', '_self');
-        <% else %>
-            $.ajax({
-                type: "PUT",
-                url: "/user_article_save/" + articleId
-	        });
-        <% end %>
-        console.log(elem.innerHTML);
-        elem.innerHtml = 'Saved';
-    }
-</script>
-
-<style>
-    /*temp to hide most recents*/
-    #article-index-views, .article-index-views-pagination {display: none;}
-    .article-index-new-pagination, .article-index-views-pagination {clear: both; margin-left: 14px;}
-</style>
-
-<!-- Start page content -->
 <section id="page-content" class="page-wrapper archive">
     <div class="zm-section single-post-wrap archive-2 bg-white ptb-15">
         <div class="container">
@@ -73,8 +51,6 @@
                         </div>
                     </div>
                     <% if @state != nil || @category != nil || @source != nil || @searchQuery != nil %>
-                        
-                        <!--show what we are viewing-->
                         <div class="news-viewing-title-div" style="text-align: center; margin: 20px 0;">
                             <h3>Viewing news for: 
                                 <span style = 'color: #2ab081;'>
@@ -94,11 +70,7 @@
                                 </span>
                             </h3>
                         </div>
-                    
                     <% end %>
-                    
-                    
-                    
                     <div class="row mt-40">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="row mb-40">
@@ -126,7 +98,6 @@
                                                             <% end %>
                                                         </div>
                                                         <div class="zm-post-dis">
-                                                            
                                                             <div class="zm-post-header-mantis">
                                                                 <div class="zm-post-meta">
                                                                     <ul>
@@ -135,18 +106,14 @@
                                                                     </ul>
                                                                 </div>
                                                             </div>
-                                                            
                                                             <div class="zm-post-content">
                                                                 Cannabiz Network is not affiliated with the sponsored content
                                                             </div>
                                                         </div>
                                                     </article>
                                                 </div>
-                                                
-                                                
                                                 <div class="col-md-4">
                                                     <article class="zm-post-lay-a1">
-                                                        
                                                         <div class="zm-post-thumb">
                                                             <a href="<%= article_path(article) %>">
                                                                 <% if Rails.env.production? %>
@@ -158,8 +125,6 @@
                                                         </div>
                                                         <div class="zm-post-dis">
                                                             <div class="zm-post-header">
-                                                                
-                                                                <!--display article tags-->
                                                                 <div class="zm-category">
                                                                     <% article.categories.each do |category| %>
                                                                         <a class="bg-cat-3 cat-btn" href="<%=category_path(category)%>"><%=category.name%></a>
@@ -168,8 +133,6 @@
                                                                         <a class="bg-cat-3 cat-btn" href="<%=state_path(state)%>"><%=state.name%></a>
                                                                     <% end %>
                                                                 </div>
-                                                                <!--display article tags-->
-                                                                
                                                                 <h2 class="zm-post-title"><a href="<%= article_path(article) %>"><%= article.title.truncate(60).titlecase if article.title %></a></h2>
                                                                 <div class="zm-post-meta">
                                                                     <ul>
@@ -179,12 +142,10 @@
                                                                            
                                                                         </li>
                                                                         <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
-                                                                        <!--<li class="s-meta"><a href="#" class="zm-date"></a></li>-->
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                             <div class="zm-post-content">
-                                                                
                                                                 <%frag = Nokogiri::HTML(article.body)%>
                                                                 <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
                                                                 <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
@@ -192,18 +153,14 @@
                                                                 <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
                                                                 <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
                                                                 <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
-                                                                
                                                                 <%= truncate_html frag, :length => 175 %>
-                                                                
                                                             </div>
                                                         </div>
                                                     </article>
                                                 </div>
-                                            
                                             <% else %>
                                                 <div class="col-md-4">
                                                     <article class="zm-post-lay-a1">
-                                                        
                                                         <div class="zm-post-thumb">
                                                             <a href="<%= article_path(article) %>">
                                                                 <% if Rails.env.production? %>
@@ -215,8 +172,6 @@
                                                         </div>
                                                         <div class="zm-post-dis">
                                                             <div class="zm-post-header">
-                                                                
-                                                                <!--display article tags-->
                                                                 <div class="zm-category">
                                                                     <% article.categories.each do |category| %>
                                                                         <a class="bg-cat-3 cat-btn" href="<%=category_path(category)%>"><%=category.name%></a>
@@ -225,8 +180,6 @@
                                                                         <a class="bg-cat-3 cat-btn" href="<%=state_path(state)%>"><%=state.name%></a>
                                                                     <% end %>
                                                                 </div>
-                                                                <!--display article tags-->
-                                                                
                                                                 <h2 class="zm-post-title"><a href="<%= article_path(article) %>"><%= article.title.truncate(60).titlecase if article.title %></a></h2>
                                                                 <div class="zm-post-meta">
                                                                     <ul>
@@ -236,12 +189,10 @@
                                                                            
                                                                         </li>
                                                                         <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
-                                                                        <!--<li class="s-meta"><a href="#" class="zm-date"></a></li>-->
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                             <div class="zm-post-content">
-                                                                
                                                                 <%frag = Nokogiri::HTML(article.body)%>
                                                                 <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
                                                                 <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
@@ -249,21 +200,17 @@
                                                                 <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
                                                                 <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
                                                                 <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
-                                                                
                                                                 <%= truncate_html frag, :length => 175 %>
-                                                                
                                                             </div>
                                                         </div>
                                                     </article>
                                                 </div>
                                             <% end %>
                                         <% end %>
-                                       
                                     </div>
                                     <div id = 'article-index-views'>
                                         <%= render @mostviews %>
                                     </div>
-                                    
                                     <div class = 'article-index-new-pagination'>
                                         <%= will_paginate @recents %>
                                     </div>
@@ -279,7 +226,3 @@
         </div>
     </div>
 </section>
-<!-- End page content -->
-    
-    
-        

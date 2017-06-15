@@ -97,8 +97,10 @@ class UsersController < ApplicationController
   
     def show
         #my feed articles - only for appropriate source for now
-        source_ids = Source.where(:active => true).pluck(:id)
-        @recents = Article.where("source_id IN (?)", source_ids).order("created_at DESC").paginate(:page => params[:page], :per_page => 24) #have to paginate the feed page eventually
+        source_ids = @sources.pluck(:id)
+        @recents = Article.where("source_id IN (?)", source_ids).order("created_at DESC").
+                    includes(:source).includes(:states).includes(:categories).
+                    paginate(:page => params[:page], :per_page => 24)
         
         state_article_ids = []
         category_article_ids = []
@@ -126,7 +128,7 @@ class UsersController < ApplicationController
        
         #saved articles
         article_ids = UserArticle.where(:user_id => current_user.id, :saved => true).pluck(:article_id)
-        @savedArticles = Article.where(id: article_ids)
+        @savedArticles = Article.where(id: article_ids).includes(:source).includes(:states).includes(:categories)
         
         #trending articles for sidebar - only for active sources
         @trendingArticles = Article.where("source_id IN (?)", source_ids).order("num_views DESC").limit(24)

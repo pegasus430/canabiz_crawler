@@ -1,16 +1,14 @@
 /*
-    social sharing?
+    social sharing
     Code from here: https://simplesharingbuttons.com/#code
 */
 ul.share-buttons{
     list-style: none;
     padding: 0;
 }
-
 ul.share-buttons li{
     display: inline;
 }
-
 ul.share-buttons .sr-only {
     position: absolute;
     clip: rect(1px 1px 1px 1px);
@@ -25,7 +23,6 @@ ul.share-buttons .sr-only {
     cursor: pointer;
     color: #2ab081;
 }
-
 #mobile-sticky-header  {
     display: none;
 }
@@ -34,7 +31,6 @@ ul.share-buttons .sr-only {
     height: auto;
     display: none;
 }
-
 .fix-search {
     box-shadow: 0px 1px 50px #5E5E5E;
     position:fixed;
@@ -45,7 +41,6 @@ ul.share-buttons .sr-only {
     padding-bottom: 5px;
     display: block !important;
 }
-
 .fix-logo {
     position: fixed;
     top: -8px;
@@ -56,7 +51,6 @@ ul.share-buttons .sr-only {
     margin-right: auto;
     z-index: 20;
 }
-
 .fix-bar {
     position: fixed !important;
     top: 0px;

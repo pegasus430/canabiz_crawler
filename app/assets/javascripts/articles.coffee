@@ -1,5 +1,4 @@
 # app/assets/javascripts/articles.js.coffee
-
 ready = ->
     $(".wrap .article-index").infinitescroll
       navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)

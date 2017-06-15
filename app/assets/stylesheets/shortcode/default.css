@@ -66,8 +66,9 @@ a {
 .allow-overflow {
   overflow: visible;
 }
-.clear {
-    position: relative;
+.clear{
+  position: relative;
+  display: block;
 }
 .clear::after {
     clear: both;
@@ -79,10 +80,6 @@ a {
     background: #ccc;
     color: #000;
     padding: 0.2em 0;
-}
-.clear{
-  position: relative;
-  display: block;
 }
 .clear:before{
   position: absolute;

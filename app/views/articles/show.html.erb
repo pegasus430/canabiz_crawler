@@ -7,7 +7,6 @@
 	    //open new link
 	    window.open(articleURL,'_blank');
     }
-    
     function userArticleSave(elem, articleId) {
         console.log(elem.checked);
         <% if !logged_in? %>
@@ -30,7 +29,6 @@
         <% end %>
     }
 </script>
-
 <!-- Start page content -->
 <div id="page-content" class="page-wrapper">
     <div class="zm-section single-post-wrap bg-white ptb-70 xs-pt-30">
@@ -51,7 +49,6 @@
                                     <% end %>
                                 </div>
                             </div>
-                            
                             <div class="entry-meta-small clearfix mtb-20">
                                 <div>
                                     <label class="switch pull-right">
@@ -69,31 +66,16 @@
                                     <span class="post-title">SAVE THIS ARTICLE:</span> 
                                 </div>
                                 <div class="share-social-link pull-left" style="margin-top: 5px;">
-                                    
                                     <ul class="share-buttons">
                                         <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcannabiznetwork.com&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Facebook.png") %></a></li>
                                         <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fcannabiznetwork.com&text=:%20http%3A%2F%2Fcannabiznetwork.com&via=CannabizNetwork" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Twitter.png") %></a></li>
                                         <li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.png") %></a></li>
                                     </ul>
-                                	
-                                	<% if @current_user && @current_user.admin? %>
-                                	    <!--only show facebook if admin for now-->
-                                    	<!--<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" -->
-                                    	<!--    data-size="small" data-mobile-iframe="true">-->
-                                    	<!--        <a class="fb-xfbml-parse-ignore" target="_blank" -->
-                                    	<!--            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>-->
-                                    	<!--</div>-->
-                                    	
-                                    	<!--reddit again-->
-                                    	
-
-                                    <% end %>
                                 </div>
                             </div>                                    
                         </div>
                     </div>
                     <div class="row">
-                        <!-- Start single post image formate-->
                         <div class="col-md-12">
                             <article class="zm-post-lay-single">
                                 <div class="zm-post-thumb">
@@ -111,7 +93,6 @@
                                     </div>
                                     <div class="zm-post-content">
                                         <%frag = Nokogiri::HTML(@article.body)%>
-                                       
                                         <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
@@ -120,13 +101,8 @@
                                         <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//a").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//br").each { |div|  div.remove}%>
-                                        
-                                        
                                         <% frag = sanitize simple_format(frag.text), tags: %w(p), attributes: %w() %>
-                                        
                                         <%= truncate_html frag, :length => 1000 %>
-                                        
-                                        
                                         <br/>
                                         <br/>
                                         <p>See Article on <%= @article.source.name %> <span class="article-link" onclick = "saveExternalArticleClick('<%=@article.id%>', '<%=@article.web_url%>')">HERE</span></p>
@@ -152,22 +128,12 @@
                                                 <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fcannabiznetwork.com&text=:%20http%3A%2F%2Fcannabiznetwork.com&via=CannabizNetwork" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Twitter.png") %></a></li>
                                                 <li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.png") %></a></li>
                                             </ul>
-                                        	
-                                        	<% if @current_user && @current_user.admin? %>
-                                	            <!--only show facebook if admin for now-->
-                                            	<!--<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" -->
-                                            	<!--    data-size="small" data-mobile-iframe="true">-->
-                                            	<!--        <a class="fb-xfbml-parse-ignore" target="_blank" -->
-                                            	<!--            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>-->
-                                            	<!--</div>-->
-                                            <% end %>
                                         </div>
                                     </div>
                                 </div>
                             </article>
                         </div>
-                        <!-- End single post image formate -->
-
+                        <!-- End single post image format -->
                         <!--Start Similar post -->
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <aside class="zm-post-lay-a2-area">
@@ -180,10 +146,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="zm-posts clearfix">
-                                        
-                                        <!--loop through @same_source_articles -->
                                         <% @same_source_articles.each do |article| %>
-                                        
                                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                                                 <article class="zm-post-lay-a2">
                                                     <div class="zm-post-thumb">
@@ -204,16 +167,11 @@
                                                     </div>
                                                 </article>
                                             </div>
-                                            
                                         <% end %>
-                                        <!--loop through @same_source_articles-->
-                                        
                                     </div>
                                 </div>
                             </aside>
                         </div>
-                        <!-- End similar post -->
-
                     </div>
                 </div>
                 <!-- End left side -->
@@ -229,10 +187,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                
-                                <!--loop through related articles-->
                                 <% @related_articles.each do |article| %>
-                                
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="zm-posts">
                                             <article class="zm-post-lay-a sidebar">
@@ -256,10 +211,8 @@
                                         </div>
                                     </div>
                                 <% end %>
-                                <!--loop through related articles-->
                             </div>
                         </aside>
-                        
                     </div>
                 </div>
                 <!-- End Right sidebar -->
@@ -267,4 +220,3 @@
         </div>
     </div>
 </div>
-<!-- End page content

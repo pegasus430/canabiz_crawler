@@ -1,4 +1,3 @@
-
 .tabscontainer {
 	width: 800px;
 	margin: 0 auto;
@@ -133,17 +132,10 @@ ul.tabs li.current{
 		top: 170px;
 	}
 }
-
-
 #tab-2, .tab-content.row {
 	position: relative;
 	/*, .sing-option.zm-source, .sing-option.zm-category, .sing-option.zm-state*/
 }
-
-
-
-
-
 /*feed instructions*/
 @media all and (max-width: 410px) {
 	.feed-instructions p {
