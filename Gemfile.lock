@@ -241,6 +241,8 @@ GEM
       activesupport (>= 4.1.0)
     hash-utils (2.2.0)
       ruby-version (>= 0.4.0)
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
     htmlentities (4.3.4)
     http (2.2.1)
       addressable (~> 2.3)
@@ -456,6 +458,7 @@ DEPENDENCIES
   figaro (~> 1.1, >= 1.1.1)
   fog (~> 1.38)
   friendly_id (~> 5.0.0)
+  heroku-deflater
   htmlentities
   httparty (~> 0.13.7)
   jbuilder (~> 2.0)
