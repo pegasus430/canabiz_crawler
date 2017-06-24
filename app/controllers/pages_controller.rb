@@ -175,11 +175,6 @@ class PagesController < ApplicationController
         @states = State.all.order("name ASC")
     end
     
-    def robots
-        respond_to :text
-        expires_in 6.hours, public: true
-    end
-    
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
     #def prepare_access_token(oauth_token, oauth_token_secret)
 

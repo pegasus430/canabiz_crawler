@@ -21,11 +21,9 @@ Rails.application.routes.draw do
   get 'privacy_policy', to: 'pages#privacy_policy'
   get 'terms_conditions', to: 'pages#terms_conditions'
   get 'about', to: 'pages#about'
-  #get 'sitemap', to: 'pages#sitemap'
   
-  #sitemap and robots.txt
+  #sitemap
   get "sitemap.xml" => "sitemaps#index", :format => "xml", :as => :sitemap
-  get '/robots.:format' => 'pages#robots'
   
   #DIFF STYLING
   get 'test', to: 'diff_layouts#test'
