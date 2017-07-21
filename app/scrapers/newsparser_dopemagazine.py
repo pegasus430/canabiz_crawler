@@ -18,36 +18,41 @@ class NPDopeMagazine(INewsParser):
             for element in htmlDocument.xpath(xpath):
                 element.getparent().remove(element)
 
+    def getString(self, element, xpath):
+        lst = element.xpath(xpath)
+        return lst[0] if len(lst) > 0 else ''
+
+    def getFirstElement(self, element, xpath):
+        lst = element.xpath(xpath)
+        return lst[0] if len(lst) > 0 else element
+
     def parse(self):
         site = NewsSite(self.url)
 
         home_raw = requests.get(self.url)
         home = html.fromstring(home_raw.content)
-        excerpts = home.xpath('//div[@id="content"]//article')
+        excerpts = home.xpath('//div[@class="row posts"]//article')
 
         for excerpt in excerpts:
-            title = excerpt.xpath('.//h2/a/text()')[0].strip()
-            url = excerpt.xpath('.//h2/a/@href')[0]
+            element = self.getFirstElement(excerpt,'.//a[contains(@title,.)]')
+            title = self.getString(element, './text()').strip()
+            url = self.getString(element, './@href')
+            
+            if not url:
+                continue
 
             article_raw = requests.get(url)
             article = html.fromstring(article_raw.content.decode(article_raw.encoding))
-
             self.clean_html_content(article)
             
-            image_url = None
-            image_raw = article.xpath('.//meta[@property="og:image"]/@content')
-            if len(image_raw):
-                image_url = image_raw[0]
+            image_url = self.getString(article,'.//meta[@property="og:image"]/@content')
 
-            dateXpath = '//div[@id="content"]//span/time[@itemprop="datePublished"]/@datetime'
-            if len (article.xpath(dateXpath)):
-                date_raw = article.xpath(dateXpath)[0]
-                date = datetime.strptime(date_raw.strip()[:10], "%Y-%m-%d")
-
-            if len (article.xpath('//div[@class="entry-content"]')):    
-                body_html_raw = article.xpath('//div[@class="entry-content"]')[0]
-                body_html = html.tostring(body_html_raw)
-                body_text = body_html_raw.text_content().strip()
+            strDate = self.getString(article,'.//meta[@property="article:published_time"]/@content')
+            date = datetime.strptime(strDate.strip()[:10], "%Y-%m-%d") if strDate else None
+                
+            body_html_raw = self.getFirstElement(article, '//div[contains(@class,"entry-content")]')
+            body_html = html.tostring(body_html_raw)
+            body_text = body_html_raw.text_content().strip()
 
             site.add_article(title, url, image_url, date, body_html, body_text)
 
@@ -59,4 +64,5 @@ def parse_site():
     return parser.parse()
 
 if __name__ == '__main__':
-    print json.dumps(parse_site())
+    result = parse_site()
+    print json.dumps(result)

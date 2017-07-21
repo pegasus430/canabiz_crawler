@@ -1,3 +1,6 @@
 This is the Code Base for CannabizNetwork.com ... 
 
 if you have any suggestions on how to make it better, let us know
+
+- https://stackoverflow.com/questions/16209991/force-rails-heroku-app-from-subdomain-herokuapp-com-to-apex-domain
+- https://github.com/tylerhunt/rack-canonical-host
