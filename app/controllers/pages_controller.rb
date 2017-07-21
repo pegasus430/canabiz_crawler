@@ -4,8 +4,6 @@ class PagesController < ApplicationController
     before_action :require_admin, only: [:admin]
     
     def home
-           
-        NewsDopeMagazine.perform_later()
         
         #only showing articles for active sources 
         source_ids = @sources.pluck(:id)
