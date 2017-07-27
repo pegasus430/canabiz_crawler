@@ -3,7 +3,7 @@ class LeaflyDispensaryWorker
 
     def perform()
         logger.info "Leafly Dispensary background job is running"
-        @start = DateTime.new
+        @start = DateTime.now
         scrapeLeafly()
     end    
     
@@ -22,7 +22,7 @@ class LeaflyDispensaryWorker
 	    #logger.info 'size: '
 	    logger.info contents.size
 	    
-	    @end = DateTime.new
+	    @end = DateTime.now
 	    
 	    ContactUs.email('Leafly Dispensary scraper complete', @start.strftime("%B %d, %Y | %I:%M %p"),
 	                      @end.strftime("%B %d, %Y | %I:%M %p") + ', size:' + contents.size.to_s).deliver
