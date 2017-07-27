@@ -1,3 +1,5 @@
+Sidekiq::Cron::Job.create(name: 'Leafly Dispensary', cron: '0 */2 * * *', class: 'LeaflyDispensaryWorker')
+
 if Rails.env.production?
 	Sidekiq::Cron::Job.create(name: 'Leafly every 2 hours on the hour', cron: '0 */2 * * *', class: 'LeaflyWorker')
 	Sidekiq::Cron::Job.create(name: 'CannaLawBlog every 2 hours on the 5 min', cron: '5 */2 * * *', class: 'CannaLawBlogWorker')
