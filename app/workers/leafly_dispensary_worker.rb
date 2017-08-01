@@ -21,7 +21,7 @@ class LeaflyDispensaryWorker
 	    
 	    logger.info 'size: '
 	    logger.info contents[ENV['LEAFLY_STATE']].size
-	    logger.info contents
+	    #logger.info contents
 	    
 	    @end = DateTime.now
 	    
