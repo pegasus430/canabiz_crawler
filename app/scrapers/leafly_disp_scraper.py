@@ -1,91 +1,45 @@
-from utils import *
-from runner import run
-import requests
-from lxml import html
-import sys
+from prodConsumQueue import ProdComsumQueue
+from leafly_consumer import Consumer
+from leafly_producer import Producer
+import multiprocessing
+import time
+import Queue
 import json
+import sys
+from menu_extractor import DispensaryInfoExtractor
 
-def request_dispensaries():
-    return requests.post('https://www.leafly.com/finder/searchnext', data={'Take': 10000, 'Page': 0}).content
+def isValidItem(item):
+	return item['State'] == (sys.argv[1] if len(sys.argv) > 1 else "")
 
+def runScript():	
+	queue = ProdComsumQueue(150)
+	resultPool = []
 
-def getPartialDispensary(dispensaryData):
-    kv = {'url': 'UrlName', 'rating': 'Rating', 'reviews_count': 'NumReviews', 'name': 'Name', 'city': 'City',
-          'phone_number': 'Phone', 'hours_of_operation': 'Schedule', 'state': 'State', 'latitude': 'Latitude',
-          'longitude': 'Longitude', 'avatar_url': 'CoverPhotoUrl', 'zip_code': 'Zip', 'address': 'Address1'}
-    result = {}
-    for key, value in kv.items():
-        result[key] = extract_str_from_json_obj(dispensaryData, value)
-    return result
+	producer = Producer(queue, isValidItem)
+	producer.start()
+	
+	while not queue.was_populated():
+		time.sleep(1/4)
+		pass
 
+	threadsCount = multiprocessing.cpu_count()
+	threads = []
+	for i in range(threadsCount*15):
+		t = Consumer(queue, resultPool, DispensaryInfoExtractor())
+		t.start()
+		threads.append(t)
 
-def produce(stateName):
-    dispensaries = loads_json(request_dispensaries())
-    items = extract_obj_from_json_obj(dispensaries, 'Results')
-    for item in items:
-        if extract_str_from_json_obj(item, 'State') == stateName:
-            yield getPartialDispensary(item)
+	producer.join()
+	for t in threads:
+		t.join()
 
+	return resultPool
 
-def consume(partialDispensary):
-    url = extract_str_from_json_obj(partialDispensary, 'url')
-    if not url:
-        return partialDispensary
-    absoluteUrl = 'https://www.leafly.com/dispensary-info/' + url
-    partialDispensary['about-dispensary'] = getAboutInfo(absoluteUrl)
-    partialDispensary['menu'] = getMenuInfo(absoluteUrl + '/menu')
-    partialDispensary['url'] = absoluteUrl
-    return partialDispensary
-
-
-def getAboutInfo(url):
-    html = getHtmlDocumentFrom(url)
-    return extract_text_from_html(html, "//div[@class='store-about']")
+def writeToFile(fileName, data):
+	with open(fileName, 'w') as outfile:
+		json.dump(data, outfile)
 
 
-def getPricesInfo(elements):
-    result = {}
-    if len(elements) == 0:
-        return result
-    pricesData = extract_elements_from_html(elements[0], './div')
-    for priceData in pricesData:
-        key = extract_text_from_html(priceData, "(./span)[3]")
-        if key:
-            result[key] = extract_text_from_html(priceData, "(./span)[1]")
-    return result
-
-
-def getMenuItemInfo(html):
-    result = {}
-    result['name'] = extract_text_from_html(html, ".//h3[contains(@class,'padding-rowItem')]")
-    result['short-description'] = extract_text_from_html(html, ".//div[contains(@class,'description')]")
-    result['rating'] = extract_text_from_html(html, ".//div[@class='score']")
-    result['prices'] = getPricesInfo(
-        extract_elements_from_html(html, ".//div[contains(@class,'item-heading--prices')]"))
-    return result
-
-
-def getMenuInfo(url):
-    html = getHtmlDocumentFrom(url)
-    categoryElements = extract_elements_from_html(html, "//div[contains(@class,'accordion--main-group')]")
-    categoriesResult = []
-    for categoryData in categoryElements:
-        categoryResult = {}
-        categoryResult['name'] = extract_text_from_html(categoryData, ".//h4[contains(@class,'panel-title')]//span")
-        itemElements = extract_elements_from_html(categoryData, ".//div[contains(@class,'menu__item m-accordion')]")
-        itemsResult = []
-        for itemData in itemElements:
-            itemsResult.append(getMenuItemInfo(itemData))
-            categoryResult['items'] = itemsResult
-        categoriesResult.append(categoryResult)
-    return categoriesResult
-
-
-def getHtmlDocumentFrom(url):
-    response = requests.get(url)
-    htmlDocument = html.fromstring(response.content)
-    return htmlDocument
-
-
-if __name__ == '__main__':
-    print json.dumps(run(sys.argv[1:], produce, consume))
+if __name__ == "__main__":
+	data = runScript()
+	print json.dumps(data)
