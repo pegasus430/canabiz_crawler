@@ -23,7 +23,7 @@ class LeaflyDispensaryWorker
         output = IO.popen(["python", "#{Rails.root}/app/scrapers/leafly_disp_scraper.py", ENV['LEAFLY_STATE']]) #@state_abbr
       end
 	    
-	    #contents = JSON.parse(output.read)
+	    contents = JSON.parse(output.read)
 	    
 	    logger.info 'size: '
 	    #logger.info contents.size
@@ -33,7 +33,7 @@ class LeaflyDispensaryWorker
 	    
 	    ContactUs.email('Leafly Dispensary scraper complete for state: ' + ENV['LEAFLY_STATE'], 
 	                      @start.strftime("%B %d, %Y | %I:%M %p"),
-	                      @end.strftime("%B %d, %Y | %I:%M %p") + ', size:' + 'hi').deliver
+	                      @end.strftime("%B %d, %Y | %I:%M %p") + ', size:' + contents.size.to_s).deliver
            	
     end    
 	
