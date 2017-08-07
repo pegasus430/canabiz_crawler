@@ -16,18 +16,24 @@ class LeaflyDispensaryWorker
         require 'open-uri'
         
       #MAKE CALL AND CREATE JSON
-	    output = IO.popen(["python", "#{Rails.root}/app/scrapers/leafly_disp_scraper.py", ENV['LEAFLY_STATE']]) #@state_abbr
-	    contents = JSON.parse(output.read)
+      output = nil
+      if ENV['LEAFLY_CITY_RANGE'] != nil && ENV['LEAFLY_CITY_RANGE'] != '' 
+        output = IO.popen(["python", "#{Rails.root}/app/scrapers/leafly_disp_scraper.py", ENV['LEAFLY_STATE'], '--cityStarts='+ENV['LEAFLY_CITY_RANGE']])
+      else
+        output = IO.popen(["python", "#{Rails.root}/app/scrapers/leafly_disp_scraper.py", ENV['LEAFLY_STATE']]) #@state_abbr
+      end
+	    
+	    #contents = JSON.parse(output.read)
 	    
 	    logger.info 'size: '
-	    logger.info contents.size
+	    #logger.info contents.size
 	    #logger.info contents
 	    
 	    @end = DateTime.now
 	    
 	    ContactUs.email('Leafly Dispensary scraper complete for state: ' + ENV['LEAFLY_STATE'], 
 	                      @start.strftime("%B %d, %Y | %I:%M %p"),
-	                      @end.strftime("%B %d, %Y | %I:%M %p") + ', size:' + contents.size.to_s).deliver
+	                      @end.strftime("%B %d, %Y | %I:%M %p") + ', size:' + 'hi').deliver
            	
     end    
 	

@@ -56,6 +56,7 @@ def loads_json(strData):
         return {}
 
 
+
 def writeToFile(fileName, data):
     with open(fileName, 'w') as outfile:
         json.dump(data, outfile)
