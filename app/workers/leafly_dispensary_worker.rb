@@ -33,7 +33,7 @@ class LeaflyDispensaryWorker
 	    
 	    ContactUs.email('Leafly Dispensary scraper complete for state: ' + ENV['LEAFLY_STATE'], 
 	                      @start.strftime("%B %d, %Y | %I:%M %p"),
-	                      @end.strftime("%B %d, %Y | %I:%M %p") + ', size:' + contents[ENV['LEAFLY_STATE']].size.to_s).deliver
+	                      @end.strftime("%B %d, %Y | %I:%M %p") + ', size:' + contents[ENV['LEAFLY_STATE']][0]).deliver
            	
     end    
 	
