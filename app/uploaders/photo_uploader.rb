@@ -25,6 +25,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [420, 230]
   end
   
+  version :trending_size do 
+    process :resize_to_fill => [280, 350]
+  end
+  
   #specifies the file types we can take
   #if we wanted file upload we would use different file sizes
   def extension_white_list
