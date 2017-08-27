@@ -47,8 +47,12 @@ class SourcesController < ApplicationController
     
     def show
         if (@source.active == true)
-            @recents = @source.articles.includes(:source).includes(:categories).includes(:states).order("created_at DESC").page(params[:page]).per_page(24)
-            @mostviews = @source.articles.includes(:source).includes(:categories).includes(:states).order("num_views DESC").page(params[:page]).per_page(24) 
+            @recents = @source.articles.includes(:source).includes(:categories).
+                            includes(:states).order("created_at DESC").page(params[:page]).per_page(24)
+            @mostviews = @source.articles.includes(:source).includes(:categories).
+                            includes(:states).order("num_views DESC").page(params[:page]).per_page(24)
+                            
+            expires_in 10.minutes, :public => true
         else
             redirect_to root_path
         end

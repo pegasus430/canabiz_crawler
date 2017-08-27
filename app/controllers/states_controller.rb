@@ -44,7 +44,9 @@ class StatesController < ApplicationController
                             order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
         @mostviews = @state.articles.where("source_id IN (?)", source_ids).
                             includes(:source).includes(:categories).includes(:states).
-                            order("num_views DESC").paginate(:page => params[:page], :per_page => 24)  
+                            order("num_views DESC").paginate(:page => params[:page], :per_page => 24) 
+                            
+        expires_in 10.minutes, :public => true
     end
     
    def edit

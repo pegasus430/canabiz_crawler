@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
     @categories = Category.all.order("name ASC")
     @states = State.all.order("name ASC")
     @sources = Source.where(:active => true).order("name ASC")
+    expires_in 10.days, :public => true
   end
   
   #redirect to homepage on error
