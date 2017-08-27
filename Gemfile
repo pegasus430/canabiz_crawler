@@ -12,6 +12,7 @@ gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a strin
 gem 'social-share-button', '~> 0.9.0' #social sharing
 gem 'friendly_id', '~> 5.0.0' #use the titles as the urls
 gem "skylight" #app monitoring
+gem 'sprockets-rails', :require => 'sprockets/railtie' #trying to minify css and js
 
 #BACKGROUND JOBS
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
