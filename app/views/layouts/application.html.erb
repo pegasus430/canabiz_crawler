@@ -38,7 +38,6 @@
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         
-        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true%> <!--, 'data-turbolinks-track' => true || , 'data-turbolinks-track' => true-->
         <%= csrf_meta_tags %>
         <!--google analytics-->
         <script>
@@ -59,6 +58,7 @@
                 <%= render 'layouts/footer' %>
             <% end %>
         </div>
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true%> <!--, 'data-turbolinks-track' => true || , 'data-turbolinks-track' => true-->
         <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     </body>
 </html>
