@@ -9,7 +9,7 @@ CanonicalRails.setup do |config|
   # This is the main host, not just the TLD, omit slashes and protocol. If you have more than one, pick the one you want to rank in search results.
 
   config.host = 'www.cannabiznetwork.com'
-  config.port# = '3000'
+  config.port = '443'
 
   # http://en.wikipedia.org/wiki/URL_normalization
   # Trailing slash represents semantics of a directory, ie a collection view - implying an :index get route;
