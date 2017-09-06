@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang ="en">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -9,18 +9,22 @@
         dispensary, vape, decriminalize, medicinal, cannabusiness, news, ganja, hydroponics, legalization, THC, terpene, cannabinoid, collective, MMJ, 
         medical marijuana, Bong, dab, Vaporizer, medicinal, charlottes web" />
         <link rel="alternate" hreflang="en-us" href="https://www.cannabiznetwork.com">
+         <%= canonical_tag -%>
         <% if @article == nil %>
             <% if @state != nil %>
                 <title><%=@state.name%> Cannabiz News</title>
+                <meta name ="description" content="The most up to date cannabis news about the state of <%=@state.name%>."/>
             <% elsif @category != nil %>
                 <title><%=@category.name%> Cannabiz News</title>
+                <meta name ="description" content="The most up to date cannabis news in the category of <%=@category.name%>."/>
             <% elsif @source != nil %>
                 <title><%=@source.name%> Cannabiz News</title>
+                <meta name ="description" content="The most up to date cannabis news from <%=@source.name%>."/>
             <% else %>
                 <title>CannabizNetwork</title>
+                <meta name ="description" 
+                    content="Providing you with the most up to date news aggregated from the most trusted cannabis resources in the industry."/>
             <% end %>
-            <meta name ="description" 
-                content="Providing you with the most up to date news aggregated from the most trusted cannabis resources in the industry."/>
         <% else %>
             <title><%=@article.title%></title>
             <meta property="og:title" content="<%=@article.title%>" />
@@ -46,7 +50,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true%> <!--, 'data-turbolinks-track' => true || , 'data-turbolinks-track' => true-->
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true%> <!--, 'data-turbolinks-track' => true || , 'data-turbolinks-track' => true-->
         <%= csrf_meta_tags %>
         
     </head>

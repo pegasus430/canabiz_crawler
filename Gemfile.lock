@@ -53,6 +53,8 @@ GEM
     buftok (0.2.0)
     builder (3.2.3)
     byebug (9.0.6)
+    canonical-rails (0.2.1)
+      rails (>= 4.1, < 5.2)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -451,6 +453,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   bootstrap-will_paginate (= 0.0.10)
   byebug
+  canonical-rails (~> 0.2.1)
   capybara (= 2.7.1)
   carrierwave (~> 0.11.2)
   carrierwave-imageoptimizer (~> 1.4)
