@@ -151,7 +151,7 @@
                                                 <article class="zm-post-lay-a2">
                                                     <div class="zm-post-thumb">
                                                         <a href="<%= article_path(article) %>">
-                                                    	    <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                	        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
                                                         </a>
                                                     </div>
                                                     <div class="zm-post-dis">
@@ -211,7 +211,11 @@
                                                 <article class="zm-post-lay-a sidebar">
                                                     <div class="zm-post-thumb">
                                                         <a href="<%= article_path(article) %>">
-                                                    	    <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                            <% if article.created_at >= DateTime.new(2017, 06, 16) %>
+                                                                <img src="<%=article.image_url(:profile_size)%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
+                                                    	    <% else %>
+                                                    	        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
+                                                            <% end %>
                                                         </a>
                                                     </div>
                                                     <div class="zm-post-dis">
