@@ -13,22 +13,18 @@ class NewsCannaLawBlog < ActiveJob::Base
         require "json"
         require 'open-uri'
         
-        #leafly removed here
-            #date_raw = article.xpath('(//div[@class="leafly-publish-date"])/text()')
-            #date = None
-            #if len(date_raw):
-                #date_raw = date_raw[0]
-                #date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
+        begin
+    		output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannalawblog.py"]) #cmd,
+        	contents = JSON.parse(output.read)
+        	if contents["articles"] != nil && contents["articles"].size > 0
+	        	addArticles(contents["articles"])	
+	        else 
+	        	ScraperError.email('CannaLawBlog News', 'No Articles were returned').deliver	
+	        end
         
-        #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannalawblog.py"]) #cmd,
-        contents = JSON.parse(output.read)
-        
-        #call method:
-        
-        if contents["articles"] != nil
-        	addArticles(contents["articles"])	
-        end
+        rescue => ex
+        	ScraperError.email('CannaLawBlog News', ex.message).deliver
+		end
            	
     end
     

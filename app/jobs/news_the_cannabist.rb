@@ -11,16 +11,18 @@ class NewsTheCannabist < ActiveJob::Base
         require "json"
         require 'open-uri'
         
-        #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_thecannabist.py"]) #cmd,
-        contents = JSON.parse(output.read)
+        begin
+        	output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_thecannabist.py"]) #cmd,
+        	contents = JSON.parse(output.read)
+        	if contents["articles"] != nil && contents["articles"].size > 0
+	        	addArticles(contents["articles"])	
+	        else 
+	        	ScraperError.email('TheCannabist News', 'No Articles were returned').deliver	
+	        end
         
-        #call method:
-        
-        if contents["articles"] != nil
-        	addArticles(contents["articles"])	
-        end
-           	
+        rescue => ex
+        	ScraperError.email('TheCannabist News', ex.message).deliver
+		end
     end    
 	
 	    

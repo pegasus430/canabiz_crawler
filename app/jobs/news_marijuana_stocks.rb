@@ -7,23 +7,22 @@ class NewsMarijuanaStocks < ActiveJob::Base
     end    
     
     def scrapeMarijuanaStocks()
-        
-        #store image
-        #https://github.com/savon40/Cannabiz-SecondAttempt/commit/f7e51bb4f5153f073d4ffeb8d888e78a463e63e2
-        
+
         require "json"
         require 'open-uri'
         
-        #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_marijuanastocksnews.py"]) #cmd,
-        contents = JSON.parse(output.read)
+        begin
+        	output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_marijuanastocksnews.py"]) #cmd,
+        	contents = JSON.parse(output.read)
+        	if contents["articles"] != nil && contents["articles"].size > 0
+	        	addArticles(contents["articles"])	
+	        else 
+	        	ScraperError.email('MarijuanaStocks News', 'No Articles were returned').deliver	
+	        end
         
-        #call method:
-        
-        if contents["articles"] != nil
-        	addArticles(contents["articles"])	
-        end
-           	
+        rescue => ex
+        	ScraperError.email('MarijuanaStocks News', ex.message).deliver
+		end
     end    
 	
 	    

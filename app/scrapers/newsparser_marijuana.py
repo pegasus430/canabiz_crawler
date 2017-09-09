@@ -10,7 +10,7 @@ from news import NewsSite, INewsParser
 
 class NPMarijuana(INewsParser):
     def __init__(self):
-        self.url = 'http://www.marijuana.com/news/'
+        self.url = 'https://www.marijuana.com/news/'
 
     def parse(self):
         site = NewsSite(self.url)

@@ -8,29 +8,22 @@ def perform()
     end
     
     def scrapeCannabisCulture()
-        #store image
-        #https://github.com/savon40/Cannabiz-SecondAttempt/commit/f7e51bb4f5153f073d4ffeb8d888e78a463e63e2
         
         require "json"
         require 'open-uri'
         
-        #leafly removed here
-            #date_raw = article.xpath('(//div[@class="leafly-publish-date"])/text()')
-            #date = None
-            #if len(date_raw):
-                #date_raw = date_raw[0]
-                #date = datetime.strptime(date_raw.strip(), "%B %d, %Y")
+        begin
+        	output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannabisculture.py"]) #cmd,
+        	contents = JSON.parse(output.read)
+        	if contents["articles"] != nil && contents["articles"].size > 0
+	        	addArticles(contents["articles"])	
+	        else 
+	        	ScraperError.email('CannabisCulture News', 'No Articles were returned').deliver	
+	        end
         
-        #removed ##print u'Processing article: {}'.format(title)   print u'Processing article: {}'.format(title)
-        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannabisculture.py"]) #cmd,
-        contents = JSON.parse(output.read)
-        
-        #call method:
-        
-        if contents["articles"] != nil
-        	addArticles(contents["articles"])	
-        end
-
+        rescue => ex
+        	ScraperError.email('CannabisCulture News', ex.message).deliver
+		end
     end
     
     def addArticles(articles)
