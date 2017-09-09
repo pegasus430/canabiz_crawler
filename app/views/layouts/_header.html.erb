@@ -47,9 +47,9 @@
                                     <a href="index.html">
                                         <!--if state use the state logo-->
                                         <% if @state != nil && @state.logo != nil && @state.logo != '' %>
-                                            <%= link_to image_tag(asset_path(@state.logo)), root_path %>
+                                            <%= link_to image_tag(asset_path(@state.logo), alt: "#{@state.name} Cannabiz Logo"), root_path %>
                                         <% else %>
-                                    	    <%= link_to image_tag("header_footer/cbz-logo-color.svg"), root_path %>
+                                    	    <%= link_to image_tag("header_footer/cbz-logo-color.svg", alt: "Cannabiz Network Logo"), root_path %>
                                         <% end %>
                                     </a>
                                     <p class="site-desc"> </p>
