@@ -77,21 +77,24 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <article class="zm-post-lay-single">
+                            <article itemscope itemtype="http://schema.org/Article" class="zm-post-lay-single">
                                 <div class="zm-post-thumb">
-                            	    <img src="<%=@article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                            	    <img itemprop="image" src="<%=@article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
                                 </div>
                                 <div class="zm-post-dis">
                                     <div class="zm-post-header">
-                                        <h2 class="zm-post-title h2"><%=@article.title.titlecase%></h2>
+                                        <h2 itemprop="name" class="zm-post-title h2"><%=@article.title.titlecase%></h2>
                                         <div class="zm-post-meta">
                                             <ul>
-                                                <li class="s-meta"><a href="<%= source_path(@article.source) %>" class="zm-author"><%=@article.source.name%></a></li>
-                                                <li class="s-meta" style="color: #7c8c99;"><%= @article.created_at.strftime("%B %d, %Y | %I:%M %p") %></li>
+                                                <li class="s-meta"><a href="<%= source_path(@article.source) %>" class="zm-author">
+                                                    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                                        <span itemprop="name"><%=@article.source.name%></span></span></a>
+                                                </li>
+                                                <li itemprop="datePublished" class="s-meta" style="color: #7c8c99;"><%= @article.created_at.strftime("%B %d, %Y | %I:%M %p") %></li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="zm-post-content">
+                                    <div itemprop="articleBody" class="zm-post-content">
                                         <%frag = Nokogiri::HTML(@article.body)%>
                                         <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
                                         <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
@@ -151,7 +154,7 @@
                                                 <article class="zm-post-lay-a2">
                                                     <div class="zm-post-thumb">
                                                         <a href="<%= article_path(article) %>">
-                                                	        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
+                                                	        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
                                                         </a>
                                                     </div>
                                                     <div class="zm-post-dis">
@@ -211,11 +214,7 @@
                                                 <article class="zm-post-lay-a sidebar">
                                                     <div class="zm-post-thumb">
                                                         <a href="<%= article_path(article) %>">
-                                                            <% if article.created_at >= DateTime.new(2017, 06, 16) %>
-                                                                <img src="<%=article.image_url(:profile_size)%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
-                                                    	    <% else %>
-                                                    	        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="<%=article.title%>">
-                                                            <% end %>
+                                                            <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
                                                         </a>
                                                     </div>
                                                     <div class="zm-post-dis">
