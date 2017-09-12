@@ -7,36 +7,34 @@ from datetime import datetime
 import json
 
 from news import NewsSite, INewsParser
+from utils import  *
 
 class NPMarijuana(INewsParser):
     def __init__(self):
         self.url = 'https://www.marijuana.com/news/'
+        self.xpahts_to_remove = ['//style','//script','/div[@class="watch-action"]','//div[@class="sharedaddy sd-sharing-enabled"]']
+
+    def request(self, url):
+        return requests.get(url, headers=self.headers, verify=False)
 
     def parse(self):
         site = NewsSite(self.url)
-        home_raw = requests.get(self.url, headers = self.headers)
-        home = html.fromstring(home_raw.content)
+        home = get_html(self.url, headers=self.headers, verify=False)
 
-        excerpts = home.xpath('//article')
+        news = home.xpath('//article')
 
-        for excerpt in excerpts:
-            title = excerpt.xpath('.//h2/a/text()')[0]
-            
-            url = excerpt.xpath('.//h2/a/@href')[0]
-            article_raw = requests.get(url, headers = self.headers)
-            article = html.fromstring(article_raw.content)
-            for style in article.xpath('//style'):
-                style.getparent().remove(style)
-            for div in article.xpath('//div[@class="watch-action"]'):
-                div.getparent().remove(div)
-            for div in article.xpath('//div[@class="sharedaddy sd-sharing-enabled"]'):
-                div.getparent().remove(div)
-            image_url = article.xpath('.//img[@class="attachment-main-slider size-main-slider wp-post-image"]/@src')[0]
-            date_raw = article.xpath('//span[@class="posted-on"]/span/time/@datetime')[0]
-            date = datetime.strptime(date_raw.strip()[:10], "%Y-%m-%d")
-            body_html_raw = article.xpath('//div[@class="post-content description"]')[0]
-            body_html = html.tostring(body_html_raw)
-            body_text = body_html_raw.text_content().strip()
+        for n in news:
+            title = get_text(n, './/h2/a')
+            url = get_atr(n, './/h2/a','href')
+            if not url:
+                continue
+
+            article = get_html(url,headers=self.headers, verify=False)
+            remove_elements_by_xpaths(article, self.xpahts_to_remove)
+
+            image_url = get_atr(article, './/img[@class="attachment-main-slider size-main-slider wp-post-image"]','src')
+            date =  get_date(get_atr(article, '//span[@class="posted-on"]/span/time', 'datetime'))
+            body_html, body_text = get_data(article, '//div[@class="post-content description"]')
 
             site.add_article(title, url, image_url, date, body_html, body_text)
 

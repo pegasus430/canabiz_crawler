@@ -4,10 +4,9 @@ class PagesController < ApplicationController
     before_action :require_admin, only: [:admin]
     
     def home
-        
+        NewsDopeMagazine.perform_later()
         #only showing articles for active sources 
         source_ids = @sources.pluck(:id)
-        #@recents = Article.includes(:user).where(id: params[:id]).first
         @recents = Article.where("source_id IN (?)", source_ids).includes(:source).includes(:categories).includes(:states).
                         order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
         

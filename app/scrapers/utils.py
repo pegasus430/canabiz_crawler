@@ -1,60 +1,62 @@
 import json
 
-def extract_str_from_json_obj(jsonObj, path):
-    if not jsonObj or not path:
-        return ''
-    if isinstance(path, str):
-        return jsonObj[path] if path in jsonObj else ''
-    if isinstance(path, list) and len(path) > 0:
-        key = path[0]
-        childJsonObj = jsonObj[key] if key in jsonObj else ''
-        if len(path) == 1:
-            return childJsonObj if not isinstance(childJsonObj, dict) else ''
-        else:
-            return extract_str_from_json_obj(childJsonObj, path[1:])
+from datetime import datetime
+import requests
+from lxml import html
+
+
+def get(url, **kwargs):
+    response = requests.get(url, **kwargs)
+    if response.status_code == 200:
+        return response.content
+    return '<p></p>'
+
+
+def get_html(url, **kwargs):
+    return html.fromstring(get(url, **kwargs))
+
+
+def get_elements(html, xpath):
+    try:
+        return html.xpath(xpath)
+    except Exception as e:
+        return []
+
+
+def get_text(html, xpath):
+    return _get_text(html, '%s/text()' % xpath)
+
+
+def get_atr(html, xpath, atrName):
+    return _get_text(html, '%s/@%s' % (xpath, atrName))
+
+
+def remove_elements_by_xpaths(html, xpaths):
+    for xpath in xpaths:
+        for e in html.xpath(xpath):
+            e.getparent().remove(e)
+
+
+def _get_text(html, xpath):
+    elements = get_elements(html, xpath)
+    if elements and len(elements):
+        return elements[0]
     return ''
 
 
-def extract_obj_from_json_obj(jsonObj, path):
-    if not jsonObj or not path:
-        return {}
-    if isinstance(path, str):
-        return jsonObj[path] if path in jsonObj else {}
-    if isinstance(path, list) and len(path) > 0:
-        key = path[0]
-        childJsonObj = jsonObj[key] if key in jsonObj else {}
-        if len(path) == 1:
-            return childJsonObj
-        else:
-            return extract_obj_from_json_obj(childJsonObj, path[1:])
-    return {}
-
-
-def extract_text_from_html(htmlDocument, xpath):
-    return extract_str_from_html(htmlDocument, xpath+'/text()')
-
-
-def extract_atr_from_html(htmlDocument, xpath, atrName):
-    return extract_str_from_html(htmlDocument, '{0}/@{1}'.format(xpath, atrName))
-
-
-def extract_elements_from_html(htmlDocument, xpath):
-    return htmlDocument.xpath(xpath)
-
-
-def extract_str_from_html(htmlDocument, xpath):
-    if htmlDocument is None or not xpath:
-        return ''
-    elements = htmlDocument.xpath(xpath)
-    return elements[0].strip() if len(elements) > 0 else ''
-
-
-def loads_json(strData):
+def get_date(str_date):
     try:
-        return json.loads(strData)
-    except:
-        return {}
+        return datetime.strptime(str_date.strip()[:10], "%Y-%m-%d")
+    except Exception:
+        return ''
 
+
+def get_data(htmlDoc,xpath):
+    elements = get_elements(htmlDoc, xpath)
+    if elements and len(elements) > 0:
+        body_html_raw = elements[0]
+        return html.tostring(body_html_raw), body_html_raw.text_content().strip()
+    return '', ''
 
 
 def writeToFile(fileName, data):
