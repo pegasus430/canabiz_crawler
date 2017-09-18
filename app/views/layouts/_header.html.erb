@@ -44,14 +44,14 @@
                         <div class="global-row">
                             <div class="global-cell">
                                 <div class="logo">
-                                    <a href="index.html">
-                                        <!--if state use the state logo-->
-                                        <% if @state != nil && @state.logo != nil && @state.logo != '' %>
-                                            <%= link_to image_tag(asset_path(@state.logo), alt: "#{@state.name} Cannabiz Logo"), root_path %>
-                                        <% else %>
-                                    	    <%= link_to image_tag("header_footer/cbz-logo-color.svg", alt: "Cannabiz Network Logo"), root_path %>
-                                        <% end %>
-                                    </a>
+                                    
+                                    <!--if state use the state logo-->
+                                    <% if @state != nil && @state.logo != nil && @state.logo != '' %>
+                                        <%= link_to image_tag(asset_path(@state.logo), alt: "#{@state.name} Cannabiz Logo"), root_path %>
+                                    <% else %>
+                                	    <%= link_to image_tag("header_footer/cbz-logo-color.svg", alt: "Cannabiz Network Logo"), root_path %>
+                                    <% end %>
+                                    
                                     <p class="site-desc"> </p>
                                 </div>
                             </div>
@@ -148,7 +148,8 @@
                         <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
                         <li class ="mobile-digest-signup">
                             <form class="mobile-digest-form" role="search" method="get" action = '/save_email'>
-            		            <input type="email" class="form-control input-lg" name='email' id ='emailTextBox' placeholder="Email for Weekly Digest" autocomplete='on' required=true>
+            		            <input type="email" class="form-control input-lg" name='email' id ='emailTextBox' 
+            		                placeholder="Email for Weekly Digest" autocomplete='on' required="required">
             		            <button type="submit">Sign Up</button>
             		        </form>
                         </li>

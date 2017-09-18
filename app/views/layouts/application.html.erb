@@ -42,9 +42,9 @@
                 <meta property="og:image" content="<%= asset_url(@article.source.sidebar_logo) if @article.source %>" />
             <% end %>
             <%frag = Nokogiri::HTML(@article.body)%>
-            <meta property="og:description" content="<%= truncate_html frag, :length => 100 %>" />
-            <meta name="twitter:description" content="<%= truncate_html frag, :length => 100 %>" />
-            <meta name="description" content="<%= truncate_html frag, :length => 100 %>" />
+            <meta property="og:description" content="<%= truncate_html frag, :length => 160 %>" />
+            <meta name="twitter:description" content="<%= truncate_html frag, :length => 160 %>" />
+            <meta name="description" content="<%= truncate_html frag, :length => 160 %>" />
             <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=58c8388905e7400012bc6df2&product=inline-share-buttons"></script>
         <% end %>
         <meta name="viewport" content="width=device-width, initial-scale=1">
