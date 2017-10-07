@@ -1,6 +1,24 @@
+<style>
+	.header-area {
+		background-image: url('<%= asset_path 'header_footer/cbz_source_banner.png' %>'); 
+		background-size: 100%
+	}
+	.article-create, .mantis-ad {
+		 color: #7c8c99;
+	}
+	.float-right {
+		float: right;
+	}
+	.mb-15 {
+		margin-bottom: 15px;
+	}
+	.min-height-auto {
+		min-height: auto;
+	}
+</style>
 
 <!-- Start of header area -->
-<header  class="header-area header-wrapper clearfix" style="background-image: url('<%= asset_path 'header_footer/cbz_source_banner.png' %>'); background-size: 100%">
+<header class="header-area header-wrapper clearfix">
     <div class="header-top-bar bg-dark ptb-10">
         <div class="container">
             <div class="row">
@@ -55,24 +73,6 @@
                                     
                                     <p class="site-desc"> </p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8 col-lg-7 col-sm-7 col-xs-12 col-lg-offset-1 header-mdh hidden-991">
-                    <div class="global-table">
-                        <div class="global-row">
-                            <div class="global-cell">
-                                <div style="background-color: #2f2f2f;">
-                                    <div class="subscribe-form subscribe-footer" style="width: 90%; margin: 0 auto; padding-bottom: 10px;"> 
-                                        <h2 class="h6 zm-widget-title uppercase text-white" style="color: #fff; padding: 10px 0 5px">
-                                            Subscribe To Weekly Digest</h2>
-                                        <form role="search" method="get" action = '/save_email'>
-                                            <input type="email" name='email' placeholder="Enter email address" required="required">
-                                            <input type="submit" value="Subscribe">
-                                        </form>
-                                    </div>
-                               </div>
                             </div>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                                                     <span itemprop="author" itemscope itemtype="http://schema.org/Person">
                                                         <span itemprop="name"><%=@article.source.name%></span></span></a>
                                                 </li>
-                                                <li itemprop="datePublished" class="s-meta" style="color: #7c8c99;"><%= @article.created_at.strftime("%B %d, %Y | %I:%M %p") %></li>
+                                                <li itemprop="datePublished" class="s-meta article-create"><%= @article.created_at.strftime("%B %d, %Y | %I:%M %p") %></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -257,7 +257,7 @@
                                                             <div class="zm-post-meta">
                                                                 <ul>
                                                                     <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
-                                                                    <li class="s-meta" style = "float: right;"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
+                                                                    <li class="s-meta float-right"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -292,10 +292,10 @@
                                                 <article class="zm-post-lay-a sidebar">
                                                     <div id="recommended"></div>
                                                     <div class="zm-post-dis">
-                                                        <div class="zm-post-meta" style="margin-bottom: 15px;">
+                                                        <div class="zm-post-meta mb-15">
                                                             <ul>
-                                                                <li class="s-meta" style="color: #7c8c99;">Add Sponored By Mantis</li>
-                                                                <li class="s-meta" style = "float: right; color: #7c8c99;">Now</li>
+                                                                <li class="s-meta mantis-ad">Add Sponored By Mantis</li>
+                                                                <li class="s-meta mantis-ad float-right">Now</li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -313,11 +313,11 @@
                                                     </div>
                                                     <div class="zm-post-dis">
                                                         <div class="zm-post-header">
-                                                            <h2 class="zm-post-title h2" style="min-height: auto"><%= link_to article.title.truncate(60).titlecase, article_path(article)%></h2>
-                                                            <div class="zm-post-meta" style="margin-bottom: 15px;">
+                                                            <h2 class="zm-post-title h2 min-height-auto"><%= link_to article.title.truncate(60).titlecase, article_path(article)%></h2>
+                                                            <div class="zm-post-meta mb-15">
                                                                 <ul>
                                                                     <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
-                                                                    <li class="s-meta" style = "float: right;"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
+                                                                    <li class="s-meta float-right"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
