@@ -25,5 +25,8 @@ module CannabizNews
     
     #error handling
     config.exceptions_app = self.routes
+    
+    #amp pages
+    config.assets.precompile << 'amp/application.scss'
   end
 end

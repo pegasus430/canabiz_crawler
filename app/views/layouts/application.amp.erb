@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="canonical" href="<%= url_for(format: :html, only_path: false) %>" >
+		<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+		<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+		<script async src="https://cdn.ampproject.org/v0.js"></script>
+		<script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+		<script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+		<% if Rails.application.assets && Rails.application.assets['amp/application'] %>
+			<style amp-custom><%= Rails.application.assets['amp/application'].to_s.html_safe %></style>
+		<% else %>
+			<style amp-custom><%= File.read "#{Rails.root}/public#{stylesheet_path('amp/application', host: nil)}" %></style>
+		<% end %>
+		<% if @article != nil %>
+			<title><%=@article.title%></title>
+            <meta property="og:title" content="<%=@article.title%>" />
+            <meta property="og:url" content="https://cannabiznetwork.com" />
+            <meta property="og:type" content="article" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@CannabizNetwork" />
+            <meta name="twitter:title" content="<%=@article.title%>"/>
+            <meta name="twitter:url" content="https://cannabiznetwork.com" />
+            <% if @article.image_url != nil && @article.image_url != ''%>
+                <meta name="twitter:image" content="<%=@article.image%>" />
+                <meta property="og:image" content="<%=@article.image%>" />
+            <% else %>
+                <meta name="twitter:image" content="<%= asset_url(@article.source.sidebar_logo) if @article.source %>" />
+                <meta property="og:image" content="<%= asset_url(@article.source.sidebar_logo) if @article.source %>" />
+            <% end %>
+            <%frag = Nokogiri::HTML(@article.body)%>
+            <meta property="og:description" content="<%= truncate_html frag, :length => 160 %>" />
+            <meta name="twitter:description" content="<%= truncate_html frag, :length => 160 %>" />
+            <meta name="description" content="<%= truncate_html frag, :length => 160 %>" />
+		<% end %>
+	</head>
+	<body>
+		<div class="amp">
+			<div class="wrapper">
+	            
+	            <%= yield %>
+	            
+	        </div>
+		</div>
+	</body>
+</html>

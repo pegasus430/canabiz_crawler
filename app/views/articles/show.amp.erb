@@ -1,0 +1,506 @@
+<script>
+    function saveExternalArticleClick(articleId, articleURL) {
+    	$.ajax({
+	      type: "PUT",
+	      url: "/save_visit/" + articleId
+	    });
+	    //open new link
+	    window.open(articleURL,'_blank');
+    }
+    function userArticleSave(elem, articleId) {
+        console.log(elem.checked);
+        <% if !logged_in? %>
+            window.open('/login', '_self');
+        <% else %>
+            $.ajax({
+                type: "PUT",
+                url: "/user_article_save/" + articleId
+	        });
+	        
+	        //change the checkboxes appropriately
+	        if (elem.checked) {
+	            document.getElementById("top-checkbox").checked = true;
+	            document.getElementById("bottom-checkbox").checked = true;
+	        }
+	        else {
+	            document.getElementById("top-checkbox").checked = false;
+	            document.getElementById("bottom-checkbox").checked = false;
+	        }
+        <% end %>
+    }
+</script>
+<!-- Start of header area -->
+<header  class="header-area header-wrapper clearfix" style="background-image: url('<%= asset_path 'header_footer/cbz_source_banner.png' %>'); background-size: 100%">
+    <div class="header-top-bar bg-dark ptb-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7  hidden-xs">
+                    <div class="header-top-left">
+                        <nav class="header-top-menu zm-secondary-menu">
+                            <ul>
+                                <li><%= link_to 'Cannabiz Network', root_path %></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">
+                    <div class="header-top-right clierfix text-right">
+                        <div class="user-accoint topbar-sblock">
+                            <% if logged_in? %>
+                                <span class="login-btn uppercase"><%= link_to 'Logout', logout_path, method: :delete %></span>
+                                <span class="uppercase"> | </span>
+                                <span class="login-btn uppercase"><%= link_to 'Change Password', change_password_path(current_user) %></span>
+                            <% else %>
+                                <span class="login-btn uppercase"><%= link_to 'Login', login_path %></span>
+                                <span class="uppercase"> | </span>
+                                <span class="login-btn uppercase"><%= link_to 'Register', signup_path %></span>
+                            <% end %>
+                                <div class = 'not-on-mobile'>
+                                    <span class="uppercase"> | </span>
+                                    <span class="login-btn uppercase"><%= link_to 'Privacy Policy', privacy_policy_path %></span>
+                                    <span class="uppercase"> | </span>
+                                    <span class="login-btn uppercase"><%= link_to 'Terms & Conditions', terms_conditions_path %></span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12 header-mdh">
+                    <div class="global-table">
+                        <div class="global-row">
+                            <div class="global-cell">
+                                <div class="logo">
+                                    
+                                    <!--if state use the state logo-->
+                                    <% if @state != nil && @state.logo != nil && @state.logo != '' %>
+                                        <%= link_to image_tag(asset_path(@state.logo), alt: "#{@state.name} Cannabiz Logo"), root_path %>
+                                    <% else %>
+                                	    <%= link_to image_tag("header_footer/cbz-logo-color.svg", alt: "Cannabiz Network Logo"), root_path %>
+                                    <% end %>
+                                    
+                                    <p class="site-desc"> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-lg-7 col-sm-7 col-xs-12 col-lg-offset-1 header-mdh hidden-991">
+                    <div class="global-table">
+                        <div class="global-row">
+                            <div class="global-cell">
+                                <div style="background-color: #2f2f2f;">
+                                    <div class="subscribe-form subscribe-footer" style="width: 90%; margin: 0 auto; padding-bottom: 10px;"> 
+                                        <h2 class="h6 zm-widget-title uppercase text-white" style="color: #fff; padding: 10px 0 5px">
+                                            Subscribe To Weekly Digest</h2>
+                                        <form role="search" method="get" action = '/save_email'>
+                                            <input type="email" name='email' placeholder="Enter email address" required="required">
+                                            <input type="submit" value="Subscribe">
+                                        </form>
+                                    </div>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom-area  bg-theme hidden-sm hidden-xs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="menu-wrapper clearfix">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <div class="mainmenu-area">
+                                    <nav class="primary-menu uppercase">
+                                        <ul class="clearfix customnavfont">
+                                            <li><%= link_to 'Home', root_path %></li>
+                                            <li>
+                                                <% if current_user %>
+                                                    <a href="<%= user_path(current_user)%>">My Page</a>
+                                                <% else %>
+                                                    <a href="<%= login_path %>">My Page</a>
+                                                <% end %>
+                                            </li>
+                                            <li><a href="<%= about_path %>">About</a></li>
+                                            <li><a href="<%= contact_us_path %>">Contact Us</a></li>
+                                            <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding-right: 0;">
+                                <div class="search-wrap pull-right">
+                                    <div class="search-form">
+                                        <form class="navbar-form" role="search" method="get" action = '/search'>
+                                            <input type="search" name="query" placeholder="What can we help you find..." autocomplete='on'>
+                                            <button type="submit">Search</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- mobile-menu-area start -->
+    <div class="mobile-menu-area hidden-md hidden-lg">
+        <div class="fluid-container">
+            <div class="mobile-menu clearfix">
+                <div class="search-wrap mobile-search">
+                    <div class="mobile-search-btn"><%=image_tag("icons/search.png")%></div>
+                    <div class="mobile-search-form">
+                        <form class="navbar-form" role="search" method="get" action = '/search'>
+                            <input type="text" name="query" placeholder="What can we help you find..." autocomplete='on'>
+                            <button type="submit"><%=image_tag("icons/search.png")%></button>
+                        </form>
+                    </div>
+                </div>
+                <nav id="mobile_dropdown">
+                    <ul class="customnavfont">
+                        <li><%= link_to 'Home', root_path %></li>
+                        <li>
+                            <% if current_user %>
+                                <a href="<%= user_path(current_user)%>">My Page</a>
+                            <% else %>
+                                <a href="<%= login_path %>">My Page</a>
+                            <% end %>
+                        </li>
+                        <li><a href="<%= about_path %>">About</a></li>
+                        <li><a href="<%= contact_us_path %>">Contact Us</a></li>
+                        <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
+                        <li class ="mobile-digest-signup">
+                            <form class="mobile-digest-form" role="search" method="get" action = '/save_email'>
+            		            <input type="email" class="form-control input-lg" name='email' id ='emailTextBox' 
+            		                placeholder="Email for Weekly Digest" autocomplete='on' required="required">
+            		            <button type="submit">Sign Up</button>
+            		        </form>
+                        </li>
+                    </ul>
+                </nav>
+            </div>       
+        </div>
+    </div>
+    <!-- mobile-menu-area end -->   
+</header>
+
+<!--mobile sticky header-->
+<div id = "mobile-sticky-logo">
+    <%= link_to image_tag("header_footer/mean-bar-logo.png"), root_path %>
+</div>
+<div id = "mobile-sticky-header">
+    <div class="col-xs-12">
+        <div class="archive-inner">
+            <div class="archive-filter">
+                <form action="#">
+                    <div class="sing-option zm-trending">
+                        <select name="Category" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
+                            <option value = "<%= root_path %>">Category</option>
+                            <% @categories.each do |category| %>
+                                <% if @category != nil && @category.name == category.name %>
+                                    <option value = "<%=category_path(category)%>" selected="selected"><%=category.name%></option>
+                                <% else %>
+                                    <option value = "<%=category_path(category)%>"><%=category.name%></option>
+                                <% end %>
+                        	<% end %>
+                        </select>
+                    </div>
+                    <div class="sing-option zm-state">
+                        <select name="State" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
+                        	<option value = "<%= root_path %>">State</option>
+                        	<% @states.each do |state| %>
+                        	
+                        	    <% if @state != nil && @state.name == state.name %>
+                                    <option value = "<%=state_path(state)%>" selected="selected"><%=state.name%></option>
+                                <% else %>
+                                    <option value = "<%=state_path(state)%>"><%=state.name%></option>
+                                <% end %>
+                
+                        	<% end %>
+                        </select>
+                    </div>
+                    <div class="sing-option zm-state">
+                        <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
+                            <option value = "<%= root_path %>">Source</option>
+                            <% Source.where(:active => true).order("name ASC").each do |source| %>
+                                <% if @source != nil && @source.name == source.name %>
+                                    <option value = "<%=source_path(source)%>" selected="selected"><%=source.name%></option>
+                                <% else %>
+                                    <option value = "<%=source_path(source)%>"><%=source.name%></option>
+                                <% end %>
+                        	<% end %>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>                        
+</div>
+
+<!-- Start page content -->
+<div id="page-content" class="page-wrapper">
+    <div class="zm-section single-post-wrap bg-white ptb-70 xs-pt-30">
+        <div class="container">
+            <div class="row">
+                <!-- Start left side -->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 columns">
+                    <div class="row mb-40">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            
+                            <div class="tagcloudpad">
+                                <div itemprop="articleSection" class="zm-tagcloud">
+                                    <% @article.states.each do |state| %>
+                                        <a href="<%=state_path(state)%>"><%=state.name%></a>
+                                    <% end %>
+                                    <% @article.categories.each do |category| %>
+                                		<a href="<%=category_path(category)%>"><%=category.name%></a>
+                                    <% end %>
+                                </div>
+                            </div>
+                            <div class="entry-meta-small clearfix mtb-20">
+                                <div>
+                                    <label class="switch pull-right">
+                                        <!--check if article is already saved-->
+                                        <% if current_user && UserArticle.where(:article_id => @article.id, :user_id => current_user.id, :saved => true).any? %>
+                                            <input type="checkbox" id = "top-checkbox" checked onclick="userArticleSave(this, <%=@article.id%>);">
+                                        <% else %>
+                                            <input type="checkbox" id = "top-checkbox" unchecked onclick="userArticleSave(this, <%=@article.id%>);"> 
+                                        <% end %>
+                                    
+                                        <div class="slider round" ></div> 
+                                    </label>  
+                                </div>
+                                <div class="meta-list pull-right">
+                                    <span class="post-title">SAVE THIS ARTICLE:</span> 
+                                </div>
+                                <div class="share-social-link pull-left" style="margin-top: 5px;">
+                                    <ul class="share-buttons">
+                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcannabiznetwork.com&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Facebook.png") %></a></li>
+                                        <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fcannabiznetwork.com&text=:%20http%3A%2F%2Fcannabiznetwork.com&via=CannabizNetwork" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Twitter.png") %></a></li>
+                                        <li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.png") %></a></li>
+                                    </ul>
+                                </div>
+                            </div>                                    
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <article itemscope itemtype="http://schema.org/Article" class="zm-post-lay-single">
+                                <div class="zm-post-thumb">
+                            	    <img itemprop="image" src="<%=@article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                </div>
+                                <div class="zm-post-dis">
+                                    <div class="zm-post-header">
+                                        <h2 itemprop="name" itemprop="headline" class="zm-post-title h2"><%=@article.title.titlecase%></h2>
+                                        <div class="zm-post-meta">
+                                            <ul>
+                                                <li class="s-meta"><a href="<%= source_path(@article.source) %>" class="zm-author">
+                                                    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                                        <span itemprop="name"><%=@article.source.name%></span></span></a>
+                                                </li>
+                                                <li itemprop="datePublished" class="s-meta" style="color: #7c8c99;"><%= @article.created_at.strftime("%B %d, %Y | %I:%M %p") %></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div itemprop="articleBody" class="zm-post-content">
+                                        <%frag = Nokogiri::HTML(@article.body)%>
+                                        <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//a").each { |div|  div.name= "p"}%>
+                                        <%frag.xpath("//br").each { |div|  div.remove}%>
+                                        <% frag = sanitize simple_format(frag.text), tags: %w(p), attributes: %w() %>
+                                        <%= truncate_html frag, :length => 1000 %>
+                                        <br/>
+                                        <br/>
+                                        <p>See Article on <%= @article.source.name %> <span class="article-link" onclick = "saveExternalArticleClick('<%=@article.id%>', '<%=@article.web_url%>')">HERE</span></p>
+                                    </div>
+                                    <div class="entry-meta-small clearfix ptb-40 mtb-40 border-top border-bottom">
+                                        <div>
+                                            <label class="switch pull-right">
+                                                <!--check if article is already saved-->
+                                                <% if current_user && UserArticle.where(:article_id => @article.id, :user_id => current_user.id, :saved => true).any? %>
+                                                    <input type="checkbox" id = "bottom-checkbox" checked onclick="userArticleSave(this, <%=@article.id%>);">
+                                                <% else %>
+                                                    <input type="checkbox" id = "bottom-checkbox" unchecked onclick="userArticleSave(this, <%=@article.id%>);"> 
+                                                <% end %>
+                                              <div class="slider round"></div>
+                                            </label>                                                    
+                                        </div>
+                                        <div class="meta-list pull-right">
+                                            <span class="post-title">SAVE THIS ARTICLE:</span> 
+                                        </div> 
+                                        <div class="share-social-link pull-left" style="margin-top: 5px;">
+                                            <ul class="share-buttons">
+                                                <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcannabiznetwork.com&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Facebook.png") %></a></li>
+                                                <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fcannabiznetwork.com&text=:%20http%3A%2F%2Fcannabiznetwork.com&via=CannabizNetwork" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><%= image_tag("icons/Twitter.png") %></a></li>
+                                                <li><a href="http://www.reddit.com/submit?url=http%3A%2F%2Fcannabiznetwork.com&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><%= image_tag("icons/Reddit.png") %></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <!-- End single post image format -->
+                        <!--Start Similar post -->
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <aside class="zm-post-lay-a2-area">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="post-title mb-40">
+                                            <h2 class="h6 inline-block">Other Posts By <%= @article.source.name %></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="zm-posts clearfix">
+                                        <% @same_source_articles.each do |article| %>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                                                <article class="zm-post-lay-a2">
+                                                    <div class="zm-post-thumb">
+                                                        <a href="<%= article_path(article) %>">
+                                                	        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="zm-post-dis">
+                                                        <div class="zm-post-header">
+                                                            <h2 class="zm-post-title h2"><%= link_to article.title.truncate(60).titlecase, article_path(article)%></h2>
+                                                            <div class="zm-post-meta">
+                                                                <ul>
+                                                                    <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
+                                                                    <li class="s-meta" style = "float: right;"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+                <!-- End left side -->
+                <!-- Start Right sidebar -->
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 sidebar-warp columns">
+                    <div class="row">
+                        <aside class="zm-post-lay-a-area col-sm-6 col-md-12 col-lg-12 sm-mt-50 xs-mt-50">
+                            <div class="row mb-40">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="section-title">
+                                         <h2 class="h6 header-color inline-block uppercase">Related Articles</h2> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <% random_integer = rand(1..2) %>
+                                <% @related_articles.each_with_index do |article, index| %>
+                                    <% if index == random_integer %>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="zm-posts">
+                                                <article class="zm-post-lay-a sidebar">
+                                                    <div id="recommended"></div>
+                                                    <div class="zm-post-dis">
+                                                        <div class="zm-post-meta" style="margin-bottom: 15px;">
+                                                            <ul>
+                                                                <li class="s-meta" style="color: #7c8c99;">Add Sponored By Mantis</li>
+                                                                <li class="s-meta" style = "float: right; color: #7c8c99;">Now</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </div>
+                                    <% else %>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="zm-posts">
+                                                <article class="zm-post-lay-a sidebar">
+                                                    <div class="zm-post-thumb">
+                                                        <a href="<%= article_path(article) %>">
+                                                            <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="zm-post-dis">
+                                                        <div class="zm-post-header">
+                                                            <h2 class="zm-post-title h2" style="min-height: auto"><%= link_to article.title.truncate(60).titlecase, article_path(article)%></h2>
+                                                            <div class="zm-post-meta" style="margin-bottom: 15px;">
+                                                                <ul>
+                                                                    <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
+                                                                    <li class="s-meta" style = "float: right;"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </div>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+                <!-- End Right sidebar -->
+            </div>
+        </div>
+    </div>
+</div>
+<!--mantis ad network-->
+<script type="text/javascript">
+	var mantis = mantis || [];
+	mantis.push(['recommend', 'load', {
+		property: '59305c4bc75f3d8c11991945',
+		render: 'recommended',
+		css: 'https://assets.mantisadnetwork.com/recommend.3columns.css'
+	}]);
+</script>
+<script type="text/javascript" data-cfasync="false" src="https://assets.mantisadnetwork.com/recommend.min.js" async></script>
+
+<footer id="footer" class="footer-wrapper footer-1">
+    <div class="footer-top-wrap ptb-20 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class = 'footer-image'>
+        				<%= link_to image_tag("header_footer/cbz-logo-grayscale.PNG"), root_path %>
+        			</div>
+        		</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-buttom bg-black ptb-15">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                    <div class="zm-copyright">
+                        <p class="uppercase">&copy;<script>document.write(new Date().getFullYear())</script> Canna.biz All Rights Reserved.</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 text-right hidden-xs">
+                    <nav class="footer-menu zm-secondary-menu text-right">
+                        <ul>
+                            <li><a href="<%= about_path %>">About</a></li>                                    
+                            <li><a href="<%= terms_conditions_path%>">Terms &amp; Conditions</a></li>
+                            <li><a href="<%= privacy_policy_path %>">Privacy Policy</a></li>
+                            <li><a href="<%= contact_us_path %>">Contact Us</a></li>
+                            <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

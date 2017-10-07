@@ -26,6 +26,8 @@
                     content="Providing you with the most up to date news aggregated from the most trusted cannabis resources in the industry."/>
             <% end %>
         <% else %>
+            <link rel="canonical" href="<%= url_for(format: :html, only_path: false) %>" >
+            <link rel="amphtml" href="<%= url_for(format: :amp, only_path: false) %>">
             <title><%=@article.title%></title>
             <meta property="og:title" content="<%=@article.title%>" />
             <meta property="og:url" content="https://cannabiznetwork.com" />
