@@ -1,22 +1,3 @@
-<style>
-	.header-area {
-		background-image: url('<%= asset_path 'header_footer/cbz_source_banner.png' %>'); 
-		background-size: 100%
-	}
-	.article-create, .mantis-ad {
-		 color: #7c8c99;
-	}
-	.float-right {
-		float: right;
-	}
-	.mb-15 {
-		margin-bottom: 15px;
-	}
-	.min-height-auto {
-		min-height: auto;
-	}
-</style>
-
 <!-- Start of header area -->
 <header class="header-area header-wrapper clearfix">
     <div class="header-top-bar bg-dark ptb-10">
@@ -118,7 +99,7 @@
                 <div class="search-wrap mobile-search">
                     <div class="mobile-search-btn"><%=image_tag("icons/search.png")%></div>
                     <div class="mobile-search-form">
-                        <form class="navbar-form" role="search" method="get" action = '/search'>
+                        <form class="navbar-form" role="search" method="get" target="_blank" action = '/search'>
                             <input type="text" name="query" placeholder="What can we help you find..." autocomplete='on'>
                             <button type="submit"><%=image_tag("icons/search.png")%></button>
                         </form>
@@ -138,7 +119,7 @@
                         <li><a href="<%= contact_us_path %>">Contact Us</a></li>
                         <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
                         <li class ="mobile-digest-signup">
-                            <form class="mobile-digest-form" role="search" method="get" action = '/save_email'>
+                            <form class="mobile-digest-form" role="search" method="get" target="_blank" action = '/save_email'>
             		            <input type="email" class="form-control input-lg" name='email' id ='emailTextBox' 
             		                placeholder="Email for Weekly Digest" autocomplete='on' required="required">
             		            <button type="submit">Sign Up</button>
@@ -192,7 +173,10 @@
                         <div class="col-md-12">
                             <article itemscope itemtype="http://schema.org/Article" class="zm-post-lay-single">
                                 <div class="zm-post-thumb">
-                            	    <img itemprop="image" src="<%=@article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                            	    <amp-img itemprop="image" src="<%=@article.image%>" 
+                            	        onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" 
+                            	        alt="<%= @article.title%>" height='650' width = '850' layout=responsive>
+                            	    <!--</amp-img>-->
                                 </div>
                                 <div class="zm-post-dis">
                                     <div class="zm-post-header">
@@ -248,7 +232,9 @@
                                                 <article class="zm-post-lay-a2">
                                                     <div class="zm-post-thumb">
                                                         <a href="<%= article_path(article) %>">
-                                                	        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
+                                                            <amp-img src="<%=article.image%>" 
+                                                                onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" 
+                                                                alt="<%=article.title%>" height="230" width="270" layout="responsive">
                                                         </a>
                                                     </div>
                                                     <div class="zm-post-dis">
@@ -284,48 +270,32 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <% random_integer = rand(1..2) %>
+                                
                                 <% @related_articles.each_with_index do |article, index| %>
-                                    <% if index == random_integer %>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="zm-posts">
-                                                <article class="zm-post-lay-a sidebar">
-                                                    <div id="recommended"></div>
-                                                    <div class="zm-post-dis">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="zm-posts">
+                                            <article class="zm-post-lay-a sidebar">
+                                                <div class="zm-post-thumb">
+                                                    <a href="<%= article_path(article) %>">
+                                                        <amp-img src="<%=article.image%>" 
+                                                            onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" 
+                                                            alt="<%=article.title%>" height="230" width="420" layout="responsive">
+                                                    </a>
+                                                </div>
+                                                <div class="zm-post-dis">
+                                                    <div class="zm-post-header">
+                                                        <h2 class="zm-post-title h2 min-height-auto"><%= link_to article.title.truncate(60).titlecase, article_path(article)%></h2>
                                                         <div class="zm-post-meta mb-15">
                                                             <ul>
-                                                                <li class="s-meta mantis-ad">Add Sponored By Mantis</li>
-                                                                <li class="s-meta mantis-ad float-right">Now</li>
+                                                                <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
+                                                                <li class="s-meta float-right"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                </article>
-                                            </div>
+                                                </div>
+                                            </article>
                                         </div>
-                                    <% else %>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="zm-posts">
-                                                <article class="zm-post-lay-a sidebar">
-                                                    <div class="zm-post-thumb">
-                                                        <a href="<%= article_path(article) %>">
-                                                            <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="zm-post-dis">
-                                                        <div class="zm-post-header">
-                                                            <h2 class="zm-post-title h2 min-height-auto"><%= link_to article.title.truncate(60).titlecase, article_path(article)%></h2>
-                                                            <div class="zm-post-meta mb-15">
-                                                                <ul>
-                                                                    <li class="s-meta"><%= link_to article.source.name, article_path(article), class: 'zm-author'%></li>
-                                                                    <li class="s-meta float-right"><%= link_to article.created_at.strftime("%B %d, %Y"), article_path(article), class: 'zm-date'%></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                        </div>
-                                    <% end %>
+                                    </div>
                                 <% end %>
                             </div>
                         </aside>
@@ -336,16 +306,6 @@
         </div>
     </div>
 </div>
-<!--mantis ad network-->
-<script type="text/javascript">
-	var mantis = mantis || [];
-	mantis.push(['recommend', 'load', {
-		property: '59305c4bc75f3d8c11991945',
-		render: 'recommended',
-		css: 'https://assets.mantisadnetwork.com/recommend.3columns.css'
-	}]);
-</script>
-<script type="text/javascript" data-cfasync="false" src="https://assets.mantisadnetwork.com/recommend.min.js" async></script>
 
 <footer id="footer" class="footer-wrapper footer-1">
     <div class="footer-top-wrap ptb-20 bg-dark">
@@ -364,7 +324,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="zm-copyright">
-                        <p class="uppercase">&copy;<script>document.write(new Date().getFullYear())</script> Canna.biz All Rights Reserved.</p>
+                        <p class="uppercase">&copy;2017 Canna.biz All Rights Reserved.</p>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 text-right hidden-xs">
