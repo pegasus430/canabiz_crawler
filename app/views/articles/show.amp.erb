@@ -97,11 +97,17 @@
         <div class="fluid-container">
             <div class="mobile-menu clearfix">
                 <div class="search-wrap mobile-search">
-                    <div class="mobile-search-btn"><%=image_tag("icons/search.png")%></div>
+                    <div class="mobile-search-btn">
+                         <amp-img src="<%=asset_path("icons/search.png")%>" 
+                            height="16" width="16" layout="responsive">
+                    </div>
                     <div class="mobile-search-form">
                         <form class="navbar-form" role="search" method="get" target="_blank" action = '/search'>
                             <input type="text" name="query" placeholder="What can we help you find..." autocomplete='on'>
-                            <button type="submit"><%=image_tag("icons/search.png")%></button>
+                            <button type="submit">
+                                <amp-img src="<%=asset_path("icons/search.png")%>" 
+                                    height="16" width="16" layout="responsive">
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -135,7 +141,10 @@
 
 <!--mobile sticky header-->
 <div id = "mobile-sticky-logo">
-    <%= link_to image_tag("header_footer/mean-bar-logo.png"), root_path %>
+    <a href="<%= root_path%>">
+        <amp-img src="<%=asset_path("header_footer/mean-bar-logo.png")%>" 
+            alt="Cannabiz Network Sticky Logo" height="60" width="90" layout="responsive">
+    </a>
 </div>
 <div id = "mobile-sticky-header">
     <div class="col-xs-12">
@@ -173,10 +182,13 @@
                         <div class="col-md-12">
                             <article itemscope itemtype="http://schema.org/Article" class="zm-post-lay-single">
                                 <div class="zm-post-thumb">
-                            	    <amp-img itemprop="image" src="<%=@article.image%>" 
-                            	        onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" 
-                            	        alt="<%= @article.title%>" height='650' width = '850' layout=responsive>
-                            	    <!--</amp-img>-->
+                            	    <% if @article.image.present? %>
+                                        <amp-img src="<%=@article.image%>" 
+                                            alt="<%=@article.title%>" height="650" width="850" layout="responsive">
+                                    <% else %>
+                                        <amp-img src="<%= asset_path 'homepage/news-substitute.jpg' %>"
+                                            alt="<%=@article.title%>" height="650" width="850" layout="responsive">
+                                    <% end %>
                                 </div>
                                 <div class="zm-post-dis">
                                     <div class="zm-post-header">
@@ -232,9 +244,13 @@
                                                 <article class="zm-post-lay-a2">
                                                     <div class="zm-post-thumb">
                                                         <a href="<%= article_path(article) %>">
-                                                            <amp-img src="<%=article.image%>" 
-                                                                onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" 
-                                                                alt="<%=article.title%>" height="230" width="270" layout="responsive">
+                                                            <% if article.image.present? %>
+                                                                <amp-img src="<%=article.image%>" 
+                                                                    alt="<%=article.title%>" height="230" width="270" layout="responsive">
+                                                            <% else %>
+                                                                <amp-img src="<%= asset_path 'homepage/news-substitute.jpg' %>"
+                                                                    alt="<%=article.title%>" height="230" width="270" layout="responsive">
+                                                            <% end %>
                                                         </a>
                                                     </div>
                                                     <div class="zm-post-dis">
@@ -277,9 +293,13 @@
                                             <article class="zm-post-lay-a sidebar">
                                                 <div class="zm-post-thumb">
                                                     <a href="<%= article_path(article) %>">
-                                                        <amp-img src="<%=article.image%>" 
-                                                            onerror="this.src='<%= asset_path 'homepage/news-substitute.jpg' %>'" 
-                                                            alt="<%=article.title%>" height="230" width="420" layout="responsive">
+                                                        <% if article.image.present? %>
+                                                            <amp-img src="<%=article.image%>" 
+                                                                alt="<%=article.title%>" height="230" width="420" layout="responsive">
+                                                        <% else %>
+                                                            <amp-img src="<%= asset_path 'homepage/news-substitute.jpg' %>"
+                                                                alt="<%=article.title%>" height="230" width="420" layout="responsive">
+                                                        <% end %>
                                                     </a>
                                                 </div>
                                                 <div class="zm-post-dis">
@@ -313,7 +333,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class = 'footer-image'>
-        				<%= link_to image_tag("header_footer/cbz-logo-grayscale.PNG"), root_path %>
+                        <a href="<%= root_path%>">
+                            <amp-img src="<%=asset_path("header_footer/cbz-logo-grayscale.PNG")%>" 
+                                alt="Cannabiz Network Footer Logo" height="135" width="660" layout="responsive">
+                        </a>
         			</div>
         		</div>
             </div>

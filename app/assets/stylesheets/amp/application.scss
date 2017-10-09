@@ -14,6 +14,22 @@
  *= require_self
  *= require jquery-ui
  */
+.article-create, .mantis-ad {
+	 color: #7c8c99;
+}
+.float-right {
+	float: right;
+}
+.mb-15 {
+	margin-bottom: 15px;
+}
+.min-height-auto {
+	min-height: auto;
+}
+.footer-image {
+	max-width: 660px;
+	margin: 0 auto;
+}
 .article-link{cursor:pointer;color:#2ab081;}
 #mobile-sticky-header{display:none;}
 #mobile-sticky-logo{width:90px;height:auto;display:none;}
