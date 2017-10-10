@@ -47,9 +47,15 @@
                                     
                                     <!--if state use the state logo-->
                                     <% if @state != nil && @state.logo != nil && @state.logo != '' %>
-                                        <%= link_to image_tag(asset_path(@state.logo), alt: "#{@state.name} Cannabiz Logo"), root_path %>
+                                        <a href="<%= root_path%>">
+                                            <amp-img src="<%=asset_path(@state.logo)%>" 
+                                                height="102" width="500" alt="<%= "#{@state.name} Cannabiz Logo"%>" layout="responsive">
+                                        </a>
                                     <% else %>
-                                	    <%= link_to image_tag("header_footer/cbz-logo-color.svg", alt: "Cannabiz Network Logo"), root_path %>
+                                        <a href="<%= root_path%>">
+                                            <amp-img src="<%=asset_path("header_footer/cbz-logo-color.svg")%>" 
+                                                height="102" width="500" alt="<%= "Cannabiz Network Logo"%>" layout="responsive">
+                                        </a>
                                     <% end %>
                                     
                                     <p class="site-desc"> </p>
