@@ -31,6 +31,9 @@
             <meta name="description" content="<%= truncate_html frag, :length => 160 %>" />
 		<% end %>
 		<style amp-custom>
+			.mainmenu-area {text-align: center;}
+			/*.header-mdh {margin-top: 50px;}*/
+			.sticky {position: fixed; background-color: #2f2f2f; z-index: 10; top: 0; width: 100%;}
 			.header-area {background-image: url('<%= asset_path 'header_footer/cbz_source_banner.png' %>'); background-size: 100%}
 			.article-create {color: #7c8c99;}
 			.float-right {float: right;}
@@ -493,17 +496,16 @@
 			.topbar-sblock{position:relative;}
 			.topbar-sblock::after{background:#484848 none repeat scroll 0 0;content:"";height:26px;position:absolute;right:-0.5px;top:50%;transform:translateY(-50%);width:1px;}
 			.header-top-right .topbar-sblock:last-child::after{display:none;}
-			.header-mdh{height:150px;}
 			.site-desc{line-height:18px;margin-top:4px;}
-			.primary-menu > ul > li{float:left;}
-			.primary-menu > ul > li > a{display:block;height:70px;line-height:70px;padding:0 20px;}
+			/*.primary-menu > ul > li{float:left;}*/
+			.primary-menu > ul > li > a{display:block;height:50px;line-height:50px;padding:0 17px;}
 			.primary-menu > ul > li:hover > a{background:#8A2A88 none repeat scroll 0 0;color:#ecf3f6;}
 			.search-wrap{position:relative;}
 			.search-wrap.mobile-search{position:absolute;top:0;width:100%;}
 			.user-accoint{position:relative;}
 			.login-btn{cursor:pointer;transition:0.3s;}
 			.login-btn:hover{color:#2ab081;}
-			.primary-menu ul li{position:relative;}
+			.primary-menu ul li{position:relative; display: inline-block;}
 			.menu-wrapper .col-md-11{position:inherit;}
 			.zm-post-thumb a{display:block;}
 			.zm-post-title{min-height:68px;}
