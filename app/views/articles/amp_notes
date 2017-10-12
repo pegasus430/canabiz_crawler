@@ -71,3 +71,22 @@ sticky header
         </div>
     </div>
     <!-- mobile-menu-area end --> 
+    
+    
+    
+<!--mobile sticky header-->
+<div id = "mobile-sticky-logo">
+    <a href="<%= root_path%>">
+        <amp-img src="<%=asset_path("header_footer/mean-bar-logo.png")%>" 
+            alt="Cannabiz Network Sticky Logo" height="60" width="90" layout="responsive">
+    </a>
+</div>
+<div id = "mobile-sticky-header">
+    <div class="col-xs-12">
+        <div class="archive-inner">
+            <div class="archive-filter">
+                
+            </div>
+        </div>
+    </div>                        
+</div>
