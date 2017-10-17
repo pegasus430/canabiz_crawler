@@ -4,6 +4,8 @@ class PagesController < ApplicationController
     before_action :require_admin, only: [:admin]
     
     def home
+        NewsFourTwentyTimes.perform_later()
+        
         #only showing articles for active sources 
         source_ids = @sources.pluck(:id)
         @recents = Article.where("source_id IN (?)", source_ids).includes(:source).includes(:categories).includes(:states).

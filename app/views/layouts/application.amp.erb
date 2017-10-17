@@ -8,6 +8,7 @@
 		<script async src="https://cdn.ampproject.org/v0.js"></script>
 		<script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
 		<script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+		<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 
 		<% if @article != nil %>
 			<title><%=@article.title%></title>
@@ -583,6 +584,21 @@
 	            <%= yield %>
 	            
 	        </div>
+	        <amp-analytics type="googleanalytics">
+				<script type="application/json">
+				{
+				  "vars": {
+				    "account": "UA-96167975-1"
+				  },
+				  "triggers": {
+				    "trackPageview": {
+				      "on": "visible",
+				      "request": "pageview"
+				    }
+				  }
+				}
+				</script>
+			</amp-analytics>
 		</div>
 	</body>
 </html>

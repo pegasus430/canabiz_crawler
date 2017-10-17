@@ -16,6 +16,8 @@ class NewsFourTwentyTimes < ActiveJob::Base
         begin
         	output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_the420times.py"]) #cmd,
         	contents = JSON.parse(output.read)
+        	logger.info 'ARTICLE COUNT: '
+        	logger.info contents["articles"].size
         	if contents["articles"] != nil && contents["articles"].size > 0
 	        	addArticles(contents["articles"])	
 	        else 
