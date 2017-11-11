@@ -1,2 +1,2 @@
 lxml==3.3.3
-requests==2.2.1
+requests==2.18.4
