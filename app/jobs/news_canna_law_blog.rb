@@ -17,8 +17,7 @@ class NewsCannaLawBlog < ActiveJob::Base
     		output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannalawblog.py"]) #cmd,
         	contents = JSON.parse(output.read)
         	if contents["articles"] != nil && contents["articles"].size > 0
-	        	#addArticles(contents["articles"])
-	        	logger.info 'ARTICLES!'
+	        	addArticles(contents["articles"])
 	        else 
 	        	ScraperError.email('CannaLawBlog News', 'No Articles were returned').deliver	
 	        end
