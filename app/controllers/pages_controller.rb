@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     
     def home
 
-        NewsHighTimes.perform_later()
+        #NewsHighTimes.perform_later()
         
         #only showing articles for active sources 
         source_ids = @sources.pluck(:id)
