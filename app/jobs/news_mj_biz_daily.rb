@@ -18,11 +18,11 @@ class NewsMjBizDaily < ActiveJob::Base
         	if contents["articles"] != nil && contents["articles"].size > 0
 	        	addArticles(contents["articles"])	
 	        else 
-	        	ScraperError.email('MjBizDaily News', 'No Articles were returned').deliver	
+	        	ScraperError.email('MjBizDaily News', 'No Articles were returned').deliver_now	
 	        end
         
         rescue => ex
-        	ScraperError.email('MjBizDaily News', ex.message).deliver
+        	ScraperError.email('MjBizDaily News', ex.message).deliver_now
 		end
     end  
 

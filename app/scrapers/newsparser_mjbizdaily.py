@@ -10,7 +10,7 @@ from news import NewsSite, INewsParser
 
 class NPMJBizDaily(INewsParser):
     def __init__(self):
-        self.url = 'http://mjbizdaily.com'
+        self.url = 'https://mjbizdaily.com'
 
     def parse(self):
         site = NewsSite(self.url)
