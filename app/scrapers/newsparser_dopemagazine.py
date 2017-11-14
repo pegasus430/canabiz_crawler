@@ -65,4 +65,4 @@ def parse_site():
 
 if __name__ == '__main__':
     result = parse_site()
-    print (json.dumps(result))
+    print json.dumps(result)
