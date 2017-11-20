@@ -1,52 +1,35 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
-
-from lxml import html
-import requests
-from datetime import datetime
 import json
+from newsscraper import NewsScraper, HtmlGetter, XpathsContainer
 
-from news import NewsSite, INewsParser
 
-class NPMJBizDaily(INewsParser):
+class NPMJBizDaily(NewsScraper):
     def __init__(self):
-        self.url = 'http://mjbizdaily.com'
+        xpaths = {'news_xpath': '//article',
+                  'title_xpath': './/header//a/text()',
+                  'url_xpath': './/header//a/@href',
+                  'image_xpath': '//section[@class= "entry-content"]//img/@src',
+                  'date_xpath': '//header[contains(@class, "article-header")]/p/text()',
+                  'elements_to_remove_xpaths': ['//style', '//script'],
+                  'content_xpath': '//section[@class="entry-content"]'}
 
-    def parse(self):
-        site = NewsSite(self.url)
-        home_raw = requests.get(self.url, headers = self.headers)
-        home = html.fromstring(home_raw.content)
+        html_getter = HtmlGetter()
+        url = 'http://mjbizdaily.com'
+        xpaths_container = XpathsContainer(**xpaths)
 
-        excerpts = home.xpath('//article')
+        NewsScraper.__init__(self, html_getter, url, xpaths_container)
 
-        for excerpt in excerpts:
-            title = excerpt.xpath('.//header//a/text()')[0]
-            
-            url = excerpt.xpath('.//header//a/@href')[0]
-            image_url = None
-            image_raw = excerpt.xpath('.//img/@src')
-            if len(image_raw):
-                image_url = image_raw[0]
-            article_raw = requests.get(url, headers = self.headers)
-            article = html.fromstring(article_raw.content)
-            for script in article.xpath('//script'):
-                script.getparent().remove(script)
-            for style in article.xpath('//style'):
-                style.getparent().remove(style)
-            date_raw = article.xpath('//header/span[contains(@class, "articleTitleDate")]/@content')[0]
-            date = datetime.strptime(date_raw.strip()[:10], "%Y-%m-%d")
-            body_html_raw = article.xpath('//div[@class="thecontent"]')[0]
-            body_html = html.tostring(body_html_raw)
-            body_text = body_html_raw.text_content().strip()
+    def select_date(self, date_str):
+        strs = date_str.split('|')
+        return strs[0].strip() if len(strs) > 0 else ''
 
-            site.add_article(title, url, image_url, date, body_html, body_text)
-
-        return site.to_dict()
+    def get_date_format(self):
+        return 'Published %B %d, %Y'
 
 
 def parse_site():
     parser = NPMJBizDaily()
     return parser.parse()
+
 
 if __name__ == '__main__':
     print json.dumps(parse_site())

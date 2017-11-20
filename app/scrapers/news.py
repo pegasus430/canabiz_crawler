@@ -46,11 +46,10 @@ class NewsArticle:
 
 class NewsSite:
     """Class to handle News sites"""
-    url = ""
-    articles = []
 
     def __init__(self, url):
         self.url = url
+        self.articles = []
 
     def add_article(self, title, url, image_url, date, text_html, text_plain):
         article = NewsArticle(title, url, image_url, date, text_html, text_plain)
