@@ -39,6 +39,7 @@ class CannaLawBlogWorker
         source = Source.find_by name: 'Canna Law Blog'
         
         logger.info 'GLOBAL VARIABLES DECLARED:::::'
+        logger.info source
         
         articles.each do |article|
         	
