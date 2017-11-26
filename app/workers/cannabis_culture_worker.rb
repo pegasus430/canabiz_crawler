@@ -69,13 +69,6 @@ def perform()
 	        end
 	        
 
-	        #if (article["image_url"] != nil)
-	        
-	        	#data = open(article["image_url"])
-	        	#@image_stored = File.new(data)
-
-	        	#CREATE ARTICLE
-	        	#missing abstract right now
 	        	puts "this is the image url: " + article["image_url"]
 	        	
 	        	if article["date"] != nil
@@ -83,11 +76,6 @@ def perform()
 	        	else 
 	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>')
 	        	end
-	        #else 
-	    		#CREATE ARTICLE
-	        	#missing abstract right now
-	        #	article = Article.create(:title => article["title"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
-	        #end
 	        
 
 	        

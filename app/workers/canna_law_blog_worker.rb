@@ -39,6 +39,7 @@ class CannaLawBlogWorker
         source = Source.find_by name: 'Canna Law Blog'
         
         logger.info 'GLOBAL VARIABLES DECLARED:::::'
+        logger.info 'source'
         logger.info source
         
         articles.each do |article|
@@ -84,7 +85,12 @@ class CannaLawBlogWorker
 
 
         	#CREATE ARTICLE
-        	#missing abstract right now
+        	puts "this is the image url: " + article["image_url"]
+        	puts "this is the title: " + article["title"]
+        	puts "this is the url: " + article["url"]
+        	puts "this is the date: " + article["date"]
+        	puts "this is the text_html: " + article["text_html"].present?
+        	puts "this is the source: " + source.id
         	
         	if article["date"] != nil
         		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_html"])	#.gsub(/\n/, '<br/><br/>')
@@ -93,6 +99,8 @@ class CannaLawBlogWorker
         	end
         	
         	logger.info 'ARTICLE CREATED!!!!'
+        	logger.info 'ARTICLE'
+        	logger.info article
 
 	        
 	        #CREATE ARTICLE CATEGORIES
