@@ -17,8 +17,9 @@ class CannaLawBlogWorker
         	logger.info 'BEFORE THE CONTENTS:::'
         	contents = JSON.parse(output.read)
         	logger.info 'HERE ARE THE CONTENTS:::::'
-        	logger.info contents
+
         	if contents["articles"] != nil && contents["articles"].size > 0
+        		logger.info 'IN ARTICLE IF STATEMENT:::::'
 	        	addArticles(contents["articles"])	
 	        else 
 	        	ScraperError.email('CannaLawBlog News', 'No Articles were returned').deliver	
@@ -37,8 +38,11 @@ class CannaLawBlogWorker
         @states = State.all
         source = Source.find_by name: 'Canna Law Blog'
         
+        logger.info 'GLOBAL VARIABLES DECLARED:::::'
+        
         articles.each do |article|
         	
+        	logger.info 'IN ARTICLE LOOP:::::'
 	        #MATCH ARTICLE CATEGORIES BASED ON KEYWORDS IN CATEGORY ARRAYS
 	        relateCategoriesSet = Set.new
 	        @categories.each do |category|
@@ -51,6 +55,8 @@ class CannaLawBlogWorker
 	                end
 	            end
 	        end
+	        
+	        logger.info 'AFTER CATEGORY MATCHING:'
 	        
 	        #MATCH ARTICLE STATES
 	        relateStatesSet = Set.new
@@ -72,6 +78,8 @@ class CannaLawBlogWorker
 	            end
 	        end
 	        
+	        logger.info 'AFTER STATE MATCHING:'
+	        
 
 
         	#CREATE ARTICLE
@@ -82,6 +90,8 @@ class CannaLawBlogWorker
         	else 
         		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>')
         	end
+        	
+        	logger.info 'ARTICLE CREATED!!!!'
 
 	        
 	        #CREATE ARTICLE CATEGORIES
@@ -94,10 +104,14 @@ class CannaLawBlogWorker
 	            ArticleCategory.create(:category_id => setObject, :article_id => article.id)
 	        end
 	        
+	        logger.info 'ARTICLE CATEGORIES CREATED:'
+	        
 	        #CREATE ARTICLE STATES
 	        relateStatesSet.each do |setObject|
 	            ArticleState.create(:state_id => setObject, :article_id => article.id)
 	        end 
+	        
+	        logger.info 'ARTICLE STATES CREATED'
 	        
 	   end #end of article loop
 	   
