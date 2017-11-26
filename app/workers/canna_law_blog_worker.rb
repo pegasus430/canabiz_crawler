@@ -89,7 +89,7 @@ class CannaLawBlogWorker
         	puts "this is the title: " + article["title"]
         	puts "this is the url: " + article["url"]
         	puts "this is the date: " + article["date"]
-        	puts "this is the text_html: " + article["text_html"].present?
+        	puts article["text_html"].present?
         	puts "this is the source: " + source.id
         	
         	if article["date"] != nil
