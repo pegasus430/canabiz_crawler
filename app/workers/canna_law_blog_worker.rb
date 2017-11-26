@@ -90,7 +90,8 @@ class CannaLawBlogWorker
         	puts "this is the url: " + article["url"]
         	puts "this is the date: " + article["date"]
         	puts article["text_html"].present?
-        	puts "this is the source: " + source.id
+        	puts "this is the source: "
+        	puts source.id
         	
         	if article["date"] != nil
         		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_html"])	#.gsub(/\n/, '<br/><br/>')
