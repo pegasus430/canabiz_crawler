@@ -14,7 +14,10 @@ class CannaLawBlogWorker
         
         begin
     		output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannalawblog.py"]) #cmd,
+        	logger.info 'BEFORE THE CONTENTS:::'
         	contents = JSON.parse(output.read)
+        	logger.info 'HERE ARE THE CONTENTS:::::'
+        	logger.info contents
         	if contents["articles"] != nil && contents["articles"].size > 0
 	        	addArticles(contents["articles"])	
 	        else 
