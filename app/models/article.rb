@@ -10,7 +10,7 @@ class Article < ActiveRecord::Base
     belongs_to :source
     
     validates :title, presence: true, length: {minimum: 3, maximum: 300}
-    #validates_uniqueness_of :title
+    validates_uniqueness_of :title
     validates_uniqueness_of :web_url
     
     #friendly url
