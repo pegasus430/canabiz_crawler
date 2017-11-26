@@ -101,7 +101,7 @@ class CannaLawBlogWorker
         	
         	logger.info 'ARTICLE CREATED!!!!'
         	logger.info 'ARTICLE'
-        	logger.info article
+        	logger.info article.id
 
 	        
 	        #CREATE ARTICLE CATEGORIES
