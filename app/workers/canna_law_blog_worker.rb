@@ -81,9 +81,9 @@ class CannaLawBlogWorker
 	        end
 	        
 	        logger.info 'AFTER STATE MATCHING:'
-	        
 
 			image_url = article["image_url"].gsub(/\A(\/\/)/, '') if article["image_url"]
+			image_url = "https://#{image_url}"
         	#CREATE ARTICLE
         	puts "this is the image url: " + image_url
         	puts "this is the title: " + article["title"]
