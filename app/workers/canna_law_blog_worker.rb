@@ -83,9 +83,9 @@ class CannaLawBlogWorker
 	        logger.info 'AFTER STATE MATCHING:'
 	        
 
-
+			image_url = article["image_url"].gsub(/\A(\/\/)/, '') if article["image_url"]
         	#CREATE ARTICLE
-        	puts "this is the image url: " + article["image_url"]
+        	puts "this is the image url: " + image_url
         	puts "this is the title: " + article["title"]
         	puts "this is the url: " + article["url"]
         	puts "this is the date: " + article["date"]
@@ -96,7 +96,7 @@ class CannaLawBlogWorker
         	date = article["date"] ? DateTime.parse(article["date"]) : DateTime.now
         	article = Article.new(
 				:title => article["title"], 
-				:remote_image_url => article["image_url"], 
+				:remote_image_url => image_url,
 				:source_id => source.id, 
 				:date => date, 
 				:web_url => article["url"], 
