@@ -93,10 +93,20 @@ class CannaLawBlogWorker
         	puts "this is the source: "
         	puts source.id
         	
-        	if article["date"] != nil
-        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_html"])	#.gsub(/\n/, '<br/><br/>')
-        	else 
-        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>')
+        	date = article["date"] ? DateTime.parse(article["date"]) : DateTime.now
+        	article = Article.new(
+				:title => article["title"], 
+				:remote_image_url => article["image_url"], 
+				:source_id => source.id, 
+				:date => date, 
+				:web_url => article["url"], 
+				:body => article["text_html"]
+        	)
+        	
+        	unless article.save
+	        	puts "*" * 35
+        		puts "Articel Errors: #{article.errors.messages}"
+        		puts "*" * 35
         	end
         	
         	logger.info 'ARTICLE CREATED!!!!'
