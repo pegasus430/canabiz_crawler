@@ -176,7 +176,3 @@
         </div>
     </article>
 </div>
-
-
-#amp page
-<%= sanitize @article.body, scrubber: AmpScrubber.new %>
