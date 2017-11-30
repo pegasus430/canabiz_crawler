@@ -80,8 +80,7 @@ class TheCannabistWorker
         	)
         	
         	unless article.save
-        		ScraperError.email('The Cannabist News', 
-        			"Article Save Error: #{article.errors.messages}").deliver_now
+        		puts "Article Save Error: #{article.errors.messages}"
         	end
         	
 	        #CREATE ARTICLE CATEGORIES

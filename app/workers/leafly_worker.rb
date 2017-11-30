@@ -80,8 +80,7 @@ class LeaflyWorker
         	)
         	
         	unless article.save
-        		ScraperError.email('Leafly News', 
-        			"Article Save Error: #{article.errors.messages}").deliver_now
+        		puts "Article Save Error: #{article.errors.messages}"
         	end
 	        
 	        #CREATE ARTICLE CATEGORIES

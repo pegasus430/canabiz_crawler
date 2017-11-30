@@ -81,8 +81,7 @@ class HighTimesWorker
         	)
         	
         	unless article.save
-        		ScraperError.email('HighTimes News', 
-        			"Article Save Error: #{article.errors.messages}").deliver_now
+        		puts "Article Save Error: #{article.errors.messages}"
         	end
 	        
 	        #CREATE ARTICLE CATEGORIES

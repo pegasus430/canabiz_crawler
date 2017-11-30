@@ -80,11 +80,8 @@ def perform()
         	)
         	
         	unless article.save
-        		ScraperError.email('Cannabis Culture News', 
-        			"Article Save Error: #{article.errors.messages}").deliver_now
+        		puts "Article Save Error: #{article.errors.messages}"
         	end
-	        
-
 	        
 	        #CREATE ARTICLE CATEGORIES
 	        #If no category, set category to random

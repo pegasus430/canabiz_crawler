@@ -80,8 +80,7 @@ class MjBizDailyWorker
         	)
         	
         	unless article.save
-        		ScraperError.email('MJ Biz Daily News', 
-        			"Article Save Error: #{article.errors.messages}").deliver_now
+        		puts "Article Save Error: #{article.errors.messages}"
         	end
 	        
 	        #CREATE ARTICLE CATEGORIES

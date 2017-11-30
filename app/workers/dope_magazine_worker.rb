@@ -80,10 +80,8 @@ class DopeMagazineWorker
         	)
         	
         	unless article.save
-        		ScraperError.email('Dope Magazine News', 
-        			"Article Save Error: #{article.errors.messages}").deliver_now
+        		puts "Article Save Error: #{article.errors.messages}"
         	end
-
 	        
 	        #CREATE ARTICLE CATEGORIES
 	        #If no category, set category to random

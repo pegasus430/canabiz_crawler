@@ -80,8 +80,7 @@ class FourTwentyTimesWorker
         	)
         	
         	unless article.save
-        		ScraperError.email('420 Times News', 
-        			"Article Save Error: #{article.errors.messages}").deliver_now
+        		puts "Article Save Error: #{article.errors.messages}"
         	end
 	        
 	        #CREATE ARTICLE CATEGORIES
