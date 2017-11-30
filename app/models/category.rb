@@ -1,4 +1,8 @@
 class Category < ActiveRecord::Base
+    
+    #so I can just say Category.active in query
+    scope :active, -> { where(active: true) }
+    
     has_many :article_categories
     has_many :articles, through: :article_categories 
     
