@@ -85,7 +85,8 @@ class CannaLawBlogWorker
         	)
         	
         	unless article.save
-        		ScraperError.email('CannaLawBlog News', "Article Save Error: #{article.errors.messages}").deliver_now
+        		ScraperError.email('CannaLawBlog News', 
+        			"Article Save Error: #{article.errors.messages}").deliver_now
         	end
 	        
 	        #CREATE ARTICLE CATEGORIES

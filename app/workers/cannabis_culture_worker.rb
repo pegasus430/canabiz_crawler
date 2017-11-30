@@ -18,11 +18,11 @@ def perform()
         	if contents["articles"] != nil && contents["articles"].size > 0
 	        	addArticles(contents["articles"])	
 	        else 
-	        	ScraperError.email('CannabisCulture News', 'No Articles were returned').deliver	
+	        	ScraperError.email('CannabisCulture News', 'No Articles were returned').deliver_now	
 	        end
         
         rescue => ex
-        	ScraperError.email('CannabisCulture News', ex.message).deliver
+        	ScraperError.email('CannabisCulture News', ex.message).deliver_now
 		end
     end
     
@@ -68,14 +68,21 @@ def perform()
 	            end
 	        end
 	        
-
-	        	puts "this is the image url: " + article["image_url"]
-	        	
-	        	if article["date"] != nil
-	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_html"])	#.gsub(/\n/, '<br/><br/>')
-	        	else 
-	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>')
-	        	end
+	        #CREATE ARTICLE
+	        date = article["date"] ? DateTime.parse(article["date"]) : DateTime.now
+        	article = Article.new(
+				:title => article["title"], 
+				:remote_image_url => article["image_url"],
+				:source_id => source.id, 
+				:date => date, 
+				:web_url => article["url"], 
+				:body => article["text_html"]
+        	)
+        	
+        	unless article.save
+        		ScraperError.email('Cannabis Culture News', 
+        			"Article Save Error: #{article.errors.messages}").deliver_now
+        	end
 	        
 
 	        

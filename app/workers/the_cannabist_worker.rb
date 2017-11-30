@@ -17,11 +17,11 @@ class TheCannabistWorker
         	if contents["articles"] != nil && contents["articles"].size > 0
 	        	addArticles(contents["articles"])	
 	        else 
-	        	ScraperError.email('TheCannabist News', 'No Articles were returned').deliver	
+	        	ScraperError.email('TheCannabist News', 'No Articles were returned').deliver_now	
 	        end
         
         rescue => ex
-        	ScraperError.email('TheCannabist News', ex.message).deliver
+        	ScraperError.email('TheCannabist News', ex.message).deliver_now
 		end
     end    
 	
@@ -68,28 +68,22 @@ class TheCannabistWorker
 	            end
 	        end
 	        
-
-	        #if (article["image_url"] != nil)
-	        
-	        	#data = open(article["image_url"])
-	        	#@image_stored = File.new(data)
-
-	        	#CREATE ARTICLE
-	        	#missing abstract right now
-	        	
-	        	if article["date"] != nil
-	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>'))	
-	        	else 
-	        		article = Article.create(:title => article["title"], :remote_image_url => article["image_url"], :source_id => source.id, :date => DateTime.now, :web_url => article["url"], :body => article["text_html"]) #.gsub(/\n/, '<br/><br/>'))
-	        	end
-	        #else 
-	    		#CREATE ARTICLE
-	        	#missing abstract right now
-	        #	article = Article.create(:title => article["title"], :source_id => source.id, :date => DateTime.parse(article["date"]), :web_url => article["url"], :body => article["text_plain"].gsub(/\n/, '<br/><br/>'))
-	        #end
-	        
-
-	        
+			#CREATE ARTICLE
+	        date = article["date"] ? DateTime.parse(article["date"]) : DateTime.now
+        	article = Article.new(
+				:title => article["title"], 
+				:remote_image_url => article["image_url"],
+				:source_id => source.id, 
+				:date => date, 
+				:web_url => article["url"], 
+				:body => article["text_html"]
+        	)
+        	
+        	unless article.save
+        		ScraperError.email('The Cannabist News', 
+        			"Article Save Error: #{article.errors.messages}").deliver_now
+        	end
+        	
 	        #CREATE ARTICLE CATEGORIES
 	        #If no category, set category to random
 	        if relateCategoriesSet.empty?
