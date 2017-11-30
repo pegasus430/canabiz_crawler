@@ -14,19 +14,16 @@ class CannaLawBlogWorker
         
         begin
     		output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannalawblog.py"]) #cmd,
-        	logger.info 'BEFORE THE CONTENTS:::'
         	contents = JSON.parse(output.read)
-        	logger.info 'HERE ARE THE CONTENTS:::::'
 
         	if contents["articles"] != nil && contents["articles"].size > 0
-        		logger.info 'IN ARTICLE IF STATEMENT:::::'
 	        	addArticles(contents["articles"])	
 	        else 
-	        	ScraperError.email('CannaLawBlog News', 'No Articles were returned').deliver	
+	        	ScraperError.email('CannaLawBlog News', 'No Articles were returned').deliver_now	
 	        end
         
         rescue => ex
-        	ScraperError.email('CannaLawBlog News', ex.message).deliver
+        	ScraperError.email('CannaLawBlog News', ex.message).deliver_now
 		end
            	
     end
@@ -38,13 +35,8 @@ class CannaLawBlogWorker
         @states = State.all
         source = Source.find_by name: 'Canna Law Blog'
         
-        logger.info 'GLOBAL VARIABLES DECLARED:::::'
-        logger.info 'source'
-        logger.info source
-        
         articles.each do |article|
         	
-        	logger.info 'IN ARTICLE LOOP:::::'
 	        #MATCH ARTICLE CATEGORIES BASED ON KEYWORDS IN CATEGORY ARRAYS
 	        relateCategoriesSet = Set.new
 	        @categories.each do |category|
@@ -57,8 +49,6 @@ class CannaLawBlogWorker
 	                end
 	            end
 	        end
-	        
-	        logger.info 'AFTER CATEGORY MATCHING:'
 	        
 	        #MATCH ARTICLE STATES
 	        relateStatesSet = Set.new
@@ -79,19 +69,10 @@ class CannaLawBlogWorker
 	                end
 	            end
 	        end
-	        
-	        logger.info 'AFTER STATE MATCHING:'
 
+			#CREATE ARTICLE
 			image_url = article["image_url"].gsub(/\A(\/\/)/, '') if article["image_url"]
-			image_url = "https://#{image_url}"
-        	#CREATE ARTICLE
-        	puts "this is the image url: " + image_url
-        	puts "this is the title: " + article["title"]
-        	puts "this is the url: " + article["url"]
-        	puts "this is the date: " + article["date"]
-        	puts article["text_html"].present?
-        	puts "this is the source: "
-        	puts source.id
+			image_url = "https://#{image_url}" if image_url
         	
         	date = article["date"] ? DateTime.parse(article["date"]) : DateTime.now
         	article = Article.new(
@@ -104,15 +85,8 @@ class CannaLawBlogWorker
         	)
         	
         	unless article.save
-	        	puts "*" * 35
-        		puts "Articel Errors: #{article.errors.messages}"
-        		puts "*" * 35
+        		ScraperError.email('CannaLawBlog News', "Article Save Error: #{article.errors.messages}").deliver_now
         	end
-        	
-        	logger.info 'ARTICLE CREATED!!!!'
-        	logger.info 'ARTICLE'
-        	logger.info article.id
-
 	        
 	        #CREATE ARTICLE CATEGORIES
 	        #If no category, set category to random
@@ -124,14 +98,10 @@ class CannaLawBlogWorker
 	            ArticleCategory.create(:category_id => setObject, :article_id => article.id)
 	        end
 	        
-	        logger.info 'ARTICLE CATEGORIES CREATED:'
-	        
 	        #CREATE ARTICLE STATES
 	        relateStatesSet.each do |setObject|
 	            ArticleState.create(:state_id => setObject, :article_id => article.id)
 	        end 
-	        
-	        logger.info 'ARTICLE STATES CREATED'
 	        
 	   end #end of article loop
 	   
