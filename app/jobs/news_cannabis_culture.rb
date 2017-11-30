@@ -7,6 +7,9 @@ class NewsCannabisCulture < ActiveJob::Base
     end
     
     def scrapeCannabisCulture()
+    	
+    	require "json"
+        require 'open-uri'
 
 		begin
 	        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_cannabisculture.py"]) #cmd,
