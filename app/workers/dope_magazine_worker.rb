@@ -13,16 +13,17 @@ class DopeMagazineWorker
         require 'open-uri'
         
         begin
-			output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_dopemagazine.py"]) #cmd,
-        	contents = JSON.parse(output.read)
-        	if contents["articles"] != nil && contents["articles"].size > 0
-	        	addArticles(contents["articles"])	
+	        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_dopemagazine.py"]) #cmd,
+	        contents = JSON.parse(output.read)
+	        
+			#call method
+	        if contents["articles"].present?
+	        	NewsScraperHelper.new(contents["articles"], 'Dope Magazine').addArticles
 	        else 
-	        	ScraperError.email('DopeMagazine News', 'No Articles were returned').deliver_now	
+	        	ScraperError.email('Dope Magazine News', 'No Articles were returned').deliver_now	
 	        end
-        
-        rescue => ex
-        	ScraperError.email('DopeMagazine News', ex.message).deliver_now
+	    rescue => ex
+        	ScraperError.email('Dope Magazine News', ex.message).deliver_now
 		end
     end
     
