@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130211455) do
+ActiveRecord::Schema.define(version: 20171201182238) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 20171130211455) do
 
   add_index "articles", ["slug"], name: "index_articles_on_slug", unique: true
 
+  create_table "average_prices", force: :cascade do |t|
+    t.integer  "product_id"
+    t.decimal  "average_price"
+    t.string   "average_price_unit"
+    t.decimal  "units_sold"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.string   "keywords"
@@ -53,6 +62,7 @@ ActiveRecord::Schema.define(version: 20171130211455) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.string   "category_type"
   end
 
   add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true
@@ -62,9 +72,115 @@ ActiveRecord::Schema.define(version: 20171130211455) do
     t.boolean "active"
   end
 
+  create_table "dispensaries", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image"
+    t.string   "location"
+    t.string   "city"
+    t.string   "about"
+    t.string   "slug"
+    t.integer  "state_id"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dispensaries", ["slug"], name: "index_dispensaries_on_slug", unique: true
+
+  create_table "dispensary_source_products", force: :cascade do |t|
+    t.integer  "dispensary_source_id"
+    t.integer  "product_id"
+    t.string   "image"
+    t.decimal  "price"
+    t.decimal  "price_gram"
+    t.decimal  "price_eighth"
+    t.decimal  "price_quarter"
+    t.decimal  "price_half_gram"
+    t.decimal  "price_two_grams"
+    t.decimal  "price_half_ounce"
+    t.decimal  "price_ounce"
+    t.decimal  "price_80mg"
+    t.decimal  "price_160mg"
+    t.decimal  "price_180mg"
+    t.decimal  "price_100mg"
+    t.decimal  "price_40mg"
+    t.decimal  "price_25mg"
+    t.decimal  "price_150mg"
+    t.decimal  "price_10mg"
+    t.decimal  "price_50mg"
+    t.decimal  "price_240mg"
+    t.decimal  "price_1mg"
+    t.decimal  "price_2_5mg"
+    t.decimal  "one"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dispensary_sources", force: :cascade do |t|
+    t.integer  "dispensary_id"
+    t.integer  "source_id"
+    t.integer  "state_id"
+    t.string   "name"
+    t.string   "slug"
+    t.string   "image"
+    t.string   "location"
+    t.string   "city"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "source_rating"
+    t.string   "source_url"
+    t.time     "monday_open_time"
+    t.time     "tuesday_open_time"
+    t.time     "wednesday_open_time"
+    t.time     "thursday_open_time"
+    t.time     "friday_open_time"
+    t.time     "saturday_open_time"
+    t.time     "sunday_open_time"
+    t.time     "monday_close_time"
+    t.time     "tuesday_close_time"
+    t.time     "wednesday_close_time"
+    t.time     "thursday_close_time"
+    t.time     "friday_close_time"
+    t.time     "saturday_close_time"
+    t.time     "sunday_close_time"
+    t.string   "facebook"
+    t.string   "instagram"
+    t.string   "twitter"
+    t.string   "website"
+    t.string   "email"
+    t.string   "phone"
+    t.integer  "min_age"
+    t.datetime "last_menu_update"
+    t.string   "street"
+    t.string   "zip_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dispensary_sources", ["slug"], name: "index_dispensary_sources_on_slug", unique: true
+
   create_table "hashtags", force: :cascade do |t|
     t.string "name"
   end
+
+  create_table "products", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image"
+    t.boolean  "ancillary"
+    t.string   "product_type"
+    t.string   "slug"
+    t.string   "description"
+    t.boolean  "featured_product"
+    t.string   "short_description"
+    t.integer  "category_id"
+    t.decimal  "year"
+    t.decimal  "month"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["slug"], name: "index_products_on_slug", unique: true
 
   create_table "source_hashtags", force: :cascade do |t|
     t.integer "source_id"
@@ -82,6 +198,7 @@ ActiveRecord::Schema.define(version: 20171130211455) do
     t.string   "slug"
     t.datetime "last_run"
     t.boolean  "active"
+    t.string   "source_type"
   end
 
   add_index "sources", ["slug"], name: "index_sources_on_slug", unique: true
@@ -94,6 +211,7 @@ ActiveRecord::Schema.define(version: 20171130211455) do
     t.datetime "updated_at"
     t.string   "logo"
     t.string   "slug"
+    t.boolean  "product_state"
   end
 
   add_index "states", ["slug"], name: "index_states_on_slug", unique: true
@@ -142,5 +260,29 @@ ActiveRecord::Schema.define(version: 20171130211455) do
 
   add_index "users", ["password_reset_token"], name: "index_users_on_password_reset_token"
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true
+
+  create_table "vendor_products", force: :cascade do |t|
+    t.integer  "vendor_id"
+    t.integer  "product_id"
+    t.decimal  "units_sold"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "vendors", force: :cascade do |t|
+    t.string   "slug"
+    t.string   "name"
+    t.string   "description"
+    t.string   "linkedin_name"
+    t.string   "twitter_name"
+    t.integer  "year_of_establishment"
+    t.string   "specialization"
+    t.string   "website"
+    t.string   "facebook_link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "vendors", ["slug"], name: "index_vendors_on_slug", unique: true
 
 end

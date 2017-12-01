@@ -1,6 +1,12 @@
 class Article < ActiveRecord::Base
-    #attr_accessible :remote_file_url
     
+    # only showing articles for active sources
+    scope :active_source, -> { 
+        source_ids = Source.where(:active => true).pluck(:id)
+        where("source_id IN (?)", source_ids)
+    }
+    
+    #relationships
     has_many :article_categories
     has_many :categories, through: :article_categories
 
@@ -9,6 +15,7 @@ class Article < ActiveRecord::Base
 
     belongs_to :source
     
+    #validations
     validates :title, presence: true, length: {minimum: 3, maximum: 300}
     validates_uniqueness_of :title
     validates_uniqueness_of :web_url
@@ -37,9 +44,4 @@ class Article < ActiveRecord::Base
             end
         end
     end
-    
-    #search records
-    #def self.search(search)
-      # all :conditions =>  (search ? { :title => search.split} : []) 
-    #end
 end

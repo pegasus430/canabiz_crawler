@@ -2,13 +2,19 @@ class Category < ActiveRecord::Base
     
     #so I can just say Category.active in query
     scope :active, -> { where(active: true) }
+    scope :news, -> { where(category_type: 'News') }
+    scope :products, -> { where(category_type: 'Products') }
     
+    #relationships
     has_many :article_categories
     has_many :articles, through: :article_categories 
     
     has_many :user_categories
     has_many :users, through: :user_categories 
     
+    has_many :products
+    
+    #validations
     validates :name, presence: true, length: { minimum: 3, maximum: 25 }
     validates_uniqueness_of :name
     

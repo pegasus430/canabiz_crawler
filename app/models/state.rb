@@ -1,11 +1,15 @@
 class State < ActiveRecord::Base
     
+    #relationships
     has_many :article_states
     has_many :articles, through: :article_states
     
     has_many :user_states
     has_many :users, through: :user_states 
     
+    has_many :dispensaries
+    
+    #validations
     validates :name, presence: true, length: {minimum: 1, maximum: 50}
     validates :abbreviation, presence: true, length: {minimum: 1, maximum: 3}
     validates_uniqueness_of :name
