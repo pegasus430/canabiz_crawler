@@ -20,10 +20,10 @@ class HighTimesWorker
 	        if contents["articles"].present?
 	        	NewsScraperHelper.new(contents["articles"], 'HighTimes').addArticles
 	        else 
-	        	ScraperError.email('HighTimes News', 'No Articles were returned').deliver	
+	        	ScraperError.email('HighTimes News', 'No Articles were returned').deliver_now	
 	        end
 	    rescue => ex
-        	ScraperError.email('HighTimes News', ex.message).deliver
+        	ScraperError.email('HighTimes News', ex.message).deliver_now
 		end
            	
     end
