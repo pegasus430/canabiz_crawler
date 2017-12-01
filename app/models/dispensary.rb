@@ -33,35 +33,5 @@ class Dispensary < ActiveRecord::Base
         end
     end
     
-    #FOR SEARCHING
-    if Rails.env.production? 
-        include Elasticsearch::Model
-        include Elasticsearch::Model::Callbacks
-        
-        settings index: { number_of_shards: 1 } do
-            mappings dynamic: 'false' do
-                indexes :name, analyzer: 'english'
-                indexes :location, analyzer: 'english'
-                #indexes :state.name, analyzer: 'english' --> should we create / use state_name string variable? 
-            end
-        end        
-    end
-    
-    
-    def self.search(query)
-        __elasticsearch__.search(
-            {
-                query: {
-                    multi_match: {
-                        query: query,
-                        fields: ['title^10', 'body']
-                    }
-                }
-            }
-        )
-    end
-    
-
-    
     
 end #end dispensary class
