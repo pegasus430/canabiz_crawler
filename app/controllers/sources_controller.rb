@@ -47,10 +47,10 @@ class SourcesController < ApplicationController
     
     def show
         if (@source.active == true)
-            @recents = @source.articles.includes(:source).includes(:categories).
-                            includes(:states).order("created_at DESC").page(params[:page]).per_page(24)
-            @mostviews = @source.articles.includes(:source).includes(:categories).
-                            includes(:states).order("num_views DESC").page(params[:page]).per_page(24)
+            @recents = @source.articles.includes(:source, :categories, :states).
+                            order("created_at DESC").page(params[:page]).per_page(24)
+            @mostviews = @source.articles.includes(:source, :categories, :states).
+                            order("num_views DESC").page(params[:page]).per_page(24)
                             
             expires_in 10.minutes, :public => true
         else
@@ -102,7 +102,8 @@ class SourcesController < ApplicationController
         end
         
         def source_params
-          params.require(:source).permit(:name, :source_type, :article_logo, :sidebar_logo, :url, :slug, :last_run, :active)
+          params.require(:source).permit(:name, :source_type, :article_logo, 
+                                    :sidebar_logo, :url, :slug, :last_run, :active)
         end  
         
         def sort_column

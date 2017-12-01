@@ -108,7 +108,7 @@ class CategoriesController < ApplicationController
         end
         
         def category_params
-          params.require(:category).permit(:name, :keywords, :active, :category_type)
+          params.require(:category).permit(:name, :keywords, :active, :category_type, product_ids:[])
         end  
         
         def sort_column

@@ -96,10 +96,9 @@ class UsersController < ApplicationController
     end     
   
     def show
-        #my feed articles - only for appropriate source for now
-        source_ids = @sources.pluck(:id)
-        @recents = Article.where("source_id IN (?)", source_ids).order("created_at DESC").
-                    includes(:source).includes(:states).includes(:categories).
+        #my feed articles
+        @recents = Article.active_source.order("created_at DESC").
+                    includes(:source, :states, :categories).
                     paginate(:page => params[:page], :per_page => 24)
         
         state_article_ids = []
@@ -128,10 +127,10 @@ class UsersController < ApplicationController
        
         #saved articles
         article_ids = UserArticle.where(:user_id => current_user.id, :saved => true).pluck(:article_id)
-        @savedArticles = Article.where(id: article_ids).includes(:source).includes(:states).includes(:categories)
+        @savedArticles = Article.where(id: article_ids).includes(:source, :states, :categories)
         
         #trending articles for sidebar - only for active sources
-        @trendingArticles = Article.where("source_id IN (?)", source_ids).order("num_views DESC").limit(24)
+        @trendingArticles = Article.active_source.order("num_views DESC").limit(24)
     end
     
     #user adds or removes source from saved sources
