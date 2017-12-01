@@ -24,9 +24,40 @@ class ApplicationController < ActionController::Base
     end
   end 
   
+  def site_visitor_state
+    #geocode user api
+    if request.location && request.location.state
+        @site_visitor_state = State.where(name: request.location.state).first
+    end
+  end
+  
+  def site_visitor_city
+    #geocode user api
+    if request.location && request.location.city
+        @site_visitor_city = request.location.city
+    end
+  end
+  
+  def site_visitor_zip
+    #geocode user api
+    if request.location && request.location.zip_code
+        @site_visitor_zip = request.location.zip_code
+    end
+  end
+  
+  def site_visitor_ip
+    #geocode user api
+    if request.location && request.location.ip
+        @site_visitor_ip = request.location.ip
+    end
+  end
+  
   def populate_lists
     @categories = Category.all.order("name ASC")
+    @news_categories = Category.news.order("name ASC")
+    @product_categories = Category.news.order("name ASC")
     @states = State.all.order("name ASC")
+    @product_states = @states.where(product_state: true)
     @sources = Source.where(:active => true).order("name ASC")
     expires_in 10.days, :public => true
   end

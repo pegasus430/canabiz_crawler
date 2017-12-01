@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
     before_action :set_article, only: [:edit, :update, :destroy, :show, :tweet, :send_tweet]
-    before_action :require_admin, only: [:edit, :update, :destroy, :admin, :digest, :tweet]
+    before_action :require_admin, only: [:edit, :update, :destroy, :admin, :digest, :tweet, :index]
     skip_before_action :verify_authenticity_token #for saving article via ajax
 
     #--------ADMIN PAGE-------------------------
@@ -147,6 +147,16 @@ class ArticlesController < ApplicationController
     
     #--------ADMIN PAGE-------------------------
     
+    def index
+        #only showing articles for active sources 
+        @recents = Article.active_source.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        @mostviews = Article.active_source.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+        
+        respond_to do |format|
+          format.html
+          format.js # add this line for your js template
+        end
+    end
 
     def new
       @article = Article.new
@@ -199,9 +209,6 @@ class ArticlesController < ApplicationController
             end
                                         
         end
-        
-        logger.info 'RELATED ARTICLES: '
-        logger.info @related_articles.length
         
         #same source articles
         @same_source_articles = Article.where(source_id: @article.source).
@@ -264,7 +271,7 @@ class ArticlesController < ApplicationController
             end
         end
         def article_params
-            params.require(:article).permit(:title, :abstract, :body, :date, :image, :remote_image_url, 
+            params.require(:article).permit(:title, :abstract, :body, :date, :image, :remote_image_url, :web_url,
                                     :source_id, :include_in_digest, state_ids: [], category_ids: [])
         end
       

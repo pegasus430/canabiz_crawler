@@ -53,13 +53,14 @@ class CategoriesController < ApplicationController
     
     def show
         #only show active sources
-        source_ids = @sources.pluck(:id)
-        @recents = @category.articles.where("source_id IN (?)", source_ids).
-                        includes(:source).includes(:categories).includes(:states).
-                        order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-        @mostviews = @category.articles.where("source_id IN (?)", source_ids).
-                        includes(:source).includes(:categories).includes(:states).
-                        order("num_views DESC").paginate(:page => params[:page], :per_page => 24) 
+        @recents = @category.articles.active_source.
+                        includes(:source, :categories, :states).
+                        order("created_at DESC").
+                        paginate(:page => params[:page], :per_page => 24)
+        @mostviews = @category.articles.active_source.
+                        includes(:source, :categories, :states).
+                        order("num_views DESC").
+                        paginate(:page => params[:page], :per_page => 24) 
                         
         expires_in 10.minutes, :public => true
     end
