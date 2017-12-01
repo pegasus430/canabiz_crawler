@@ -11,10 +11,6 @@ class DispensarySource < ActiveRecord::Base
     
     #validates_uniqueness_of :product_id, :scope => :dispensary_id #no duplicate products per dispensary
     
-    #geocode location
-    geocoded_by :location
-    after_validation :geocode
-    
     #photo aws storage
     mount_uploader :image, PhotoUploader
     
