@@ -9,6 +9,10 @@ class Dispensary < ActiveRecord::Base
     has_many :dispensary_sources
     has_many :sources, through: :dispensary_sources
     
+    #geocode location
+    geocoded_by :location
+    after_validation :geocode, if: ->(obj){ obj.location.present? and obj.location_changed? }
+    
     #friendly url
     extend FriendlyId
     friendly_id :name, use: :slugged

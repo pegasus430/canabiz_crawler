@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 gem 'will_paginate', '3.0.7' # PAGINATION
 gem 'bootstrap-will_paginate', '0.0.10' # BOOTSTRAP STYLING
 gem 'bootstrap-sass', '~> 3.3.6' # BOOTSTRAP STYLING
+gem 'geocoder', '~> 1.4', '>= 1.4.4' #GET USER / DISPENSARY LOCATION
+gem 'gmaps4rails', '~> 2.1', '>= 2.1.2' #INTEGRATE GOOGLE MAPS
 gem 'httparty', '~> 0.13.7' #External API Integration
 gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a string and output it as a link
@@ -37,14 +39,18 @@ gem 'premailer-rails', '~> 1.9', '>= 1.9.5' # to style emails
 gem 'twitter' #TWITTER
 gem 'oauth', '~> 0.5.1' #Needed for Twitter
 
-#gems for image management
-gem 'carrierwave', '~> 0.11.2'
-gem 'mini_magick', '~> 4.5', '>= 4.5.1'
-gem 'fog', '~> 1.38'
-gem 'figaro', '~> 1.1', '>= 1.1.1'
-gem 'unf', '~> 0.1.4'
+#gems for image management and storing images in AWS
+gem 'carrierwave', '~> 0.11.2' #rails tool for file uploads
+gem 'mini_magick', '~> 4.5', '>= 4.5.1' #handles file sizes - so they aren't too big - can resize images
+gem 'fog', '~> 1.38' #connects to AWS CDN
+gem 'figaro', '~> 1.1', '>= 1.1.1' #protects environment variables - so they don't go up to GitHub or anything
+gem 'unf', '~> 0.1.4' #protects against any issues with carrier wave
 gem 'carrierwave-imageoptimizer', '~> 1.4'
-gem 'jpegoptim', '~> 0.2.1' #maybe?
+gem 'jpegoptim', '~> 0.2.1'
+
+#FONT AWESOME
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
+gem 'font-awesome-sass', '~> 4.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
