@@ -24,7 +24,27 @@
                 <div class="col-sm-8">
                     False: <%= f.radio_button :active, false, :checked => true , :value => false %>  True: <%= f.radio_button :active, true, :value => true%>
                 </div>
-            </div>            
+            </div> 
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Type</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.select :category_type, ['News', 'Product']%>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>Products</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <%= f.collection_check_boxes :product_ids, Product.all, :id, :name do |cb| %>
+                            <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+                        <% end %>
+                    </div>
+                </div>            
+            </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <%= f.submit class: 'btn btn-lg btn-xlarge'%>
