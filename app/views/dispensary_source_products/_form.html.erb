@@ -1,0 +1,111 @@
+<%= render 'shared/errors', obj: @dispensary_source_product %>
+
+<div class='row'>
+    <div class='col-xs-12'>
+        <%= form_for(@dispensary_source_product, :html => {class:"form-horizontal", role: "form"}) do |f| %>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>Dispensary Source Record</b>
+                    </div>
+                   <div class="col-sm-8">
+                     <%= f.collection_select :dispensary_source_id, DispensarySource.order('created_at DESC'), :id, :name, :include_blank =>true %>
+                   </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>Product</b>
+                    </div>
+                   <div class="col-sm-8">
+                     <%= f.collection_select :product_id, Product.all, :id, :name, :include_blank =>true %>
+                   </div>
+                </div>
+            </div>  
+  
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Image</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :image, class: "form-control", placeholder: "Image", autofocus: true %>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Price</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :price, :class => 'text_field', :step => 0.01 %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Price Half Gram</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :price_half_gram, :class => 'text_field', :step => 0.01 %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Price Gram</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :price_gram, :class => 'text_field', :step => 0.01 %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Price Two Grams</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :price_two_grams, :class => 'text_field', :step => 0.01 %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Price Eighth</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :price_eighth, :class => 'text_field', :step => 0.01 %>
+                </div>
+            </div>            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Price Quarter</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :price_quarter, :class => 'text_field', :step => 0.01 %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Price Half Ounce</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :price_half_ounce, :class => 'text_field', :step => 0.01 %>
+                </div>
+            </div>    
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Price Ounce</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :price_ounce, :class => 'text_field', :step => 0.01 %>
+                </div>
+            </div>            
+            
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <%= f.submit class: 'btn btn-lg btn-xlarge'%>
+                </div>
+            </div>
+        <% end %>
+        <div class="center">
+            <%= link_to 'Return to Dispensary Product Listing', dispensary_source_products_admin_path %>
+        </div>
+    </div>
+</div>

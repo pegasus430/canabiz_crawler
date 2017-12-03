@@ -1,0 +1,94 @@
+<%= render 'shared/errors', obj: @vendor %>
+
+<div class='row'>
+    <div class='col-xs-12'>
+        <%= form_for(@vendor, :html => {class:"form-horizontal", role: "form"}) do |f| %>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :name %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :name, class: "form-control", placeholder: "Name", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :description %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :description, class: "form-control", placeholder: "Description", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :linkedin_name %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :linkedin_name, class: "form-control", placeholder: "LinkedIn Name", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :twitter_name %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :twitter_name, class: "form-control", placeholder: "Twitter Name", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :year_of_establishment %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :year_of_establishment, class: "form-control", placeholder: "Year of Establishment", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :specialization %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :specialization, class: "form-control", placeholder: "Specialization", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :website %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :website, class: "form-control", placeholder: "Website", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :facebook_link %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :facebook_link, class: "form-control", placeholder: "Facebook Link", autofocus: true %>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>Products</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <%= f.collection_check_boxes :product_ids, Product.all, :id, :name do |cb| %>
+                            <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+                        <% end %>
+                    </div>
+                </div>            
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <%= f.submit class: 'btn btn-lg btn-xlarge'%>
+                </div>
+            </div>
+        <% end %>
+        <div class="center">
+            <%= link_to 'Return to Vendow Listing', vendor_admin_path %>
+        </div>
+    </div>
+</div>

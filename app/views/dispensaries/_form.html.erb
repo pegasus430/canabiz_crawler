@@ -1,0 +1,57 @@
+<%= render 'shared/errors', obj: @dispensary %>
+<div class='row'>
+    <div class='col-xs-12'>
+        <%= form_for(@dispensary, :html => {class:"form-horizontal", role: "form"}) do |f| %>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :name %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :name, class: "form-control", placeholder: "Name", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :image %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :image, class: "form-control", placeholder: "Image Url", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :location %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :location, class: "form-control", placeholder: "Location", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :city %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :city, class: "form-control", placeholder: "City", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>State</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <%= f.collection_select :state_id, State.all, :id, :name, :include_blank =>true %>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <%= f.submit class: 'btn btn-lg btn-xlarge'%>
+                </div>
+            </div> 
+        <% end %>
+        <div class="center">
+            <%= link_to 'Return to Dispensary Listing', dispensary_admin_path %>
+        </div>
+    </div>
+</div>

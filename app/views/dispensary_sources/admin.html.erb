@@ -1,0 +1,103 @@
+<style>
+    body {overflow-x: auto;}
+</style>
+
+<h2 align = 'center'>All Dispensary Sources</h2>
+<h3 align = 'center'><%= link_to 'Admin Home', admin_path %></h3>
+<h3 align = 'center'><%= link_to 'Create New Dispensary Source', new_dispensary_source_path %></h3>
+    
+<!--Import CSV File-->
+<div align = 'center'>
+    <h3>Import Dispensary Sources</h3>
+    <%= form_tag import_dispensary_sources_path, multipart: true do %>
+        <%= file_field_tag :file, :style => 'margin-left: 80px;' %>
+        </br>
+        <%=submit_tag "Import", class: 'btn btn-default'%>
+    <% end %>    
+</div>
+
+<!--Export CSV File-->
+<div align = 'center'>
+    <h3>Export Dispensary Sources</h3>
+    <%=link_to "CSV File", dispensary_sources_admin_path(format: "csv"), class: 'btn btn-default' %>
+</div>
+    
+<!--SEARCH BAR-->
+</br>
+<div align = 'center'>
+  <%= form_tag search_dispensary_sources_path do %>
+    <input name='query' placeholder='Search Dispensary Sources' type = 'text' autocomplete='on'>
+  <% end %>
+</div>
+</br>
+    
+<div align = 'center'><%= will_paginate %></div>
+    
+<%= form_tag destroy_multiple_dispensary_sources_path, method: :delete do %>
+    <table class = 'table' id = 'admin-table'>
+        <th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
+        <th><%= sortable "name" %></th>
+        <th><%= sortable "id" %></th>
+        <th><%= sortable "updated_at" %></th>
+        <th><%= sortable "created_at" %></th>
+        <th><%= sortable "source_id" %></th>
+        <th><%= sortable "dispensary_id" %></th>
+        <th><%= sortable "image" %></th>
+        <th><%= sortable "location" %></th>
+        <th><%= sortable "latitude" %></th>
+        <th><%= sortable "longitude" %></th>
+        <th><%= sortable "city" %></th>
+        <th><%= sortable "state_id" %></th>
+        <th><%= sortable "source_rating" %></th>
+        <th><%= sortable "source_url" %></th>
+        <th><%= sortable "facebook" %></th>
+        <th><%= sortable "instagram" %></th>
+        <th><%= sortable "twitter" %></th>
+        <th><%= sortable "website" %></th>
+        <th><%= sortable "email" %></th>
+        <th><%= sortable "phone" %></th>
+        <th><%= sortable "min_age" %></th>
+        <th>Products</th>
+        <th>Edit</th>
+        <th>Delete</th>
+            
+        <% @dispensary_sources.each do |dispensary| %>
+            <tr>
+                <td><%= check_box_tag "dispensary_sources[]", dispensary.id %></td>
+                <td><%= dispensary.name %></td>
+                <td><%= dispensary.id %></td>
+                <td><%= dispensary.updated_at.strftime("%B %d, %Y | %I:%M %p") %></td>
+                <td><%= dispensary.created_at.strftime("%B %d, %Y | %I:%M %p") %></td>
+                <td><%= dispensary.source.name if dispensary.source %></td>
+                <td><%= dispensary.dispensary.name if dispensary.dispensary %></td>
+                <td><%= dispensary.image.to_s.truncate(50) if dispensary.image %></td>
+                <td><%= dispensary.location %></td>
+                <td><%= dispensary.latitude %></td>
+                <td><%= dispensary.longitude %></td>
+                <td><%= dispensary.city %></td>
+                <td><%= dispensary.state.name if dispensary.state %></td>
+                <td><%= dispensary.source_rating %></td>
+                <td><%= dispensary.source_url %></td>
+                <td><%= dispensary.facebook %></td>
+                <td><%= dispensary.instagram %></td>
+                <td><%= dispensary.twitter %></td>
+                <td><%= dispensary.website %></td>
+                <td><%= dispensary.email %></td>
+                <td><%= dispensary.phone %></td>
+                <td><%= dispensary.min_age %></td>
+                
+                <td><% if dispensary.products.any? %>
+                    <%= render :partial => "products", :collection => dispensary.products, :as => :product %>
+                <% end %></td>
+                
+                <td><%= link_to "Edit", edit_dispensary_source_path(dispensary), class: "btn" %></td>
+                <td><%= link_to "Delete", dispensary_source_path(dispensary), method: :delete,
+                            data: { confirm: "Are you sure you want to delete this dispensary?"},
+                            class: "btn" %></td>
+            </tr>
+        <% end %>
+    </table>
+    <%= submit_tag "Delete selected" %>
+<% end %> 
+
+<div align = 'center'><%= will_paginate %></div>

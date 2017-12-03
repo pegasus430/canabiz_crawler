@@ -1,0 +1,86 @@
+<h2 align = 'center'>Products</h2>
+<h3 align = 'center'><%= link_to 'Admin Home', admin_path %></h3>
+<h3 align = 'center'><%= link_to 'Create New Product', new_product_path %></h3>
+
+
+
+<!--Import CSV File-->
+<div align = 'center'>
+  <h3>Import Products</h3>
+  <%= form_tag import_products_path, multipart: true do %>
+    <%= file_field_tag :file, :style => 'margin-left: 80px;' %>
+    </br>
+    <%=submit_tag "Import"%>
+  <% end %>    
+</div>
+
+<!--Export CSV File-->
+<div align = 'center'>
+    <h3>Export Products</h3>
+    <%=link_to "CSV File", product_admin_path(format: "csv"), class: 'btn btn-default' %>
+</div>
+
+<!--SEARCH BAR-->
+</br>
+<div align = 'center'>
+  <%= form_tag search_products_path do %>
+    <input name='query' placeholder='  Search Products' type = 'text' autocomplete='on'>
+  <% end %>
+</div>
+</br>
+
+<%= form_tag destroy_multiple_products_path, method: :delete do %>
+ 	<table class = 'table' id = 'admin-table'>
+		<th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
+		<th><%= sortable "name" %></th>
+		<th><%= sortable "id" %></th>
+		<th><%= sortable "image" %></th>
+		<th><%= sortable "description" %></th>
+		<th><%= sortable "featured_product" %></th>
+		<th><%= sortable "category_id" %></th>
+		<th><%= sortable "year" %></th>
+		<th><%= sortable "month" %></th>
+		<th>Vendors</th>
+		<th>Dispensaries</th>
+		<th>AveragePrices</th>
+		<th>Edit</th>
+		<th>Delete</th>
+      
+		<% @products.each do |product| %>
+		  <tr>
+		      <td><%= check_box_tag "products[]", product.id %></td>
+		      <td><%= product.name %></td>
+		      <td><%= product.id %></td>
+		      <td><%= product.image.to_s.truncate(50) if product.image %></td>
+		      <td><%= product.description %></td>
+		      <td><%= product.featured_product %></td>
+		      <td><%= product.category.name if product.category %></td>
+		      <td><%= product.year %></td>
+		      <td><%= product.month %></td>
+          	
+          	<td><% if product.vendors.any? %>
+	          		<!--since we are using dispensary product, we need to change this-->
+	              <%= render :partial => "vendors/listname", :collection => product.vendors, :as => :vendor %>
+	          <% end %></td>
+          
+	          <td><% if product.dispensary_sources.any? %>
+	          		<!--since we are using dispensary product, we need to change this-->
+	              <%= render :partial => "dispensary_sources/listname", :collection => product.dispensary_sources, :as => :dispensary %>
+	          <% end %></td>
+	          
+	          <td><% if product.average_prices.any? %>
+	          		<!--since we are using dispensary product, we need to change this-->
+	              <%= render :partial => "average_prices/list", :collection => product.average_prices, :as => :average_price %>
+	          <% end %></td>
+		
+		      <td><%= link_to "Edit", edit_product_path(product), class: "btn" %></td>
+		      <td><%= link_to "Delete", product_path(product), method: :delete,
+		                  data: { confirm: "Are you sure you want to delete this product?"},
+		                  class: "btn" %></td>
+		  </tr>
+		<% end %>
+    </table>
+    <%= submit_tag "Delete selected" %>
+<% end %>
+
+<div class = 'center'><%= will_paginate %></div>

@@ -1,0 +1,192 @@
+<%= render 'shared/errors', obj: @dispensary_source %>
+<div class='row'>
+    <div class='col-xs-12'>
+        <%= form_for(@dispensary_source, :html => {class:"form-horizontal", role: "form"}) do |f| %>
+            
+            
+            <!-- LOOKUPS -->
+
+            <h3 align="center">Lookups</h3>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>State</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <%= f.collection_select :state_id, State.all, :id, :name, :include_blank =>true %>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>Source</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <%= f.collection_select :source_id, Source.where(source_type: ['Dispensary', 'Both']), :id, :name, :include_blank =>true %>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>Dispensary (Duplicating)</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <%= f.collection_select :dispensary_id, Dispensary.all, :id, :name, :include_blank =>true %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GENERAL INFO -->
+
+            <h3 align="center">General Info</h3>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :name %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :name, class: "form-control", placeholder: "Name", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :image %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :image, class: "form-control", placeholder: "Image Url", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :website %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :website, class: "form-control", placeholder: "Website", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :location %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :location, class: "form-control", placeholder: "Location", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :street %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :street, class: "form-control", placeholder: "Street", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :city %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :city, class: "form-control", placeholder: "City", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :email %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :email, class: "form-control", placeholder: "Email", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Minimum Age</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :min_age, :class => 'form-control', :step => 0.01 %>
+                </div>
+            </div>
+
+            
+            <!-- SOCIAL MEDIA -->
+
+            <h3 align="center">Social Media</h3>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Facebook</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :facebook, class: "form-control", placeholder: "Facebook", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Instagram</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :instagram, class: "form-control", placeholder: "Instagram", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Twitter</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :twitter, class: "form-control", placeholder: "Twitter", autofocus: true %>
+                </div>
+            </div>
+
+            <!-- SPECIFIC TO SOURCE -->
+
+            <h3 align="center">Specific to Source</h3>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :source_rating %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :source_rating, :class => 'form-control', :step => 0.01 %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Source Url</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :source_url, class: "form-control", placeholder: "Source Url", autofocus: true %>
+                </div>
+            </div>
+
+
+            <!-- HOURS -->
+            
+            <h3 align = 'center'>Hours</h3>
+            <div class="form-group">
+                <div class = 'wrap extra-wrap-width'>
+                    <table style = 'width: 900px; margin: 0 auto;'>
+                        <tr><td>Monday Open Time: </td><td><%= f.time_field :monday_open_time, :class => 'text_field'%></td>
+                            <td>Monday Close Time: </td><td><%= f.time_field :monday_close_time, :class => 'text_field'%></td>
+                            <td>Tuesday Open Time: </td><td><%= f.time_field :tuesday_open_time, :class => 'text_field'%></td>
+                            <td>Tuesday Close Time: </td><td><%= f.time_field :tuesday_close_time, :class => 'text_field'%></td></tr>
+                        <tr><td>Wednesday Open Time: </td><td><%= f.time_field :wednesday_open_time, :class => 'text_field'%></td>
+                            <td>Wednesday Close Time: </td><td><%= f.time_field :wednesday_close_time, :class => 'text_field'%></td>
+                            <td>Thursday Open Time: </td><td><%= f.time_field :thursday_open_time, :class => 'text_field'%></td>
+                            <td>Thursday Close Time: </td><td><%= f.time_field :thursday_close_time, :class => 'text_field'%></td></tr>
+                        <tr><td>Friday Open Time: </td><td><%= f.time_field :friday_open_time, :class => 'text_field'%></td>
+                            <td>Friday Close Time: </td><td><%= f.time_field :friday_close_time, :class => 'text_field'%></td>
+                            <td>Saturday Open Time: </td><td><%= f.time_field :saturday_open_time, :class => 'text_field'%></td>
+                            <td>Saturday Close Time: </td><td><%= f.time_field :saturday_close_time, :class => 'text_field'%></td></tr>
+                        <tr><td>Sunday Open Time: </td><td><%= f.time_field :sunday_open_time, :class => 'text_field'%></td>
+                            <td>Sunday Close Time: </td><td><%= f.time_field :sunday_close_time, :class => 'text_field'%></td>    
+                    </table>                    
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <%= f.submit class: 'btn btn-lg btn-xlarge'%>
+                </div>
+            </div> 
+        <% end %>
+        <div class="center">
+            <%= link_to 'Return to Dispensary Listing', dispensary_sources_admin_path %>
+        </div>
+    </div>
+</div>

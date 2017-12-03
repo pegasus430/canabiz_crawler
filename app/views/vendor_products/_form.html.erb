@@ -1,0 +1,42 @@
+<div class='row'>
+    <div class='col-xs-12'>
+        <%= form_for(@vendor_product, :html => {class:"form-horizontal", role: "form"}) do |f| %>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>Product</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <%= f.collection_select :vendor_id, Vendor.all, :id, :name %>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="control-label col-sm-2">
+                        <b>Product</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <%= f.collection_select :product_id, Product.featured, :id, :name %>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <%= f.label :units_sold %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :units_sold, :class => 'text_field', :step => 0 %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <%= f.submit class: 'btn btn-lg btn-xlarge'%>
+                </div>
+            </div>
+        <% end %>
+        <div class="center">
+            <%= link_to 'Return to Average Price Listing', average_price_admin_path %>
+        </div>
+    </div>
+</div>
