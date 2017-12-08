@@ -53,9 +53,8 @@ class ApplicationController < ActionController::Base
   end
   
   def populate_lists
-    @categories = Category.all.order("name ASC")
     @news_categories = Category.news.order("name ASC")
-    @product_categories = Category.news.order("name ASC")
+    @product_categories = Category.products.order("name ASC")
     @states = State.all.order("name ASC")
     @product_states = @states.where(product_state: true)
     @sources = Source.where(:active => true).order("name ASC")

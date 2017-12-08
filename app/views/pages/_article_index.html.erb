@@ -12,8 +12,8 @@
                                         <div class="sing-option zm-trending">
                                             <select name="Category" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                                                 <option value = "<%= root_path %>">Category</option>
-                                                <% @categories.each do |category| %>
-                                                    <% if @category != nil && @category.name == category.name %>
+                                                <% @news_categories.each do |category| %>
+                                                    <% if @category.present? && @category.name == category.name %>
                                                         <option value = "<%=category_path(category)%>" selected="selected"><%=category.name%></option>
                                                     <% else %>
                                                         <option value = "<%=category_path(category)%>"><%=category.name%></option>
@@ -25,7 +25,7 @@
                                             <select name="State" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                                             	<option value = "<%= root_path %>">State</option>
                                             	<% @states.each do |state| %>
-                                            	    <% if @state != nil && @state.name == state.name %>
+                                            	    <% if @state.present? && @state.name == state.name %>
                                                         <option value = "<%=state_path(state)%>" selected="selected"><%=state.name%></option>
                                                     <% else %>
                                                         <option value = "<%=state_path(state)%>"><%=state.name%></option>
@@ -36,8 +36,8 @@
                                         <div class="sing-option zm-state">
                                             <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
                                                 <option value = "<%= root_path %>">Source</option>
-                                                <% @sources.order("name ASC").each do |source| %>
-                                                    <% if @source != nil && @source.name == source.name %>
+                                                <% @sources.each do |source| %>
+                                                    <% if @source.present? && @source.name == source.name %>
                                                         <option value = "<%=source_path(source)%>" selected="selected"><%=source.name%></option>
                                                     <% else %>
                                                         <option value = "<%=source_path(source)%>"><%=source.name%></option>
