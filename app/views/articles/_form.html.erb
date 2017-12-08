@@ -21,6 +21,14 @@
             </div>
             <div class="form-group">
                 <div class="control-label col-sm-2">
+                    <%= f.label :web_url %>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.text_field :web_url, class: "form-control", placeholder: "Web Url", autofocus: true %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-2">
                     <b>Include in Weekly Digest?</b>
                 </div>
                 <div class="col-sm-8">
@@ -68,7 +76,7 @@
                     <b>Categories</b>
                 </div>
                <div class="col-sm-8">
-                 <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
+                 <%= f.collection_check_boxes :category_ids, @news_categories, :id, :name do |cb| %>
                    <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
                  <% end %>
                </div>
