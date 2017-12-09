@@ -11,7 +11,7 @@ class Dispensary < ActiveRecord::Base
     
     #geocode location
     geocoded_by :location
-    after_validation :geocode, if: ->(obj){ obj.location.present? and obj.location_changed? }
+    after_validation :geocode
     
     #friendly url
     extend FriendlyId
