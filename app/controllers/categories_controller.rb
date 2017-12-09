@@ -27,11 +27,6 @@ class CategoriesController < ApplicationController
                                     sort_direction).paginate(page: params[:page], per_page: 50)
         render 'admin'
     end
-    
-    def sidekiqtest
-        #test sidekiq background job
-        HardWorker.perform_async()
-    end
     #--------ADMIN PAGE-------------------------
     
     #-------------------------------------------

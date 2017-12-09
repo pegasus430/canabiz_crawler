@@ -1,11 +1,15 @@
 class Vendor < ActiveRecord::Base
     
+    #relationships
     has_many :vendor_products
     has_many :products, through: :vendor_products
     
     #friendly url
     extend FriendlyId
     friendly_id :name, use: :slugged
+    
+    #photo aws storage
+    mount_uploader :image, PhotoUploader
     
     #import CSV file
     def self.import(file)

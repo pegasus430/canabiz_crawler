@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201182238) do
+ActiveRecord::Schema.define(version: 20171209032857) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -281,6 +281,7 @@ ActiveRecord::Schema.define(version: 20171201182238) do
     t.string   "facebook_link"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image"
   end
 
   add_index "vendors", ["slug"], name: "index_vendors_on_slug", unique: true

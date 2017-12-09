@@ -33,6 +33,7 @@
 		<th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
 		<th><%= sortable "name" %></th>
 		<th><%= sortable "id" %></th>
+		<th><%= sortable "image" %></th>
 		<th><%= sortable "description" %></th>
 		<th><%= sortable "linkedin_name" %></th>
 		<th><%= sortable "twitter_name" %></th>
@@ -49,6 +50,7 @@
 		      <td><%= check_box_tag "vendors[]", vendor.id %></td>
 		      <td style = 'width: 300px'><%= vendor.name %></td>
 		      <td><%= vendor.id %></td>
+		      <td><%= vendor.image.to_s.truncate(50) if vendor.image %></td>
 		      <td><%= vendor.description %></td>
 		      <td><%= vendor.linkedin_name %></td>
 		      <td><%= vendor.twitter_name %></td>

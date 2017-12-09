@@ -99,7 +99,7 @@ class VendorsController < ApplicationController
         
         def vendor_params
           params.require(:vendor).permit(:name, :description, :linkedin_name, :twitter_name, :year_of_establishment, :specialization, 
-                                            :website, :facebook_link, product_ids:[])
+                                            :website, :facebook_link, :image, :remote_image_url, product_ids:[])
         end  
         
         def sort_column
