@@ -42,8 +42,8 @@ class NewsScraperHelper
 
 
         	#CREATE ARTICLE
-        	image_url = ''
         	
+        	image_url = ''
         	if @source_name == 'Canna Law Blog'
         		if article["image_url"].present?
         			image_url = article["image_url"].gsub(/\A(\/\/)/, '') 
@@ -53,8 +53,16 @@ class NewsScraperHelper
         	else 
         		image_url = article["image_url"]
         	end
+        	
+        	date = DateTime.now
+        	if article["date"].present?
+        		begin
+        			date = DateTime.parse(article["date"])
+        		rescue => ex
+					date = DateTime.now
+				end
+        	end
 
-        	date = article["date"] ? DateTime.parse(article["date"]) : DateTime.now
         	article = Article.new(
 				:title => article["title"], 
 				:remote_image_url => image_url,
