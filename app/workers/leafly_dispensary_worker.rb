@@ -26,7 +26,7 @@ class LeaflyDispensaryWorker
 	    contents = JSON.parse(output.read)
 	    
 	    logger.info 'size: '
-	    #logger.info contents.size
+	    logger.info contents.size
 	    #logger.info contents
 	    
 	    @end = DateTime.now
