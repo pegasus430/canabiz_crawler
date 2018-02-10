@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
     #--------ADMIN PAGE-------------------------
     
     def index
-        
+        #comment
         if params[:format].present?
            @searched_category = Category.find_by(name: params[:format])
         end
