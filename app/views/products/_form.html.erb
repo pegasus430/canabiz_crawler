@@ -27,15 +27,97 @@
                     <%= f.file_field :image %>
                 </div>
             </div>
+            
             <div class="form-group">
                 <div class="control-label col-sm-2">
-                    <b>Ancillary?</b>
+                    <%= f.label :alternate_names %>
                 </div>
                 <div class="col-sm-8">
-                    False: <%= f.radio_button :ancillary, false, :checked => true , :value => false %>  True: <%= 
-                                    f.radio_button :ancillary, true, :value => true %>
+                    <%= f.text_field :alternate_names, class: "form-control", placeholder: "alternate_names", autofocus: true %>
                 </div>
             </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Subcategory (only for flowers)</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.select :sub_category, ['', 'Indica', 'Hybrid', 'Sativa']%>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>Subcategory (only for flowers)</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.select :is_dom, ['', 'Indica', 'Sativa']%>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>cbd</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :cbd, :class => 'text_field'%>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>cbn</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :cbn, :class => 'text_field'%>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>min_thc</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :min_thc, :class => 'text_field'%>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>med_thc</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :med_thc, :class => 'text_field'%>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>max_thc</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :max_thc, :class => 'text_field'%>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>year</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :year, :class => 'text_field' %>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    <b>month</b>
+                </div>
+                <div class="col-sm-8">
+                    <%= f.number_field :month, :class => 'text_field' %>
+                </div>
+            </div>
+            
             <div class="form-group">
                 <div class="control-label col-sm-2">
                     <b>Featured Product?</b>

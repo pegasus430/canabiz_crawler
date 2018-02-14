@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171209032857) do
+ActiveRecord::Schema.define(version: 20180214150515) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -178,6 +178,14 @@ ActiveRecord::Schema.define(version: 20171209032857) do
     t.decimal  "month"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "alternate_names"
+    t.string   "sub_category"
+    t.string   "is_dom"
+    t.decimal  "cbd"
+    t.decimal  "cbn"
+    t.decimal  "min_thc"
+    t.decimal  "med_thc"
+    t.decimal  "max_thc"
   end
 
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true

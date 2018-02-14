@@ -34,10 +34,18 @@
 		<th><input type="checkbox" onclick=selectAllCheckboxes(this)> Mass Delete</th>
 		<th><%= sortable "name" %></th>
 		<th><%= sortable "id" %></th>
+		<th><%= sortable "category_id" %></th>
 		<th><%= sortable "image" %></th>
 		<th><%= sortable "description" %></th>
+		<th><%= sortable "alternate_names" %></th>
+		<th><%= sortable "sub_category" %></th>
+		<th><%= sortable "is_dom" %></th>
+		<th><%= sortable "cbd" %></th>
+		<th><%= sortable "cbn" %></th>
+		<th><%= sortable "min_thc" %></th>
+		<th><%= sortable "med_thc" %></th>
+		<th><%= sortable "max_thc" %></th>
 		<th><%= sortable "featured_product" %></th>
-		<th><%= sortable "category_id" %></th>
 		<th><%= sortable "year" %></th>
 		<th><%= sortable "month" %></th>
 		<th>Vendors</th>
@@ -51,10 +59,18 @@
 		      <td><%= check_box_tag "products[]", product.id %></td>
 		      <td><%= product.name %></td>
 		      <td><%= product.id %></td>
-		      <td><%= product.image.to_s.truncate(50) if product.image %></td>
-		      <td><%= product.description %></td>
-		      <td><%= product.featured_product %></td>
 		      <td><%= product.category.name if product.category %></td>
+		      <td><%= product.image.to_s.truncate(50) if product.image %></td>
+		      <td><%= product.description.truncate(100) if product.description %></td>
+		      <td><%= product.alternate_names %></td>
+		      <td><%= product.sub_category %></td>
+		      <td><%= product.is_dom %></td>
+		      <td><%= product.cbd %></td>
+		      <td><%= product.cbn %></td>
+		      <td><%= product.min_thc %></td>
+		      <td><%= product.med_thc %></td>
+		      <td><%= product.max_thc %></td>
+		      <td><%= product.featured_product %></td>
 		      <td><%= product.year %></td>
 		      <td><%= product.month %></td>
           	
