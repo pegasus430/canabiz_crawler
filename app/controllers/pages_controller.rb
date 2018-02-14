@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
     
     before_action :current_user, only: [:home]
-    before_action :require_admin, only: [:admin]
+    #before_action :require_admin, only: [:admin]
     
     def home
         
