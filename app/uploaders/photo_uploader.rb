@@ -10,9 +10,14 @@ class PhotoUploader < CarrierWave::Uploader::Base
   
   storage :fog #fog connects application and AWS
   
-  #make the file name unique
+  #change filename
+  def filename
+      "#{model.slug}.#{file.extension}" if original_filename.present?
+  end
+  
+  #where to store the image
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
   
   
