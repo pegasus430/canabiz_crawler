@@ -104,12 +104,17 @@ class StatesController < ApplicationController
    end    
     
     private 
-      def set_state
-         @state = State.friendly.find(params[:id])
-      end
-      def state_params
-        params.require(:state).permit(:name, :abbreviation, :timezone_id, :keywords, 
+        def set_state
+            @state = State.friendly.find(params[:id])
+        end
+        def state_params
+            params.require(:state).permit(:name, :abbreviation, :timezone_id, :keywords, 
                             :logo, :slug, :product_state, dispensary_ids: [])
-      end    
+        end  
+        def require_admin
+            if !logged_in? || (logged_in? and !current_user.admin?)
+                redirect_to root_path
+            end
+        end
     
 end
