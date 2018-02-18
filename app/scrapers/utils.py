@@ -1,38 +1,62 @@
-from lxml import html
+import json
 
-class HtmlUtils:
-    @staticmethod
-    def get_elements(html_document, xpath):
-        try:
-            return html_document.xpath(xpath)
-        except Exception as e:
-            return []
-
-    @staticmethod
-    def get_element_value(element, xpath):
-        elements = HtmlUtils.get_elements(element, xpath)
-        if elements and len(elements):
-            return elements[0]
+def extract_str_from_json_obj(jsonObj, path):
+    if not jsonObj or not path:
         return ''
+    if isinstance(path, str):
+        return jsonObj[path] if path in jsonObj else ''
+    if isinstance(path, list) and len(path) > 0:
+        key = path[0]
+        childJsonObj = jsonObj[key] if key in jsonObj else ''
+        if len(path) == 1:
+            return childJsonObj if not isinstance(childJsonObj, dict) else ''
+        else:
+            return extract_str_from_json_obj(childJsonObj, path[1:])
+    return ''
 
-    @staticmethod
-    def remove_elements(html_document, xpaths):
-        for xpath in xpaths:
-            for e in HtmlUtils.get_elements(html_document, xpath):
-                e.getparent().remove(e)
 
-    @staticmethod
-    def get_text_html(html_document, xpath):
-        elements = HtmlUtils.get_elements(html_document, xpath)
-        if elements and len(elements) > 0:
-            body_html_raw = elements[0]
-            return html.tostring(body_html_raw)
+def extract_obj_from_json_obj(jsonObj, path):
+    if not jsonObj or not path:
+        return {}
+    if isinstance(path, str):
+        return jsonObj[path] if path in jsonObj else {}
+    if isinstance(path, list) and len(path) > 0:
+        key = path[0]
+        childJsonObj = jsonObj[key] if key in jsonObj else {}
+        if len(path) == 1:
+            return childJsonObj
+        else:
+            return extract_obj_from_json_obj(childJsonObj, path[1:])
+    return {}
+
+
+def extract_text_from_html(htmlDocument, xpath):
+    return extract_str_from_html(htmlDocument, xpath+'/text()')
+
+
+def extract_atr_from_html(htmlDocument, xpath, atrName):
+    return extract_str_from_html(htmlDocument, '{0}/@{1}'.format(xpath, atrName))
+
+
+def extract_elements_from_html(htmlDocument, xpath):
+    return htmlDocument.xpath(xpath)
+
+
+def extract_str_from_html(htmlDocument, xpath):
+    if htmlDocument is None or not xpath:
         return ''
+    elements = htmlDocument.xpath(xpath)
+    return elements[0].strip() if len(elements) > 0 else ''
 
-    @staticmethod
-    def get_text_plain(html_document, xpath):
-        elements = HtmlUtils.get_elements(html_document, xpath)
-        if elements and len(elements) > 0:
-            body_html_raw = elements[0]
-            return body_html_raw.text_content().strip()
-        return ''
+
+def loads_json(strData):
+    try:
+        return json.loads(strData)
+    except:
+        return {}
+
+
+
+def writeToFile(fileName, data):
+    with open(fileName, 'w') as outfile:
+        json.dump(data, outfile)
