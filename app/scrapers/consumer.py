@@ -3,10 +3,11 @@ import requests
 import json
 
 class Consumer(threading.Thread):
-	def __init__(self, queue, resultPool, itemExtractor):
+	def __init__(self, queue, resultPool, urlReconstructor, itemExtractor):
 		super(Consumer, self).__init__()
 		self.queue = queue
 		self.resultPool = resultPool
+		self.urlReconstructor = urlReconstructor
 		self.itemExtractor = itemExtractor
 
 	def request(self, url):
@@ -21,6 +22,6 @@ class Consumer(threading.Thread):
 
 	def run(self):
 		while not self.queue.empty():
-			item = self.queue.get()
-			item['info'] = self.itemExtractor.getInfo(item['url'])
-			self.resultPool.append(item)
+			url = self.urlReconstructor.reconstruct(self.queue.get())
+			data = self.getData(url)
+			self.resultPool.append(self.itemExtractor.extract(data))
