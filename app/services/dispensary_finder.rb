@@ -10,7 +10,7 @@ class DispensaryFinder
 	
 	def build
 	    
-        @dispensaries = Dispensary.all
+        @dispensaries = Dispensary.all.order("name ASC")
         @search_string = ''
         
         if params[:name_search].present?
@@ -26,7 +26,13 @@ class DispensaryFinder
             add_to_search(params[:name_search], ' and ')
         elsif params[:az_search].present?
             @az_letter = params[:az_search]
-            @dispensaries = @dispensaries.where("dispensaries.name LIKE ?", "#{params[:az_search]}%")
+            if @az_letter == '#'
+                @dispensaries = @dispensaries.
+                where("dispensaries.name LIKE ? OR dispensaries.name LIKE ? OR dispensaries.name LIKE ? OR dispensaries.name LIKE ? OR dispensaries.name LIKE ? OR dispensaries.name LIKE ? OR dispensaries.name LIKE ? OR dispensaries.name LIKE ? OR dispensaries.name LIKE ? OR dispensaries.name LIKE ?",
+                        "0%", "1%", "2%", "3%", "4%", "5%", "6%", "7%", "8%", "9%")
+            else
+                @dispensaries = @dispensaries.where("dispensaries.name LIKE ?", "#{params[:az_search]}%")
+            end
             add_to_search(params[:az_search], ' and ')
         end
         
