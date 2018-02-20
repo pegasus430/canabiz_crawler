@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
     
     #so I can just say Product.featured in query
-    scope :featured, -> { where(featured_product: true) }
+    scope :featured, -> { where(featured_product: true).where.not(image: nil) }
     
     #lookups
     belongs_to :category
@@ -10,7 +10,7 @@ class Product < ActiveRecord::Base
     has_many :vendors, through: :vendor_products
     
     #average prices has lookup to product
-    has_many :average_prices
+    has_many :average_prices, -> { order(:display_order => :asc) }
     
     #many-to-many with
     has_many :dispensary_source_products
@@ -32,7 +32,7 @@ class Product < ActiveRecord::Base
     
     #import CSV file
     def self.import(file)
-        CSV.foreach(file.path, headers: true) do |row|
+        CSV.foreach(file.path, headers: true, skip_blanks: true) do |row|
             Product.create! row.to_hash
         end
     end    
@@ -42,7 +42,10 @@ class Product < ActiveRecord::Base
         CSV.generate do |csv|
             csv << column_names
             all.each do |product|
-                csv << product.attributes.values_at(*column_names)
+                values = product.attributes.values_at(*column_names)
+                values += [product.image.to_s]
+                values += [product.category.name] if product.category
+                csv << values
             end
         end
     end

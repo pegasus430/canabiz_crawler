@@ -3,6 +3,7 @@ class Vendor < ActiveRecord::Base
     #relationships
     has_many :vendor_products
     has_many :products, through: :vendor_products
+    belongs_to :state
     
     #friendly url
     extend FriendlyId
@@ -23,7 +24,10 @@ class Vendor < ActiveRecord::Base
         CSV.generate do |csv|
             csv << column_names
             all.each do |vendor|
-                csv << vendor.attributes.values_at(*column_names)
+                values = vendor.attributes.values_at(*column_names)
+                values += [vendor.image.to_s]
+                values += [vendor.state.name] if vendor.state
+                csv << values
             end
         end
     end

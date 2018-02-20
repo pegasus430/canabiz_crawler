@@ -14,8 +14,10 @@ class AveragePrice < ActiveRecord::Base
     def self.to_csv
         CSV.generate do |csv|
             csv << column_names
-            all.each do |product|
-                csv << product.attributes.values_at(*column_names)
+            all.each do |average_price|
+                values = average_price.attributes.values_at(*column_names)
+                values += [average_price.product.name] if average_price.product
+                csv << values
             end
         end
     end
