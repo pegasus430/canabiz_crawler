@@ -28,6 +28,7 @@
             <th><%= sortable "product_id" %></th>
             <th>Average Price</th>
             <th>Unit</th>
+            <th>Display Order</th>
             <th>Units Sold</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -38,6 +39,7 @@
                     <td><%= average_price.product.name if average_price.product%></td>
                     <td><%= average_price.average_price%></td>
                     <td><%= average_price.average_price_unit%></td>
+                    <td><%= average_price.display_order%></td>
                     <td><%= average_price.units_sold%></td>
 
                     <td><%= link_to "Edit", edit_average_price_path(average_price), class: "btn" %></td>

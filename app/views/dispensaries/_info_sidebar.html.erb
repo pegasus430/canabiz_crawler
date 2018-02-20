@@ -1,0 +1,137 @@
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 sidebar-warp columns">
+    <div class="row">
+        <aside class="zm-post-lay-e-area col-md-12 col-lg-12">
+            <div class="row mb-40">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="section-title">
+                        <h2 class="h6 header-color inline-block uppercase">Info</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                	
+                	<% if @dispensary_source.website.present? %>
+                		<div> 
+                			<span class="title">Website</span>
+                		</div>
+                    	<p><a itemprop="url" href="<%=@dispensary_source.website%>"><%=@dispensary_source.website%></a></p>
+                	<% end %>
+                	
+                	<% if @dispensary_source.location.present? %>
+                		<div class="title">Address</div>
+                		<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                        	<p itemprop="streetAddress"><%=@dispensary_source.street%></p>
+                        	<p>
+                        	    <span itemprop="addressLocality"><%=@dispensary_source.city%></span>, 
+                        	    <span itemprop="addressRegion"><%=@dispensary_source.state.abbreviation%></span>,
+                        	    <%=@dispensary_source.zip_code%>
+                            </p>
+                        </span>    
+                    	<p><%= link_to 'Get Directions', 
+                    		"https://maps.google.co.uk/maps?&daddr=#{URI.encode(@dispensary_source.location)}", 
+                    		target: '_blank' %></p>
+                	<% end %>
+                    
+                    <% if @dispensary_source.phone.present? %>
+                    	<div class="title">Phone</div>
+                    	<p itemprop="telephone"><%=@dispensary_source.phone%></p>
+                    <% end %>
+                    
+                    <% if @dispensary_source.email.present? %>
+                    	<div class="title">Email</div>
+                    	<p itemprop="email"><%=@dispensary_source.email%></p>
+                    <% end %>
+                    
+                    <% if @dispensary_source.twitter.present? %>
+                    	<div class="title">Twitter</div>
+                    	<% if @dispensary_source.twitter =~ URI::regexp %>
+                    		<p><%=link_to @dispensary_source.twitter, @dispensary_source.twitter, 
+                    		    :target => "_blank"%></p>
+                    	<% else %>	
+                    		<p><%=@dispensary_source.twitter%></p>
+                    	<% end %>
+                    <% end %>
+                    
+                    <% if @dispensary_source.facebook.present? %>
+                    	<div class="title">Facebook</div>
+                    	<% if @dispensary_source.facebook =~ URI::regexp %>
+                    		<p><%=link_to @dispensary_source.facebook, @dispensary_source.facebook, 
+                    		    :target => "_blank"%></p>
+                    	<% else %>	
+                    		<p><%=@dispensary_source.facebook%></p>
+                    	<% end %>	
+                    <% end %>
+                    
+                    <% if @dispensary_source.instagram.present? %>
+                    	<div class="title">Instagram</div>
+                    	<% if @dispensary_source.instagram =~ URI::regexp %>
+                    		<p><%=link_to @dispensary_source.instagram, @dispensary_source.instagram, 
+                    		    :target => "_blank"%></p>
+                    	<% else %>	
+                    		<p><%=@dispensary_source.instagram%></p>
+                    	<% end %>
+                    <% end %>
+                    
+                    
+                    <% if @dispensary_source.min_age.present? %>
+                    	<div class="title">Minimum Age</div>
+                    	<p><%=@dispensary_source.min_age%></p>
+                    <% end %>
+
+                    <div class="title">Hours</div>
+                    <div itemprop="openingHoursSpecification" itemscope itemtype="http://schema.org/OpeningHoursSpecification">
+                    	<% if @dispensary_source.monday_open_time.present? && @dispensary_source.monday_close_time.present? %>
+                			Monday: <%=@dispensary_source.monday_open_time.strftime("%I:%M %p")%> - 
+                    				<%=@dispensary_source.monday_close_time.strftime("%I:%M %p")%><br/>
+                    	<% else %>
+                    		Monday: Closed<br/>
+                    	<% end %>
+                    	
+                    	<% if @dispensary_source.tuesday_open_time.present? && @dispensary_source.tuesday_close_time.present? %>
+                    		Tuesday: <%=@dispensary_source.tuesday_open_time.strftime("%I:%M %p")%> - 
+                    				 <%=@dispensary_source.tuesday_close_time.strftime("%I:%M %p")%><br/>
+                    	<% else %>
+                    		Tuesday: Closed<br/>
+                    	<% end %>
+                    	
+                    	<% if @dispensary_source.wednesday_open_time.present? && @dispensary_source.wednesday_close_time.present? %>
+                    		Wednesday: <%=@dispensary_source.wednesday_open_time.strftime("%I:%M %p")%> - 
+									   <%=@dispensary_source.wednesday_close_time.strftime("%I:%M %p")%><br/>
+                    	<% else %>
+                    		Wednesday: Closed<br/>
+                    	<% end %>
+                    	
+                    	<% if @dispensary_source.thursday_open_time.present? && @dispensary_source.thursday_close_time.present? %>
+                    		Thursday: <%=@dispensary_source.thursday_open_time.strftime("%I:%M %p")%> - 
+									  <%=@dispensary_source.thursday_close_time.strftime("%I:%M %p")%><br/>
+                    	<% else %>
+                    		Thursday: Closed<br/>
+                    	<% end %>
+                    	
+                    	<% if @dispensary_source.friday_open_time.present? && @dispensary_source.friday_close_time.present? %>
+                    		Friday: <%=@dispensary_source.friday_open_time.strftime("%I:%M %p")%> - 
+									<%=@dispensary_source.friday_close_time.strftime("%I:%M %p")%><br/>
+                    	<% else %>
+                    		Friday: Closed<br/>
+                    	<% end %>
+                    	
+                    	<% if @dispensary_source.saturday_open_time.present? && @dispensary_source.saturday_close_time.present? %>
+                    		Saturday: <%=@dispensary_source.saturday_open_time.strftime("%I:%M %p")%> - 
+									  <%=@dispensary_source.saturday_close_time.strftime("%I:%M %p")%><br/>
+                    	<% else %>
+                    		Saturday: Closed<br/>
+                    	<% end %>
+                    	
+                    	<% if @dispensary_source.sunday_open_time.present? && @dispensary_source.sunday_close_time.present? %>
+                    		Sunday: <%=@dispensary_source.sunday_open_time.strftime("%I:%M %p")%> - 
+									<%=@dispensary_source.sunday_close_time.strftime("%I:%M %p")%>
+                    	<% else %>
+                    		Sunday: Closed
+                    	<% end %>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>                   
+</div>

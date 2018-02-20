@@ -1,0 +1,119 @@
+<!-- Start page content -->
+<div id="page-content" class="page-wrapper dispensary-show-page">
+    <div class="zm-section single-post-wrap bg-white ptb-70">
+        <div class="container">
+            <div itemscope itemtype="http://schema.org/LocalBusiness" class="row">
+                <!-- Start left side (dispensary info) -->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 columns">
+                    <div class="row mb-40">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="section-title">
+                                <h2 itemprop="name" class="h6 header-color inline-block uppercase" style="height: auto;"><%=@dispensary.name%></h2>
+                            </div>                                
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Start single post image formate-->
+                        <div class="col-md-12">
+                            <article class="zm-post-lay-single">
+                                <div class="zm-post-thumb">
+                                    <!-- Start Google Map area -->
+                                    <div class="zm-section">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="dispensary-image" style="width: 49%; border: 1px solid black; height: 350px; display: inline-block;">
+                                                    
+                                                    <% if @dispensary_source.image.present? %>
+                                                        <img itemprop="image" src ="<%=@dispensary_source.image_url(:dispensary_show)%>" 
+                                                        onerror="this.src='<%= asset_path 'substitutes/disp-substitute.jpg' %>'" alt="<%=@dispensary_source.name%>"/>
+                                                    <% else %>
+                                                        <img itemprop="image" src = "<%=asset_path 'substitutes/disp-substitute.png' %>">
+                                                    <% end %>
+                                                </div>
+                                                <div class="google-map" style="width: 48%; height: 350px; float: right;">
+                                                    <div>
+                                                        <iframe
+                                                          width="100%"
+                                                          height=350
+                                                          frameborder="1" style="border:0"
+                                                          scrolling="no"
+                                                          src="<%="https://www.google.com/maps/embed/v1/place?key=AIzaSyAYlvKElHaDEnHe1W2ocFh9fF171_OE8D8&q=#{URI.encode(@dispensary.location)}"%>" allowfullscreen>
+                                                        </iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Google Map area -->                                        
+                                </div>
+                            </article>
+                        </div>
+                        <!-- End single post image formate -->
+                    </div>
+                </div>
+                <!-- End left side -->
+                
+                <!--sidebar-->
+                <%= render 'info_sidebar' %>
+                
+                <!--bottom of left side-->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 columns">
+                    
+                        <div class="row">
+                            <!-- Start single post image formate-->
+                            <div class="col-md-12">
+                                       
+                                <!--product categories-->
+                                <div class="row mb-40" style="margin-top: 20px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="section-title">
+                                            <% @category_to_products.each_with_index  do |(key, list), index| %>
+                                                
+                                                <% if index == 0 %>
+                                                    <h2 class="h6 inline-block uppercase header-button active-header-button <%=key%>-button" 
+                                                        onClick="changeProductCategory('<%=key%>')"><%= key %></h2>
+                                                <% else %>
+                                                    <h2 class="h6 inline-block uppercase header-button inactive-header-button <%=key%>-button" 
+                                                        onClick="changeProductCategory('<%=key%>')"><%= key %></h2>
+                                                <% end %>
+            
+                                            <% end %>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="mb-20"></div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 dispensary-product-categories">
+                                        <!--loop through the hash values-->
+                                        <% @category_to_products.each_with_index do |(key, list), index| %>
+                                        
+                                            <div class = "product-section-class <%=key%>" <% if index != 0 %> style="display:none;" <%end%> >
+                                                <!-- Start single post image formate-->
+                                                <div class="col-md-12">
+                                                    <article class="zm-post-lay-single">
+                                                        <div class="zm-post-thumb">
+                                                        </div>
+                                                        <div class="rowspacer">
+                                                            <div class="row">
+                                                                
+                                                                <%=render :partial => "all_product", 
+                                                                    :collection => list, :as => :dispProduct %>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                <!--products-->
+                            </div>
+                        </div>
+                    
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>

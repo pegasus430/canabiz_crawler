@@ -1,0 +1,120 @@
+<!-- Start page content -->
+<!-- Start Products -->
+<div id="page-content" class="page-wrapper">
+    <div class="zm-section single-post-wrap bg-white">
+        <div class="container">
+            <div>
+                <div class="row mb-40">
+                    <div class="col-lg-12">
+                        <div class="section-title">
+                            <h2 class="h6 header-color inline-block uppercase">Dispensary</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-40">
+                    <div class="col-lg-4">
+                        <div class="zm-post-dis">
+                            <div class="">
+                                <h2 class="zm-post-title h2"><%=@dispensary_source.name%></h2>
+                                <div class="zm-post-meta">
+                                    <ul>
+                                        <li class="s-meta"><a href="#" class="zm-author"><span class="badge badge-warning" style="background-color: #8A2A88;">Recreational Dispensary</span></a></li>
+                                        <li class="s-meta"><a href="#" class="zm-date"><%=@dispensary_source.website%></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="zm-post-content mb-20">
+                            <div class="title">Address</div>
+                            <p>3110 Sampson Street, <br/>Aurora, Colorado, 80014</p><button type="submit" class="button">Get Directions</button><br/><br/>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="zm-post-content mb-20">
+                            <div class="title">Phone</div>
+                            <p>303-568-6096</p>
+                            <div class="title">Email</div>
+                            <p>weed@weed.com</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="zm-post-content mb-20">
+                            <div class="title">Twitter handle</div>
+                            <p>@weedtwitter</p>
+                            <div class="title">Rating</div>
+                            10/10                      
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="zm-post-content mb-20">
+                            <div class="google-map">
+                            	<div>
+                                    <iframe
+                                      width="100%"
+                                      height="150"
+                                      frameborder="0" style="border:0"
+                                      src="<%="https://www.google.com/maps/embed/v1/place?key=AIzaSyAYlvKElHaDEnHe1W2ocFh9fF171_OE8D8&q=#{URI.encode(@dispensary.location)}"%>" allowfullscreen>
+                                    </iframe>
+                                </div>
+                                <!--<div id="googleMap" style="width:100%;height:150px;"></div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Start left side -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 columns">
+                    <div class="row mb-40">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="section-title">
+                                <% @category_to_products.each_with_index  do |(key, list), index| %>
+                                    
+                                    <% if index == 0 %>
+                                        <h2 class="h6 inline-block uppercase header-button active-header-button" id = "<%=key%>-button" onClick="changeCategory('<%=key%>')"><%= key %></h2>
+                                    <% else %>
+                                        <h2 class="h6 inline-block uppercase header-button inactive-header-button" id = "<%=key%>-button" onClick="changeCategory('<%=key%>')"><%= key %></h2>
+                                    <% end %>
+
+                                <% end %>
+                            </div>                                
+                        </div>
+                    </div>
+                    <div class="mb-20">
+                        <!--37,530 Products for <a href="">Dispensary Name</a>-->
+                    </div>
+                    <div class="row">
+                        
+                        <!--loop through the hash values-->
+                        <% @category_to_products.each_with_index do |(key, list), index| %>
+                        
+                            <div class = "product-section-class <%=key%>" <% if index != 0 %> style="display:none;" <%end%> >
+                                <!-- Start single post image formate-->
+                                <div class="col-md-12">
+                                    <article class="zm-post-lay-single">
+                                        <div class="zm-post-thumb">
+                                        </div>
+                                        <div class="rowspacer">
+                                            <div class="row">
+                                                
+                                                
+                                                <%=render :partial => "all_product", :collection => list, :as => :dispProduct %>
+                                               
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="spacer"></div>

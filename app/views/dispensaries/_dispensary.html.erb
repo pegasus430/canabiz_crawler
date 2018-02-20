@@ -1,0 +1,34 @@
+<!-- individual dispensary on the index -->
+<div class="col-md-3 productspacer ind-disp">
+	<!-- dispensary image -->
+	<a href="<%= dispensary_path(dispensary) %>">
+        <% if dispensary.image.present? %>
+            <img src="<%=dispensary.image_url(:product_dispensary_index)%>" onerror="this.src='<%= asset_path 'substitutes/disp-substitute.jpg' %>'" alt="<%=dispensary.name%>">
+        <% else %>
+            <%=image_tag('substitutes/disp-substitute.png')%>
+        <% end %>
+    </a>
+    <div class="description">
+        <!-- Start single productitem-->
+        <article class="overflow">                                     
+            <div class="zm-post-dis">
+                <div class="zm-post-header">
+                    <div class="price">
+                        <% if dispensary.city.present? %>
+                            <%= "#{dispensary.city}, #{dispensary.state.name}"%>
+                        <% else %>
+                            <%= dispensary.state.name %>
+                        <% end %>
+                    </div>           
+                    <h5 class="h5height" style="height: 42px;">
+                        <%=link_to dispensary.name, dispensary_path(dispensary)%>
+                    </h5>
+                </div>
+                <!--<div class="soldby">-->
+                <!--    Produced by <a href="#">Dispensary Name</a>-->
+                <!--</div>-->
+            </div>
+        </article>
+        <!-- End single productitem-->
+    </div>
+</div>

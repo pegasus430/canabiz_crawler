@@ -1,0 +1,47 @@
+<div class="col-md-3 productspacer similar_product">
+    <% if product.image_url != nil %>
+        <img src="<%= product.image_url(:product_show)%>" onerror="this.src='<%= asset_path 'substitutes/product-substitute.jpg' %>'" alt="<%=product.name%>">
+    <% else %>
+        <%= image_tag('substitutes/product-substitute.png') %>
+    <% end %>
+    <div class="description">
+        <!-- Start single productitem-->
+        <article class="overflow">                                     
+            <div class="zm-post-dis">
+                <div class="zm-post-header">
+                <div class="price">
+                    
+                </div>           
+                    <h5 class="h5height">
+                    	<%= link_to product.name, product_path(product) %>
+                    </h5>
+                </div>
+                <div class="product-info">
+                    <p>Produced By:
+                        <% product.vendors.each_with_index do |vendor, index| %>
+                            <% if index + 1 == product.vendors.size %>
+                                <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
+                            <% else %>
+                                <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
+                            <% end %>
+                        <% end %>
+                    </p>
+                </div>
+                <div class="product-info">
+                    <p>Average Prices:
+                        <% product.average_prices.each_with_index do |average_price, index| %>
+                            <% if index + 1 == product.average_prices.size %>
+                                <a href="<%=average_price_path(average_price)%>" style="color: #2ab081;">
+                                    <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>
+                            <% else %>
+                                <a href="<%=average_price_path(average_price)%>" style="color: #2ab081;">
+                                    <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>,&nbsp;
+                            <% end %>
+                        <% end %>
+                    </p>
+                </div>
+            </div>
+        </article>
+        <!-- End single productitem-->
+    </div>
+</div>
