@@ -1,0 +1,10 @@
+<select name="AZ" class="selectDropdown az-dropdown" data-live-search="true" onChange="selectSelectedAZValue(this.value)">
+    <option value = ''>A-Z Filter</option>
+    <% @az_values.each do |letter| %>
+    	<% if @az_letter != nil && @az_letter == letter %>
+    		<option value = "<%=letter%>" selected="selected"><%=letter%></option>
+    	<% else %>
+    		<option value = "<%=letter%>"><%=letter%></option>
+    	<% end %>
+    <% end %>
+</select>

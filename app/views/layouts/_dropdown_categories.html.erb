@@ -1,0 +1,21 @@
+<select name="Category" class="selectDropdown category-dropdown" data-live-search="true" onChange="setSelectedCategory(this.value)">
+    <option value = "">Category</option>
+    <% @product_categories.each do |category| %>
+    
+        <% if @searched_category != nil && @searched_category.name == category.name%>
+            <option value = "<%=category.name%>" selected="selected"><%=category.name%></option>
+        <% else %>
+        	<option value = "<%=category.name%>"><%=category.name%></option>
+        <% end %>
+        
+        <% if category.name == 'Flower' %>
+            <!--add in others-->
+            <option value="Indica">&nbsp&nbsp&nbsp&nbspIndica</option>
+            <option value="Sativa">&nbsp&nbsp&nbsp&nbspSativa</option>
+            <option value="Hybrid">&nbsp&nbsp&nbsp&nbspHybrid</option>
+            <option value="Hybrid-Indica">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspHybrid-Indica</option>
+            <option value="Hybrid-Sativa">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspHybrid-Sativa</option>
+        <% end %>
+
+    <% end %>
+</select>

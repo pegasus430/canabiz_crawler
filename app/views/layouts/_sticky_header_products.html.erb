@@ -1,0 +1,29 @@
+<%= form_tag products_refine_index_path do %>
+	<h3 align="center" style="margin-top: 10px; margin-bottom: -5px;">Refine Products</h3>	
+	<div class="sing-option zm-trending">  
+        <%= render 'layouts/dropdown_states' %>
+    </div>
+    
+    <div class="sing-option zm-state"> 
+        <%= render 'layouts/dropdown_categories' %>
+    </div>
+    
+    <div class="sing-option zm-state"> 
+        <%= render 'layouts/dropdown_az' %>
+    </div>
+    
+    <div class = "product-refine-buttons">
+    	<!--hidden values-->
+    	<input type = "hidden" id="state_search" name = "state_search"/>
+    	<input type = "hidden" id="category_search" name = "category_search"/>
+    	<input type = "hidden" id="az_search" name = "az_search"/>
+    	
+    	<div class="btn-group btn-group-justified">
+            <button type="submit" class="button" 
+                    style="width: 50%; margin-bottom: 0px; margin: 10px 0px; border-right: 1px solid black">Refine Results</button>
+        
+            <button type="button" class="button" onclick="clearFormValues();"
+                	style="width: 50%; margin-bottom: 0px; margin: 10px 0px;">Clear Filters</button>
+        </div>
+    </div>
+<% end %>
