@@ -22,7 +22,6 @@
                     <th>1 Gram</th>
                     <th>2 Grams</th>
                     <th>1/8 Ounce</th>
-                    <th>4 Grams</th>
                     <th>1/4 Ounce</th>
                     <th>1/2 Ounce</th>
                     <th>1 Ounce</th>
@@ -68,12 +67,6 @@
                     		
                     		<% if value.price_eighth != nil && value.price_eighth != 0.0 %>
                     			<td>$<%=value.price_eighth%></td>
-                    		<% else %>
-                    			<td>--</td>
-                    		<% end %>
-                    		
-                    		<% if value.price_four_grams != nil && value.price_four_grams != 0.0 %>
-                    			<td>$<%=value.price_four_grams%></td>
                     		<% else %>
                     			<td>--</td>
                     		<% end %>
