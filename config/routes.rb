@@ -161,6 +161,7 @@ Rails.application.routes.draw do
     end
   end
   post 'vendors/search' => 'vendors#search', as: 'search_vendors'
+  post 'vendors/refine_index' => 'vendors#refine_index', as: 'refine_vendor_index'
   get 'vendor-admin', to: 'vendors#admin'
   
   #VENDOR PRODUCTS
