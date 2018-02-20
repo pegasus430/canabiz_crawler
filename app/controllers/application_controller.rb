@@ -1,4 +1,3 @@
-
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -25,39 +24,46 @@ class ApplicationController < ActionController::Base
   end 
   
   def site_visitor_state
+    @site_visitor_state = State.where(name: 'Washington').first 
+    
     #geocode user api
-    if request.location && request.location.state
-        @site_visitor_state = State.where(name: request.location.state).first
-    end
+    #if request.location && request.location.state
+    #    @site_visitor_state = State.where(name: request.location.state).first
+    #end
   end
   
   def site_visitor_city
     #geocode user api
-    if request.location && request.location.city
-        @site_visitor_city = request.location.city
-    end
+    @site_visitor_city = 'Seattle'
+    #if request.location && request.location.city
+    #    @site_visitor_city = request.location.city
+    #end
   end
   
   def site_visitor_zip
     #geocode user api
-    if request.location && request.location.zip_code
-        @site_visitor_zip = request.location.zip_code
-    end
+    @site_visitor_zip = '98101'
+    #if request.location && request.location.zip_code
+    #    @site_visitor_zip = request.location.zip_code
+    #end
   end
   
   def site_visitor_ip
     #geocode user api
-    if request.location && request.location.ip
-        @site_visitor_ip = request.location.ip
-    end
+    @site_visitor_ip = '75.172.101.74'
+    #if request.location && request.location.ip
+    #    @site_visitor_ip = request.location.ip
+    #end
   end
   
   def populate_lists
-    @news_categories = Category.news.order("name ASC")
-    @product_categories = Category.products.order("name ASC")
+    @news_categories = Category.news.active.order("name ASC")
+    @product_categories = Category.products.active.order("name ASC")
     @states = State.all.order("name ASC")
     @product_states = @states.where(product_state: true)
     @sources = Source.where(:active => true).order("name ASC")
+    @az_values = ['#', 'A','B','C','D','E','F','G','H','I','J','K','L','M',
+                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     expires_in 10.days, :public => true
   end
   

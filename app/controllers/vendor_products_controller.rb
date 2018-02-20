@@ -10,7 +10,7 @@ class VendorProductsController < ApplicationController
     
         respond_to do |format|
             format.html
-            format.csv {render text: @vendor_products.to_csv }
+            format.csv {render text: VendorProduct.all.to_csv }
         end
     end
     

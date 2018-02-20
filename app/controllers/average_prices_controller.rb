@@ -1,6 +1,7 @@
 class AveragePricesController < ApplicationController
 
     before_action :set_average_price, only: [:edit, :update, :destroy, :show]
+    before_action :require_admin, only: [:edit, :update, :destroy, :show, :admin]
     
     #--------ADMIN PAGE-------------------------
     def admin
@@ -10,7 +11,7 @@ class AveragePricesController < ApplicationController
         #for csv downloader
         respond_to do |format|
             format.html
-            format.csv {render text: @average_prices.to_csv }
+            format.csv {render text: AveragePrice.all.to_csv }
         end
     end
     
@@ -54,7 +55,41 @@ class AveragePricesController < ApplicationController
     #-----------------------------------
     
     def show
-
+        @product = @average_price.product
+        #find all places selling for that product and that unit
+        
+        #map of average_price_unit to DispensarySourceProduct field for query`
+        @unit_to_field = Hash.new
+        @unit_to_field.store('Half Gram', 'price_half_gram');
+        @unit_to_field.store('Gram', 'price_gram');
+        @unit_to_field.store('2 Grams', 'price_two_grams');
+        @unit_to_field.store('Eighth', 'price_eighth');
+        @unit_to_field.store('4 Grams', 'price_four_grams');
+        @unit_to_field.store('Quarter Ounce', 'price_quarter');
+        @unit_to_field.store('Half Ounce', 'price_half_ounce');
+        
+        @dispensary_source_products = DispensarySourceProduct.where(product: @product).
+            where("#{@unit_to_field[@average_price.average_price_unit]} <= ?", @average_price.average_price).
+            where("#{@unit_to_field[@average_price.average_price_unit]} != ?", 0.0)
+        
+        dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
+        @dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC')
+        
+        #need a map of dispensary to dispensary source product
+        @dispensary_to_product = Hash.new
+        
+        @dispensary_sources.each do |dispSource|
+            
+            #dispensary products
+            if !@dispensary_to_product.has_key?(dispSource.id)
+               
+                if @dispensary_source_products.where(dispensary_source_id: dispSource.id).any?
+                    @dispensary_to_product.store(dispSource.id, 
+                        @dispensary_source_products.where(dispensary_source_id: dispSource.id).first)
+                end
+            end
+        end
+        
     end
     
     
@@ -97,7 +132,8 @@ class AveragePricesController < ApplicationController
             end
         end
         def average_price_params
-            params.require(:average_price).permit(:average_price, :average_price_unit, :units_sold, :product_id)
+            params.require(:average_price).permit(:average_price, :average_price_unit, 
+                                :display_order, :units_sold, :product_id)
         end
       
         def sort_column

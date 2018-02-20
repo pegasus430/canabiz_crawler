@@ -1,8 +1,7 @@
 class VendorsController < ApplicationController
     
     before_action :set_vendor, only: [:edit, :update, :destroy, :show]
-    before_action :require_admin, only: [:admin, :edit, :show, :index, :destroy, :update]
-    #before_action :require_admin, except: [:show, :index]
+    before_action :require_admin, only: [:show, :index, :edit, :update, :destroy, :admin]
 
     #--------ADMIN PAGE-------------------------
     def admin
@@ -11,7 +10,7 @@ class VendorsController < ApplicationController
         #for csv downloader
         respond_to do |format|
             format.html
-            format.csv {render text: @vendors.to_csv }
+            format.csv {render text: Vendor.all.to_csv }
         end
     end
     
@@ -31,7 +30,22 @@ class VendorsController < ApplicationController
     #--------ADMIN PAGE-------------------------
     
     def index
-        @vendors = Vendor.all 
+
+        @vendors = Vendor.order("RANDOM()").paginate(page: params[:page], per_page: 16)
+
+    end
+    
+    def refine_index
+        
+        result = VendorFinder.new(params).build
+        
+        #parse returns
+        @vendors, @search_string, @searched_name, @az_letter =
+                result[0], result[1], result[2], result[3]
+        
+        @vendors = @vendors.paginate(page: params[:page], per_page: 16)
+        
+        render 'index'
     end
     
     #-------------------------------------------
@@ -51,7 +65,7 @@ class VendorsController < ApplicationController
     #-------------------------------------------
     
     def show
-
+        @vendor_products = @vendor.products.includes(:average_prices, :vendors)
     end
 
     #-------------------------------------------
@@ -99,7 +113,7 @@ class VendorsController < ApplicationController
         
         def vendor_params
           params.require(:vendor).permit(:name, :description, :linkedin_name, :twitter_name, :year_of_establishment, :specialization, 
-                                            :website, :facebook_link, :image, :remote_image_url, product_ids:[])
+                                            :website, :facebook_link, :image, :remote_image_url, :state_id, product_ids:[])
         end  
         
         def sort_column

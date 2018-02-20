@@ -202,7 +202,7 @@ class ArticlesController < ApplicationController
                                         
         else
             @related_articles = Article.all.order("RANDOM()").limit(3).where.not(id: @article.id).
-                                    includes(:source).includes(:states).includes(:categories)
+                                    includes(:source, :states, :categories)
             
             if Rails.env.production?
                 #@related_articles = @related_articles.where(created_at: (now - 1.week.ago))
@@ -212,7 +212,7 @@ class ArticlesController < ApplicationController
         
         #same source articles
         @same_source_articles = Article.where(source_id: @article.source).
-                                    includes(:source).includes(:states).includes(:categories).
+                                    includes(:source, :states ,:categories).
                                     order("RANDOM()").limit(3).where.not(id: @article.id)
         
         if Rails.env.production? 

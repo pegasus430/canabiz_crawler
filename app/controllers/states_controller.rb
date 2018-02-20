@@ -52,7 +52,7 @@ class StatesController < ApplicationController
         #state products
         if @state.product_state
             #get products available at dispensaries in state
-            @products = Product.featured.includes(:dispensary_sources, :vendor).
+            @products = Product.featured.includes(:dispensary_sources, :vendors, :category, :average_prices).
                                     where(:dispensary_sources => {state_id: @state.id}).
                                     paginate(:page => params[:page], :per_page => 16)
             @search_string = @state.name

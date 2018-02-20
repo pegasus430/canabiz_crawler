@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
     before_action :site_visitor_state, only: [:show, :index]
     before_action :set_product, only: [:edit, :update, :destroy, :show]
     before_action :site_visitor_ip, only: [:index, :refine_index]
-    before_action :require_admin, only: [:admin, :edit, :show, :index, :destroy, :update, :refine_index]
+    before_action :require_admin, only: [:admin, :edit, :show, :update, :delete, :index]
 
     #--------ADMIN PAGE-------------------------
     def admin
@@ -11,12 +11,8 @@ class ProductsController < ApplicationController
         #for csv downloader
         respond_to do |format|
             format.html
-            format.csv {render text: @products.to_csv }
+            format.csv {render text: Product.all.to_csv }
         end
-        
-        #az-list
-        @az_values = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     end
     
     #method is used for csv file upload
@@ -30,38 +26,56 @@ class ProductsController < ApplicationController
         query = "%#{params[:query]}%"
         @products = Product.where("name LIKE ?", query).order(sort_column + " " + 
                                     sort_direction).paginate(page: params[:page], per_page: 50)
-        
-        #az-list
-        @az_values = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
                         
         render 'admin'
     end
     #--------ADMIN PAGE-------------------------
     
     def index
-        #comment
+        
         if params[:format].present?
-           @searched_category = Category.find_by(name: params[:format])
+            @searched_category = Category.find_by(name: params[:format])
+            
+            if !@searched_category.present?
+                if params[:format] == 'Hybrid-Indica'
+                    @searched_is_dom = 'Indica'
+                elsif params[:format] == 'Hybrid-Sativa'
+                    @searched_is_dom = 'Sativa'
+                else
+                    @searched_sub_category = params[:format] 
+                end
+            end
         end
         
         if @site_visitor_state != nil && @site_visitor_state.product_state
             
-            @products = Product.featured.
-                                includes(:dispensary_sources, :vendors, :category, :dispensary_sources => :dispensary).
-                                where(:dispensary_sources => {state_id: @site_visitor_state.id})
+            @products = Product.featured.order("name ASC").
+                        includes(:dispensary_sources, :vendors, :category)
+            #, :dispensary_sources => :dispensary
+            #where(:dispensary_sources => {state_id: @site_visitor_state.id})
                                     
-            if @searched_category != nil 
+            if @searched_category.present?
                 
                 @products = @products.where(category_id: @searched_category.id)
                 @search_string = "#{@searched_category.name} in #{@site_visitor_state.name}"
+            
+            elsif @searched_sub_category.present? 
+            
+                @products = @products.where(sub_category: @searched_sub_category)
+                @search_string = "#{@searched_sub_category} in #{@site_visitor_state.name}"
+            
+            elsif @searched_is_dom.present?    
+            
+                @products = @products.where(is_dom: @searched_is_dom)
+                @search_string = "Hybrid-#{@searched_is_dom} in #{@site_visitor_state.name}"
+            
             else
                 @search_string = @site_visitor_state.name
             end
             
             #price range and distance
-            result = ProductHelper.new(@products, @site_visitor_ip).findProductsPriceAndDistance
-            @product_to_distance, @product_to_closest_disp = result[0], result[1]
+            #result = ProductHelper.new(@products, @site_visitor_ip).findProductsPriceAndDistance
+            #@product_to_distance, @product_to_closest_disp = result[0], result[1]
             
         else
             @products = Product.featured.order("name ASC").includes(:vendors, :category)
@@ -72,11 +86,7 @@ class ProductsController < ApplicationController
                 @search_string = ''
             end
         end
-        
-        #az-list
-        @az_values = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-        
+
         @products = @products.paginate(page: params[:page], per_page: 16)
 
     end
@@ -94,22 +104,16 @@ class ProductsController < ApplicationController
         
         if @site_visitor_state != nil && @site_visitor_state.product_state
             #price range    
-            result = ProductHelper.new(@products, @site_visitor_ip).findProductsPriceAndDistance
-            @product_to_distance, @product_to_closest_disp = result[0], result[1]
+            #result = ProductHelper.new(@products, @site_visitor_ip).findProductsPriceAndDistance
+            #@product_to_distance, @product_to_closest_disp = result[0], result[1]
         end
         
-        #az-list
-        @az_values = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
         render 'index' 
     end
     
     #-------------------------------------------
     def new
       @product = Product.new
-      #az-list
-        @az_values = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     end
     def create
         @product = Product.new(product_params)
@@ -130,11 +134,20 @@ class ProductsController < ApplicationController
             redirect_to root_path 
         end
         
-        #similar products
+        #similar products - include is_dom and sub_category as well
         @similar_products = []
-        if @product.category.present?
-            @similar_products = @product.category.products.featured.where.not(id: @product.id).limit(4)
+        if @product.is_dom.present?
+            @similar_products = Product.featured.where.not(id: @product.id).
+                        where(is_dom: @product.is_dom).order("Random()").limit(4)
 
+        elsif @product.sub_category.present? 
+            @similar_products = Product.featured.where.not(id: @product.id).
+                        where(sub_category: @product.sub_category).
+                        order("Random()").limit(4)
+        
+        elsif @product.category.present?
+            @similar_products = @product.category.products.
+                    featured.where.not(id: @product.id).order("Random()").limit(4)
         end
         
         @dispensary_source_products = DispensarySourceProduct.where(product: @product)
@@ -165,10 +178,6 @@ class ProductsController < ApplicationController
                 end
             end
         end
-        
-        #az-list
-        @az_values = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     end
 
     #-------------------------------------------
@@ -216,7 +225,9 @@ class ProductsController < ApplicationController
         end
         
         def product_params
-          params.require(:product).permit(:name, :product_type, :image, :remote_image_url, :ancillary, :featured_product,
+          params.require(:product).permit(:name, :product_type, :image, :remote_image_url, 
+                                            :ancillary, :featured_product, :alternate_names,
+                                            :sub_category, :cbd, :cbn, :min_thc, :med_thc, :max_thc, :is_dom,
                                             :year, :month, :category_id, :description, dispensary_ids: [], vendor_ids: [])
         end  
         

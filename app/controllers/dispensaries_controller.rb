@@ -1,7 +1,6 @@
 class DispensariesController < ApplicationController
     before_action :set_dispensary, only: [:edit, :update, :destroy, :show, :all_products]
-    before_action :require_admin, only: [:show, :index, :test_geocode, :test_python, :refine_index, :all_products, :admin, :edit, :update, :destroy]
-    #before_action :require_admin, except: [:show, :index, :test_geocode, :test_python, :refine_index, :all_products]
+    before_action :require_admin, only: [:admin, :edit, :update, :destroy, :show, :index, :refine_index, :all_products]
     before_action :site_visitor_state, only: [:index]
 
     #--------ADMIN PAGE-------------------------
@@ -46,15 +45,15 @@ class DispensariesController < ApplicationController
     def index
         
         if @site_visitor_state != nil
-            @dispensaries = Dispensary.where(state: @site_visitor_state).paginate(page: params[:page], per_page: 16)
+            @dispensaries = Dispensary.where(state: @site_visitor_state).
+                                order("name ASC").paginate(page: params[:page], per_page: 16)
             @search_string = @site_visitor_state.name
         else
-            @dispensaries = Dispensary.paginate(page: params[:page], per_page: 16)
+            @dispensaries = Dispensary.order("name ASC").paginate(page: params[:page], per_page: 16)
         end
         
         #az-list
-        @az_values = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+        
         
     end
     
@@ -69,10 +68,6 @@ class DispensariesController < ApplicationController
         
         
         @dispensaries = @dispensaries.paginate(page: params[:page], per_page: 16)
-        
-        #az-list
-        @az_values = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
         
         render 'index'
     end
