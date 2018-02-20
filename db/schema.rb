@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214150515) do
+ActiveRecord::Schema.define(version: 20180220145807) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20180214150515) do
     t.decimal  "units_sold"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "display_order"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -290,6 +291,7 @@ ActiveRecord::Schema.define(version: 20180214150515) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
+    t.integer  "state_id"
   end
 
   add_index "vendors", ["slug"], name: "index_vendors_on_slug", unique: true
