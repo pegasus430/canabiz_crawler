@@ -1,3 +1,5 @@
-<!--PAGE SHOWS ALL OF THE ARTICLES OF A PARTICULAR STATE-->
-
-<%= render 'articles/article_index' %>
+<% if @state.product_state %>
+	<%= render 'product_state' %>
+<% else %>
+	<%= render 'articles/article_index' %>
+<% end %>

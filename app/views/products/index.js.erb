@@ -1,0 +1,3 @@
+console.log('in the product js thing');
+$('.indexed-products').append('<%= escape_javascript render :partial => "pages/top_product_mobile", :collection => @products, :as => :product %>');
+$('.product-index-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@products) %>');

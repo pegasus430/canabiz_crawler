@@ -1,0 +1,106 @@
+<style>
+    .state-name-row {
+        background-color: #eceeef;
+    }
+    .dispensary-td, .state-name-row td {
+        text-align: left;
+    }
+    table td {
+        text-align: center;
+    }
+</style>
+
+<div class="col-md-12 mt-20">
+    <div class="title">Pricing</div>
+    <!-- table -->
+    <div class = 'scrollable'>
+        <table class="table table-striped table-bordered table-inverse">
+            <thead>
+                <tr>
+                    <th>Dispensary</th>
+                    <th>1/2 Gram</th>
+                    <th>1 Gram</th>
+                    <th>2 Grams</th>
+                    <th>1/8 Ounce</th>
+                    <th>4 Grams</th>
+                    <th>1/4 Ounce</th>
+                    <th>1/2 Ounce</th>
+                    <th>1 Ounce</th>
+                </tr>
+            </thead>
+    
+                <!--loop through dispensaries-->
+                <% @state_to_dispensary.each do |state_name, dispensaries| %>
+                    
+                    <tr class='state-name-row'>
+                        <td><%=state_name%></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    
+                    <% dispensaries.each do |dispensary_key| %>
+                        <tr>
+                            <td class="dispensary-td"><%=link_to dispensary_key.name, dispensary_path(dispensary_key.dispensary)%></td>
+                            <% value = @dispensary_to_product[dispensary_key.id] %>
+                            
+                            <% if value.price_half_gram != nil && value.price_half_gram != 0.0 %>
+                    			<td>$<%=value.price_half_gram%></td>
+                    		<% else %>
+                    			<td>--</td>
+                    		<% end %>
+                    		
+                    		<% if value.price_gram != nil && value.price_gram != 0.0 %>
+                    			<td>$<%=value.price_gram%></td>
+                    		<% else %>
+                    			<td>--</td>
+                    		<% end %>
+                    		
+                    		<% if value.price_two_grams != nil && value.price_two_grams != 0.0 %>
+                    			<td>$<%=value.price_two_grams%></td>
+                    		<% else %>
+                    			<td>--</td>
+                    		<% end %>
+                    		
+                    		<% if value.price_eighth != nil && value.price_eighth != 0.0 %>
+                    			<td>$<%=value.price_eighth%></td>
+                    		<% else %>
+                    			<td>--</td>
+                    		<% end %>
+                    		
+                    		<% if value.price_four_grams != nil && value.price_four_grams != 0.0 %>
+                    			<td>$<%=value.price_four_grams%></td>
+                    		<% else %>
+                    			<td>--</td>
+                    		<% end %>
+                    		
+                    		<% if value.price_quarter != nil && value.price_quarter != 0.0 %>
+                    			<td>$<%=value.price_quarter%></td>
+                    		<% else %>
+                    			<td>--</td>
+                    		<% end %>
+                    		
+                    		<% if value.price_half_ounce != nil && value.price_half_ounce != 0.0 %>
+                    			<td>$<%=value.price_half_ounce%></td>
+                    		<% else %>
+                    			<td>--</td>
+                    		<% end %>
+                    		
+                    		<% if value.price_ounce != nil && value.price_ounce != 0.0 %>
+                    			<td>$<%=value.price_ounce%></td>
+                    		<% else %>
+                    			<td>--</td>
+                    		<% end %>
+                        </tr>
+                    
+                    <% end %> <!-- end of loop over dispensaries in state  -->
+                    
+                <% end %> <!--end of state to dispensary loop-->
+            
+        </table>
+    </div>
+</div>

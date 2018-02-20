@@ -1,0 +1,140 @@
+<!-- Start page content -->
+<section id="page-content" class="page-wrapper archive">
+    <div class="zm-section single-post-wrap archive-2 bg-white ptb-15">
+        <div class="container">
+            <div class="row">
+                <!-- Start left side -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 columns">
+                    
+                    <div class="news-viewing-title-div" style="text-align: center; margin: 20px 0;">
+                        <h3 style = 'color: #2ab081;'>
+                    		<%= @state.name %>
+                        </h3>
+                    </div>
+                    
+                    <div class="row mt-40">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row mb-40">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="section-title">
+                                        <h2 class="h6 inline-block uppercase header-button active-header-button" 
+                                        			id = 'state-products-button' onClick="changeStateView('Products')">Products</h2>
+                                        <h2 class="h6 inline-block uppercase header-button inactive-header-button" 
+                                        			id = 'state-news-button' onClick="changeStateView('News')">News</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--state news-->
+                            <div class = "state-news-section" style="display:none;">
+	                            <div class="row">
+	                                <div class="zm-posts clearfix">
+	                                	
+	                                	<%= render @recents %>
+	                                    
+	                                    <div class = 'article-index-new-pagination'>
+	                                        <%= will_paginate @recents %>
+	                                    </div>
+	
+	                                </div>
+	                            </div>
+	                        </div>
+                            
+                            <!--state products-->
+                            <div class = "state-products-section">
+	                            <!-- options -->
+							    <div class="col-sm-12 col-md-3 col-lg-3 col-xs-12 col-sm-12 paddingbottom">
+								    <div class="row mb-40">
+								        <div class="col-lg-12">
+								            <div class="section-title">
+								                <h2 class="h6 header-color inline-block uppercase">Options</h2>
+								            </div>
+								        </div>
+								    </div>
+								    <%= form_tag refine_state_products_path do %>
+								  
+								        <ul class="miniarticlemenu">
+								            <li class="">
+								                <div>Refine By Name</div>
+								                <input type="text" placeholder="Search" name = 'name_search' style="margin-bottom: 0px; margin: 10px 0px;">
+								            </li>
+								            <li>
+								                <div>Refine By Location</div>
+								                <input type="text" placeholder="Search" name = 'location_search' style="margin-bottom: 0px; margin: 10px 0px;"><br/>
+								            </li>
+								            
+								            <!--category dropdown-->
+								            <li style="overflow: visible;">
+								                <%= render "layouts/dropdown_categories" %>
+								            </li>
+								            
+								            
+								            
+								            <!-- az dropdown -->
+								            <li style="overflow: visible;"> 
+								            	<%= render "layouts/dropdown_az" %>
+								            </li>
+								            <li>
+								            	<!--hidden values-->
+								            	<input type = "hidden" name = "state_id" value="<%=@state.id%>"/>
+								            	<input type = "hidden" id="category_search" name = "category_search"/>
+								            	<input type = "hidden" id="az_search" name = "az_search"/>
+								            	
+								                <button type="submit" class="button" style="margin-bottom: 0px; margin: 10px 0px;">Refine Results</button>&nbsp;&nbsp;&nbsp;&nbsp;
+								                
+								                <%= button_to "Clear Filters", state_path(@state), :class => "button", 
+								                		:style => "margin-bottom: 0px; margin: 10px 0px;" %>
+								            </li>
+								        </ul>
+								     <% end %>
+							    </div>
+								<!-- options -->
+								
+								<!-- results index -->
+							    <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
+							        <div>
+							            <div class="row mb-40">
+							                <div class="col-lg-12">
+							                    <div class="section-title">
+							                        <h2 class="h6 header-color inline-block uppercase">Products</h2>
+							                    </div>
+							                </div>
+							            </div>   
+							        </div>
+						
+							        <div class="mb-20">
+							        	<%= page_entries_info @products, :model => ''%>
+							        	<% if @search_string != nil && @search_string != ''%>
+							        		for <%= @search_string %>
+							        	<% end %>
+							        </div>
+						
+							        <!-- Product Section -->
+							        <div class="row">
+							            <!-- Start single post image formate-->
+							            <div class="col-md-12">
+							                <article class="zm-post-lay-single">
+							                    <div class="zm-post-thumb">
+							                    </div>
+							                    <div>
+							                        <div class="row">
+						
+							                        	<!-- render with products/_product partial -->
+							    						<%= render @products %>
+						
+							                        </div>
+							                    </div>
+							                </article>
+							            </div>
+							        </div>
+							    </div> <!-- end table -->
+								<!-- results index -->
+                            </div> <!-- end state products section -->
+                        </div>
+                    </div>
+                </div>
+                <!-- End left side -->
+        </div>
+    </div>
+</section>
+<!-- End page content -->
