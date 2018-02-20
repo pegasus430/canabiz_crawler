@@ -1,0 +1,18 @@
+<!--trending news-->
+<style>
+    .owl-carousel {
+        cursor: url(<%= asset_path 'icons/cursor.png' %>), auto;
+    }
+</style>
+<div class="trending-post-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="trend-post-list zm-posts owl-active-1 clearfix owl-carousel">
+
+                <%= render :partial => "trending_article", :collection => @trending_articles, :as => :article %>
+                    
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End trending news area -->

@@ -1,0 +1,86 @@
+<div class="col-md-12 col-lg-6 col-sm-12">
+    <article class="zm-post-lay-a1 top-product-mobile">
+        <div class="zm-post-thumb">
+            <!--product image --> 
+            <a href="<%= product_path(product) %>">
+                <% if Rails.env.production? && product.image != nil %>
+                    <%= image_tag(product.image_url(:profile_size))%>
+                <% else %>
+                    <%= image_tag("home_article_fill.jpg") %>
+                <% end %>
+            </a>
+        </div>
+        <div class="zm-post-dis">
+            <div class="zm-post-header">
+
+            	<!--display product tags-->
+                <div class="zm-category">
+                    <% if product.category.present? %>
+                        <a class="bg-cat-3 cat-btn" href="<%=products_path(product.category.name)%>"><%= product.category.name %></a>
+                    <% end %>
+                    <!--sub category-->
+                    <% if product.sub_category.present? %>
+                    
+                        <!--#see if it has is_dom-->
+                        <% if product.is_dom.present? %>
+                            
+                            <% if product.is_dom == 'Indica' %>
+                            
+                                <a class="bg-cat-3 cat-btn" 
+                                    href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
+                            
+                            <% else %>
+                            
+                                <a class="bg-cat-3 cat-btn" 
+                                    href="<%=products_path('Hybrid-Sativa')%>">Hybrid-Indica</a>
+                            
+                            <% end %>
+                            
+                        <% else %>
+                            <a class="bg-cat-3 cat-btn" 
+                                href="<%=products_path(product.sub_category)%>"><%= product.sub_category %></a>   
+                        <% end %>
+                        
+                    <% end %>
+                </div>
+                <!--display product tags-->
+
+                <!-- name -->
+                <h2 class="zm-post-title"><a href="<%= product_path(product) %>"><%= product.name %></a></h2>
+
+                <div class="zm-post-content">
+                    <p><%=product.description.truncate(175) if product.description%></p>
+                </div>
+
+                <!-- meta info -->
+                <div class="product-info">
+                    <p>Produced By:
+                        <% product.vendors.each_with_index do |vendor, index| %>
+                            <% if index + 1 == product.vendors.size %>
+                                <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
+                            <% else %>
+                                <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
+                            <% end %>
+                                
+                        <% end %>
+                    </p>
+                </div>
+                <div class="product-info">
+                    <p>Average Prices:
+                        <% product.average_prices.each_with_index do |average_price, index| %>
+                            <% if index + 1 == product.average_prices.size %>
+                                <a href="<%=average_price_path(average_price)%>" style="color: #2ab081;">
+                                    <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>
+                            <% else %>
+                                <a href="<%=average_price_path(average_price)%>" style="color: #2ab081;">
+                                    <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>,&nbsp;
+                            <% end %>
+                        <% end %>
+                    </p>
+                </div>
+                
+                
+            </div>
+        </div>
+    </article>
+</div>

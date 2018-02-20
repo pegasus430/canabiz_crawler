@@ -16,6 +16,7 @@ gem 'friendly_id', '~> 5.0.0' #use the titles as the urls
 gem "skylight" #app monitoring
 gem 'sprockets-rails', :require => 'sprockets/railtie' #trying to minify css and js
 gem 'canonical-rails', '~> 0.2.1' #automatically add canonical meta tag to each page
+gem 'owlcarousel-rails', '~> 1.1', '>= 1.1.3.3' #for trending article carousel
 
 #BACKGROUND JOBS
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE

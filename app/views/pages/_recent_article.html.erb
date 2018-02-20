@@ -1,0 +1,62 @@
+<!-- Start single post layout A1 -->
+<div class="col-md-12 col-lg-6 col-sm-12">
+    <article class="zm-post-lay-a1">
+        <div class="zm-post-thumb">
+            <!-- article image -->
+            <a href="">
+                <% if Rails.env.production? %>
+                    <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'substitutes/news-substitute.jpg' %>'" alt="<%=article.title%>">
+                <% else %>
+                    <%= image_tag("home_article_fill.jpg") %>
+                <% end %>
+            </a>
+        </div>
+        <div class="zm-post-dis">
+            <div class="zm-post-header">
+
+            	<!--display article tags-->
+                <div class="zm-category">
+                    <% article.categories.each do |category| %>
+                        <a class="bg-cat-3 cat-btn" href="<%=category_path(category)%>"><%=category.name%></a>
+                    <% end %>
+                    <% article.states.each do |state| %>
+                        <a class="bg-cat-3 cat-btn" href="<%=state_path(state)%>"><%=state.name%></a>
+                    <% end %>
+                </div>
+                <!--display article tags-->
+
+                <!-- title -->
+                <h2 class="zm-post-title"><a href="<%= article_path(article) %>"><%= article.title.truncate(60).titlecase if article.title %></a></h2>
+
+                <!-- source and date -->
+                 <div class="zm-post-meta">
+                    <ul>
+                        <li class="s-meta">
+                            <img class='inline' style='width: 40px; height: auto; display: none;' src = "<%= asset_path(article.source.sidebar_logo) if article.source %>">
+                            <%= link_to article.source.name, source_path(article.source), class: 'zm-author' %>
+                           
+                        </li>
+                        <li class="s-meta"><p class="zm-date" style="color: #7c8c99;"><%= time_ago_in_words(article.created_at) %> ago</p></li>
+                    </ul>
+                </div>
+            </div>
+           
+           	<!-- article body -->
+           	<div class="zm-post-content">
+                
+                <%frag = Nokogiri::HTML(article.body)%>
+                <%frag.xpath("//h1").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h2").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h3").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h4").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h5").each { |div|  div.name= "p"}%>
+                <%frag.xpath("//h6").each { |div|  div.name= "p"}%>
+                
+                <%= truncate_html frag, :length => 175 %>
+                
+            </div>
+            
+        </div>
+    </article>
+</div>
+<!-- End single post layout A1 -->

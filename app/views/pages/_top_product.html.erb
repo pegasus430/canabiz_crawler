@@ -1,0 +1,79 @@
+
+<article class="zm-post-lay-e zm-single-post clearfix top-product">
+    <div class="zm-post-thumb f-left">
+        <!--product image --> 
+        <a href="<%= product_path(product) %>">
+            <% if Rails.env.production? && product.image != nil %>
+                <%= image_tag(product.image_url(:product_show))%>
+            <% else %>
+                <%= image_tag("home_top_product.jpg") %>
+            <% end %>
+        </a>
+    </div>
+    <div class="zm-post-dis f-right">
+        <div class="zm-post-header">
+            
+            <div class="zm-category">
+                
+                <!--dont show category if has subcategory-->
+                <% if product.category.present? && !product.sub_category.present? %>
+                    <a class="bg-cat-3 cat-btn" href="<%=products_path(product.category.name)%>"><%= product.category.name %></a>
+                <% end %>
+                
+                <!--sub category-->
+                <% if product.sub_category.present? %>
+                
+                    <!--#see if it has is_dom-->
+                    <% if product.is_dom.present? %>
+                        
+                        <% if product.is_dom == 'Indica' %>
+                        
+                            <a class="bg-cat-3 cat-btn" 
+                                href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
+                        
+                        <% else %>
+                        
+                            <a class="bg-cat-3 cat-btn" 
+                                href="<%=products_path('Hybrid-Sativa')%>">Hybrid-Indica</a>
+                        
+                        <% end %>
+                        
+                    <% else %>
+                        <a class="bg-cat-3 cat-btn" 
+                            href="<%=products_path(product.sub_category)%>"><%= product.sub_category %></a>   
+                    <% end %>
+                    
+                <% end %>
+            </div>
+            
+            <h2 class="zm-post-title"><a href="<%= product_path(product) %>">
+                <%= product.name.titlecase if product.name %></a>
+            </h2>
+
+            <div class="product-info">
+                <p class ="produced-info" style="max-height: 36px; overflow: hidden;">Produced By:
+                    <% product.vendors.each_with_index do |vendor, index| %>
+                        <% if index + 1 == product.vendors.size %>
+                            <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
+                        <% else %>
+                            <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
+                        <% end %>
+                    <% end %>
+                </p>
+            </div>
+            <div class="product-info">
+                <p>Average Prices:
+                    <% product.average_prices.each_with_index do |average_price, index| %>
+                        <% if index + 1 == product.average_prices.size %>
+                            <a href="<%=average_price_path(average_price)%>" style="color: #2ab081;">
+                                <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>
+                        <% else %>
+                            <a href="<%=average_price_path(average_price)%>" style="color: #2ab081;">
+                                <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>,&nbsp;
+                        <% end %>
+                    <% end %>
+                </p>
+            </div>
+        </div>
+    </div>
+</article>
