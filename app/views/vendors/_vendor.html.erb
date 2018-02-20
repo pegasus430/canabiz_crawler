@@ -1,0 +1,27 @@
+<!-- individual dispensary on the index -->
+<div class="col-md-3 productspacer ind-disp">
+	<!-- dispensary image -->
+	<a href="<%= vendor_path(vendor) %>">
+        <% if vendor.image.present? %>
+            <img src="<%=vendor.image_url(:product_dispensary_index)%>" onerror="this.src='<%= asset_path 'substitutes/vendor-substitute.jpg' %>'" alt="<%=vendor.name%>">
+        <% else %>
+            <%=image_tag('substitutes/vendor-substitute.png')%>
+        <% end %>
+    </a>
+    <div class="description">
+        <!-- Start single productitem-->
+        <article class="overflow">                                     
+            <div class="zm-post-dis">
+                <div class="zm-post-header">
+                    <div class="price">
+                        <%= vendor.name %>
+                    </div>           
+                </div>
+                <div class="soldby">
+                    <%= vendor.description.truncate(100) if vendor.description %>
+                </div>
+            </div>
+        </article>
+        <!-- End single productitem-->
+    </div>
+</div>

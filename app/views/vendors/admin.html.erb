@@ -35,12 +35,7 @@
 		<th><%= sortable "id" %></th>
 		<th><%= sortable "image" %></th>
 		<th><%= sortable "description" %></th>
-		<th><%= sortable "linkedin_name" %></th>
-		<th><%= sortable "twitter_name" %></th>
-		<th><%= sortable "year_of_establishment" %></th>
-		<th><%= sortable "specialization" %></th>
-		<th><%= sortable "website" %></th>
-		<th><%= sortable "facebook_link" %></th>
+		<th><%= sortable "state_id" %></th>
 		<th>Products</th>
 		<th>Edit</th>
 		<th>Delete</th>
@@ -52,12 +47,7 @@
 		      <td><%= vendor.id %></td>
 		      <td><%= vendor.image.to_s.truncate(50) if vendor.image %></td>
 		      <td><%= vendor.description %></td>
-		      <td><%= vendor.linkedin_name %></td>
-		      <td><%= vendor.twitter_name %></td>
-		      <td><%= vendor.year_of_establishment %></td>
-		      <td><%= vendor.specialization %></td>
-		      <td><%= vendor.website %></td>
-		      <td><%= vendor.facebook_link %></td>
+		      <td><%= vendor.state.name if vendor.state %></td>
 		      
 		      <td><% if vendor.products.any? %>
 	              <%= render :partial => "products/listname", :collection => vendor.products, :as => :product %>
