@@ -27,31 +27,31 @@
                         <% else %>
                         
                             <% if dispProduct.price_half_gram.present? && dispProduct.price_half_gram != 0.0 %>
-                                $<%=number_to_currency(dispProduct.price_half_gram, :unit => "$")%> for 1/2 gram <br/>
+                                <%=number_to_currency(dispProduct.price_half_gram, :unit => "$")%> for 1/2 gram <br/>
                                 <% price_given = true %>
                             <% end %>
                             <% if dispProduct.price_gram.present? && dispProduct.price_gram != 0.0%>
-                                $<%=number_to_currency(dispProduct.price_gram, :unit => "$")%> for 1 gram <br/>
+                                <%=number_to_currency(dispProduct.price_gram, :unit => "$")%> for 1 gram <br/>
                                 <% price_given = true %>
                             <% end %>
                             <% if dispProduct.price_two_grams.present? && dispProduct.price_two_grams != 0.0%>
-                                $<%=dispProduct.price_two_grams%> for 2 grams <br/>
+                                <%=number_to_currency(dispProduct.price_two_grams, :unit => "$")%> for 2 grams <br/>
                                 <% price_given = true %>
                             <% end %>
                             <% if dispProduct.price_eighth.present? && dispProduct.price_eighth != 0.0%>
-                                $<%=number_to_currency(dispProduct.price_eighth, :unit => "$")%> for 1/8th <br/>
+                                <%=number_to_currency(dispProduct.price_eighth, :unit => "$")%> for 1/8th <br/>
                                 <% price_given = true %>
                             <% end %>
                             <% if dispProduct.price_quarter.present? && dispProduct.price_quarter != 0.0%>
-                                $<%=number_to_currency(dispProduct.price_quarter, :unit => "$")%> for 1/4th <br/>
+                                <%=number_to_currency(dispProduct.price_quarter, :unit => "$")%> for 1/4th <br/>
                                 <% price_given = true %>
                             <% end %>
                             <% if dispProduct.price_half_ounce.present? && dispProduct.price_half_ounce != 0.0%>
-                                $<%=number_to_currency(dispProduct.price_half_ounce, :unit => "$")%> for 1/2 ounce <br/>
+                                <%=number_to_currency(dispProduct.price_half_ounce, :unit => "$")%> for 1/2 ounce <br/>
                                 <% price_given = true %>
                             <% end %>
                             <% if dispProduct.price_ounce.present? && dispProduct.price_ounce != 0.0 %>
-                                $<%=number_to_currency(dispProduct.price_ounce, :unit => "$")%> for 1 ounce <br/>
+                                <%=number_to_currency(dispProduct.price_ounce, :unit => "$")%> for 1 ounce <br/>
                                 <% price_given = true %>
                             <% end %>
                         
