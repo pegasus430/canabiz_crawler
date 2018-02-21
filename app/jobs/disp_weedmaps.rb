@@ -22,7 +22,7 @@ class DispWeedmaps < ActiveJob::Base
 								
 		#query all featured products to look for a match
 		@flower_products = Category.where(name: 'Flower').first.products.featured.includes(:vendors)
-		@all_products = Product.featured
+		#@all_products = Product.featured
 		
 		#MAKE CALL AND CREATE JSON
 		require "json"

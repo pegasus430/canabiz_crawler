@@ -23,7 +23,7 @@ class WeedMapsWorker
 		@real_dispensaries = Dispensary.where(state_id: @state.id)
 								
 		#query all featured products by category to look for a match - add in other product lists as needed
-		@flower_products = Category.where(name: 'Flower').first.products.featured
+		@flower_products = Category.where(name: 'Flower').first.products.featured.includes(:vendors)
 		#@all_products = Product.featured
 		
 		#MAKE CALL AND CREATE JSON
