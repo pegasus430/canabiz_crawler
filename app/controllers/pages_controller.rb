@@ -6,7 +6,7 @@ class PagesController < ApplicationController
     def home
         
         #test weedmaps
-        DispWeedmaps.perform_later('Washington')
+        #DispWeedmaps.perform_later('Washington')
         
         #only showing articles for active sources 
         source_ids = @sources.pluck(:id)
