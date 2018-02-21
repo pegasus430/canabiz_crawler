@@ -156,7 +156,9 @@
                                         <%= truncate_html frag, :length => 1000 %>
                                         <br/>
                                         <br/>
-                                        <p>See Article on <span itemprop="publisher"><%= @article.source.name %></span>
+                                        <p>See Article on 
+                                            <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+                                                <span itemprop="name"><%= @article.source.name %></span></span>
                                         	<a class = 'article-link' href="<%=@article.web_url%>">HERE</a>
 										</p>
                                     </div>
