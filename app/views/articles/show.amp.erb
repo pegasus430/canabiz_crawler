@@ -158,7 +158,10 @@
                                         <br/>
                                         <p>See Article on 
                                             <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-                                                <span itemprop="name"><%= @article.source.name %></span></span>
+                                                <span itemprop="name"><%= @article.source.name %></span>
+                                                <img style = 'display: none;' src="<%=asset_path('sourceIcons/420times-icon.jpg')%>" 
+                                                    itemprop="logo" height="100" width="100" layout="responsive">
+                                            </span>
                                         	<a class = 'article-link' href="<%=@article.web_url%>">HERE</a>
 										</p>
                                     </div>
