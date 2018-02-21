@@ -122,16 +122,16 @@
                             <article itemscope itemtype="http://schema.org/Article" class="zm-post-lay-single">
                                 <div class="zm-post-thumb">
                             	    <% if @article.image.present? %>
-                                        <amp-img itemprop="image" src="<%=@article.image%>" 
+                                        <img itemprop="image" src="<%=@article.image%>" 
                                             alt="<%=@article.title%>" height="650" width="850" layout="responsive">
                                     <% else %>
-                                        <amp-img itemprop="image" src="<%= asset_path 'homepage/news-substitute.jpg' %>"
+                                        <img itemprop="image" src="<%= asset_path 'homepage/news-substitute.jpg' %>"
                                             alt="<%=@article.title%>" height="650" width="850" layout="responsive">
                                     <% end %>
                                 </div>
                                 <div class="zm-post-dis">
                                     <div class="zm-post-header">
-                                        <h2 itemprop="name" itemprop="headline" class="zm-post-title h2"><%=@article.title.titlecase%></h2>
+                                        <h2 itemprop="headline" itemprop="name" class="zm-post-title h2"><%=@article.title.titlecase%></h2>
                                         <div class="zm-post-meta">
                                             <ul>
                                                 <li class="s-meta"><a href="<%= source_path(@article.source) %>" class="zm-author">
@@ -160,7 +160,7 @@
                                         	<a class = 'article-link' href="<%=@article.web_url%>">HERE</a>
 										</p>
                                     </div>
-                                    <div class="entry-meta-small clearfix ptb-40 mtb-40 border-top border-bottom">
+                                    <div itemprop="publisher" class="entry-meta-small clearfix ptb-40 mtb-40 border-top border-bottom">
                                     </div>
                                 </div>
                             </article>
