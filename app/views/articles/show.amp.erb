@@ -156,11 +156,11 @@
                                         <%= truncate_html frag, :length => 1000 %>
                                         <br/>
                                         <br/>
-                                        <p>See Article on <%= @article.source.name %> 
+                                        <p>See Article on <span itemprop="publisher"><%= @article.source.name %></span>
                                         	<a class = 'article-link' href="<%=@article.web_url%>">HERE</a>
 										</p>
                                     </div>
-                                    <div itemprop="publisher" class="entry-meta-small clearfix ptb-40 mtb-40 border-top border-bottom">
+                                    <div class="entry-meta-small clearfix ptb-40 mtb-40 border-top border-bottom">
                                     </div>
                                 </div>
                             </article>
