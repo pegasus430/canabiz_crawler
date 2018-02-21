@@ -80,44 +80,108 @@ class DispWeedmaps < ActiveJob::Base
 	def analyzeReturnedDispensarySourceMenu(returned_json_menu, existing_dispensary_source, is_new_dispensary)
 	
 		returned_json_menu.each do |returned_menu_section|
+
+			#right now we are only doing flowers
+			if ['Indica', 'Hybrid', 'Sativa', 'Flower'].include? returned_menu_section['title']
 			
-			#loop through the different menu sections (separated by title - category)
-			returned_menu_section['items'].each do |returned_dispensary_source_product|
-			
-				#check if dispensary source already has this product
-				existing_dispensary_source_products = []
+				#loop through the different menu sections (separated by title - category)
+				returned_menu_section['items'].each do |returned_dispensary_source_product|
 				
-				#if its not a new dispensary, we will check if the dispensary source already has the product
-				if is_new_dispensary == false
-					existing_dispensary_source_products = existing_dispensary_source.products.select { |product| 
-															product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
-				end
-				
-				if existing_dispensary_source_products.size > 0 #dispensary source has the product
+					#check if dispensary source already has this product
+					existing_dispensary_source_products = []
 					
-					#if product already exists, check to see if any prices have changed
-					compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, DispensarySourceProduct.
-														where(product: existing_dispensary_source_products[0]).
-														where(dispensary_source: existing_dispensary_source).first, existing_dispensary_source)
-				
-				else #dispensary source does not have the product / it is a new dispensary source
+					#if its not a new dispensary, we will check if the dispensary source already has the product
+					if is_new_dispensary == false
+						existing_dispensary_source_products = existing_dispensary_source.products.select { |product| 
+																product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
 					
-					#first check if product is in the system	
-					existing_products = @all_products.select { |product| product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
+						#try alternate names or combine with vendors
+						if existing_dispensary_source_products.size == 0
+							existing_dispensary_source.products.each do |product|
+								
+								#check alternate names for a match
+								if product.alternate_names.present? 
+									product.alternate_names.split(',').each do |alt|
+										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_dispensary_source_products.add(product)
+											break
+										end
+									end
+								end
+
+								#check products with vendor name
+								if product.vendors.any?
+									product.vendors.each do |vendor|
+										combined = "#{product.name} - #{vendor.name}"
+										if combined.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_dispensary_source_products.add(product)
+											break
+										end
+									end
+								end
+
+							end
+						end
+
+					end
 					
-					if existing_products.size > 0 #product is in the system
+					if existing_dispensary_source_products.size > 0 #dispensary source has the product
 						
-						#just create a dispensary source product
-						createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product)
-		
+						#if product already exists, check to see if any prices have changed
+						compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, DispensarySourceProduct.
+															where(product: existing_dispensary_source_products[0]).
+															where(dispensary_source: existing_dispensary_source).first, existing_dispensary_source)
+					
+					else #dispensary source does not have the product / it is a new dispensary source
+						
+						#first check if product is in the system - used to be all_products
+						existing_products = @flower_products.select { |product| product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
+						
+						if existing_products.size > 0 #product is in the system
+							
+							#just create a dispensary source product
+							createProductAndDispensarySourceProduct(existing_products[0], 
+								existing_dispensary_source.id, returned_dispensary_source_product)
+			
+							#existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
+						else
+							#dive deeper for a match
+							@flower_products.each do |product|
+								if existing_products.size > 0 
+									createProductAndDispensarySourceProduct(existing_products[0], 
+											existing_dispensary_source.id, returned_dispensary_source_product)
+									break
+								end 
+
+								#check alternate names for a match
+								if product.alternate_names.present? 
+									product.alternate_names.split(',').each do |alt|
+										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_products.add(product)
+											break
+										end
+									end
+								end
+
+								#check products with vendor name
+								if product.vendors.any?
+									product.vendors.each do |vendor|
+										combined = "#{product.name} - #{vendor.name}"
+										if combined.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_products.add(product)
+											break
+										end
+									end
+								end
+							end
+						end
+						
+						#either way I update the dispensarySource.last_menu_update
 						existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
-					end		
-					
-					#either way I update the dispensarySource.last_menu_update
-					existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
-					
-				end
-			end #end loop of each section's products
+						
+					end
+				end #end loop of each section's products
+			end #end if statement to check if product is a flower - will need to update in future
 			
 		end #end loop of each menu 'section' -> sections are broken down by type 'indica, sativa, etc'
 	

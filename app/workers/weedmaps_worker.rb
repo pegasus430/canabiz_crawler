@@ -94,6 +94,35 @@ class WeedMapsWorker
 					if is_new_dispensary == false
 						existing_dispensary_source_products = existing_dispensary_source.products.select { |product| 
 																product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
+					
+						#try alternate names or combine with vendors
+						if existing_dispensary_source_products.size == 0
+							existing_dispensary_source.products.each do |product|
+								
+								#check alternate names for a match
+								if product.alternate_names.present? 
+									product.alternate_names.split(',').each do |alt|
+										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_dispensary_source_products.add(product)
+											break
+										end
+									end
+								end
+
+								#check products with vendor name
+								if product.vendors.any?
+									product.vendors.each do |vendor|
+										combined = "#{product.name} - #{vendor.name}"
+										if combined.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_dispensary_source_products.add(product)
+											break
+										end
+									end
+								end
+
+							end
+						end
+
 					end
 					
 					if existing_dispensary_source_products.size > 0 #dispensary source has the product
