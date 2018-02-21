@@ -88,7 +88,7 @@ class DispensariesController < ApplicationController
     #-------------------------------------
 
     def show
-        @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).
+        @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).includes(:dispensary_source_products).
                                 order('last_menu_update DESC').first
                                 
         if @dispensary_source != nil
