@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
     #lookups
     belongs_to :category
     
-    has_many :vendor_products
+    has_many :vendor_products, -> { order(:units_sold => :desc) }
     has_many :vendors, through: :vendor_products
     
     #average prices has lookup to product
