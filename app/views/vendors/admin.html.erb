@@ -36,6 +36,18 @@
 		<th><%= sortable "image" %></th>
 		<th><%= sortable "description" %></th>
 		<th><%= sortable "state_id" %></th>
+		<th><%= sortable "tier" %></th>
+		<th><%= sortable "vendor_type" %></th>
+		<th><%= sortable "address" %></th>
+		<th><%= sortable "longitude" %></th>
+		<th><%= sortable "latitude" %></th>
+		<th><%= sortable "total_sales" %></th>
+		<th><%= sortable "license_number" %></th>
+		<th><%= sortable "ubi_number" %></th>
+		<th><%= sortable "dba" %></th>
+		<th><%= sortable "month_inc" %></th>
+		<th><%= sortable "year_inc" %></th>
+		<th><%= sortable "month_inc_num" %></th>
 		<th>Products</th>
 		<th>Edit</th>
 		<th>Delete</th>
@@ -46,8 +58,20 @@
 		      <td style = 'width: 300px'><%= vendor.name %></td>
 		      <td><%= vendor.id %></td>
 		      <td><%= vendor.image.to_s.truncate(50) if vendor.image %></td>
-		      <td><%= vendor.description %></td>
+		      <td><%= vendor.description.truncate(100) if vendor.description %></td>
 		      <td><%= vendor.state.name if vendor.state %></td>
+		      <td><%= vendor.tier %></td>
+		      <td><%= vendor.vendor_type %></td>
+		      <td><%= vendor.address %></td>
+		      <td><%= vendor.longitude %></td>
+		      <td><%= vendor.latitude %></td>
+		      <td><%= vendor.total_sales %></td>
+		      <td><%= vendor.license_number %></td>
+		      <td><%= vendor.ubi_number %></td>
+		      <td><%= vendor.dba %></td>
+		      <td><%= vendor.month_inc %></td>
+		      <td><%= vendor.year_inc %></td>
+		      <td><%= vendor.month_inc_num %></td>
 		      
 		      <td><% if vendor.products.any? %>
 	              <%= render :partial => "products/listname", :collection => vendor.products, :as => :product %>

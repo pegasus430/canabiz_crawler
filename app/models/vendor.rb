@@ -12,6 +12,10 @@ class Vendor < ActiveRecord::Base
     #photo aws storage
     mount_uploader :image, PhotoUploader
     
+    #geocode location
+    geocoded_by :address
+    after_validation :geocode
+    
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true) do |row|

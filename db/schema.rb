@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220145807) do
+ActiveRecord::Schema.define(version: 20180222181911) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -282,16 +282,22 @@ ActiveRecord::Schema.define(version: 20180220145807) do
     t.string   "slug"
     t.string   "name"
     t.string   "description"
-    t.string   "linkedin_name"
-    t.string   "twitter_name"
-    t.integer  "year_of_establishment"
-    t.string   "specialization"
-    t.string   "website"
-    t.string   "facebook_link"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
     t.integer  "state_id"
+    t.integer  "tier"
+    t.string   "vendor_type"
+    t.string   "address"
+    t.float    "total_sales"
+    t.string   "license_number"
+    t.string   "ubi_number"
+    t.string   "dba"
+    t.string   "month_inc"
+    t.integer  "year_inc"
+    t.integer  "month_inc_num"
+    t.float    "longitude"
+    t.float    "latitude"
   end
 
   add_index "vendors", ["slug"], name: "index_vendors_on_slug", unique: true

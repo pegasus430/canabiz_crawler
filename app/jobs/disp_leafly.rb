@@ -38,8 +38,8 @@ class DispLeafly < ActiveJob::Base
 
 		contents = JSON.parse(output.read)
 		
-		#logger.info contents
-		#contents.clear
+		logger.info contents
+		contents.clear
 
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)
 		contents[@state_abbreviation].each do |returned_dispensary_source|
