@@ -31,8 +31,9 @@
                 <!--loop through dispensaries-->
                 <% @state_to_dispensary.each do |state_name, dispensaries| %>
                     
+                    <!-- removing state name row for now since its just washington
                     <tr class='state-name-row'>
-                        <td><%=state_name%></td>
+                        <td>state_name</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
@@ -40,7 +41,7 @@
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                    </tr>
+                    </tr>-->
                     
                     <% dispensaries.each do |dispensary_key| %>
                         <tr>
