@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180222181911) do
+ActiveRecord::Schema.define(version: 20180222183100) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(version: 20180222181911) do
     t.integer  "tier"
     t.string   "vendor_type"
     t.string   "address"
-    t.float    "total_sales"
+    t.decimal  "total_sales"
     t.string   "license_number"
     t.string   "ubi_number"
     t.string   "dba"
