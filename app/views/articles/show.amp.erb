@@ -156,14 +156,14 @@
                                         <%= truncate_html frag, :length => 1000 %>
                                         <br/>
                                         <br/>
-                                        <p>See Article on 
-                                            <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+                                        <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+                                            <img class="publisher-image" src="<%=asset_path(@article.source.sidebar_logo)%>" 
+                                                    itemprop="logo" height="28" width="28" layout="responsive">
+                                            <p>See Article on 
                                                 <span itemprop="name"><%= @article.source.name %></span>
-                                                <img class="publisher-image" src="<%=asset_path('sourceIcons/420times-icon.jpg')%>" 
-                                                    itemprop="logo" height="100" width="100" layout="responsive">
-                                            </span>
-                                        	<a class = 'article-link' href="<%=@article.web_url%>">HERE</a>
-										</p>
+                                            	<a class = 'article-link' href="<%=@article.web_url%>">HERE</a>
+    										</p>
+                                        </span>
                                     </div>
                                     <div class="entry-meta-small clearfix ptb-40 mtb-40 border-top border-bottom">
                                     </div>
