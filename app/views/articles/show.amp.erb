@@ -122,10 +122,10 @@
                             <article itemscope itemtype="http://schema.org/Article" class="zm-post-lay-single">
                                 <div class="zm-post-thumb">
                             	    <% if @article.image.present? %>
-                                        <img itemprop="image" src="<%=@article.image%>" 
+                                        <amp-img itemprop="image" src="<%=@article.image%>" 
                                             alt="<%=@article.title%>" height="650" width="850" layout="responsive">
                                     <% else %>
-                                        <img itemprop="image" src="<%= asset_path 'homepage/news-substitute.jpg' %>"
+                                        <amp-img itemprop="image" src="<%= asset_path 'homepage/news-substitute.jpg' %>"
                                             alt="<%=@article.title%>" height="650" width="850" layout="responsive">
                                     <% end %>
                                 </div>
@@ -157,7 +157,7 @@
                                         <br/>
                                         <br/>
                                         <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-                                            <img class="publisher-image" src="<%=asset_path(@article.source.sidebar_logo)%>" 
+                                            <amp-img class="publisher-image" src="<%=asset_path(@article.source.sidebar_logo)%>" 
                                                     itemprop="logo" height="28" width="28" layout="responsive">
                                             <p>See Article on 
                                                 <span itemprop="name"><%= @article.source.name %></span>
