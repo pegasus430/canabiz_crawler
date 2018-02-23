@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row">
                 <!-- Start left side -->
-                <div itemscope itemtype="http://schema.org/Product" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 columns">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 columns">
                     <div class="row mb-40">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="section-title">
@@ -19,21 +19,45 @@
                                 <div class="zm-post-dis">
                                     <div class="col-md-4 mb-40 product-show-image"  style="padding-left: 0px !important;">
                                         <% if @vendor.image.present? %> 
-                                            <img itemprop="image" alt= "<%=@vendor.name%>" src="<%= @vendor.image_url(:product_show_smaller)%>" style = "border: 1px solid black;">
+                                            <img alt= "<%=@vendor.name%>" src="<%= @vendor.image_url(:product_show_smaller)%>" style = "border: 1px solid black;">
                                         <% else %>
-                                            <img itemprop="image" alt= "<%=@vendor.name%>" src="<%= asset_path 'substitutes/vendor-substitute.jpg' %>" style = "border: 1px solid black;">
+                                            <img alt= "<%=@vendor.name%>" src="<%= asset_path 'substitutes/vendor-substitute.jpg' %>" style = "border: 1px solid black;">
                                         <% end %>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                        <div class="pricelg">
-                                            
-                                        </div>
-                                    </span>
                                     <div itemprop="description">
                                         <%=@vendor.description%>
-                                    </div> 
+                                    </div>
+                                    <div class ="order-vendor-info">
+                                        <% if @vendor.state.present? %>
+                                    		<p><span class="title">State Serviced:</span> <%=@vendor.state.name%></p>
+                                    	<% end %>
+                                    	<% if @vendor.tier.present? %>
+                                    		<p><span class="title">Tier:</span> <%=@vendor.tier%></p>
+                                    	<% end %>
+                                    	<% if @vendor.vendor_type.present? %>
+                                    		<p><span class="title">Type:</span> <%=@vendor.vendor_type%></p>
+                                    	<% end %>
+                                    	<% if @vendor.address.present? %>
+                                    		<p><span class="title">Address:</span> <%=@vendor.address%></p>
+                                    	<% end %>
+                                    	<% if @vendor.total_sales.present? %>
+                                    		<p><span class="title">Total Sales:</span> <%=@vendor.total_sales%></p>
+                                    	<% end %>
+                                    	<% if @vendor.license_number.present? %>
+                                    		<p><span class="title">License Number:</span> <%=@vendor.license_number%></p>
+                                    	<% end %>
+                                    	<% if @vendor.ubi_number.present? %>
+                                    		<p><span class="title">UBI Number:</span> <%=@vendor.ubi_number%></p>
+                                    	<% end %>
+                                    	<% if @vendor.dba.present? %>
+                                    		<p><span class="title">DBA:</span> <%=@vendor.dba%></p>
+                                    	<% end %>
+                                    	<% if @vendor.month_inc.present? && @vendor.year_inc.present? %>
+                                    		<p><span class="title">Incorporated:</span> <%=@vendor.month_inc%> <%=@vendor.year_inc%></p>
+                                    	<% end %>
+                                    </div>
                                 </div>
                             </article>
                         </div>
