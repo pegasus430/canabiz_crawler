@@ -147,11 +147,6 @@ class WeedMapsWorker
 						else
 							#dive deeper for a match
 							@flower_products.each do |product|
-								if existing_products.size > 0 
-									createProductAndDispensarySourceProduct(existing_products[0], 
-											existing_dispensary_source.id, returned_dispensary_source_product)
-									break
-								end 
 
 								#check alternate names for a match
 								if product.alternate_names.present? 
@@ -163,16 +158,30 @@ class WeedMapsWorker
 									end
 								end
 
-								#check products with vendor name
-								if product.vendors.any?
-									product.vendors.each do |vendor|
-										combined = "#{product.name} - #{vendor.name}"
-										if combined.casecmp(returned_dispensary_source_product['name']) == 0
-											existing_products.add(product)
-											break
+								if existing_products.size > 0 
+									createProductAndDispensarySourceProduct(existing_products[0], 
+											existing_dispensary_source.id, returned_dispensary_source_product)
+									break
+								
+								else 
+									#check products with vendor name
+									if product.vendors.any?
+										product.vendors.each do |vendor|
+											combined = "#{product.name} - #{vendor.name}"
+											if combined.casecmp(returned_dispensary_source_product['name']) == 0
+												existing_products.add(product)
+												break
+											end
 										end
 									end
-								end
+
+									if existing_products.size > 0 
+										createProductAndDispensarySourceProduct(existing_products[0], 
+												existing_dispensary_source.id, returned_dispensary_source_product)
+										break
+									end
+								end 
+
 							end
 						end
 						
