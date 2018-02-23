@@ -86,7 +86,7 @@ class LeaflyDispensaryWorker
 		returned_json_menu.each do |returned_menu_section|
 
 			#right now we are only doing flowers
-			['Flowers', 'Indicas', 'Sativas', 'Hybrids'].include? returned_menu_section['name']
+			if ['Flowers', 'Indicas', 'Sativas', 'Hybrids'].include? returned_menu_section['name']
 
 				#loop through the different menu sections (separated by title - category)
 				returned_menu_section['items'].each do |returned_dispensary_source_product|
