@@ -19,14 +19,14 @@ class LeaflyDispensaryWorker
 
 		#query the dispensarysources from this source and this state that have a dispensary lookup
 		@dispensary_sources = DispensarySource.where(state_id: @state.id).where(source_id: @source.id).
-								includes(:dispensary, :products)
+								includes(:dispensary, :products, :products => :vendors)
 
 		#the actual dispensaries that we will really display
 		@real_dispensaries = Dispensary.where(state_id: @state.id)
 
 		#query all products to see if products exist that aren't in the specified dispensary
-		@all_products = Product.featured
-		# @product_categories = Category.active.products
+		@flower_products = Category.where(name: 'Flower').first.products.featured.includes(:vendors)
+		#@all_products = Product.featured
 
 		#MAKE CALL AND CREATE JSON
 		output = nil
@@ -73,75 +73,125 @@ class LeaflyDispensaryWorker
 			end #end of if statement seeing if dispensary source exists or not
 				
 		end #end of contents loop 
-			
-	end #end of scrapeLeafly method
 
+	end #end of main scraper method
+	
+	
 	#BEGIN HELPER METHODS
-
+	
+	
 	#method to loop through the dispensary products (items) and determine the correct course of action 
 	def analyzeReturnedDispensarySourceMenu(returned_json_menu, existing_dispensary_source, is_new_dispensary)
 
 		returned_json_menu.each do |returned_menu_section|
 
-			#see if a category matches this section, if not create it
-			# existing_categories = @product_categories.select { |cat| cat.name == returned_menu_section['name'] }
+			#right now we are only doing flowers
+			['Flowers', 'Indicas', 'Sativas', 'Hybrids'].include? returned_menu_section['name']
 
-			# category_id = nil
-			# if existing_categories.size > 0 #category already exists
-			# 	category_id = existing_categories[0].id
-			# else #category does not exist
+				#loop through the different menu sections (separated by title - category)
+				returned_menu_section['items'].each do |returned_dispensary_source_product|
 
-			# 	#create category, add to @product_categories, set category_id
-			# 	category = Category.create(:name => returned_menu_section['name'], 
-			# 		:category_type => 'Product', :active => true)
-			# 	@product_categories.push(category)
-			# 	category_id = category.id
+					#check if dispensary source already has this product
+					existing_dispensary_source_products = []
 
-			# end #end of category does not exist
+					#if its not a new dispensary, we will check if the dispensary source already has the product
+					if is_new_dispensary == false
+						existing_dispensary_source_products = existing_dispensary_source.products.select { |product| 
+																product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
 
-			#loop through the different menu sections (separated by title - category)
-			returned_menu_section['items'].each do |returned_dispensary_source_product|
+						#try alternate names or combine with vendors
+						if existing_dispensary_source_products.size == 0
+							existing_dispensary_source.products.each do |product|
+								
+								#check alternate names for a match
+								if product.alternate_names.present? 
+									product.alternate_names.split(',').each do |alt|
+										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_dispensary_source_products.push(product)
+											break
+										end
+									end
+								end
 
-				#check if dispensary source already has this product
-				existing_dispensary_source_products = []
+								#check products with vendor name
+								if product.vendors.any?
+									product.vendors.each do |vendor|
+										combined = "#{product.name} - #{vendor.name}"
+										if combined.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_dispensary_source_products.push(product)
+											break
+										end
+									end
+								end
 
-				#if its not a new dispensary, we will check if the dispensary source already has the product
-				if is_new_dispensary == false
-					existing_dispensary_source_products = existing_dispensary_source.products.select { |product| 
-															product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
-				end
+							end
+						end #end alternate name test
 
-				if existing_dispensary_source_products.size > 0 #dispensary source has the product
-					
-					#if product already exists, check to see if any prices have changed
-					compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, DispensarySourceProduct.
-														where(product: existing_dispensary_source_products[0]).
-														where(dispensary_source: existing_dispensary_source).first)
-				
-				else #dispensary source does not have the product / it is a new dispensary source
+					end
 
-					#first check if product is in the system	
-					existing_products = @all_products.select { |product| product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
-					
-					if existing_products.size > 0 #product is in the system
+					if existing_dispensary_source_products.size > 0 #dispensary source has the product
 						
-						#just create a dispensary source product
-						createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product, category_id)
-		
-					else #product is not in system
+						#if product already exists, check to see if any prices have changed
+						compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, DispensarySourceProduct.
+															where(product: existing_dispensary_source_products[0]).
+															where(dispensary_source: existing_dispensary_source).first)
+					
+					else #dispensary source does not have the product / it is a new dispensary source
+
+						#first check if product is in the system	
+						existing_products = @all_products.select { |product| product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
 						
-						#have to create a new product as well as a dispensary source product
-						#NOT CREATING NEW PRODUCTS RIGHT NOW
-						#createProductAndDispensarySourceProduct(nil, existing_dispensary_source.id, returned_dispensary_source_product, category_id)
-					end		
-					
-					#either way I update the dispensarySource.last_menu_update
-					existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
-					
-				end
+						if existing_products.size > 0 #product is in the system
+							
+							#just create a dispensary source product
+							createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product, category_id)
+			
+						else #product is not in system
+							
+							#dive deeper for a match
+							@flower_products.each do |product|
 
+								#check alternate names for a match
+								if product.alternate_names.present? 
+									product.alternate_names.split(',').each do |alt|
+										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_products.push(product)
+											break
+										end
+									end
+								end
 
-			end #end loop of each section's products
+								if existing_products.size > 0 #product is in the system
+									createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product, category_id)
+
+								else
+
+									#check products with vendor name
+									if product.vendors.any?
+										product.vendors.each do |vendor|
+											combined = "#{product.name} - #{vendor.name}"
+											if combined.casecmp(returned_dispensary_source_product['name']) == 0
+												existing_products.push(product)
+												break
+											end
+										end
+									end
+
+									if existing_products.size > 0 #product is in the system
+										createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product, category_id)
+									end
+								end
+							end #end of deep dive
+
+						end		
+						
+						#either way I update the dispensarySource.last_menu_update
+						existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
+						
+					end
+
+				end #end loop of each section's products
+			end #end if statement to see if the section is flowers
 
 		end #end loop of each menu 'section' -> sections are broken down by type 'indica, sativa, et
 
@@ -149,21 +199,6 @@ class LeaflyDispensaryWorker
 
 	#method to create product (if necessary) and dispensary product
 	def createProductAndDispensarySourceProduct(product, dispensary_source_id, returned_dispensary_source_product, category_id)
-
-		if product == nil
-			#create product
-			#if product has a 'unit price', then it is not a strain - we have to account for this
-			product = Product.create(:name => returned_dispensary_source_product['name'], 
-								:remote_image_url => returned_dispensary_source_product['image_url'],
-								:short_description => returned_dispensary_source_product['short-description'],
-								:ancillary => false, :product_type => 'Strain')
-			
-			#product needs to be added to @all_products so it can be matched the next time
-			@all_products.push(product)
-
-			#create product category record
-			ProductCategory.create(:product_id => product.id, :category_id => category_id)
-		end
 
 		#create dispensary source product
 		if returned_dispensary_source_product['prices'] != nil

@@ -103,7 +103,7 @@ class WeedMapsWorker
 								if product.alternate_names.present? 
 									product.alternate_names.split(',').each do |alt|
 										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
-											existing_dispensary_source_products.add(product)
+											existing_dispensary_source_products.push(product)
 											break
 										end
 									end
@@ -114,7 +114,7 @@ class WeedMapsWorker
 									product.vendors.each do |vendor|
 										combined = "#{product.name} - #{vendor.name}"
 										if combined.casecmp(returned_dispensary_source_product['name']) == 0
-											existing_dispensary_source_products.add(product)
+											existing_dispensary_source_products.push(product)
 											break
 										end
 									end
@@ -152,7 +152,7 @@ class WeedMapsWorker
 								if product.alternate_names.present? 
 									product.alternate_names.split(',').each do |alt|
 										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
-											existing_products.add(product)
+											existing_products.push(product)
 											break
 										end
 									end
@@ -169,7 +169,7 @@ class WeedMapsWorker
 										product.vendors.each do |vendor|
 											combined = "#{product.name} - #{vendor.name}"
 											if combined.casecmp(returned_dispensary_source_product['name']) == 0
-												existing_products.add(product)
+												existing_products.push(product)
 												break
 											end
 										end
