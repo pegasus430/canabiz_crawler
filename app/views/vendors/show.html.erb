@@ -43,7 +43,7 @@
                                     		<p><span class="title">Address:</span> <%=@vendor.address%></p>
                                     	<% end %>
                                     	<% if @vendor.total_sales.present? %>
-                                    		<p><span class="title">Total Sales:</span> <%=number_to_currency(@vendor.total_sales, :unit => "$")%></p>
+                                    		<p><span class="title">Total Sales:</span> <%=@vendor.total_sales%></p>
                                     	<% end %>
                                     	<% if @vendor.license_number.present? %>
                                     		<p><span class="title">License Number:</span> <%=@vendor.license_number%></p>
