@@ -65,7 +65,7 @@
 		      <td><%= vendor.address %></td>
 		      <td><%= vendor.longitude %></td>
 		      <td><%= vendor.latitude %></td>
-		      <td><%= vendor.total_sales %></td>
+		      <td><%= number_to_currency(vendor.total_sales, :unit => "$") if vendor.total_sales %></td>
 		      <td><%= vendor.license_number %></td>
 		      <td><%= vendor.ubi_number %></td>
 		      <td><%= vendor.dba %></td>
