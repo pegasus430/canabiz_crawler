@@ -65,7 +65,7 @@ class VendorsController < ApplicationController
     #-------------------------------------------
     
     def show
-        @vendor_products = @vendor.products.includes(:average_prices, :vendors)
+        @vendor_products = @vendor.products.includes(:average_prices, :vendors, :category)
     end
 
     #-------------------------------------------
