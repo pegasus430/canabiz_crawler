@@ -12,6 +12,22 @@
                             </div>                                
                         </div>
                     </div>
+                    <div class="row">
+                        <!-- Start single post image formate-->
+                        <div class="col-md-12">
+                            <article class="zm-post-lay-single">
+                                <div class="zm-post-dis">
+                                    <div class="col-md-4 mb-40 product-show-image"  style="padding-left: 0px !important;">
+                                        <% if @vendor.image.present? %> 
+                                            <img alt= "<%=@vendor.name%>" src="<%= @vendor.image_url(:product_show_smaller)%>" style = "border: 1px solid black;">
+                                        <% else %>
+                                            <img alt= "<%=@vendor.name%>" src="<%= asset_path 'substitutes/vendor-substitute.jpg' %>" style = "border: 1px solid black;">
+                                        <% end %>
+                                    </div>
+                                </div>
+                            </article>
+                    	</div>
+                    </div>
             	</div>
             </div>
         </div>
