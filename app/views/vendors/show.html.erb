@@ -83,6 +83,21 @@
                             </div>                                
                         </div>
                     </div>
+                    <div class="row">
+                        <!-- Start single post image formate-->
+                        <div class="col-md-12">
+                            <article class="zm-post-lay-single">
+                                <div class="zm-post-thumb">
+                                </div>
+                                <div class="rowspacer">
+                                    <div class="row desktop-homepage">
+                                        <!--vendor products-->
+                                        <%= render :partial => "products/similar_product", :collection => @vendor_products, :as => :product %>
+                                    </div>
+            					</div>
+                            </article>
+                        </div>
+                    </div>
             	</div>
             </div>
         </div>
