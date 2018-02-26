@@ -33,10 +33,14 @@
             <option value = "<%= root_path %>">Products</option>
             <% @product_categories.order("name ASC").each do |category| %>
                 
-                <% if @category != nil && @category.name == category.name %>
-                    <option value = "<%=products_path(category)%>" selected="selected"><%=category.name%></option>
-                <% else %>
-                    <option value = "<%=products_path(category)%>"><%=category.name%></option>
+                <option value = "<%=category.name%>"><%=category.name%></option>
+    
+                <% if category.name == 'Flower' %>
+                    <option value="<%=products_path('Indica')%>">&nbsp&nbsp&nbsp&nbspIndica</option>
+                    <option value="<%=products_path('Sativa')%>">&nbsp&nbsp&nbsp&nbspSativa</option>
+                    <option value="<%=products_path('Hybrid')%>">&nbsp&nbsp&nbsp&nbspHybrid</option>
+                    <option value="<%=products_path('Hybrid-Indica')%>">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspHybrid-Indica</option>
+                    <option value="<%=products_path('Hybrid-Sativa')%>">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspHybrid-Sativa</option>
                 <% end %>
                 
         	<% end %>>
