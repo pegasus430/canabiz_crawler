@@ -94,12 +94,25 @@
                                         <!--vendor products-->
                                         <%= render :partial => "products/similar_product", :collection => @vendor_products, :as => :product %>
                                     </div>
+                                    <div class="row mobile-homepage">
+        		                        <div class="zm-posts clearfix">
+        		                        	<%= render :partial => "pages/top_product_mobile", :collection => @vendor_products, :as => :product %>
+        		                        </div>
+        		                    </div>
             					</div>
                             </article>
                         </div>
                     </div>
             	</div>
-            </div>
-        </div>
+            	<!-- Start pagination area -->
+        	    <div class="row hidden-xs">
+        	        <div class="zm-pagination-wrap mt-30">
+        	            <nav class="zm-pagination ptb-40 text-center">
+        	            	<%= will_paginate @vendors %>
+        	            </nav>
+        	        </div>
+        	    </div>
+            </div> <!-- end row --> 
+        </div> <!-- end container -->
     </div>
 </div>
