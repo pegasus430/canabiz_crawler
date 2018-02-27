@@ -36,12 +36,12 @@ class WeedMapsWorker
             output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
 		end
 		contents = JSON.parse(output.read)
-		logger.info 'first contents: '
-		logger.info contents['washington'][0]
-		contents.clear
+		#logger.info 'first contents: '
+		#logger.info contents['washington'][0]
+		#contents.clear
 		
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)
-		contents.each do |returned_dispensary_source|
+		contents['washington'].each do |returned_dispensary_source|
 			
 			#check if the dispensary source already exists
 			existing_dispensary_sources = @dispensary_sources.select { |dispensary_source| dispensary_source.name.casecmp(returned_dispensary_source['name']) == 0 }
