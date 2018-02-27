@@ -37,7 +37,7 @@ class WeedMapsWorker
 		end
 		contents = JSON.parse(output.read)
 		logger.info 'first contents: '
-		logger.info contents
+		logger.info contents['washington'][0]
 		contents.clear
 		
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)

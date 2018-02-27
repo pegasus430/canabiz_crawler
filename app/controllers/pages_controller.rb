@@ -7,6 +7,7 @@ class PagesController < ApplicationController
         
         #test weedmaps or leafly
         #DispLeafly.perform_later('WA', 'A-B')
+        #DispWeedmaps.perform_later('Washington', 'W-Z')
         
         #only showing articles for active sources 
         source_ids = @sources.pluck(:id)

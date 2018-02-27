@@ -35,7 +35,7 @@ class DispWeedmaps < ActiveJob::Base
 		end
 		contents = JSON.parse(output.read)
 		
-		logger.info contents[0]
+		#logger.info contents['washington'][0]
 		contents.clear
 		
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)
