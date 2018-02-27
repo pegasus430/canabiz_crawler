@@ -36,7 +36,9 @@ class WeedMapsWorker
             output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
 		end
 		contents = JSON.parse(output.read)
-		
+		logger.info 'first contents: '
+		logger.info contents
+		contents.clear
 		
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)
 		contents.each do |returned_dispensary_source|
