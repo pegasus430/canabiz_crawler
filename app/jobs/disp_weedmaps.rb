@@ -1,8 +1,9 @@
 class DispWeedmaps < ActiveJob::Base
 	include SuckerPunch::Job
 	
-	def perform(state_name)
+	def perform(state_name, city_range)
 		@state_name = state_name
+		@city_range = city_range
 		logger.info "Weedmaps Job is running"
 		scrapeWeedmaps()  
 	end
@@ -26,7 +27,12 @@ class DispWeedmaps < ActiveJob::Base
 		
 		#MAKE CALL AND CREATE JSON
 		require "json"
-		output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
+		output = nil
+		if @city_range.present?
+            output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name, '-city='+ @city_range])
+		else
+            output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
+		end
 		contents = JSON.parse(output.read)
 		
 		logger.info contents[0]

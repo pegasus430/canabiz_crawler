@@ -31,7 +31,7 @@ class DispLeafly < ActiveJob::Base
 		#MAKE CALL AND CREATE JSON
 		output = nil
 		if @city_range.present?
-            output = IO.popen(["python", "#{Rails.root}/app/scrapers/leafly_disp_scraper.py", @state_abbreviation, '--cityStarts='+ @city_range])
+            output = IO.popen(["python", "#{Rails.root}/app/scrapers/leafly_disp_scraper.py", @state_abbreviation, '--city='+ @city_range])
 		else
             output = IO.popen(["python", "#{Rails.root}/app/scrapers/leafly_disp_scraper.py", @state_abbreviation])
 		end

@@ -3,7 +3,7 @@ class WeedMapsWorker
 
 	def perform()
 		require "json"
-
+		@city_range = ENV['WEEDMAPS_CITY_RANGE']
 		@state_name = ENV['WEEDMAPS_STATE']
 		logger.info "Weedmaps Job is running"
 		scrapeWeedmaps() 
@@ -28,7 +28,13 @@ class WeedMapsWorker
 		
 		#MAKE CALL AND CREATE JSON
 		require "json"
-		output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
+		#output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
+		output = nil
+		if @city_range.present?
+            output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name, '-city='+ @city_range])
+		else
+            output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
+		end
 		contents = JSON.parse(output.read)
 		
 		
