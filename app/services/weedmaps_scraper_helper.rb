@@ -109,7 +109,7 @@ class WeedmapsScraperHelper
 								#check alternate names for a match
 								if product.alternate_names.present? 
 									product.alternate_names.split(',').each do |alt|
-										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
+										if alt.casecmp(returned_dispensary_source_product['name']) == 0
 											existing_dispensary_source_products.push(product)
 											break
 										end
@@ -170,7 +170,7 @@ class WeedmapsScraperHelper
 								#check alternate names for a match
 								if product.alternate_names.present? 
 									product.alternate_names.split(',').each do |alt|
-										if alt.name.casecmp(returned_dispensary_source_product['name']) == 0
+										if alt.casecmp(returned_dispensary_source_product['name']) == 0
 											existing_products.push(product)
 											break
 										end
