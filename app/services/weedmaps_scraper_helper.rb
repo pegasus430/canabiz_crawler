@@ -130,10 +130,11 @@ class WeedmapsScraperHelper
 											combined.push("#{product.name} (#{vendor.name})")
 											combined.push("#{product.name} by #{vendor.name} of Washington")
 
-											existing_dispensary_source_products = combined.select { |product_vendor| 
+											product_vendor_matches = combined.select { |product_vendor| 
 														product_vendor.casecmp(returned_dispensary_source_product['name']) == 0 }
 
-											if existing_dispensary_source_products.size > 0
+											if product_vendor_matches.size > 0
+												existing_dispensary_source_products.push(product)
 												break
 											end
 										end
