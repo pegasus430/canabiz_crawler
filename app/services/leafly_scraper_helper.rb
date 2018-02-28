@@ -84,10 +84,16 @@ class LeaflyScraperHelper
 	#method to loop through the dispensary products (items) and determine the correct course of action 
 	def analyzeReturnedDispensarySourceMenu(returned_json_menu, existing_dispensary_source, is_new_dispensary)
 
+		puts 'returned_json_menu'
+		puts returned_json_menu
+
 		valid_menu_sections = []
 		valid_menu_sections.push(returned_json_menu['Flower'])
 
 		valid_menu_sections.each do |returned_menu_section|
+
+			puts "IN A SECTION"
+			puts returned_menu_section
 
 			#right now we are only doing flowers
 			#if ['Flowers', 'Indicas', 'Sativas', 'Hybrids'].include? returned_menu_section['name']
@@ -150,7 +156,7 @@ class LeaflyScraperHelper
 							if existing_products.size > 0 #product is in the system
 								
 								#just create a dispensary source product
-								createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product, category_id)
+								createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product)
 				
 							else #product is not in system
 								
@@ -168,7 +174,7 @@ class LeaflyScraperHelper
 									end
 
 									if existing_products.size > 0 #product is in the system
-										createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product, category_id)
+										createProductAndDispensarySourceProduct(existing_products[0], existing_dispensary_source.id, returned_dispensary_source_product)
 									end
 								end #end of deep dive
 
@@ -189,7 +195,7 @@ class LeaflyScraperHelper
 	end #analyzeReturnedDispensarySourceMenu 
 
 	#method to create product (if necessary) and dispensary product
-	def createProductAndDispensarySourceProduct(product, dispensary_source_id, returned_dispensary_source_product, category_id)
+	def createProductAndDispensarySourceProduct(product, dispensary_source_id, returned_dispensary_source_product)
 
 		#create dispensary source product
 		if returned_dispensary_source_product['prices'] != nil
