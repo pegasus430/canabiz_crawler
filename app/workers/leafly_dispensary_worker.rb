@@ -37,6 +37,8 @@ class LeaflyDispensaryWorker
 		end
 
 		contents = JSON.parse(output.read)
+		logger.info contents
+		contents.clear
 
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)
 		contents.each do |returned_dispensary_source|
