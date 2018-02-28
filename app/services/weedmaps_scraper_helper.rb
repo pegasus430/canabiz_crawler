@@ -1,9 +1,9 @@
 class WeedmapsScraperHelper
 	
-	attr_reader :state, :city_range
+	attr_reader :state_name, :city_range
 	
-	def initialize(state, city_range)
-		@state = state
+	def initialize(state_name, city_range)
+		@state_name = state_name
 		@city_range = city_range
 	end
 	
@@ -11,7 +11,7 @@ class WeedmapsScraperHelper
 		
 		#GLOBAL VARIABLES
 		@source = Source.where(name: 'Weed Maps').first #source we are scraping
-		@state = State.where(name: @state).first #state we are scraping from the source
+		@state = State.where(name: @state_name).first #state we are scraping from the source
 				
 		#query the dispensarysources from this source and this state that have a dispensary lookup
 		@dispensary_sources = DispensarySource.where(state_id: @state.id).where(source_id: @source.id).

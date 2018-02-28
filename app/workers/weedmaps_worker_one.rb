@@ -1,11 +1,11 @@
-class WeedMapsWorker1
+class WeedMapsWorkerOne
 	include Sidekiq::Worker
 
 	def perform()
 		require "json"
 		logger.info "Weedmaps Job 1 is running"
 		#WeedmapsScraperHelper.new(ENV['WEEDMAPS_STATE'], 'A-F').scrapeWeedmaps
-		@state = 'Washington'
+		@state_name = 'Washington'
 		@city_range = 'A-F'
 		scrapeWeedmaps()
 	end
@@ -14,7 +14,7 @@ class WeedMapsWorker1
 		
 		#GLOBAL VARIABLES
 		@source = Source.where(name: 'Weed Maps').first #source we are scraping
-		@state = State.where(name: @state).first #state we are scraping from the source
+		@state = State.where(name: @state_name).first #state we are scraping from the source
 				
 		#query the dispensarysources from this source and this state that have a dispensary lookup
 		@dispensary_sources = DispensarySource.where(state_id: @state.id).where(source_id: @source.id).
@@ -29,7 +29,6 @@ class WeedMapsWorker1
 		
 		#MAKE CALL AND CREATE JSON
 		require "json"
-		require 'open-uri'
 		#output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
 		output = nil
 		if @city_range.present?
