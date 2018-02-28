@@ -5,7 +5,7 @@ class DispWeedmaps < ActiveJob::Base
 		@state_name = state_name
 		@city_range = city_range
 		logger.info "Weedmaps Job is running"
-		WeedmapsScraperHelper.new(ENV['WEEDMAPS_STATE'], 'A-Z').scrapeWeedmaps
+		WeedmapsScraperHelper.new(@state_name, @city_range).scrapeWeedmaps 
 	end
 	
 end #end of class

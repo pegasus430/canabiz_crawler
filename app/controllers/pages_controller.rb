@@ -6,7 +6,7 @@ class PagesController < ApplicationController
     def home
         
         #test weedmaps or leafly
-        #DispLeafly.perform_later('WA', 'A-B')
+        DispLeafly.perform_later('WA', 'A-B')
         #DispWeedmaps.perform_later('Washington', 'W-Z')
         
         #only showing articles for active sources 
