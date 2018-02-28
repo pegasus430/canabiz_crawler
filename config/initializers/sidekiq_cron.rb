@@ -11,7 +11,7 @@ if Rails.env.production?
 	Sidekiq::Cron::Job.create(name: 'Marijuana.com every 2 hours on the 35 min', cron: '35 */2 * * *', class: 'MarijuanaWorker')
 	Sidekiq::Cron::Job.create(name: 'MjBizDaily every 2 hours on the 40 min', cron: '40 */2 * * *', class: 'MjBizDailyWorker')
 	Sidekiq::Cron::Job.create(name: 'TheCannabist every 2 hours on the 45 min', cron: '45 */2 * * *', class: 'TheCannabistWorker')
-	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary 1', cron: '0 */2 * * *', class: 'WeedMapsWorker1')
+	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary 1', cron: '0 */2 * * *', class: 'WeedMapsWorker1', queue: 'dispensary')
 	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary 2', cron: '8 */2 * * *', class: 'WeedMapsWorker2')
 	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary 3', cron: '16 */2 * * *', class: 'WeedMapsWorker3')
 	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary 4', cron: '24 */2 * * *', class: 'WeedMapsWorker4')
