@@ -505,44 +505,44 @@ class LeaflyDispensaryWorker
 			
 			#monday
 			if hours_returned['Monday'] != nil
-				dispensary_source.update_attribute :monday_open_time, hours_returned['Monday']['Open']
-				dispensary_source.update_attribute :monday_close_time, hours_returned['Monday']['Close']
+				existing_dispensary_source.update_attribute :monday_open_time, hours_returned['Monday']['Open']
+				existing_dispensary_source.update_attribute :monday_close_time, hours_returned['Monday']['Close']
 			end
 
 			#tuesday
 			if hours_returned['Tuesday'] != nil
-				dispensary_source.update_attribute :tuesday_open_time, hours_returned['Tuesday']['Open']
-				dispensary_source.update_attribute :tuesday_close_time, hours_returned['Tuesday']['Close']
+				existing_dispensary_source.update_attribute :tuesday_open_time, hours_returned['Tuesday']['Open']
+				existing_dispensary_source.update_attribute :tuesday_close_time, hours_returned['Tuesday']['Close']
 			end
 
 			#wednesday
 			if hours_returned['Wednesday'] != nil
-				dispensary_source.update_attribute :wednesday_open_time, hours_returned['Wednesday']['Open']
-				dispensary_source.update_attribute :wednesday_close_time, hours_returned['Wednesday']['Close']
+				existing_dispensary_source.update_attribute :wednesday_open_time, hours_returned['Wednesday']['Open']
+				existing_dispensary_source.update_attribute :wednesday_close_time, hours_returned['Wednesday']['Close']
 			end
 
 			#thursday
 			if hours_returned['Thursday'] != nil
-				dispensary_source.update_attribute :thursday_open_time, hours_returned['Thursday']['Open']
-				dispensary_source.update_attribute :thursday_close_time, hours_returned['Thursday']['Close']
+				existing_dispensary_source.update_attribute :thursday_open_time, hours_returned['Thursday']['Open']
+				existing_dispensary_source.update_attribute :thursday_close_time, hours_returned['Thursday']['Close']
 			end
 
 			#friday
 			if hours_returned['Friday'] != nil
-				dispensary_source.update_attribute :friday_open_time, hours_returned['Friday']['Open']
-				dispensary_source.update_attribute :friday_close_time, hours_returned['Friday']['Close']
+				existing_dispensary_source.update_attribute :friday_open_time, hours_returned['Friday']['Open']
+				existing_dispensary_source.update_attribute :friday_close_time, hours_returned['Friday']['Close']
 			end
 
 			#saturday
 			if hours_returned['Saturday'] != nil
-				dispensary_source.update_attribute :saturday_open_time, hours_returned['Saturday']['Open']
-				dispensary_source.update_attribute :saturday_close_time, hours_returned['Saturday']['Close']
+				existing_dispensary_source.update_attribute :saturday_open_time, hours_returned['Saturday']['Open']
+				existing_dispensary_source.update_attribute :saturday_close_time, hours_returned['Saturday']['Close']
 			end
 
 			#sunday
 			if hours_returned['Sunday'] != nil
-				dispensary_source.update_attribute :sunday_open_time, hours_returned['Sunday']['Open']
-				dispensary_source.update_attribute :sunday_close_time, hours_returned['Sunday']['Close']
+				existing_dispensary_source.update_attribute :sunday_open_time, hours_returned['Sunday']['Open']
+				existing_dispensary_source.update_attribute :sunday_close_time, hours_returned['Sunday']['Close']
 			end
 
 		end #endHours 
