@@ -26,6 +26,7 @@ class WeedmapsScraperHelper
 		
 		#MAKE CALL AND CREATE JSON
 		require "json"
+		require 'open-uri'
 		#output = IO.popen(["python", "#{Rails.root}/app/scrapers/weedmaps_disp_scraper.py", @state_name])
 		output = nil
 		if @city_range.present?
