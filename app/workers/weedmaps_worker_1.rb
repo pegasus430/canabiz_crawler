@@ -7,6 +7,7 @@ class WeedMapsWorker1
 		#WeedmapsScraperHelper.new(ENV['WEEDMAPS_STATE'], 'A-F').scrapeWeedmaps
 		@state = 'Washington'
 		@city_range = 'A-F'
+		scrapeWeedmaps()
 	end
 	
 	def scrapeWeedmaps()
