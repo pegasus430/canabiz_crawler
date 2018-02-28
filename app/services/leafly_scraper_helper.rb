@@ -84,21 +84,13 @@ class LeaflyScraperHelper
 	#method to loop through the dispensary products (items) and determine the correct course of action 
 	def analyzeReturnedDispensarySourceMenu(returned_json_menu, existing_dispensary_source, is_new_dispensary)
 
-		puts 'returned_json_menu'
-		puts returned_json_menu
-
 		valid_menu_sections = []
 		valid_menu_sections.push(returned_json_menu['Flower'])
 
 		valid_menu_sections.each do |returned_menu_section|
 
-			puts "IN A SECTION"
-			puts returned_menu_section
-
 			#right now we are only doing flowers
 			#if ['Flowers', 'Indicas', 'Sativas', 'Hybrids'].include? returned_menu_section['name']
-
-				puts "am i in here?"
 
 				#loop through the different menu sections (separated by title - category)
 				returned_menu_section.each do |returned_dispensary_source_product|
