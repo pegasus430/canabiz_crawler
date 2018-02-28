@@ -15,4 +15,5 @@ if Rails.env.production?
 	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary 2', cron: '0 */2 * * *', class: 'WeedMapsWorker2')
 	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary 3', cron: '0 */2 * * *', class: 'WeedMapsWorker3')
 	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary 4', cron: '0 */2 * * *', class: 'WeedMapsWorker4')
+	Sidekiq::Cron::Job.create(name: 'Weedmaps Dispensary', cron: '0 */2 * * *', class: 'WeedMapsWorker')
 end
