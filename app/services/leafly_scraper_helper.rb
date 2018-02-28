@@ -1,12 +1,12 @@
 class LeaflyScraperHelper
-	
+
 	attr_reader :state_abbreviation, :city_range
 	
 	def initialize(state_abbreviation, city_range)
 		@state_abbreviation = state_abbreviation
 		@city_range = city_range
-	end
-
+	end   
+	
 	def scrapeLeafly()
 		
 		require "json"
@@ -36,7 +36,7 @@ class LeaflyScraperHelper
 		end
 
 		contents = JSON.parse(output.read)
-		logger.info contents['wa'][0]
+		#logger.info contents['wa'][0]
 		#contents.clear
 
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)
@@ -86,12 +86,12 @@ class LeaflyScraperHelper
 
 		returned_json_menu.each do |returned_menu_section|
 
-			logger.info "IN A SECTION"
+			puts "IN A SECTION"
 
 			#right now we are only doing flowers
 			if ['Flowers', 'Indicas', 'Sativas', 'Hybrids'].include? returned_menu_section['name']
 
-				logger.info "am i in here?"
+				puts "am i in here?"
 
 				#loop through the different menu sections (separated by title - category)
 				returned_menu_section['items'].each do |returned_dispensary_source_product|
@@ -139,7 +139,8 @@ class LeaflyScraperHelper
 						#if product already exists, check to see if any prices have changed
 						compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, DispensarySourceProduct.
 															where(product: existing_dispensary_source_products[0]).
-															where(dispensary_source: existing_dispensary_source).first)
+															where(dispensary_source: existing_dispensary_source).first, 
+															existing_dispensary_source)
 					
 					else #dispensary source does not have the product / it is a new dispensary source
 
@@ -243,7 +244,7 @@ class LeaflyScraperHelper
 	end #end createProductAndDispensarySourceProduct method
 
 	#method to compare returned dispensary product with one existing in system to see if prices need update
-	def compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, existing_dispensary_source_product)
+	def compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, existing_dispensary_source_product, existing_dispensary_source)
 		
 		#image
 		if existing_dispensary_source_product.image != returned_dispensary_source_product['image_url']
@@ -363,7 +364,7 @@ class LeaflyScraperHelper
 			
 			#update the last_menu_update of the dispensary_source
 			if updated_menu
-				dispensary_source.update_attribute :last_menu_update, DateTime.now
+				existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
 			end
 			
 			
@@ -551,4 +552,6 @@ class LeaflyScraperHelper
 		end #endHours 
 
 	end #end compareAndUpdateDispensarySourceValues method
-end
+
+	
+end #end of class
