@@ -87,6 +87,7 @@ class LeaflyScraperHelper
 		returned_json_menu.each do |returned_menu_section|
 
 			puts "IN A SECTION"
+			puts returned_menu_section
 
 			#right now we are only doing flowers
 			if ['Flowers', 'Indicas', 'Sativas', 'Hybrids'].include? returned_menu_section['name']
