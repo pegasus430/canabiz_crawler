@@ -84,6 +84,9 @@ class LeaflyScraperHelper
 	#method to loop through the dispensary products (items) and determine the correct course of action 
 	def analyzeReturnedDispensarySourceMenu(returned_json_menu, existing_dispensary_source, is_new_dispensary)
 
+		puts 'returned_json_menu'
+		puts returned_json_menu
+
 		returned_json_menu.each do |returned_menu_section|
 
 			puts "IN A SECTION"
