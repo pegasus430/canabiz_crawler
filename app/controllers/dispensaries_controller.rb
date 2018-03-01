@@ -88,7 +88,8 @@ class DispensariesController < ApplicationController
     #-------------------------------------
 
     def show
-        @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).includes(:dispensary_source_products).
+        @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).
+                                includes(:dispensary_source_products, :dispensary_source_products => :product).
                                 order('last_menu_update DESC').first
                                 
         if @dispensary_source != nil
@@ -97,7 +98,7 @@ class DispensariesController < ApplicationController
                                     
             #need a map of category name to list of dispensary source product records
             @category_to_products = Hash.new
-            @category_to_products.store('Flower', @dispensary_source.products.featured)
+            @category_to_products.store('Flower', @dispensary_source.dispensary_source_products)
             
             #@dispensary_products.each do |product|
                 
