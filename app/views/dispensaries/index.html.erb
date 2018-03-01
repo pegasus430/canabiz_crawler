@@ -1,19 +1,7 @@
-<style>
-	.plus-minus {
-		display: none;
-		font-size: 17px;
-		cursor: pointer;
-	}
-	@media screen and (max-width: 991px) {
-        .plus-minus {
-            display: inherit;
-        }
-    }
-</style>
-
 <!-- start page content -->
 <div class="container margintop">
 	<div class="row">
+
 		<!-- options -->
 	    <div class="col-sm-12 col-md-3 col-lg-3 col-xs-12 col-sm-12 paddingbottom">
 		    <div class="row mb-40">
@@ -24,12 +12,12 @@
 		            </div>
 		        </div>
 		    </div>
-		    <%= form_tag products_refine_index_path do %>
+		    <%= form_tag refine_dispensary_index_path do %>
 		  		<div id = 'option-div' class="collapse in">
-		  			<ul class="miniarticlemenu">
+			        <ul class="miniarticlemenu">
 			            <li class="">
 			                <div>Refine By Name</div>
-			                <input type="text"id='name_search' placeholder="Search" name = 'name_search' style="margin-bottom: 0px; margin: 10px 0px;">
+			                <input type="text" id='name_search' placeholder="Search" name = 'name_search' style="margin-bottom: 0px; margin: 10px 0px;">
 			            </li>
 			            <li>
 			                <div>Refine By Location</div>
@@ -41,19 +29,13 @@
 			                <%= render 'layouts/dropdown_states' %>
 			            </li>
 			            
-			            <!--category dropdown-->
-			            <li style="overflow: visible;">                                    
-							<%= render 'layouts/dropdown_categories' %>
-			            </li>
-			            
 			            <!-- az dropdown-->
 			            <li style="overflow: visible;">                                    
-			            	<%= render 'layouts/dropdown_az' %>	
+			            	<%= render 'layouts/dropdown_az' %>
 			            </li>
 			            <li>
 			            	<!--hidden values-->
 			            	<input type = "hidden" id="state_search" name = "state_search"/>
-			            	<input type = "hidden" id="category_search" name = "category_search"/>
 			            	<input type = "hidden" id="az_search" name = "az_search"/>
 			            	
 			                <button type="submit" class="button" style="margin-bottom: 0px; margin: 10px 0px;">Refine Results</button>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -62,7 +44,7 @@
 			                	style="margin-bottom: 0px; margin: 10px 0px;">Clear Filters</button>
 			            </li>
 			        </ul>
-		  		</div>
+			 	</div>
 		     <% end %>
 	    </div>
 		<!-- options -->
@@ -73,38 +55,32 @@
 	            <div class="row mb-40">
 	                <div class="col-lg-12">
 	                    <div class="section-title">
-	                        <h2 class="h6 header-color inline-block uppercase">Products</h2>
+	                        <h2 class="h6 header-color inline-block uppercase">Dispensaries</h2>
 	                    </div>
 	                </div>
 	            </div>   
 	        </div>
 
 	        <div class="mb-20">
-	        	<%= page_entries_info @products, :model => ''%>
+	        	<%= page_entries_info @dispensaries, :model => ''%> 
 	        	<% if @search_string != nil && @search_string != ''%>
 	        		for <%= @search_string %>
 	        	<% end %>
 	        </div>
 
-	        <!-- Product Section -->
+	        <!-- Dispensary Results Section -->
 	        <div class="row">
-	            <!-- Start single post image formate-->
 	            <div class="col-md-12">
 	                <article class="zm-post-lay-single">
 	                    <div class="zm-post-thumb">
 	                    </div>
 	                    <div>
-	                    	<div class="mobile-homepage">
-		                        <div class="zm-posts clearfix indexed-products">
-		                        	<%= render :partial => "pages/top_product_mobile", :collection => @products, :as => :product %>
-		                        </div>
-		                    </div>
-		                    
-	                        <div class="row desktop-homepage">
-	                        	<!-- render with _product partial -->
-	    						<%= render @products %>
+	                        <div class="row">
+
+	                        	<!-- render with _dispensary partial -->
+	    						<%= render @dispensaries %>
+
 	                        </div>
-	                        
 	                    </div>
 	                </article>
 	            </div>
@@ -113,11 +89,10 @@
 		<!-- results index -->
 
 		<!-- Start pagination area -->
-		<div class ="hidden-xs"></div>
-	    <div class="row product-index-pagination">
+	    <div class="row hidden-xs">
 	        <div class="zm-pagination-wrap mt-30">
 	            <nav class="zm-pagination ptb-40 text-center">
-	            	<%= will_paginate @products %>
+	            	<%= will_paginate @dispensaries %>
 	            </nav>
 	        </div>
 	    </div>

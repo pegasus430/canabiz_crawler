@@ -1,0 +1,2 @@
+$('.indexed-products').append('<%= escape_javascript render :partial => "pages/top_product_mobile", :collection => @vendor_products, :as => :product %>');
+$('.vendor-show-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@vendor_products) %>');

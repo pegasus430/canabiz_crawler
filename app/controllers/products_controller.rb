@@ -152,7 +152,7 @@ class ProductsController < ApplicationController
         
         @dispensary_source_products = DispensarySourceProduct.where(product: @product)
         dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
-        @dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC')
+        @dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC').order("name ASC")
         
         #need a map of dispensary to dispensary source product
         @dispensary_to_product = Hash.new
@@ -228,7 +228,7 @@ class ProductsController < ApplicationController
           params.require(:product).permit(:name, :product_type, :image, :remote_image_url, 
                                             :ancillary, :featured_product, :alternate_names,
                                             :sub_category, :cbd, :cbn, :min_thc, :med_thc, :max_thc, :is_dom,
-                                            :year, :month, :category_id, :description, dispensary_ids: [], vendor_ids: [])
+                                            :year, :month, :category_id, :description, dispensary_source_ids: [], vendor_ids: [])
         end  
         
         def sort_column
