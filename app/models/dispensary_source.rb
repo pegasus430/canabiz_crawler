@@ -4,7 +4,7 @@ class DispensarySource < ActiveRecord::Base
     belongs_to :state
     
     #many to many with products
-    has_many :dispensary_source_products
+    has_many :dispensary_source_products, -> { order(:product_id => :asc) }
     has_many :products, through: :dispensary_source_products
     
     validates :dispensary_id, presence: true
