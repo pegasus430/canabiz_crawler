@@ -47,44 +47,26 @@ class ProductsController < ApplicationController
             end
         end
         
-        if @site_visitor_state != nil && @site_visitor_state.product_state
+        @products = Product.featured.order("name ASC").
+                    includes(:dispensary_sources, :vendors, :category)
+
+        if @searched_category.present?
             
-            @products = Product.featured.order("name ASC").
-                        includes(:dispensary_sources, :vendors, :category)
-            #, :dispensary_sources => :dispensary
-            #where(:dispensary_sources => {state_id: @site_visitor_state.id})
-                                    
-            if @searched_category.present?
-                
-                @products = @products.where(category_id: @searched_category.id)
-                @search_string = "#{@searched_category.name} in #{@site_visitor_state.name}"
-            
-            elsif @searched_sub_category.present? 
-            
-                @products = @products.where(sub_category: @searched_sub_category)
-                @search_string = "#{@searched_sub_category} in #{@site_visitor_state.name}"
-            
-            elsif @searched_is_dom.present?    
-            
-                @products = @products.where(is_dom: @searched_is_dom)
-                @search_string = "Hybrid-#{@searched_is_dom} in #{@site_visitor_state.name}"
-            
-            else
-                @search_string = @site_visitor_state.name
-            end
-            
-            #price range and distance
-            #result = ProductHelper.new(@products, @site_visitor_ip).findProductsPriceAndDistance
-            #@product_to_distance, @product_to_closest_disp = result[0], result[1]
-            
+            @products = @products.where(category_id: @searched_category.id)
+            @search_string = "#{@searched_category.name} in #{@site_visitor_state.name}"
+        
+        elsif @searched_sub_category.present? 
+        
+            @products = @products.where(sub_category: @searched_sub_category)
+            @search_string = "#{@searched_sub_category} in #{@site_visitor_state.name}"
+        
+        elsif @searched_is_dom.present?    
+        
+            @products = @products.where(is_dom: @searched_is_dom)
+            @search_string = "Hybrid-#{@searched_is_dom} in #{@site_visitor_state.name}"
+        
         else
-            @products = Product.featured.order("name ASC").includes(:vendors, :category)
-            if @searched_category != nil 
-                @products = @products.where(category_id: @searched_category.id)
-                @search_string = @searched_category.name
-            else 
-                @search_string = ''
-            end
+            @search_string = @site_visitor_state.name
         end
 
         @products = @products.paginate(page: params[:page], per_page: 16)
@@ -101,12 +83,6 @@ class ProductsController < ApplicationController
                 result[0], result[1], result[2], result[3], result[4], result[5], result[6]
         
         @products = @products.paginate(page: params[:page], per_page: 16)
-        
-        if @site_visitor_state != nil && @site_visitor_state.product_state
-            #price range    
-            #result = ProductHelper.new(@products, @site_visitor_ip).findProductsPriceAndDistance
-            #@product_to_distance, @product_to_closest_disp = result[0], result[1]
-        end
         
         render 'index' 
     end
@@ -135,7 +111,6 @@ class ProductsController < ApplicationController
         end
         
         #similar products - include is_dom and sub_category as well
-        @similar_products = []
         if @product.is_dom.present?
             @similar_products = Product.featured.where.not(id: @product.id).
                         where(is_dom: @product.is_dom).order("Random()").limit(4)

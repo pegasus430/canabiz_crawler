@@ -93,74 +93,14 @@ class DispensariesController < ApplicationController
                                 order('last_menu_update DESC').first
                                 
         if @dispensary_source != nil
-            #@dispensary_products = Product.featured.includes(:category, :dispensary_sources).
-            #                            where(:dispensary_sources => {id: @dispensary_source.id})
-                                    
-            #need a map of category name to list of dispensary source product records
             @category_to_products = Hash.new
             @category_to_products.store('Flower', @dispensary_source.dispensary_source_products)
             
-            #@dispensary_products.each do |product|
-                
-            #    if product.category.present?
-            #        if @category_to_products.has_key?(product.category.name)
-                        
-                        #add to list 
-            #            @category_to_products[product.category.name].push(product.dispensary_source_products.first)
-                    
-            #        else
-            #            @dispProducts = []
-            #            @dispProducts.push(product.dispensary_source_products.first)
-            #            @category_to_products.store(product.category.name, @dispProducts)
-            #        end
-            #    end
-            #end
-            
-            require 'uri' #need this to tell if facebook is a link
-            
+            require 'uri' #google map / facebook
         else 
             redirect_to root_path
         end
         
-        #google map
-        require 'uri'
-        
-    end
-    
-    
-    #extention of show method
-    def all_products
-        @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).
-                                order('last_menu_update DESC').first
-                                
-        if @dispensary_source != nil
-            #need the top products for the actual page before the 'View More'
-            @dispensary_products = DispensarySourceProduct.where(dispensary_source_id: @dispensary_source.id).includes(:product)
-            
-            #need a map of category name to list of dispensary product records
-            @category_to_products = Hash.new
-            
-            @dispensary_products.each do |dispProduct|
-                if @category_to_products.has_key?(dispProduct.product.categories.first.name)
-                    
-                    #add to list 
-                    @category_to_products[dispProduct.product.categories.first.name].push(dispProduct)
-                
-                else
-                    @dispProducts = []
-                    @dispProducts.push(dispProduct)
-                    @category_to_products.store(dispProduct.product.categories.first.name,
-                            @dispProducts)
-                
-                end
-            end
-            
-        else 
-            redirect_to root_path
-        end
-        
-        #google map
-        require 'uri'
     end
     
     #-------------------------------------    
