@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
     def index
         
         if params[:format].present?
-            @searched_category = Category.find_by(name: params[:format])
+            @searched_category = @product_categories.find_by(name: params[:format])
             
             if !@searched_category.present?
                 if params[:format] == 'Hybrid-Indica'
