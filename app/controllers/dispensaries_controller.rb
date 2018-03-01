@@ -92,27 +92,28 @@ class DispensariesController < ApplicationController
                                 order('last_menu_update DESC').first
                                 
         if @dispensary_source != nil
-            @dispensary_products = Product.featured.includes(:category, :dispensary_sources).
-                                        where(:dispensary_sources => {id: @dispensary_source.id})
+            #@dispensary_products = Product.featured.includes(:category, :dispensary_sources).
+            #                            where(:dispensary_sources => {id: @dispensary_source.id})
                                     
             #need a map of category name to list of dispensary source product records
             @category_to_products = Hash.new
+            @category_to_products.store('Flower', @dispensary_source.products.featured)
             
-            @dispensary_products.each do |product|
+            #@dispensary_products.each do |product|
                 
-                if product.category.present?
-                    if @category_to_products.has_key?(product.category.name)
+            #    if product.category.present?
+            #        if @category_to_products.has_key?(product.category.name)
                         
                         #add to list 
-                        @category_to_products[product.category.name].push(product.dispensary_source_products.first)
+            #            @category_to_products[product.category.name].push(product.dispensary_source_products.first)
                     
-                    else
-                        @dispProducts = []
-                        @dispProducts.push(product.dispensary_source_products.first)
-                        @category_to_products.store(product.category.name, @dispProducts)
-                    end
-                end
-            end
+            #        else
+            #            @dispProducts = []
+            #            @dispProducts.push(product.dispensary_source_products.first)
+            #            @category_to_products.store(product.category.name, @dispProducts)
+            #        end
+            #    end
+            #end
             
             require 'uri' #need this to tell if facebook is a link
             
