@@ -91,6 +91,7 @@ class LeaflyScraperHelper
 
 			#right now we are only doing flowers
 			#if ['Flowers', 'Indicas', 'Sativas', 'Hybrids'].include? returned_menu_section['name']
+			if returned_menu_section.present?
 
 				#loop through the different menu sections (separated by title - category)
 				returned_menu_section.each do |returned_dispensary_source_product|
@@ -180,7 +181,7 @@ class LeaflyScraperHelper
 					end #end of if statement to see if the strain name is null
 
 				end #end loop of each section's products
-			#end #end if statement to see if the section is flowers
+			end #end if statement to see if the section is not nil
 
 		end #end loop of each menu 'section' -> sections are broken down by type 'indica, sativa, et
 
@@ -225,7 +226,6 @@ class LeaflyScraperHelper
 
 			DispensarySourceProduct.create(:product_id => product.id, 
 				:dispensary_source_id => dispensary_source_id,
-				:remote_image_url => returned_dispensary_source_product['imageUrl'],
 				:price_gram => price_gram,
 				:price_two_grams => price_two_grams,
 				:price_eighth => price_eighth,
@@ -240,11 +240,6 @@ class LeaflyScraperHelper
 
 	#method to compare returned dispensary product with one existing in system to see if prices need update
 	def compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, existing_dispensary_source_product, existing_dispensary_source)
-		
-		#image
-		if existing_dispensary_source_product.image != returned_dispensary_source_product['imageUrl']
-			existing_dispensary_source_product.update_attribute :image, returned_dispensary_source_product['imageUrl']
-		end
 		
 		if  returned_dispensary_source_product['prices'] != nil
 			#see if we need to update the last_menu_update for the dispensary source
@@ -333,11 +328,13 @@ class LeaflyScraperHelper
 		location = returned_dispensary_source['address'] + ', ' + returned_dispensary_source['city'] + ', ' + 
 							returned_dispensary_source['state'] + ' ' + returned_dispensary_source['zip_code']
 	
+		image_url = returned_dispensary_source['avatar_url'].present? && returned_dispensary_source['avatar_url'].length < 150 ? 
+						returned_dispensary_source['avatar_url'] : ''
 		if dispensary_id == nil
 			#create dispensary
 			dispensary = Dispensary.create(:name => returned_dispensary_source['name'], 
 								:state_id => @state.id, :location => location, :city => returned_dispensary_source['city'],
-								:remote_image_url => returned_dispensary_source['avatar_url'],
+								:remote_image_url => image_url,
 								:about => returned_dispensary_source['about-dispensary']
 							)
 			dispensary_id = dispensary.id
@@ -348,7 +345,7 @@ class LeaflyScraperHelper
 								:street => returned_dispensary_source["address"], :zip_code => returned_dispensary_source["zip_code"],
 								:source_rating => returned_dispensary_source['rating'], 
 								:phone => returned_dispensary_source['phone_number'], :website => returned_dispensary_source['website'],
-								:remote_image_url => returned_dispensary_source['avatar_url']
+								:remote_image_url => image_url
 							)  
 
 		#hours
@@ -411,8 +408,8 @@ class LeaflyScraperHelper
 	def compareAndUpdateDispensarySourceValues(returned_dispensary_source, existing_dispensary_source)
 	
 		#image
-		if existing_dispensary_source.image != returned_dispensary_source['avatar_url']
-			existing_dispensary_source.update_attribute :image, returned_dispensary_source['avatar_url']
+		if existing_dispensary_source.remote_image_url != returned_dispensary_source['avatar_url'] && returned_dispensary_source['avatar_url'].present? && returned_dispensary_source['avatar_url'].length < 150 
+			existing_dispensary_source.update_attribute :remote_image_url, returned_dispensary_source['avatar_url']
 		end
 		
 		#location

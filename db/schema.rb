@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180222183100) do
+ActiveRecord::Schema.define(version: 20180302032705) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -160,6 +160,12 @@ ActiveRecord::Schema.define(version: 20180222183100) do
   end
 
   add_index "dispensary_sources", ["slug"], name: "index_dispensary_sources_on_slug", unique: true
+
+  create_table "dsp_prices", force: :cascade do |t|
+    t.integer "dispensary_source_product_id"
+    t.decimal "price"
+    t.string  "unit"
+  end
 
   create_table "hashtags", force: :cascade do |t|
     t.string "name"

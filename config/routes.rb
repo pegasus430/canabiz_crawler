@@ -213,6 +213,16 @@ Rails.application.routes.draw do
   post 'dispensary_source_products/search' => 'dispensary_source_products#search', as: 'search_dispensary_source_products'
   get 'dispensary_source_products-admin', to: 'dispensary_source_products#admin'
   
+  #DISPENSARY SOURCE PRODUCT PRICES
+  resources :dsp_prices do 
+    collection {post :import}
+    collection do
+      delete 'destroy_multiple'
+    end
+  end
+  post 'dsp_prices/search' => 'dsp_prices#search', as: 'search_dsp_prices'
+  get 'dsp_prices-admin', to: 'dsp_prices#admin'
+  
   #DISPENSARY PRODUCTS
   resources :dispensary_products do 
     collection {post :import}

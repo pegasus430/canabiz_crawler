@@ -1,6 +1,7 @@
 class DispensarySourceProduct < ActiveRecord::Base
     belongs_to :product
     belongs_to :dispensary_source
+    has_many :dsp_prices
     
     validates :dispensary_source_id, presence: true
     
