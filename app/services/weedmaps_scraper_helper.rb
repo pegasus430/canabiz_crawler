@@ -235,7 +235,6 @@ class WeedmapsScraperHelper
 				:dispensary_source_id => dispensary_source_id,
 				:remote_image_url => returned_dispensary_source_product['image_url'],
 				:price => returned_dispensary_source_product['prices']['unit'], 
-				:price_half_gram => returned_dispensary_source_product['prices']['half_gram'],
 				:price_gram => returned_dispensary_source_product['prices']['gram'],
 				:price_two_grams => returned_dispensary_source_product['prices']['two_grams'],
 				:price_eighth => returned_dispensary_source_product['prices']['eighth'],
@@ -267,12 +266,6 @@ class WeedmapsScraperHelper
 			#unit = just 1 (standard for edibles and such I would think)
 			if existing_dispensary_source_product.price != returned_dispensary_source_product['prices']['unit']
 				existing_dispensary_source_product.update_attribute :price, returned_dispensary_source_product['prices']['unit']
-				updated_menu = true
-			end
-	
-			#price_half_gram
-			if existing_dispensary_source_product.price_half_gram != returned_dispensary_source_product['prices']['half_gram']
-				existing_dispensary_source_product.update_attribute :price_half_gram, returned_dispensary_source_product['prices']['half_gram']
 				updated_menu = true
 			end
 			
