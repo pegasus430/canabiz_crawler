@@ -56,6 +56,63 @@
                 <!--sidebar-->
                 <%= render 'info_sidebar' %>
                 
+                <!--bottom of left side-->
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 columns">
+                    
+                        <div class="row">
+                            <!-- Start single post image formate-->
+                            <div class="col-md-12">
+                                       
+                                <!--product categories-->
+                                <div class="row mb-40" style="margin-top: 20px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="section-title">
+                                            <% @category_to_products.each_with_index  do |(key, list), index| %>
+                                                
+                                                <% if index == 0 %>
+                                                    <h2 class="h6 inline-block uppercase header-button active-header-button <%=key%>-button" 
+                                                        onClick="changeProductCategory('<%=key%>')"><%= key %></h2>
+                                                <% else %>
+                                                    <h2 class="h6 inline-block uppercase header-button inactive-header-button <%=key%>-button" 
+                                                        onClick="changeProductCategory('<%=key%>')"><%= key %></h2>
+                                                <% end %>
+            
+                                            <% end %>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="mb-20"></div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 dispensary-product-categories">
+                                        <!--loop through the hash values-->
+                                        <% @category_to_products.each_with_index do |(key, list), index| %>
+                                        
+                                            <div class = "product-section-class <%=key%>" <% if index != 0 %> style="display:none;" <%end%> >
+                                                <!-- Start single post image formate-->
+                                                <div class="col-md-12">
+                                                    <article class="zm-post-lay-single">
+                                                        <div class="zm-post-thumb">
+                                                        </div>
+                                                        <div class="rowspacer">
+                                                            <div class="row">
+                                                                
+                                                                <%=render :partial => "all_product", 
+                                                                    :collection => list, :as => :dispProduct %>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                <!--products-->
+                            </div>
+                        </div>
+                    
+                </div>  
             </div>
         </div>
     </div>
