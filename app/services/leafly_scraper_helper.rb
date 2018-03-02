@@ -18,7 +18,7 @@ class LeaflyScraperHelper
 
 		#query the dispensarysources from this source and this state that have a dispensary lookup
 		@dispensary_sources = DispensarySource.where(state_id: @state.id).where(source_id: @source.id).
-								includes(:dispensary, :products, :products => :vendors)
+								includes(:dispensary, :products, :products => :vendors, :dispensary_source_products => :dsp_prices)
 
 		#the actual dispensaries that we will really display
 		@real_dispensaries = Dispensary.where(state_id: @state.id)
@@ -200,39 +200,77 @@ class LeaflyScraperHelper
 			price_quarter = nil
 			price_half_ounce = nil
 			price_ounce = nil
+			
+			dsp = DispensarySourceProduct.create(:product_id => product.id, 
+				:dispensary_source_id => dispensary_source_id)
 
 			returned_dispensary_source_product['prices'].each do |quantity_price_pair|
 
 				if quantity_price_pair['quantity'] == '1 g'
-					price_gram = quantity_price_pair['price']
+					DspPrice.create(
+						:dispensary_source_product_id => dsp.id,
+						:unit => 'Gram',
+						:display_order => 0,
+						:price => quantity_price_pair['price']
+					)
+					#price_gram = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '2 g'
-					price_two_grams = quantity_price_pair['price']
+					DspPrice.create(
+						:dispensary_source_product_id => dsp.id,
+						:unit => '2 Grams',
+						:display_order => 1,
+						:price => quantity_price_pair['price']
+					)
+					#price_two_grams = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '⅛ oz'
-					price_eighth = quantity_price_pair['price']
+					#price_eighth = quantity_price_pair['price']
+					DspPrice.create(
+						:dispensary_source_product_id => dsp.id,
+						:unit => 'Eighth',
+						:display_order => 2,
+						:price => quantity_price_pair['price']
+					)
 
 				elsif quantity_price_pair['quantity'] == '¼ oz'
-					price_quarter = quantity_price_pair['price']
+					#price_quarter = quantity_price_pair['price']
+					DspPrice.create(
+						:dispensary_source_product_id => dsp.id,
+						:unit => 'Quarter Ounce',
+						:display_order => 3,
+						:price => quantity_price_pair['price']
+					)
 
 				elsif quantity_price_pair['quantity'] == '½ oz'
-					price_half_ounce = quantity_price_pair['price']
+					#price_half_ounce = quantity_price_pair['price']
+					DspPrice.create(
+						:dispensary_source_product_id => dsp.id,
+						:unit => 'Half Ounce',
+						:display_order => 4,
+						:price => quantity_price_pair['price']
+					)
 
 				elsif quantity_price_pair['quantity'] == '1 oz'
-					price_ounce = quantity_price_pair['price']
-
+					#price_ounce = quantity_price_pair['price']
+					DspPrice.create(
+						:dispensary_source_product_id => dsp.id,
+						:unit => 'Ounce',
+						:display_order => 5,
+						:price => quantity_price_pair['price']
+					)
 				end
 			end
 
-			DispensarySourceProduct.create(:product_id => product.id, 
-				:dispensary_source_id => dispensary_source_id,
-				:price_gram => price_gram,
-				:price_two_grams => price_two_grams,
-				:price_eighth => price_eighth,
-				:price_quarter => price_quarter,
-				:price_half_ounce => price_half_ounce,
-				:price_ounce => price_ounce
-			)
+			#DispensarySourceProduct.create(:product_id => product.id, 
+			#	:dispensary_source_id => dispensary_source_id,
+			#	:price_gram => price_gram,
+			#	:price_two_grams => price_two_grams,
+			#	:price_eighth => price_eighth,
+			#	:price_quarter => price_quarter,
+			#	:price_half_ounce => price_half_ounce,
+			#	:price_ounce => price_ounce
+			#)
 			
 		end
 
@@ -246,72 +284,163 @@ class LeaflyScraperHelper
 			updated_menu = false
 			
 			#get all of the prices:
-			price_gram = nil
-			price_two_grams = nil
-			price_eighth = nil
-			price_quarter = nil
-			price_half_ounce = nil
-			price_ounce = nil
+			#price_gram = nil
+			#price_two_grams = nil
+			#price_eighth = nil
+			#price_quarter = nil
+			#price_half_ounce = nil
+			#price_ounce = nil
 
 			returned_dispensary_source_product['prices'].each do |quantity_price_pair|
 
 				if quantity_price_pair['quantity'] == '1 g'
-					price_gram = quantity_price_pair['price']
+
+					if existing_dispensary_source_product.dsp_prices.where(unit: 'Gram').any?
+						#compare the price
+						if existing_dispensary_source_product.dsp_prices.where(unit: 'Gram').first.price != quantity_price_pair['price']
+							
+							existing_dispensary_source_product.dsp_prices.
+								where(unit: 'Gram').first.update_attribute :price, quantity_price_pair['price']
+							
+							updated_menu = true
+						end
+
+					else
+						#create new dsp price
+						DspPrice.create(
+							:dispensary_source_product_id => existing_dispensary_source_product.id,
+							:unit => 'Gram',
+							:display_order => 0,
+							:price => quantity_price_pair['price']
+						)
+						updated_menu = true
+					end
+					#price_gram = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '2 g'
-					price_two_grams = quantity_price_pair['price']
+					if existing_dispensary_source_product.dsp_prices.where(unit: '2 Grams').any?
+						#compare the price
+						if existing_dispensary_source_product.dsp_prices.where(unit: '2 Grams').first.price != quantity_price_pair['price']
+							
+							existing_dispensary_source_product.dsp_prices.
+								where(unit: '2 Grams').first.update_attribute :price, quantity_price_pair['price']
+							
+							updated_menu = true
+						end
+
+					else
+						#create new dsp price
+						DspPrice.create(
+							:dispensary_source_product_id => existing_dispensary_source_product.id,
+							:unit => '2 Grams',
+							:display_order => 1,
+							:price => quantity_price_pair['price']
+						)
+						updated_menu = true
+					end
+					#price_two_grams = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '⅛ oz'
-					price_eighth = quantity_price_pair['price']
+					
+					if existing_dispensary_source_product.dsp_prices.where(unit: 'Eighth').any?
+						#compare the price
+						if existing_dispensary_source_product.dsp_prices.where(unit: 'Eighth').first.price != quantity_price_pair['price']
+							
+							existing_dispensary_source_product.dsp_prices.
+								where(unit: 'Eighth').first.update_attribute :price, quantity_price_pair['price']
+							
+							updated_menu = true
+						end
+
+					else
+						#create new dsp price
+						DspPrice.create(
+							:dispensary_source_product_id => existing_dispensary_source_product.id,
+							:unit => 'Eighth',
+							:display_order => 2,
+							:price => quantity_price_pair['price']
+						)
+						updated_menu = true
+					end
+					#price_eighth = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '¼ oz'
-					price_quarter = quantity_price_pair['price']
+					
+					if existing_dispensary_source_product.dsp_prices.where(unit: 'Quarter Ounce').any?
+						#compare the price
+						if existing_dispensary_source_product.dsp_prices.where(unit: 'Quarter Ounce').first.price != quantity_price_pair['price']
+							
+							existing_dispensary_source_product.dsp_prices.
+								where(unit: 'Quarter Ounce').first.update_attribute :price, quantity_price_pair['price']
+							
+							updated_menu = true
+						end
+
+					else
+						#create new dsp price
+						DspPrice.create(
+							:dispensary_source_product_id => existing_dispensary_source_product.id,
+							:unit => 'Quarter Ounce',
+							:display_order => 3,
+							:price => quantity_price_pair['price']
+						)
+						updated_menu = true
+					end
+
+					#price_quarter = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '½ oz'
-					price_half_ounce = quantity_price_pair['price']
+					
+					if existing_dispensary_source_product.dsp_prices.where(unit: 'Half Ounce').any?
+						#compare the price
+						if existing_dispensary_source_product.dsp_prices.where(unit: 'Half Ounce').first.price != quantity_price_pair['price']
+							
+							existing_dispensary_source_product.dsp_prices.
+								where(unit: 'Half Ounce').first.update_attribute :price, quantity_price_pair['price']
+							
+							updated_menu = true
+						end
+
+					else
+						#create new dsp price
+						DspPrice.create(
+							:dispensary_source_product_id => existing_dispensary_source_product.id,
+							:unit => 'Half Ounce',
+							:display_order => 4,
+							:price => quantity_price_pair['price']
+						)
+						updated_menu = true
+					end
+
+					#price_half_ounce = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '1 oz'
-					price_ounce = quantity_price_pair['price']
+					
+					if existing_dispensary_source_product.dsp_prices.where(unit: 'Ounce').any?
+						#compare the price
+						if existing_dispensary_source_product.dsp_prices.where(unit: 'Ounce').first.price != quantity_price_pair['price']
+							
+							existing_dispensary_source_product.dsp_prices.
+								where(unit: 'Ounce').first.update_attribute :price, quantity_price_pair['price']
+							
+							updated_menu = true
+						end
+
+					else
+						#create new dsp price
+						DspPrice.create(
+							:dispensary_source_product_id => existing_dispensary_source_product.id,
+							:unit => 'Ounce',
+							:display_order => 4,
+							:price => quantity_price_pair['price']
+						)
+						updated_menu = true
+					end
+
+					#price_ounce = quantity_price_pair['price']
 
 				end
 			end
-			
-			#gram
-			if existing_dispensary_source_product.price_gram != price_gram
-				existing_dispensary_source_product.update_attribute :price_gram, price_gram
-				updated_menu = true
-			end
-			
-			#price_two_grams
-			if existing_dispensary_source_product.price_two_grams != price_two_grams
-				existing_dispensary_source_product.update_attribute :price_two_grams, price_two_grams
-				updated_menu = true
-			end
-			
-			#price_eighth
-			if existing_dispensary_source_product.price_eighth != price_eighth
-				existing_dispensary_source_product.update_attribute :price_eighth, price_eighth
-				updated_menu = true
-			end
-			
-			#price_quarter
-			if existing_dispensary_source_product.price_quarter != price_quarter
-				existing_dispensary_source_product.update_attribute :price_quarter, price_quarter
-				updated_menu = true
-			end 
-			
-			#price_half_ounce
-			if existing_dispensary_source_product.price_half_ounce != price_half_ounce
-				existing_dispensary_source_product.update_attribute :price_half_ounce, price_half_ounce
-				updated_menu = true
-			end
-			
-			#price_ounce
-			if existing_dispensary_source_product.price_ounce != price_ounce
-				existing_dispensary_source_product.update_attribute :price_ounce, price_ounce
-				updated_menu = true
-			end
-
 			
 			#update the last_menu_update of the dispensary_source
 			if updated_menu

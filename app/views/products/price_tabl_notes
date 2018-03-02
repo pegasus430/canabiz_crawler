@@ -1,0 +1,11 @@
+                    		<!--need to figure out how to get the rest of the columsn to work-->
+                    		<% value.dsp_prices.each_with_index do |price_row, index| %>
+                    		    <% if index == price_row.display_order %>
+                    		        <td>$<%=price_row.price%></td>
+                    		    <% elsif index < price_row.display_order %>
+                    		        <td>--</td>
+                    		    <% else %>  
+                    		        <td>--</td>
+                    		    <% end %>
+                    		
+                    		<% end %>

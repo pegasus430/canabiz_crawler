@@ -125,7 +125,7 @@ class ProductsController < ApplicationController
                     featured.where.not(id: @product.id).order("Random()").limit(4)
         end
         
-        @dispensary_source_products = DispensarySourceProduct.where(product: @product)
+        @dispensary_source_products = DispensarySourceProduct.where(product: @product).joins(:dsp_prices)
         dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
         @dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC').order("name ASC")
         

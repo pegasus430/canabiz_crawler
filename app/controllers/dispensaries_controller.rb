@@ -27,19 +27,6 @@ class DispensariesController < ApplicationController
         render 'admin'
     end
     
-    def test_geocode
-        #test_query = 'Steve 07733'
-        
-        #@dispensaries = Dispensary.near("07733", 50) 
-        #@hash = Gmaps4rails.build_markers(@dispensaries) do |dispensary, marker|
-        #  marker.lat dispensary.latitude
-        #  marker.lng dispensary.longitude
-        #end
-        
-        DispLeafly.perform_later('AZ', nil)
-    end
-    
-    
     #--------ADMIN PAGE-------------------------
     
     def index

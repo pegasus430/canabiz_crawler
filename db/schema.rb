@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302032705) do
+ActiveRecord::Schema.define(version: 20180302050409) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20180302032705) do
     t.integer "dispensary_source_product_id"
     t.decimal "price"
     t.string  "unit"
+    t.integer "display_order"
   end
 
   create_table "hashtags", force: :cascade do |t|

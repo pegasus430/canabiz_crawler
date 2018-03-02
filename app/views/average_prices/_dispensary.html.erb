@@ -27,9 +27,11 @@
                         </h5>
                     </div>
                     <div class="average_price_at_disp">
-                        <% if @average_price.average_price_unit == 'Gram' %>
-                            <p style="font-size: 16px;">Price per Gram: $<%=@dispensary_to_product[dispSource.id].price_gram.round %></p>
-                        <% end %>    
+                        <% @dispensary_to_product[dispSource.id].dsp_prices.each do |price_row| %>
+                            <% if price_row.unit == @average_price.average_price_unit %>
+                                <p style="font-size: 16px;">$<%=price_row.price%> per <%=price_row.unit%>   
+                            <% end %>
+                        <% end %>
                     </div>
                 </div>
             </article>
