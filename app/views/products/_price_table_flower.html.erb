@@ -18,7 +18,6 @@
             <thead>
                 <tr>
                     <th>Dispensary</th>
-                    <th>1/2 Gram</th>
                     <th>1 Gram</th>
                     <th>2 Grams</th>
                     <th>1/8 Ounce</th>
@@ -46,12 +45,6 @@
                         <tr>
                             <td class="dispensary-td"><%=link_to dispensary_key.name, dispensary_path(dispensary_key.dispensary)%></td>
                             <% value = @dispensary_to_product[dispensary_key.id] %>
-                            
-                            <% if value.price_half_gram != nil && value.price_half_gram != 0.0 %>
-                    			<td>$<%=value.price_half_gram%></td>
-                    		<% else %>
-                    			<td>--</td>
-                    		<% end %>
                     		
                     		<% if value.price_gram != nil && value.price_gram != 0.0 %>
                     			<td>$<%=value.price_gram%></td>

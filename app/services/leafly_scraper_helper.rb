@@ -193,7 +193,6 @@ class LeaflyScraperHelper
 		if returned_dispensary_source_product['prices'] != nil
 
 			#get all of the prices:
-			price_half_gram = nil
 			price_gram = nil
 			price_two_grams = nil
 			price_eighth = nil
@@ -202,10 +201,8 @@ class LeaflyScraperHelper
 			price_ounce = nil
 
 			returned_dispensary_source_product['prices'].each do |quantity_price_pair|
-				if quantity_price_pair['quantity'] == '½ g'
-					price_half_gram = quantity_price_pair['price']
 
-				elsif quantity_price_pair['quantity'] == '1 g'
+				if quantity_price_pair['quantity'] == '1 g'
 					price_gram = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '2 g'
@@ -229,7 +226,6 @@ class LeaflyScraperHelper
 			DispensarySourceProduct.create(:product_id => product.id, 
 				:dispensary_source_id => dispensary_source_id,
 				:remote_image_url => returned_dispensary_source_product['imageUrl'],
-				:price_half_gram => price_half_gram,
 				:price_gram => price_gram,
 				:price_two_grams => price_two_grams,
 				:price_eighth => price_eighth,
@@ -255,7 +251,6 @@ class LeaflyScraperHelper
 			updated_menu = false
 			
 			#get all of the prices:
-			price_half_gram = nil
 			price_gram = nil
 			price_two_grams = nil
 			price_eighth = nil
@@ -264,10 +259,8 @@ class LeaflyScraperHelper
 			price_ounce = nil
 
 			returned_dispensary_source_product['prices'].each do |quantity_price_pair|
-				if quantity_price_pair['quantity'] == '½ g'
-					price_half_gram = quantity_price_pair['price']
 
-				elsif quantity_price_pair['quantity'] == '1 g'
+				if quantity_price_pair['quantity'] == '1 g'
 					price_gram = quantity_price_pair['price']
 
 				elsif quantity_price_pair['quantity'] == '2 g'
@@ -286,12 +279,6 @@ class LeaflyScraperHelper
 					price_ounce = quantity_price_pair['price']
 
 				end
-			end
-	
-			#price_half_gram
-			if existing_dispensary_source_product.price_half_gram != price_half_gram
-				existing_dispensary_source_product.update_attribute :price_half_gram, price_half_gram
-				updated_menu = true
 			end
 			
 			#gram
