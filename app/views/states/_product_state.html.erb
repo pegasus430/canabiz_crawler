@@ -117,11 +117,15 @@
 							                    <div class="zm-post-thumb">
 							                    </div>
 							                    <div>
-							                        <div class="row">
-						
-							                        	<!-- render with products/_product partial -->
+							                        <div class="mobile-homepage">
+								                        <div class="zm-posts clearfix indexed-products">
+								                        	<%= render :partial => "pages/top_product_mobile", :collection => @products, :as => :product %>
+								                        </div>
+								                    </div>
+								                    
+							                        <div class="row desktop-homepage">
+							                        	<!-- render with _product partial -->
 							    						<%= render @products %>
-						
 							                        </div>
 							                    </div>
 							                </article>
