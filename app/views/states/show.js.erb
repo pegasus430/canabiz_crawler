@@ -6,3 +6,7 @@ if ($('#article-index-views').css('display') == 'block') {
 	$('#article-index-views').append('<%= escape_javascript render(@mostviews) %>');
 	$('.article-index-views-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@mostviews) %>');
 }
+if ($('.indexed-products').css('display') == 'block') {
+	$('.indexed-products').append('<%= escape_javascript render :partial => "pages/top_product_mobile", :collection => @products, :as => :product %>');
+	$('.product-index-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@products) %>');
+}
