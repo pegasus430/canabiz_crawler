@@ -1,7 +1,7 @@
 class AveragePricesController < ApplicationController
 
     before_action :set_average_price, only: [:edit, :update, :destroy, :show]
-    before_action :require_admin, only: [:edit, :update, :destroy, :show, :admin]
+    before_action :require_admin, only: [:edit, :update, :destroy, :admin]
     
     #--------ADMIN PAGE-------------------------
     def admin

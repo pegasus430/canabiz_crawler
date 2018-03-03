@@ -31,7 +31,7 @@
     <div class="sing-option zm-state">
         <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
             <option value = "<%= root_path %>">Products</option>
-            <% @product_categories.order("name ASC").each do |category| %>
+            <% @product_categories.each do |category| %>
                 
                 <option value = "<%=category.name%>"><%=category.name%></option>
     
@@ -43,7 +43,7 @@
                     <option value="<%=products_path('Hybrid-Sativa')%>">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspHybrid-Sativa</option>
                 <% end %>
                 
-        	<% end %>>
+        	<% end %>
         </select>
     </div>
 </form>

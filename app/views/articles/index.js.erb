@@ -1,0 +1,8 @@
+if ($('#article-index-new').css('display') == 'block') {
+	$('#article-index-new').append('<%= escape_javascript render(@recents) %>');
+	$('.article-index-new-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@recents) %>');
+}
+if ($('#article-index-views').css('display') == 'block') {
+	$('#article-index-views').append('<%= escape_javascript render(@mostviews) %>');
+	$('.article-index-views-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@mostviews) %>');
+}

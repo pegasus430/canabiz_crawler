@@ -1,1 +1,73 @@
-<%= render 'article_index' %>
+<style>
+    #page-content {
+        min-height: 500px;
+    }
+    @media screen and (max-width: 500px) {
+        #page-content {
+            min-height: 300px;
+        }
+    }
+    .product-distance {
+        height: 54px;
+    }
+</style>
+
+<section id="page-content" class="page-wrapper archive">
+    <div class="zm-section single-post-wrap archive-2 bg-white ptb-15">
+        <div class="container">
+            <div class="row">
+				<div class="news-viewing-title-div" style="text-align: center; margin: 20px 0;">
+                    <h3>Viewing results for: 
+                        <span style = 'color: #2ab081;'>
+                            <%= @searchQuery %> 
+                        </span>
+                    </h3>
+                </div>
+                
+                <div class="row mt-40">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row mb-40">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class ="container">
+                                    <div class="section-title">
+                                        <h2 class="h6 inline-block uppercase header-button active-header-button" 
+                                        	id = 'product-button' onClick="changeSearchSort('Products')">Products (<%=@product_results.count%>)</h2>
+                                        <h2 class="h6 inline-block uppercase header-button inactive-header-button" 
+                                        	id = 'news-button' onClick="changeSearchSort('News')">News (<%=@article_results.count%>)</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row mb-40">
+                                <div class="zm-posts clearfix col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div id = 'product-search-results' class = 'desktop-homepage'>
+                                        <%= render @product_results %>
+                                    </div>
+                                    <div id = 'product-search-results' class = 'mobile-homepage'>
+                                        <div class="zm-posts clearfix">
+        		                        	<%= render :partial => "pages/top_product_mobile", :collection => @product_results, :as => :product %>
+        		                        </div>
+                                    </div>
+                                    <div id = 'article-search-results' style = "display:none;">
+                                        <%= render @article_results %>
+                                    </div>
+                                    <div class = 'product-pagination' style="clear:both;">
+                                        <nav class="zm-pagination text-center">
+                        	            	<%= will_paginate @product_results %>
+                        	            </nav>
+                                    </div>
+                                    <div class = 'article-pagination' style = "display:none; clear:both;">
+                                        <nav class="zm-pagination text-center">
+                        	            	<%= will_paginate @article_results %>
+                        	            </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	</div>
+    </div>
+</section>

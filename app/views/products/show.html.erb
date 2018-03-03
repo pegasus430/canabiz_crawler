@@ -80,15 +80,6 @@
                                             
                                             <% if ['Flower'].include? @product.category.name %>
                                                 <%= render "price_table_flower" %>
-                                            
-                                            <% elsif ['Concentrate'].include? @product.category.name %>
-                                                <%= render "price_table_concentrate" %>
-                                            
-                                            <% elsif ['Edible'].include? @product.category.name %>
-                                                <%= render "price_table_edible" %>
-                                            
-                                            <% elsif ['Other'].include? @product.category.name %>
-                                                <%= render "price_table_other" %>
                                             <% end %>
                                         <% end %>
                                     </div>

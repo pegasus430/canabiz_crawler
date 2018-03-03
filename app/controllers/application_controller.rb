@@ -57,6 +57,7 @@ class ApplicationController < ActionController::Base
   end
   
   def populate_lists
+    require 'will_paginate/array'
     @news_categories = Category.news.active.order("name ASC")
     @product_categories = Category.products.active.order("name ASC")
     @states = State.all.order("name ASC")

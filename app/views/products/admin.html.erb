@@ -60,8 +60,8 @@
 		      <td><%= product.name %></td>
 		      <td><%= product.id %></td>
 		      <td><%= product.category.name if product.category %></td>
-		      <td><%= product.image.to_s.truncate(50) if product.image %></td>
-		      <td><%= product.description.truncate(100) if product.description %></td>
+		      <td><%= product.image.to_s.truncate(30) if product.image %></td>
+		      <td><%= product.description.truncate(70) if product.description %></td>
 		      <td><%= product.alternate_names %></td>
 		      <td><%= product.sub_category %></td>
 		      <td><%= product.is_dom %></td>

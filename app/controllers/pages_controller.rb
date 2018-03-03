@@ -1,110 +1,94 @@
 class PagesController < ApplicationController
     
-    before_action :current_user, only: [:home]
+    before_action :site_visitor_state, only: [:home, :search]
+    before_action :site_visitor_ip, only: [:home, :search]
     before_action :require_admin, only: [:admin]
     
     def home
         
-        #test weedmaps or leafly
+        #test scraper
         #DispLeafly.perform_later('WA', 'A-B')
-        #DispWeedmaps.perform_later('Washington', 'W-Z')
         
-        #only showing articles for active sources 
-        source_ids = @sources.pluck(:id)
-        @recents = Article.where("source_id IN (?)", source_ids).includes(:source).includes(:categories).includes(:states).
-                        order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
+        #dont display nav search
+        @nav_search = false
         
-        @mostviews = Article.where("source_id IN (?)", source_ids).includes(:source).includes(:categories).includes(:states).
-                        order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
-                        
-        expires_in 10.minutes, :public => true
-        
-        respond_to do |format|
-          format.html
-          format.js # add this line for your js template
+        #ARTICLES --  
+        @recent_articles = Article.active_source.order("created_at DESC").
+                            includes(:states, :source, :categories).
+                            paginate(:page => params[:page], :per_page => 16)
+
+        #trending news - we should have num_views created this past week - not of all time - will do when moving live
+        if Rails.env.production?
+            @trending_articles = Article.active_source.
+                        where("created_at >= ?", 1.week.ago.utc).order("num_views DESC").limit(10)
+        else
+            @trending_articles = Article.active_source.order("num_views DESC").
+                                    includes(:states, :source, :categories).
+                                    limit(10)
         end
 
+        #PRODUCTS
+        if @site_visitor_state != nil && @site_visitor_state.product_state
+            
+            @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").
+                                    includes(:vendors, :category, :average_prices).
+                                    order("RANDOM()").limit(10)
+            
+            #not showing distance anymore
+            #includes(:dispensary_sources, :vendors, :category, :average_prices, :dispensary_sources => :dispensary).
+            #                            where(:dispensary_sources => {state_id: @site_visitor_state.id})
+        
+            #price range and distance
+            #result = ProductHelper.new(@top_products, @site_visitor_ip).findProductsPriceAndDistance
+            #@product_to_distance, @product_to_closest_disp = result[0], result[1]
+        else 
+            #Project.joins(:vacancies).group("projects.id").having("count(vacancies.id)>0")
+            @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").
+                                    includes(:vendors, :category, :average_prices).
+                                    order("RANDOM()").limit(10)
+        end
+        
+        
     end 
-    
-    
-    def oldScraperSchedule
-        if Rails.env.production?
-            Source.where("name IS NOT NULL").each do |source|
-    
-                if source.name == 'Dope Magazine' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsDopeMagazine.perform_later()
-                    #DopeMagazineWorker.perform_async()
-                end
-                if source.name == 'Marijuana Stocks' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsMarijuanaStocks.perform_later()
-                    #MarijuanaStocksWorker.perform_async()
-                end
-                if source.name == 'Leafly' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsLeafly.perform_later()
-                    #LeaflyWorker.perform_async()
-                end
-                if source.name == 'The Cannabist' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsTheCannabist.perform_later()
-                    #TheCannabistWorker.perform_async()
-                end
-                if source.name == 'Marijuana.com' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsMarijuana.perform_later()
-                    #MarijuanaWorker.perform_async()
-                end
-                if source.name == 'Cannabis Culture' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsCannabisCulture.perform_later()
-                    #CannabisCultureWorker.perform_async()
-                end
-                if source.name == 'Canna Law Blog' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsCannaLawBlog.perform_later()
-                    #CannaLawBlogWorker.perform_async()
-                end
-                if source.name == 'MJ Biz Daily' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsMjBizDaily.perform_later()
-                    #MjBizDailyWorker.perform_async()
-                end
-                if source.name == 'HighTimes' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsHighTimes.perform_later()
-                    #HighTimesWorker.perform_async()
-                end
-                if source.name == 'The 420 Times' && (source.last_run + 2.hours) <= DateTime.now
-                    #NewsFourTwentyTimes.perform_later()
-                    #FourTwentyTimesWorker.perform_async()
-                end
-                
-            end
-        end    
-    end
     
     def admin
     end
-    
+
     def search
+        
+        #allowing search for product and news
         if params[:query].present? 
-            @query = "%#{params[:query]}%"
+            query = "%#{params[:query].downcase}%"
             @searchQuery = params[:query]
+            #PRODUCTS
+            @product_results = Product.featured.includes(:vendors, :dispensary_sources, :category).
+                        where("LOWER(products.name) LIKE ? or LOWER(products.alternate_names) LIKE ?", query, query).
+                        references(:vendors, :dispensary_sources, :categories)
             
-            source_ids = @sources.pluck(:id)
+            @product_results_two = Product.featured.includes(:vendors, :dispensary_sources, :category).
+                        where("LOWER(products.is_dom) LIKE ? or LOWER(categories.name) LIKE ? or LOWER(vendors.name) LIKE ? or LOWER(dispensary_sources.name) LIKE ? or LOWER(dispensary_sources.location) LIKE ? or LOWER(products.description) LIKE ?", 
+                                query, query, query, query, query, query).
+                        references(:vendors, :dispensary_sources, :categories)
+                        
+            @product_results = @product_results | @product_results_two
             
+            @product_results = @product_results.paginate(page: params[:page], per_page: 16)
+            
+                            
+            #result = ProductHelper.new(@product_results, @site_visitor_ip).findProductsPriceAndDistance
+            #    @product_to_distance, @product_to_closest_disp = result[0], result[1]
+            
+            #NEWS
             if Rails.env.production?
-                @recents = Article.where("source_id IN (?)", source_ids).
-                                where("title iLIKE ANY (array[?]) or body  iLIKE ANY (array[?]) ", @query.split,@query.split).
-                                includes(:source).includes(:categories).includes(:states).
+                @article_results = Article.active_source.
+                                where("title iLIKE ANY (array[?]) or body iLIKE ANY (array[?]) ", query.split,query.split).
+                                includes(:source, :categories, :states).
                                 order("created_at DESC").page(params[:page]).per_page(24)
-                @mostviews = Article.where("source_id IN (?)", source_ids).
-                                where("title iLIKE ANY (array[?]) or body  iLIKE ANY (array[?]) ", @query.split, @query.split).
-                                includes(:source).includes(:categories).includes(:states).
-                                order("num_views DESC").page(params[:page]).per_page(24)
-                
             else 
-                @recents = Article.where("source_id IN (?)", source_ids).
-                                where("title LIKE ? or body LIKE ?", @query, @query).
-                                includes(:source).includes(:categories).includes(:states).
-                                order("created_at DESC").paginate(:page => params[:page], :per_page => 24) 
-                @mostviews = Article.where("source_id IN (?)", source_ids).
-                                where("title LIKE ? or body LIKE ?", @query, @query).
-                                includes(:source).includes(:categories).includes(:states).
-                                order("created_at DESC").paginate(:page => params[:page], :per_page => 24) 
+                @article_results = Article.active_source.
+                                where("title LIKE ? or body LIKE ?", query, query).
+                                includes(:source, :categories, :states).
+                                order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
             end
 
         else 
@@ -178,6 +162,7 @@ class PagesController < ApplicationController
         @sources = Source.all.order("name ASC")
         @categories = Category.all.order("name ASC")
         @states = State.all.order("name ASC")
+        #need to update sitemap
     end
     
     # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.

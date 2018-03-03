@@ -3,11 +3,16 @@
     <div class="header-top-bar bg-dark ptb-10">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7  hidden-xs">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 hidden-991">
                     <div class="header-top-left">
                         <nav class="header-top-menu zm-secondary-menu">
                             <ul>
-                                <li><%= link_to 'Cannabiz Network', root_path %></li>
+                                <!--if state use the state logo-->
+                                <% if @state.present? && @state.logo.present? %>
+                                    <%= link_to image_tag(asset_path(@state.logo)), root_path %>
+                                <% else %>
+                            	    <%= link_to image_tag("header_footer/cbz-logo-color.svg"), root_path %>
+                                <% end %>
                             </ul>
                         </nav>
                     </div>
@@ -39,39 +44,18 @@
     <div class="header-middle-area">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12 header-mdh">
+                <div class="col-md-4 col-lg-4 col-xs-12 header-mdh">
                     <div class="global-table">
                         <div class="global-row">
                             <div class="global-cell">
                                 <div class="logo">
-                                    
                                     <!--if state use the state logo-->
                                     <% if @state != nil && @state.logo != nil && @state.logo != '' %>
                                         <%= link_to image_tag(asset_path(@state.logo), alt: "#{@state.name} Cannabiz Logo"), root_path %>
                                     <% else %>
                                 	    <%= link_to image_tag("header_footer/cbz-logo-color.svg", alt: "Cannabiz Network Logo"), root_path %>
                                     <% end %>
-                                    
-                                    <p class="site-desc"> </p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8 col-lg-7 col-sm-7 col-xs-12 col-lg-offset-1 header-mdh hidden-991">
-                    <div class="global-table">
-                        <div class="global-row">
-                            <div class="global-cell">
-                                <div style="background-color: #2f2f2f;">
-                                    <div class="subscribe-form subscribe-footer" style="width: 90%; margin: 0 auto; padding-bottom: 10px;"> 
-                                        <h2 class="h6 zm-widget-title uppercase text-white" style="color: #fff; padding: 10px 0 5px">
-                                            Subscribe To Weekly Digest</h2>
-                                        <form role="search" method="get" action = '/save_email'>
-                                            <input type="email" name='email' placeholder="Enter email address" required="required">
-                                            <input type="submit" value="Subscribe">
-                                        </form>
-                                    </div>
-                               </div>
                             </div>
                         </div>
                     </div>
@@ -79,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div class="header-bottom-area  bg-theme hidden-sm hidden-xs">
+    <div class="header-bottom-area bg-theme hidden-sm hidden-xs">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -97,7 +81,8 @@
                                                     <a href="<%= login_path %>">My Page</a>
                                                 <% end %>
                                             </li>
-                                            <li><a href="<%= about_path %>">About</a></li>
+                                            <li><a href="<%= articles_path %>">News</a></li>
+                                            <li><a href="<%= products_path %>">Products</a></li>
                                             <li><a href="<%= contact_us_path %>">Contact Us</a></li>
                                             <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
                                         </ul>
@@ -107,10 +92,12 @@
                             <div class="col-md-1" style="padding-right: 0;">
                                 <div class="search-wrap pull-right">
                                     <div class="search-form">
+                                        
                                         <form class="navbar-form" role="search" method="get" action = '/search'>
-                                            <input type="search" name="query" placeholder="What can we help you find..." autocomplete='on'>
+                                            <input type="search" name="query" placeholder="Search by Product, Not by Dispensary" autocomplete='on'>
                                             <button type="submit">Search</button>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -128,13 +115,14 @@
                     <div class="mobile-search-btn"><%=image_tag("icons/search.png")%></div>
                     <div class="mobile-search-form">
                         <form class="navbar-form" role="search" method="get" action = '/search'>
-                            <input type="text" name="query" placeholder="What can we help you find..." autocomplete='on'>
+                            <input type="text" name="query" placeholder="Search by Product, not by Dispensary" autocomplete='on'>
                             <button type="submit"><%=image_tag("icons/search.png")%></button>
                         </form>
                     </div>
                 </div>
                 <nav id="mobile_dropdown">
                     <ul class="customnavfont">
+                        
                         <li><%= link_to 'Home', root_path %></li>
                         <li>
                             <% if current_user %>
@@ -143,16 +131,11 @@
                                 <a href="<%= login_path %>">My Page</a>
                             <% end %>
                         </li>
-                        <li><a href="<%= about_path %>">About</a></li>
+                        <li><a href="<%= articles_path %>">News</a></li>
+                        <li><a href="<%= products_path %>">Products</a></li>
                         <li><a href="<%= contact_us_path %>">Contact Us</a></li>
                         <li><a href="<%= feedback_path %>">Leave Feedback</a></li>
-                        <li class ="mobile-digest-signup">
-                            <form class="mobile-digest-form" role="search" method="get" action = '/save_email'>
-            		            <input type="email" class="form-control input-lg" name='email' id ='emailTextBox' 
-            		                placeholder="Email for Weekly Digest" autocomplete='on' required="required">
-            		            <button type="submit">Sign Up</button>
-            		        </form>
-                        </li>
+                                            
                     </ul>
                 </nav>
             </div>       
@@ -165,52 +148,21 @@
 <div id = "mobile-sticky-logo">
     <%= link_to image_tag("header_footer/mean-bar-logo.png"), root_path %>
 </div>
+
 <div id = "mobile-sticky-header">
     <div class="col-xs-12">
         <div class="archive-inner">
             <div class="archive-filter">
-                <form action="#">
-                    <div class="sing-option zm-trending">
-                        <select name="Category" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
-                            <option value = "<%= root_path %>">Category</option>
-                            <% @news_categories.each do |category| %>
-                                <% if @category.present? && @category.name == category.name %>
-                                    <option value = "<%=category_path(category)%>" selected="selected"><%=category.name%></option>
-                                <% else %>
-                                    <option value = "<%=category_path(category)%>"><%=category.name%></option>
-                                <% end %>
-                        	<% end %>
-                        </select>
-                    </div>
-                    <div class="sing-option zm-state">
-                        <select name="State" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
-                        	<option value = "<%= root_path %>">State</option>
-                        	<% @states.each do |state| %>
-                        	
-                        	    <% if @state.present? && @state.name == state.name %>
-                                    <option value = "<%=state_path(state)%>" selected="selected"><%=state.name%></option>
-                                <% else %>
-                                    <option value = "<%=state_path(state)%>"><%=state.name%></option>
-                                <% end %>
-                
-                        	<% end %>
-                        </select>
-                    </div>
-                    <div class="sing-option zm-state">
-                        <select name="Source" class="selectDropdown" data-live-search="true" onChange="window.location.href=this.value">
-                            <option value = "<%= root_path %>">Source</option>
-                            <% @sources.order("name ASC").each do |source| %>
-                                <% if @source.present? && @source.name == source.name %>
-                                    <option value = "<%=source_path(source)%>" selected="selected"><%=source.name%></option>
-                                <% else %>
-                                    <option value = "<%=source_path(source)%>"><%=source.name%></option>
-                                <% end %>
-                        	<% end %>
-                        </select>
-                    </div>
-                </form>
+                <% if @recents.present? || @article.present? %>
+                    <%= render 'layouts/sticky_header_news' %>	                    
+				<% elsif @products.present? || @product.present? %>
+					<%= render 'layouts/sticky_header_products' %>
+				<% elsif @dispensary.present? %>
+				    <%= render 'layouts/sticky_header_dispensary' %>
+				<% else %>
+				    <%= render 'layouts/sticky_header_home' %>
+				<% end %>
             </div>
         </div>
     </div>                        
 </div>
-    

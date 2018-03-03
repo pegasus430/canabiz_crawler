@@ -7,7 +7,7 @@
             <% if dispSource.dispensary.image.present? %>
                 <img src="<%=dispSource.dispensary.image_url(:product_show)%>" onerror="this.src='<%= asset_path 'substitutes/disp-substitute.jpg' %>'" alt="<%=dispSource.name%>">
             <% else %>
-                <%=image_tag('substitutes/disp-substitute.png')%>
+                <%=image_tag('substitutes/disp-substitute.jpg')%>
             <% end %>
         </a>
         <div class="description">

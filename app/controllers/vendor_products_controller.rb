@@ -1,8 +1,7 @@
 class VendorProductsController < ApplicationController
     
     before_action :set_vendor_product, only: [:edit, :update, :destroy, :show]
-    before_action :require_admin, only: [:admin, :edit, :show, :index, :destroy, :update]
-    #before_action :require_admin, except: [:show]
+    before_action :require_admin, except: [:show]
 
     #--------ADMIN PAGE-------------------------
     def admin
