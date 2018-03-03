@@ -58,8 +58,8 @@ class PagesController < ApplicationController
         
         #allowing search for product and news
         if params[:query].present? 
-            query = "%#{params[:query].downcase}%"
-            @searchQuery = params[:query]
+            query = "%#{params[:query].downcase.strip}%"
+            @searchQuery = params[:query].strip
             #PRODUCTS
             @product_results = Product.featured.includes(:vendors, :dispensary_sources, :category).
                         where("LOWER(products.name) LIKE ? or LOWER(products.alternate_names) LIKE ?", query, query).

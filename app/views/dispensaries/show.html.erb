@@ -23,7 +23,7 @@
                                             <div class="row">
                                                 <div class="dispensary-image" style="width: 49%; border: 1px solid black; height: 350px; display: inline-block;">
                                                     
-                                                    <% if @dispensary_source.image.present? %>
+                                                    <% if @dispensary_source.image.present? && !@dispensary_source.image.to_s.downcase.include?("missing") %>
                                                         <img itemprop="image" src ="<%=@dispensary_source.image_url(:dispensary_show)%>" 
                                                         onerror="this.src='<%= asset_path 'substitutes/disp-substitute.jpg' %>'" alt="<%=@dispensary_source.name%>"/>
                                                     <% else %>

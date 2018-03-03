@@ -2,7 +2,7 @@
 <div class="col-md-3 productspacer ind-disp">
 	<!-- dispensary image -->
 	<a href="<%= dispensary_path(dispensary) %>">
-        <% if dispensary.image.present? %>
+        <% if dispensary.image.present? && && !dispensary.image.to_s.downcase.include?("missing") %>
             <img src="<%=dispensary.image_url(:product_dispensary_index)%>" onerror="this.src='<%= asset_path 'substitutes/disp-substitute.jpg' %>'" alt="<%=dispensary.name%>">
         <% else %>
             <%=image_tag('substitutes/disp-substitute.jpg')%>

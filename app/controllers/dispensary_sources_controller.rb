@@ -80,7 +80,7 @@ class DispensarySourcesController < ApplicationController
         
         def dispensary_source_params
             params.require(:dispensary_source).permit(:dispensary_id, :source_id, :state_id, :name, :slug, :image, 
-                                                            :location, :city, :street, :zip_code, :latitude, 
+                                                            :location, :city, :street, :zip_code, :latitude, :remote_image_url,
                                                             :longitude, :source_rating, 
                                                             :source_url, :monday_open_time, :tuesday_open_time, 
                                                             :wednesday_open_time, :thursday_open_time, 
