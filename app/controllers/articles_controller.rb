@@ -150,7 +150,9 @@ class ArticlesController < ApplicationController
     def index
         #only showing articles for active sources 
         @recents = Article.active_source.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-        @mostviews = Article.active_source.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+        @mostviews = Article.active_source.where("created_at >= ?", 1.month.ago.utc).
+                        order("num_views DESC").
+                        paginate(:page => params[:page], :per_page => 24)
         
         respond_to do |format|
           format.html
