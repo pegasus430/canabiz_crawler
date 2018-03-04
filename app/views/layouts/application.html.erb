@@ -114,6 +114,13 @@
         </div>
         
         <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+        <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
+        
+        <style>
+            #modal_content {
+                background-image: url(<%= asset_path('header_footer/mean-bar-logo.png') %>)
+            }
+        </style>
         
         <!--set product or dispensary form values-->
         <% if @set_state.present? %>
