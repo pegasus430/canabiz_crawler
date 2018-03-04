@@ -1,0 +1,56 @@
+/*DISPLAY ADS*/
+/*iframe {*/
+/*	height: 230px !important;*/
+/*	border: 1px solid black !important;*/
+/*}*/
+/*#mantis div, #mantis-1 div {*/
+/*	max-width: none !important;*/
+/*}*/
+
+
+/*RECOMMENDED CONTENT*/
+.mantis__recommended__header__title, .mantis__recommended__header {
+	display: none !important;
+}
+.mantis__recommended__item {
+	width: auto !important;
+	float: none !important;
+}
+/*title*/
+.mantis__recommended__item__title {
+	color: #2f2f2f !important;
+	font-size: 24px !important;
+	line-height: 34px !important;
+	font-weight: 700 !important;
+	font-family: 'Roboto', sans-serif;
+	padding-top: 25px !important;
+}
+.mantis__recommended__item__site {
+	display: none !important;
+}
+@media (max-width: 991px) {
+    .mantis__recommended__item__image {
+        float: none !important;
+        width: 100% !important;
+    }
+}
+@media (max-width: 767px) {
+    .mantis__recommended__item__image {
+        height: 378px !important;        
+    }
+}
+@media (max-width: 550px) {
+    .mantis__recommended__item__image {
+        height: 300px !important;        
+    }
+}
+@media (max-width: 500px) {
+    .mantis__recommended__item__image {
+        height: 275px !important;        
+    }
+}
+@media (max-width: 450px) {
+    .mantis__recommended__item__image {
+        height: 250px !important;        
+    }
+}
