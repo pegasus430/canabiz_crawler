@@ -108,7 +108,7 @@
             <%= render 'shared/messages' %>
             <%= yield %>
             <!--removed footer rendering on all pages-->
-            <% if @recents == nil %>
+            <% if @recents == nil || (@state.present? && @state.product_state)  %>
                 <%= render 'layouts/footer' %>
             <% end %>
         </div>

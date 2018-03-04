@@ -44,10 +44,6 @@ class StatesController < ApplicationController
                         includes(:source, :categories, :states).
                         order("created_at DESC").
                         paginate(:page => params[:page], :per_page => 24)
-        @mostviews = @state.articles.active_source.
-                        includes(:source, :categories, :states).
-                        order("num_views DESC").
-                        paginate(:page => params[:page], :per_page => 24)
         
         #state products
         if @state.product_state
@@ -56,6 +52,11 @@ class StatesController < ApplicationController
                                     where(:dispensary_sources => {state_id: @state.id}).
                                     paginate(:page => params[:page], :per_page => 16)
             @search_string = @state.name
+        else
+            @mostviews = @state.articles.active_source.
+                        includes(:source, :categories, :states).
+                        order("num_views DESC").
+                        paginate(:page => params[:page], :per_page => 24)
         end
 
         expires_in 10.minutes, :public => true
@@ -80,7 +81,7 @@ class StatesController < ApplicationController
         
         @products = @products.paginate(page: params[:page], per_page: 16)
         
-        @search_string = @state.name
+        @search_string = @search_string + ' in ' + @state.name
         
         render 'show'
     end
