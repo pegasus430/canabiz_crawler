@@ -21,7 +21,7 @@
                                     <div class="zm-section">
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <div class="dispensary-image" style="width: 49%; border: 1px solid black; height: 350px; display: inline-block;">
+                                                <div class="dispensary-image">
                                                     
                                                     <% if @dispensary_source.image.present? && !@dispensary_source.image.to_s.downcase.include?("missing") %>
                                                         <img itemprop="image" src ="<%=@dispensary_source.image_url(:dispensary_show)%>" 
@@ -30,7 +30,7 @@
                                                         <img itemprop="image" src = "<%=asset_path 'substitutes/disp-substitute.jpg' %>">
                                                     <% end %>
                                                 </div>
-                                                <div class="google-map" style="width: 48%; height: 350px; float: right;">
+                                                <div class="google-map">
                                                     <div>
                                                         <iframe
                                                           width="100%"
