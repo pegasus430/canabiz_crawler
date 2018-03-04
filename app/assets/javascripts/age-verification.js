@@ -20,7 +20,7 @@ av_legality_check = function() {
 		av_showmodal();
 		// Make sure the prompt stays in the middle.
 		$(window).on('resize', av_positionPrompt);
-	// }
+	}
 };
 
 av_showmodal = function() {
