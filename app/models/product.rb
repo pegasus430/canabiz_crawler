@@ -33,7 +33,16 @@ class Product < ActiveRecord::Base
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true, skip_blanks: true) do |row|
-            Product.create! row.to_hash
+            
+            #change to update record if id matches
+            product_hash = row.to_hash
+            product = self.where(id: product_hash["id"])
+            
+            if product.present? 
+                product.first.update_attributes(product_hash)
+            else
+                Product.create! product_hash
+            end
         end
     end    
     

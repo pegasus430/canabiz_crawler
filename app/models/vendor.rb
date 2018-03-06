@@ -19,10 +19,18 @@ class Vendor < ActiveRecord::Base
     #import CSV file
     def self.import(file)
         CSV.foreach(file.path, headers: true) do |row|
-            Vendor.create! row.to_hash
+            
+            vendor_hash = row.to_hash
+            vendor = self.where(id: vendor_hash["id"])
+            
+            if vendor.present?
+                vendor.first.update_attributes(vendor_hash)
+            else
+                Vendor.create! vendor_hash
+            end
         end
-    end    
-    
+    end   
+
     #export CSV file
     def self.to_csv
         CSV.generate do |csv|
