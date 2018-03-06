@@ -2,6 +2,7 @@ class VendorsController < ApplicationController
     
     before_action :set_vendor, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, except: [:show, :index]
+    before_action :site_visitor_state, only: [:index, :show]
 
     #--------ADMIN PAGE-------------------------
     def admin

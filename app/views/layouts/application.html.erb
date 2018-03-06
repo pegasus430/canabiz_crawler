@@ -21,6 +21,10 @@
             <title>Cannabiz Network: <%=@dispensary.name%></title>
             <meta name ="description" 
                 content="<%=@dispensary.name%> is a medical marijuana dispensary located at <%=@dispensary.location%>"/>
+            <meta name ="og:description" 
+                content="<%=@dispensary.name%> is a medical marijuana dispensary located at <%=@dispensary.location%>"/>
+            <meta name ="twitter:description" 
+                content="<%=@dispensary.name%> is a medical marijuana dispensary located at <%=@dispensary.location%>"/>    
      
         <% elsif @vendor != nil %>
             <title>Cannabiz Network: <%=@vendor.name%></title>
