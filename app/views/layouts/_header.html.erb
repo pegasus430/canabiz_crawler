@@ -161,7 +161,7 @@
                     <%= render 'layouts/sticky_header_news' %>	                    
 				<% elsif @products.present? || @product.present? %>
 					<%= render 'layouts/sticky_header_products' %>
-				<% elsif @dispensary.present? %>
+				<% elsif @dispensary.present? && current_page?(dispensary_path(@dispensary)) %>
 				    <%= render 'layouts/sticky_header_dispensary' %>
 				<% else %>
 				    <%= render 'layouts/sticky_header_home' %>

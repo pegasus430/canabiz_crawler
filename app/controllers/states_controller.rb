@@ -1,7 +1,7 @@
 class StatesController < ApplicationController
     
     before_action :set_state, only: [:edit, :update, :destroy, :show]
-    before_action :require_admin, only: [:edit, :update, :destroy, :admin, :refine_products]
+    before_action :require_admin, only: [:edit, :update, :destroy, :admin]
 
     def index
     end
@@ -50,6 +50,7 @@ class StatesController < ApplicationController
             #get products available at dispensaries in state
             @products = Product.featured.includes(:dispensary_sources, :vendors, :category, :average_prices).
                                     where(:dispensary_sources => {state_id: @state.id}).
+                                    #order("dsp_count DESC").
                                     paginate(:page => params[:page], :per_page => 16)
             @search_string = @state.name
         else

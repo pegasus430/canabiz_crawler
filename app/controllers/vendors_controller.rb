@@ -66,7 +66,7 @@ class VendorsController < ApplicationController
     #-------------------------------------------
     
     def show
-        @vendor_products = @vendor.products.includes(:average_prices, :vendors, :category).
+        @vendor_products = @vendor.products.featured.includes(:average_prices, :vendors, :category).
                                     paginate(page: params[:page], per_page: 8)
     end
 

@@ -1,5 +1,5 @@
 class DispensarySourceProduct < ActiveRecord::Base
-    belongs_to :product
+    belongs_to :product, counter_cache: :dsp_count
     belongs_to :dispensary_source
     has_many :dsp_prices
     
@@ -25,5 +25,11 @@ class DispensarySourceProduct < ActiveRecord::Base
                 csv << dispensarySourceProduct.attributes.values_at(*column_names)
             end
         end
-    end    
+    end
+    
+    #delete related DSPPrices
+    before_destroy :delete_dsp_prices
+    def delete_dsp_prices
+       self.dsp_prices.destroy_all 
+    end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302050409) do
+ActiveRecord::Schema.define(version: 20180306175519) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(version: 20180302050409) do
     t.decimal  "min_thc"
     t.decimal  "med_thc"
     t.decimal  "max_thc"
+    t.integer  "dsp_count"
   end
 
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true

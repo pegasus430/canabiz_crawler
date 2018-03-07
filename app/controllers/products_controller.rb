@@ -47,7 +47,7 @@ class ProductsController < ApplicationController
             end
         end
         
-        @products = Product.featured.order("name ASC").
+        @products = Product.featured.
                     includes(:dispensary_sources, :vendors, :category)
 
         if @searched_category.present?
@@ -69,7 +69,8 @@ class ProductsController < ApplicationController
             @search_string = @site_visitor_state.name
         end
 
-        @products = @products.paginate(page: params[:page], per_page: 16)
+        @products = @products.order("dsp_count DESC").
+                        paginate(page: params[:page], per_page: 16)
 
     end
     
