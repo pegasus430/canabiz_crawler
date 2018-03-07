@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
             @search_string = @site_visitor_state.name
         end
 
-        @products = @products.order("dsp_count DESC").
+        @products = @products. #order("dsp_count DESC").
                         paginate(page: params[:page], per_page: 16)
 
     end
