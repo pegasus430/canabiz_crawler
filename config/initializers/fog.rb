@@ -6,6 +6,5 @@ CarrierWave.configure do |config|
     }
     
     config.fog_directory    = ENV['AWS_BUCKET']
-    config.fog_public       = false
-    config.fog_attributes = { cache_control: "public, max-age=#{2000.days.to_i}" }
+    config.fog_public       = true
 end
