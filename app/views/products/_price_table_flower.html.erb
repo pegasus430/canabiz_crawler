@@ -1,20 +1,20 @@
 <style>
-    .state-name-row {
-        background-color: #eceeef;
-    }
-    .dispensary-td, .state-name-row td {
-        text-align: left;
-    }
-    table td {
-        text-align: center;
-    }
+    /*.state-name-row {*/
+    /*    background-color: #eceeef;*/
+    /*}*/
+    /*.dispensary-td, .state-name-row td {*/
+    /*    text-align: left;*/
+    /*}*/
+    /*table td {*/
+    /*    text-align: center;*/
+    /*}*/
 </style>
 
 <div class="col-md-12 mt-20">
     <div class="title">Pricing</div>
     <!-- table -->
-    <div class = 'table-responsive'>
-        <table class="table table-striped table-bordered table-inverse">
+    <div class="table-responsive">
+        <table id="product-price-table" class="display" style="width: 100% !important;">
             <thead>
                 <tr>
                     <th>Dispensary</th>
@@ -30,15 +30,15 @@
                 <!--loop through dispensaries-->
                 <% @state_to_dispensary.each do |state_name, dispensaries| %>
                     
-                    <tr class='state-name-row'>
-                        <td><%=state_name.upcase%></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
+                    <!--<tr class='state-name-row'>-->
+                    <!--    <td>state_name.upcase</td>-->
+                    <!--    <td>&nbsp;</td>-->
+                    <!--    <td>&nbsp;</td>-->
+                    <!--    <td>&nbsp;</td>-->
+                    <!--    <td>&nbsp;</td>-->
+                    <!--    <td>&nbsp;</td>-->
+                    <!--    <td>&nbsp;</td>-->
+                    <!--</tr>-->
                     
                     <% dispensaries.each do |dispensary_key| %>
                         <tr>
@@ -51,9 +51,9 @@
                                 loop do 
                                     if value.dsp_prices.where(display_order: i).any?
                             %>
-                                        <td>$<%=value.dsp_prices.where(display_order: i).first.price%></td>    
+                                        <td style="text-align:center;">$<%=value.dsp_prices.where(display_order: i).first.price%></td>    
                                     <% else %>
-                                        <td>--</td>
+                                        <td style="text-align:center;">--</td>
                                     <% end
                                     break if i == 5
                                     i += 1

@@ -7,7 +7,6 @@ modal_screen;
 
 // Start Working ASAP.
 $(document).ready(function() {
-	console.log('calling method');
 	av_legality_check();
 });
 

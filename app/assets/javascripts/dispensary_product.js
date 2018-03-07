@@ -1,3 +1,11 @@
+// *** PRODUCT SHOW PAGE ***
+$(document).ready(function() {
+    $('#product-price-table').DataTable({
+        "scrollX": true
+    });
+});
+
+
 // ****INDEX PAGES (Mostly Product)**
 
 //when user selects an option state

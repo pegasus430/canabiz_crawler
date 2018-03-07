@@ -81,6 +81,13 @@
                                             <% if ['Flower'].include? @product.category.name %>
                                                 <%= render "price_table_flower" %>
                                             <% end %>
+
+                                            <style>
+                                                div.dataTables_wrapper {
+                                                    width: 800px;
+                                                    margin: 0 auto;
+                                                }
+                                            </style>
                                         <% end %>
                                     </div>
                                 </div>
