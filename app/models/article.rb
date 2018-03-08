@@ -44,4 +44,11 @@ class Article < ActiveRecord::Base
             end
         end
     end
+    
+    #delete related article_categories and article_states on delete
+    before_destroy :delete_relations
+    def delete_relations
+       self.article_categories.destroy_all 
+       self.article_states.destroy_all
+    end
 end
