@@ -44,4 +44,10 @@ class Vendor < ActiveRecord::Base
         end
     end
     
+    #delete relations
+    before_destroy :delete_relations
+    def delete_relations
+       self.vendor_products.destroy_all
+    end
+    
 end

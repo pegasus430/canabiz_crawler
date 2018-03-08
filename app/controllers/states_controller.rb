@@ -69,7 +69,7 @@ class StatesController < ApplicationController
         
         #state articles
         @recents = @state.articles.active_source.order("created_at DESC").paginate(:page => params[:page], :per_page => 24)
-        @mostviews = @state.articles.active_source.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
+        #@mostviews = @state.articles.active_source.order("num_views DESC").paginate(:page => params[:page], :per_page => 24)
         
         #state products
         params[:state_search] = @state.name
@@ -81,8 +81,6 @@ class StatesController < ApplicationController
                 result[0], result[1], result[2], result[3], result[4], result[5], result[6]
         
         @products = @products.paginate(page: params[:page], per_page: 16)
-        
-        @search_string = @search_string + ' in ' + @state.name
         
         render 'show'
     end

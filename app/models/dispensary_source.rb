@@ -34,4 +34,10 @@ class DispensarySource < ActiveRecord::Base
             end
         end
     end    
+    
+    #delete relations
+    before_destroy :delete_relations
+    def delete_relations
+       self.dispensary_source_products.destroy_all
+    end
 end

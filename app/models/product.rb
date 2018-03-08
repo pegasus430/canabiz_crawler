@@ -16,9 +16,6 @@ class Product < ActiveRecord::Base
     has_many :dispensary_source_products
     has_many :dispensary_sources, through: :dispensary_source_products
     
-    #delete related DispensarySourceProducts
-    before_destroy :delete_dispensary_source_products
-    
     #friendly url
     extend FriendlyId
     friendly_id :name, use: :slugged
@@ -59,8 +56,11 @@ class Product < ActiveRecord::Base
         end
     end
     
-    def delete_dispensary_source_products
-       self.dispensary_source_products.destroy_all 
+    #delete relations
+    before_destroy :delete_relations
+    def delete_relations
+       self.dispensary_source_products.destroy_all
+       self.average_prices.destroy_all
     end
     
 end
