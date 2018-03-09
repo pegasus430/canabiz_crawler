@@ -59,7 +59,7 @@ class AveragePricesController < ApplicationController
         @dispensary_source_products = DispensarySourceProduct.
                 where(product: @product).
                 where('dsp_prices.unit like ?', @average_price.average_price_unit).
-                where('dsp_prices.price <= ', @average_price.average_price)
+                where('dsp_prices.price <= ', @average_price.average_price).
                 joins(:dsp_prices)
                 
         dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
