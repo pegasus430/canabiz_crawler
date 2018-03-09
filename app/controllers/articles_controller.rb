@@ -185,42 +185,30 @@ class ArticlesController < ApplicationController
         
         #related articles
         if @article.states.present?
-            
-            @related_articles = @article.states.sample.articles.active_source.
-                                    order("RANDOM()").limit(3).where.not(id: @article.id)
-            
-            # if Rails.env.production?
-            #     @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
-            # end
-
+            @related_articles = @article.states.sample.articles
         elsif @article.categories.present?
-        
-            @related_articles = @article.categories.sample.articles.active_source.
-                                    order("RANDOM()").limit(3).where.not(id: @article.id)
-                                        
-            # if Rails.env.production?
-            #     @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
-            # end
-                                        
+            @related_articles = @article.categories.sample.articles
         else
-            @related_articles = Article.active_source.
-                                    order("RANDOM()").limit(3).where.not(id: @article.id).
-                                    includes(:source, :states, :categories)
-            
-            # if Rails.env.production?
-            #     @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
-            # end
-                                        
+            @related_articles = Article.all
         end
         
-        #same source articles
-        @same_source_articles = Article.where(source_id: @article.source).
-                                    includes(:source, :states ,:categories).
-                                    order("RANDOM()").limit(3).where.not(id: @article.id)
+        if Rails.env.production?
+            @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
+        end
         
+        @related_articles = @related_articles.active_source.includes(:source, :states, :categories).
+                                order("RANDOM()").limit(3).where.not(id: @article.id)
+        
+        #SAME SOURCE ARTICLES
+        @same_source_articles = Article.where(source_id: @article.source).
+                                    includes(:source, :states ,:categories)
+                                    
         if Rails.env.production? 
            @same_source_articles = @same_source_articles.where("created_at >= ?", 1.month.ago.utc) 
         end
+        
+        @same_source_articles = @same_source_articles.order("RANDOM()").
+                                    limit(3).where.not(id: @article.id)
         
         #add view to article for sorting
         @article.increment(:num_views, by = 1)
