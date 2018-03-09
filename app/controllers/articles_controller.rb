@@ -183,31 +183,32 @@ class ArticlesController < ApplicationController
             redirect_to root_path
         end
         
-        now = Time.now
-        
         #related articles
         if @article.states.present?
             
-            @related_articles = @article.states.sample.articles.order("RANDOM()").limit(3).where.not(id: @article.id)
+            @related_articles = @article.states.sample.articles.active_source.
+                                    order("RANDOM()").limit(3).where.not(id: @article.id)
             
             if Rails.env.production?
-                #@related_articles = @related_articles.where(created_at: (now - 1.week.ago)) 
+                @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
             end
 
         elsif @article.categories.present?
         
-            @related_articles = @article.categories.sample.articles.order("RANDOM()").limit(3).where.not(id: @article.id)
+            @related_articles = @article.categories.sample.articles.active_source.
+                                    order("RANDOM()").limit(3).where.not(id: @article.id)
                                         
             if Rails.env.production?
-               #@related_articles = @related_articles.where(created_at: (now - 1.week.ago))
+                @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
             end
                                         
         else
-            @related_articles = Article.all.order("RANDOM()").limit(3).where.not(id: @article.id).
+            @related_articles = Article.active_source.
+                                    order("RANDOM()").limit(3).where.not(id: @article.id).
                                     includes(:source, :states, :categories)
             
             if Rails.env.production?
-                #@related_articles = @related_articles.where(created_at: (now - 1.week.ago))
+                @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
             end
                                         
         end
@@ -218,19 +219,17 @@ class ArticlesController < ApplicationController
                                     order("RANDOM()").limit(3).where.not(id: @article.id)
         
         if Rails.env.production? 
-           #@same_source_articles = @same_source_articles.where(created_at: (now - 1.week.ago)) 
+           @same_source_articles = @same_source_articles.where("created_at >= ?", 1.month.ago.utc) 
         end
-                                        
-                                        
         
         #add view to article for sorting
         @article.increment(:num_views, by = 1)
         @article.save
         
         #add userView record
-        if current_user
-            #the table isn't created yet
-        end
+        # if current_user
+        #     #the table isn't created yet
+        # end
     end
     
     
