@@ -33,7 +33,7 @@
             <option value = "<%= root_path %>">Products</option>
             <% @product_categories.each do |category| %>
                 
-                <option value = "<%=category.name%>"><%=category.name%></option>
+                <option value = "<%=products_path(category.name)%>"><%=category.name%></option>
     
                 <% if category.name == 'Flower' %>
                     <option value="<%=products_path('Indica')%>">&nbsp&nbsp&nbsp&nbspIndica</option>
