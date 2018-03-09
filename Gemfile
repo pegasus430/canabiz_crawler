@@ -18,6 +18,7 @@ gem 'sprockets-rails', :require => 'sprockets/railtie' #trying to minify css and
 gem 'canonical-rails', '~> 0.2.1' #automatically add canonical meta tag to each page
 gem 'owlcarousel-rails', '~> 1.1', '>= 1.1.3.3' #for trending article carousel
 gem 'left_join', '~> 0.2.1' #do left_join queries
+gem 'hairtrigger', '~> 0.2.20' #allow for trigger use
 
 #BACKGROUND JOBS
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE

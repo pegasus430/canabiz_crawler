@@ -24,7 +24,6 @@ class Article < ActiveRecord::Base
     extend FriendlyId
     friendly_id :title, use: :slugged
     
-    
     #photo aws storage
     mount_uploader :image, PhotoUploader
     
@@ -44,6 +43,17 @@ class Article < ActiveRecord::Base
             end
         end
     end
+    
+    #CALLBACKS
+    # after_save :update_image_url
+    # def update_image_url
+    #     puts self.image_url
+    #     puts self.image
+    #     puts self.remote_image_url
+    #     self.remote_image_url = self.remote_image_url != nil ? 
+    #                         self.remote_image_url.to_s.slice(0...(self.remote_image_url.to_s.index('?'))) : 
+    #                         nil
+    # end
     
     #delete related article_categories and article_states on delete
     before_destroy :delete_relations
