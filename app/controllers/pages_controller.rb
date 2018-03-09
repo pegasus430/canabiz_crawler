@@ -59,11 +59,11 @@ class PagesController < ApplicationController
         #allowing search for product and news
         if params[:query].present? 
             query = "%#{params[:query].downcase.strip}%"
+            #query_no_sc = "%#{params[:query].downcase.strip.gsub!(/[^0-9A-Za-z]/, '')}%"
             @searchQuery = params[:query].strip
             #PRODUCTS
             @product_results = Product.featured.includes(:vendors, :dispensary_sources, :category).
-                        where("LOWER(products.name) LIKE ? or LOWER(products.alternate_names) LIKE ?", query, query).
-                        references(:vendors, :dispensary_sources, :categories)
+                        where("LOWER(products.name) LIKE ? or LOWER(products.alternate_names) LIKE ?", query, query)
             
             @product_results_two = Product.featured.includes(:vendors, :dispensary_sources, :category).
                         where("LOWER(products.is_dom) LIKE ? or LOWER(categories.name) LIKE ? or LOWER(vendors.name) LIKE ? or LOWER(dispensary_sources.name) LIKE ? or LOWER(dispensary_sources.location) LIKE ? or LOWER(products.description) LIKE ?", 
