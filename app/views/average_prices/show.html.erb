@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
 				<div class="news-viewing-title-div" style="text-align: center; margin: 20px 0;">
-                    <h3><%=@product.name%> ~ 
+                    <h3><a href="<%=product_path(@product)%>"><%=@product.name%></a> ~ 
                         <span style = 'color: #2ab081;'>
                             <%="$#{@average_price.average_price.round}/#{@average_price.average_price_unit}"%> 
                         </span>
