@@ -47,7 +47,8 @@ class ProductsController < ApplicationController
             end
         end
         
-        @products = Product.featured.
+        @products = Product.featured.left_join(:dispensary_source_products).group(:id).
+                    order('COUNT(dispensary_source_products.id) DESC').
                     includes(:dispensary_sources, :vendors, :category)
 
         if @searched_category.present?
