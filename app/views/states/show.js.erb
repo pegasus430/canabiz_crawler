@@ -1,4 +1,5 @@
 if ($('#article-index-new').css('display') == 'block') {
+	console.log('i am in here');
 	$('#article-index-new').append('<%= escape_javascript render(@recents) %>');
 	$('.article-index-new-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@recents) %>');
 }
