@@ -30,7 +30,9 @@
 	                            <div class="row">
 	                                <div class="zm-posts clearfix">
 	                                	
-	                                	<%= render @recents %>
+	                                	<div id = "article-index-new" style="display:none;">
+	                                		<%= render @recents %>	
+	                                	</div>
 	                                    
 	                                    <div class = 'article-index-new-pagination'>
 	                                        <%= will_paginate @recents %>

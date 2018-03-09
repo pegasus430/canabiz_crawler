@@ -52,6 +52,7 @@ function changeStateView(value) {
 		$("#state-products-button").removeClass('active-header-button');
 		$(".state-products-section").css("display", "none");
 		$(".state-news-section").css("display", "block");
+		$("#article-index-new").css("display", "block");
 	}
 	else if (value == 'Products') {
 		$("#state-products-button").addClass('active-header-button');
@@ -60,6 +61,7 @@ function changeStateView(value) {
 		$("#state-news-button").removeClass('active-header-button');
 		$(".state-products-section").css("display", "block");
 		$(".state-news-section").css("display", "none");
+		$("#article-index-new").css("display", "none");
 	}
 }
 
