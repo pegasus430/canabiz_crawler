@@ -36,10 +36,8 @@
       <th><%= sortable "body" %></th>
       <th><%= sortable "web_url" %></th>
       <th><%= sortable "image" %></th>
-      <th><%= sortable "include_in_digest" %></th>
       <th><%= sortable "created_at" %></th>
       <th><%= sortable "num_views" %></th>
-      <th><%= sortable "date" %></th>
       <th><%= sortable "source_id" %></th>
       <th><%= sortable "external_visits" %></th>
       <th>States</th>
@@ -53,11 +51,9 @@
               <td style = 'width: 300px'><%= article.title %></td>
               <td><%= article.body.truncate(30) if article.body %></td>
               <td><%= article.web_url.truncate(30) if article.web_url %></td>
-              <td><%= article.image.to_s.truncate(30) if article.image %></td>
-              <td><%= article.include_in_digest %></td>
+              <td><%= article.image.to_s if article.image %></td>
               <td><%= article.created_at.strftime("%B %d, %Y | %I:%M %p") %></td>
               <td><%= article.num_views %></td>
-              <td><%= article.date.strftime("%B %d, %Y | %I:%M %p") %></td>
               <td><%= article.source.name if article.source %></td>
               <td><%= article.external_visits %></td>
               
