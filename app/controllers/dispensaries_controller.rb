@@ -75,9 +75,14 @@ class DispensariesController < ApplicationController
     #-------------------------------------
 
     def show
+        # @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).
+        #                         includes(:dispensary_source_products => :product, 
+        #                             :dispensary_source_products => :dsp_prices).
+        #                         order('last_menu_update DESC').first
+        
         @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).
-                                includes(:dispensary_source_products => :product, :dispensary_source_products => :dsp_prices).
-                                order('last_menu_update DESC').first
+                        includes(dispensary_source_products: [:product, :dsp_prices]).
+                        order('last_menu_update DESC').first
                                 
         if @dispensary_source != nil
             @category_to_products = Hash.new
