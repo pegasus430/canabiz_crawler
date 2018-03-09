@@ -193,7 +193,7 @@ class ArticlesController < ApplicationController
         end
         
         if Rails.env.production?
-            @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
+            # @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
         end
         
         @related_articles = @related_articles.active_source.includes(:source, :states, :categories).
