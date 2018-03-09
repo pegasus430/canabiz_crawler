@@ -8,9 +8,10 @@ class ProductFinder
 	end
 	
 	def build
-		@products = Product.featured.order("name ASC").
-		    includes(:category, :dispensary_sources, :vendors, 
-		    :dispensary_source_products, :dispensary_sources => :dispensary)
+                    
+		@products = Product.featured.left_join(:dispensary_source_products).group(:id).
+                    order('COUNT(dispensary_source_products.id) DESC').
+		            includes(:category, :average_prices, :vendors, :dispensary_sources => :dispensary)
             
         #only search either name or letter, not both
         if params[:name_search].present?
