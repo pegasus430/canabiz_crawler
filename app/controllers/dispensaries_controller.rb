@@ -81,6 +81,13 @@ class DispensariesController < ApplicationController
                         order('last_menu_update DESC').first
                                 
         if @dispensary_source != nil
+            
+            #dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
+            #@dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC')
+            
+            @matching_products = Product.where(id: @dispensary_source.dispensary_source_products.pluck(:product_id)).
+                                    includes(:vendors, :category)
+            
             @category_to_products = Hash.new
             @category_to_products.store('Flower', @dispensary_source.dispensary_source_products)
             

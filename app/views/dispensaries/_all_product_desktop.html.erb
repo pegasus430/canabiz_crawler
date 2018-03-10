@@ -1,9 +1,9 @@
-<!-- individual dispensary on the index -->
+<% disp_product = @matching_products.where(id: dispProduct.product_id).first %>
 <div class="col-md-3 productspacer ind-product">
 	<!-- product image -->
-	<a href="<%= product_path(dispProduct.product) %>">
-    	<% if dispProduct.product.image.present? && Rails.env.production? %>
-    	    <img src="<%=dispProduct.product.image_url(:product_show)%>" onerror="this.src='<%= asset_path 'substitutes/product-substitute.jpg' %>'" alt="<%=dispProduct.product.name%>">
+	<a href="<%= product_path(disp_product) %>">
+    	<% if disp_product.image.present? && Rails.env.production? %>
+    	    <img src="<%=disp_product.image_url(:product_show)%>" onerror="this.src='<%= asset_path 'substitutes/product-substitute.jpg' %>'" alt="<%=disp_product.name%>">
     	<% else %>
     	    <%= image_tag('substitutes/product-substitute.png') %>
     	<% end %>
@@ -16,15 +16,15 @@
                 <div class="zm-post-header">
                     
                     <div class="zm-category mobile-homepage mobile-category">
-                        <% if dispProduct.product.category.present? %>
-                            <a class="bg-cat-3 cat-btn" href="<%=products_path(dispProduct.product.category.name)%>"><%= dispProduct.product.category.name %></a>
+                        <% if disp_product.category.present? %>
+                            <a class="bg-cat-3 cat-btn" href="<%=products_path(disp_product.category.name)%>"><%= disp_product.category.name %></a>
                         <% end %>
                         
                         <!--sub category-->
-                        <% if dispProduct.product.sub_category.present? %>
-                            <% if dispProduct.product.is_dom.present? %>
+                        <% if disp_product.sub_category.present? %>
+                            <% if disp_product.is_dom.present? %>
                                 
-                                <% if dispProduct.product.is_dom == 'Indica' %>
+                                <% if disp_product.is_dom == 'Indica' %>
                                 
                                     <a class="bg-cat-3 cat-btn" 
                                         href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
@@ -38,28 +38,28 @@
                                 
                             <% else %>
                                 <a class="bg-cat-3 cat-btn" 
-                                    href="<%=products_path(dispProduct.product.sub_category)%>"><%= dispProduct.product.sub_category %></a>   
+                                    href="<%=products_path(disp_product.sub_category)%>"><%= disp_product.sub_category %></a>   
                             <% end %>
                             
                         <% end %>
                     </div>
                     
                     <h5 class="h5height product-index-ind">
-                        <%=link_to dispProduct.product.name, product_path(dispProduct.product)%>
+                        <%=link_to disp_product.name, product_path(disp_product)%>
                     </h5>
                     <div class="zm-category hidden-991">
-                        <% if dispProduct.product.category.present? %>
-                            <a class="bg-cat-3 cat-btn" href="<%=products_path(dispProduct.product.category.name)%>">
-                                <%= dispProduct.product.category.name %></a>
+                        <% if disp_product.category.present? %>
+                            <a class="bg-cat-3 cat-btn" href="<%=products_path(disp_product.category.name)%>">
+                                <%= disp_product.category.name %></a>
                         <% end %>
                         
                         <!--sub category-->
-                        <% if dispProduct.product.sub_category.present? %>
+                        <% if disp_product.sub_category.present? %>
                         
                             <!--#see if it has is_dom-->
-                            <% if dispProduct.product.is_dom.present? %>
+                            <% if disp_product.is_dom.present? %>
                                 
-                                <% if dispProduct.product.is_dom == 'Indica' %>
+                                <% if disp_product.is_dom == 'Indica' %>
                                 
                                     <a class="bg-cat-3 cat-btn" 
                                         href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
@@ -73,19 +73,19 @@
                                 
                             <% else %>
                                 <a class="bg-cat-3 cat-btn" 
-                                    href="<%=products_path(dispProduct.product.sub_category)%>"><%= dispProduct.product.sub_category %></a>   
+                                    href="<%=products_path(disp_product.sub_category)%>"><%= disp_product.sub_category %></a>   
                             <% end %>
                             
                         <% end %>
                         
                     </div>
                     <div class="mobile-product-description">
-                        <%= dispProduct.product.description.truncate(175) if dispProduct.product.description %>
+                        <%= disp_product.description.truncate(175) if disp_product.description %>
                     </div>
                     <div class="product-info">
                         <p style="max-height: 53px; overflow: hidden;">Produced By:
-                            <% dispProduct.product.vendors.each_with_index do |vendor, index| %>
-                                <% if index + 1 == dispProduct.product.vendors.size %>
+                            <% disp_product.vendors.each_with_index do |vendor, index| %>
+                                <% if index + 1 == disp_product.vendors.size %>
                                     <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
                                 <% else %>
                                     <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
