@@ -1,0 +1,119 @@
+<!-- individual dispensary on the index -->
+<div class="col-md-3 productspacer ind-product">
+	<!-- product image -->
+	<a href="<%= product_path(dispProduct.product) %>">
+    	<% if dispProduct.product.image.present? && Rails.env.production? %>
+    	    <img src="<%=dispProduct.product.image_url(:product_show)%>" onerror="this.src='<%= asset_path 'substitutes/product-substitute.jpg' %>'" alt="<%=dispProduct.product.name%>">
+    	<% else %>
+    	    <%= image_tag('substitutes/product-substitute.png') %>
+    	<% end %>
+    </a>
+    
+    <div class="description">
+        <!-- Start single productitem-->
+        <article class="overflow">                                     
+            <div class="zm-post-dis">
+                <div class="zm-post-header">
+                    
+                    <div class="zm-category mobile-homepage mobile-category">
+                        <% if dispProduct.product.category.present? %>
+                            <a class="bg-cat-3 cat-btn" href="<%=products_path(dispProduct.product.category.name)%>"><%= dispProduct.product.category.name %></a>
+                        <% end %>
+                        
+                        <!--sub category-->
+                        <% if dispProduct.product.sub_category.present? %>
+                            <% if dispProduct.product.is_dom.present? %>
+                                
+                                <% if dispProduct.product.is_dom == 'Indica' %>
+                                
+                                    <a class="bg-cat-3 cat-btn" 
+                                        href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
+                                
+                                <% else %>
+                                
+                                    <a class="bg-cat-3 cat-btn" 
+                                        href="<%=products_path('Hybrid-Sativa')%>">Hybrid-Indica</a>
+                                
+                                <% end %>
+                                
+                            <% else %>
+                                <a class="bg-cat-3 cat-btn" 
+                                    href="<%=products_path(dispProduct.product.sub_category)%>"><%= dispProduct.product.sub_category %></a>   
+                            <% end %>
+                            
+                        <% end %>
+                    </div>
+                    
+                    <h5 class="h5height product-index-ind">
+                        <%=link_to dispProduct.product.name, product_path(dispProduct.product)%>
+                    </h5>
+                    <div class="zm-category hidden-991">
+                        <% if dispProduct.product.category.present? %>
+                            <a class="bg-cat-3 cat-btn" href="<%=products_path(dispProduct.product.category.name)%>">
+                                <%= dispProduct.product.category.name %></a>
+                        <% end %>
+                        
+                        <!--sub category-->
+                        <% if dispProduct.product.sub_category.present? %>
+                        
+                            <!--#see if it has is_dom-->
+                            <% if dispProduct.product.is_dom.present? %>
+                                
+                                <% if dispProduct.product.is_dom == 'Indica' %>
+                                
+                                    <a class="bg-cat-3 cat-btn" 
+                                        href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
+                                
+                                <% else %>
+                                
+                                    <a class="bg-cat-3 cat-btn" 
+                                        href="<%=products_path('Hybrid-Sativa')%>">Hybrid-Sativa</a>
+                                
+                                <% end %>
+                                
+                            <% else %>
+                                <a class="bg-cat-3 cat-btn" 
+                                    href="<%=products_path(dispProduct.product.sub_category)%>"><%= dispProduct.product.sub_category %></a>   
+                            <% end %>
+                            
+                        <% end %>
+                        
+                    </div>
+                    <div class="mobile-product-description">
+                        <%= dispProduct.product.description.truncate(175) if dispProduct.product.description %>
+                    </div>
+                    <div class="product-info">
+                        <p style="max-height: 53px; overflow: hidden;">Produced By:
+                            <% dispProduct.product.vendors.each_with_index do |vendor, index| %>
+                                <% if index + 1 == dispProduct.product.vendors.size %>
+                                    <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
+                                <% else %>
+                                    <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
+                                <% end %>
+                            <% end %>
+                        </p>
+                    </div>
+                    <div class="product-info">
+                        <p>Prices At Dispensary:
+                                
+                            <% dispProduct.dsp_prices.each_with_index do |price_row, index| %>
+                            
+                            	<% if index + 1 == dispProduct.dsp_prices.size %>
+                            		<span style="color: #2ab081;">$<%=price_row.price%>/<%=price_row.unit%></span>
+                                <% else %>
+                                    <span style="color: #2ab081;">$<%=price_row.price%>/<%=price_row.unit%></span>,&nbsp;
+                                <% end %>
+                            
+	                        <% end %>
+	                                
+	                        <% if dispProduct.dsp_prices.empty? %>
+	                            <span style="color: #2ab081;">No Prices Given</span>
+	                        <% end %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <!-- End single productitem-->
+    </div>
+</div>

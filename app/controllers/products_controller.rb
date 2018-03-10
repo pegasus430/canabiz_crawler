@@ -58,7 +58,7 @@ class ProductsController < ApplicationController
         
         elsif @searched_sub_category.present? 
         
-            @products = @products.where(sub_category: @searched_sub_category)
+            @products = @products.where(sub_category: @searched_sub_category).where(is_dom: nil)
             @search_string = "#{@searched_sub_category} in #{@site_visitor_state.name}"
         
         elsif @searched_is_dom.present?    

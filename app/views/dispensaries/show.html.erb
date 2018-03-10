@@ -95,11 +95,13 @@
                                                         <div class="zm-post-thumb">
                                                         </div>
                                                         <div class="rowspacer">
-                                                            <div class="row">
-                                                                
-                                                                <%=render :partial => "all_product", 
+                                                            <div class="row desktop-homepage">
+                                                                <%= render :partial => "all_product_desktop", 
                                                                     :collection => list, :as => :dispProduct %>
-                                                               
+                                                            </div>
+                                                            <div class="row mobile-homepage">
+                                                                <%= render :partial => "all_product_mobile", 
+                                                                    :collection => list, :as => :dispProduct %>
                                                             </div>
                                                         </div>
                                                     </article>

@@ -43,7 +43,7 @@ class ProductFinder
                 @products = @products.where(is_dom: 'Indica') 
                 add_to_search(params[:category_search], ' and ')
             elsif ['Indica', 'Sativa', 'Hybrid'].include? params[:category_search]
-                @products = @products.where(sub_category: params[:category_search]) 
+                @products = @products.where(sub_category: params[:category_search]).where(is_dom: nil)
                 add_to_search(params[:category_search], ' and ')
             end
         end
