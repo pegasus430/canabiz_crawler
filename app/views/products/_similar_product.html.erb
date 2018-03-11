@@ -11,14 +11,21 @@
         <article class="overflow">                                     
             <div class="zm-post-dis">
                 <div class="zm-post-header">
+                          
+                    <h5 class="h5height">
+                    	<%= link_to product.name, product_path(product) %>
+                    </h5>
                     
-                    <div class="zm-category mobile-homepage mobile-category">
+                    <div class="zm-category hidden-991">
                         <% if product.category.present? %>
-                            <a class="bg-cat-3 cat-btn" href="<%=products_path(product.category.name)%>"><%= product.category.name %></a>
+                            <a class="bg-cat-3 cat-btn" href="<%=products_path(product.category.name)%>">
+                                <%= product.category.name %></a>
                         <% end %>
                         
                         <!--sub category-->
                         <% if product.sub_category.present? %>
+                        
+                            <!--#see if it has is_dom-->
                             <% if product.is_dom.present? %>
                                 
                                 <% if product.is_dom == 'Indica' %>
@@ -29,7 +36,7 @@
                                 <% else %>
                                 
                                     <a class="bg-cat-3 cat-btn" 
-                                        href="<%=products_path('Hybrid-Sativa')%>">Hybrid-Indica</a>
+                                        href="<%=products_path('Hybrid-Sativa')%>">Hybrid-Sativa</a>
                                 
                                 <% end %>
                                 
@@ -39,11 +46,8 @@
                             <% end %>
                             
                         <% end %>
+                        
                     </div>
-                          
-                    <h5 class="h5height">
-                    	<%= link_to product.name, product_path(product) %>
-                    </h5>
                 </div>
                 <div class="product-info">
                     <p style="max-height: 36px; overflow: hidden">Produced By:

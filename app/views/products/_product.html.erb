@@ -15,35 +15,6 @@
             <div class="zm-post-dis">
                 <div class="zm-post-header">
                     
-                    <div class="zm-category mobile-homepage mobile-category">
-                        <% if product.category.present? %>
-                            <a class="bg-cat-3 cat-btn" href="<%=products_path(product.category.name)%>"><%= product.category.name %></a>
-                        <% end %>
-                        
-                        <!--sub category-->
-                        <% if product.sub_category.present? %>
-                            <% if product.is_dom.present? %>
-                                
-                                <% if product.is_dom == 'Indica' %>
-                                
-                                    <a class="bg-cat-3 cat-btn" 
-                                        href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
-                                
-                                <% else %>
-                                
-                                    <a class="bg-cat-3 cat-btn" 
-                                        href="<%=products_path('Hybrid-Sativa')%>">Hybrid-Indica</a>
-                                
-                                <% end %>
-                                
-                            <% else %>
-                                <a class="bg-cat-3 cat-btn" 
-                                    href="<%=products_path(product.sub_category)%>"><%= product.sub_category %></a>   
-                            <% end %>
-                            
-                        <% end %>
-                    </div>
-                    
                     <h5 class="h5height product-index-ind">
                         <%=link_to product.name, product_path(product)%>
                     </h5>
