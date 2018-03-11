@@ -13,9 +13,9 @@ class PagesController < ApplicationController
         @nav_search = false
         
         #ARTICLES --  
-        @recent_articles = Article.active_source.order("created_at DESC").
-                            includes(:states, :source, :categories).
-                            paginate(:page => params[:page], :per_page => 16)
+        @recent_articles = State.where(name: 'Washington').first.articles.active_source.
+                            order("created_at DESC").
+                            includes(:states, :source, :categories).limit(16)
 
         #trending news - we should have num_views created this past week - not of all time - will do when moving live
         if Rails.env.production?

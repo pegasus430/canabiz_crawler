@@ -66,10 +66,8 @@
 	                    </div>
 	                    <div>
 	                        <div class="row">
-
 	                        	<!-- render with _vendor partial -->
 	    						<%= render @vendors %>
-
 	                        </div>
 	                    </div>
 	                </article>
@@ -82,7 +80,7 @@
 	    <div class="row hidden-xs">
 	        <div class="zm-pagination-wrap mt-30">
 	            <nav class="zm-pagination ptb-40 text-center">
-	            	<%= will_paginate @vendors %>
+	            	<%= will_paginate @vendors, params: params %>
 	            </nav>
 	        </div>
 	    </div>

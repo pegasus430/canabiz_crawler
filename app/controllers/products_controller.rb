@@ -34,6 +34,10 @@ class ProductsController < ApplicationController
     def index
         
         if params[:format].present?
+            
+            logger.info 'format: '
+            logger.info params[:format]
+            
             @searched_category = @product_categories.find_by(name: params[:format])
             
             if !@searched_category.present?
@@ -45,6 +49,9 @@ class ProductsController < ApplicationController
                     @searched_sub_category = params[:format] 
                 end
             end
+            
+            logger.info 'SEARCHED SUB CATEGORY: '
+            logger.info @searched_sub_category
         end
         
         @products = Product.featured.left_join(:dispensary_source_products).group(:id).

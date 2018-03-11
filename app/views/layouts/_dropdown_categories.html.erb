@@ -10,7 +10,12 @@
         
         <% if category.name == 'Flower' %>
             <!--add in others-->
-            <option value="Indica">&nbsp&nbsp&nbsp&nbspIndica</option>
+            <% if @searched_sub_category.present? && @searched_sub_category == 'Indica' %>
+                <option value="Indica" selected="selected">&nbsp&nbsp&nbsp&nbspIndica</option>
+            <% else %>
+                <option value="Indica">&nbsp&nbsp&nbsp&nbspIndica</option>
+            <% end %>
+            
             <option value="Sativa">&nbsp&nbsp&nbsp&nbspSativa</option>
             <option value="Hybrid">&nbsp&nbsp&nbsp&nbspHybrid</option>
             <option value="Hybrid-Indica">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspHybrid-Indica</option>
