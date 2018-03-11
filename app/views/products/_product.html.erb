@@ -79,9 +79,6 @@
                         <% end %>
                         
                     </div>
-                    <div class="mobile-product-description">
-                        <%= product.description.truncate(175) if product.description %>
-                    </div>
                     <div class="product-info">
                         <p style="max-height: 53px; overflow: hidden;">Produced By:
                             <% product.vendors.each_with_index do |vendor, index| %>
