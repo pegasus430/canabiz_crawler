@@ -77,7 +77,8 @@ Rails.application.routes.draw do
   end
   get 'states-admin', to: 'states#admin'
   post 'states/:id/refine_products' => 'states#refine_products', as: 'refine_state_products'
-  
+
+
   #ARTICLES
   resources :articles do
     collection {post :import}
@@ -130,7 +131,7 @@ Rails.application.routes.draw do
   post 'hashtags/search' => 'hashtags#search', as: 'search_hashtags'
   get 'hashtag-admin', to: 'hashtags#admin'  
   
-   #FROM HERE DOWN IS EVERYTHING RELATED TO THE ADDITION OF PRODUCTS
+  #FROM HERE DOWN IS EVERYTHING RELATED TO THE ADDITION OF PRODUCTS
   
   #PRODUCTS
   resources :products do
