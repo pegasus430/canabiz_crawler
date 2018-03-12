@@ -200,24 +200,13 @@ class ArticlesController < ApplicationController
                                 order("RANDOM()").limit(3).where.not(id: @article.id)
         
         #SAME SOURCE ARTICLES
-        @same_source_articles = Article.where(source_id: @article.source).
+        @same_source_articles = Article.where(source_id: @article.source).order("created_at DESC").
+                                    limit(3).where.not(id: @article.id).
                                     includes(:source, :states ,:categories)
-                                    
-        if Rails.env.production? 
-           @same_source_articles = @same_source_articles.where("created_at >= ?", 1.month.ago.utc) 
-        end
-        
-        @same_source_articles = @same_source_articles.order("RANDOM()").
-                                    limit(3).where.not(id: @article.id)
         
         #add view to article for sorting
         @article.increment(:num_views, by = 1)
         @article.save
-        
-        #add userView record
-        # if current_user
-        #     #the table isn't created yet
-        # end
     end
     
     
