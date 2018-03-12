@@ -192,12 +192,8 @@ class ArticlesController < ApplicationController
             @related_articles = Article.all
         end
         
-        if Rails.env.production?
-            # @related_articles = @related_articles.where("created_at >= ?", 1.month.ago.utc)
-        end
-        
         @related_articles = @related_articles.active_source.includes(:source, :states, :categories).
-                                order("RANDOM()").limit(3).where.not(id: @article.id)
+                                order("created_at DESC").limit(3).where.not(id: @article.id)
         
         #SAME SOURCE ARTICLES
         @same_source_articles = Article.where(source_id: @article.source).order("created_at DESC").
