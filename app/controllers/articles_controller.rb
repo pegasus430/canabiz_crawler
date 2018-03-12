@@ -207,6 +207,11 @@ class ArticlesController < ApplicationController
         #add view to article for sorting
         @article.increment(:num_views, by = 1)
         @article.save
+        
+        #add userView record
+        # if current_user
+        #     #the table isn't created yet
+        # end
     end
     
     
