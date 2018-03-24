@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     def home
         
         #test scraper
-        #DispLeafly.perform_later('WA', 'A-B')
+        #NewsFourTwentyTimes.perform_later()
         
         #dont display nav search
         @nav_search = false

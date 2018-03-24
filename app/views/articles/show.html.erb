@@ -31,9 +31,9 @@
 </script>
 
 <style>
-    .zm-post-thumb img {height: 160px;}
+    .same-source img {height: 160px;}
     @media screen and (max-width: 767px) {
-        .zm-post-thumb img {height: auto;}
+        .same-source img {height: auto;}
     }
 </style>
 <!-- Start page content -->
@@ -159,7 +159,7 @@
                                         <% @same_source_articles.each do |article| %>
                                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                                                 <article class="zm-post-lay-a2">
-                                                    <div class="zm-post-thumb">
+                                                    <div class="zm-post-thumb same-source">
                                                         <a href="<%= article_path(article) %>">
                                                 	        <img src="<%=article.image%>" onerror="this.src='<%= asset_path 'substitutes/news-substitute.jpg' %>'" alt="">
                                                         </a>
