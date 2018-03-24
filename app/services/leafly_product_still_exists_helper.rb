@@ -18,7 +18,7 @@ class LeaflyProductStillExistsHelper
 
 		#query the dispensarysources from this source and this state that have a dispensary lookup
 		@dispensary_sources = DispensarySource.where(state_id: @state.id).where(source_id: @source.id).
-								includes(:products => :vendors, :dispensary_source_products)
+								includes(:products, :dispensary_source_products)
 
 
 		#query all products to see if products exist that aren't in the specified dispensary
