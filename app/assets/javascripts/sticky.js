@@ -22,7 +22,6 @@ $(window).scroll(function() {
             var distance = (elementOffset - scrollTop);
             heightToAppear = distance;
         }
-        console.log(heightToAppear);
 
         if ((dispensaryPage.length && heightToAppear <= 0) || 
             ($(window).scrollTop() > (header.height() - heightToAppear))) {
