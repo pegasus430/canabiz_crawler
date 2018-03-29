@@ -16,7 +16,8 @@ gem 'friendly_id', '~> 5.0.0' #use the titles as the urls
 gem 'skylight', '~> 1.5', '>= 1.5.1' #app monitoring
 gem 'sprockets-rails', :require => 'sprockets/railtie' #trying to minify css and js
 gem 'canonical-rails', '~> 0.2.1' #automatically add canonical meta tag to each page
-gem 'owlcarousel-rails', '~> 1.1', '>= 1.1.3.3' #for trending article carousel
+#gem 'owlcarousel-rails', '~> 1.1', '>= 1.1.3.3' #for trending article carousel
+gem 'owlcarousel-rails', github: 'acrogenesis/owlcarousel-rails', branch: 'master'
 gem 'left_join', '~> 0.2.1' #do left_join queries
 gem 'hairtrigger', '~> 0.2.20' #allow for trigger use
 

@@ -149,6 +149,44 @@
         <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=58c8388905e7400012bc6df2&product=inline-share-buttons"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         
+        <!--owl carousel-->
+        <% if current_page?(root_path) %>
+            <script>
+                $(".owl-carousel").owlCarousel({
+                    items: 2,
+                    nav: true,
+                    center: true,
+                    loop: true,
+                    dots: false,
+                    mouseDrag: true,
+                    stagePadding: 50,
+                    responsiveClass:true,
+                    responsive:{
+                        0:{
+                            items:1,
+                            stagePadding: 0,
+                        },
+                        480:{
+                            items:1,
+                            stagePadding: 0,
+                        },
+                        768:{
+                            items:2,
+                        },
+                        1024:{
+                            items:2,
+                        },
+                        1380:{
+                            items:3,
+                        },
+                        1580:{
+                            items:4,
+                        }
+                    }
+                });
+            </script>
+        <% end %>
+        
         <style>
             #modal_content {
                 background-image: url(<%= asset_path('header_footer/mean-bar-logo.png') %>)
