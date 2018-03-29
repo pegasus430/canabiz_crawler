@@ -30,10 +30,15 @@ class PagesController < ApplicationController
         #PRODUCTS
         if @site_visitor_state != nil && @site_visitor_state.product_state
             
-            @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").
+            
+            if Rails.env.production? 
+                @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").
                                     includes(:vendors, :category, :average_prices).
                                     order("RANDOM()").limit(10)
-            
+            else
+                @top_products = Product.featured.includes(:vendors, :category, :average_prices).
+                                    order("RANDOM()").limit(10)
+            end
             #not showing distance anymore
             #includes(:dispensary_sources, :vendors, :category, :average_prices, :dispensary_sources => :dispensary).
             #                            where(:dispensary_sources => {state_id: @site_visitor_state.id})

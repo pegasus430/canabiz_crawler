@@ -13,7 +13,7 @@
     <div class="zm-post-dis f-right">
         <div class="zm-post-header">
             
-            <div class="zm-category">
+            <div class="zm-category ipad-remove">
                 
                 <!--dont show category if has subcategory-->
                 <% if product.category.present? && !product.sub_category.present? %>
@@ -49,8 +49,41 @@
             <h2 class="zm-post-title"><a href="<%= product_path(product) %>">
                 <%= product.name.titlecase if product.name %></a>
             </h2>
+            
+            <div class="zm-category ipad-show">
+                
+                <!--dont show category if has subcategory-->
+                <% if product.category.present? && !product.sub_category.present? %>
+                    <a class="bg-cat-3 cat-btn" href="<%=products_path(product.category.name)%>"><%= product.category.name %></a>
+                <% end %>
+                
+                <!--sub category-->
+                <% if product.sub_category.present? %>
+                
+                    <!--#see if it has is_dom-->
+                    <% if product.is_dom.present? %>
+                        
+                        <% if product.is_dom == 'Indica' %>
+                        
+                            <a class="bg-cat-3 cat-btn" 
+                                href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
+                        
+                        <% else %>
+                        
+                            <a class="bg-cat-3 cat-btn" 
+                                href="<%=products_path('Hybrid-Sativa')%>">Hybrid-Sativa</a>
+                        
+                        <% end %>
+                        
+                    <% else %>
+                        <a class="bg-cat-3 cat-btn" 
+                            href="<%=products_path(product.sub_category)%>"><%= product.sub_category %></a>   
+                    <% end %>
+                    
+                <% end %>
+            </div>
 
-            <div class="product-info">
+            <div class="product-info ipad-remove">
                 <p class ="produced-info" style="max-height: 36px; overflow: hidden;">Produced By:
                     <% product.vendors.each_with_index do |vendor, index| %>
                         <% if index + 1 == product.vendors.size %>
@@ -61,7 +94,7 @@
                     <% end %>
                 </p>
             </div>
-            <div class="product-info">
+            <div class="product-info ipad-remove">
                 <p>Average Prices:
                     <% product.average_prices.each_with_index do |average_price, index| %>
                         <% if index + 1 == product.average_prices.size %>
