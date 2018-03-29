@@ -20,7 +20,7 @@
 //= require_tree .
 //= require owl.carousel
 
-$(".owl-carousel").owlCarousel();
+// $(".owl-carousel").owlCarousel();
 
 // change homepage sorting method
 function changeHomeSort(stringValue) {
