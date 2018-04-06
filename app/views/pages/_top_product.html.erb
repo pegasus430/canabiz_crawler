@@ -3,11 +3,11 @@
     <div class="zm-post-thumb f-left">
         <!--product image --> 
         <a href="<%= product_path(product) %>">
-            <% if Rails.env.production? && product.image != nil %>
-                <%= image_tag(product.image_url(:product_show))%>
-            <% else %>
-                <%= image_tag("home_top_product.jpg") %>
-            <% end %>
+            <% if Rails.env.production? && product.image_url != nil %>
+                    <img src="<%= product.image_url(:product_show)%>" onerror="this.src='<%= asset_path 'substitutes/product-substitute.png' %>'" alt="<%=product.name%>">
+                <% else %>
+                    <%= image_tag('substitutes/product-substitute.png') %>
+                <% end %>
         </a>
     </div>
     <div class="zm-post-dis f-right">
