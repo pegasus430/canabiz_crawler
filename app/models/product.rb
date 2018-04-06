@@ -33,12 +33,12 @@ class Product < ActiveRecord::Base
             
             #change to update record if id matches
             product_hash = row.to_hash
-            product = self.where(id: product_hash["id"])
+            product = self.where(name: product_hash["name"])
             
             if product.present? 
                 product.first.update_attributes(product_hash)
             else
-                Product.create! product_hash
+                #Product.create! product_hash
             end
         end
     end    
