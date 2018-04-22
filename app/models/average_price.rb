@@ -36,74 +36,71 @@ class AveragePrice < ActiveRecord::Base
             "Bulk" => 1,
             "2 Grams" => 2, 
             "Eighth" => 3,
-            # "4 Grams" 
-            "Quarter Ounce" => 4,
-            "Half Ounce" => 5, 
-            "Ounce" => 6
+            "4 Grams" => 4,
+            "Quarter Ounce" => 5,
+            "Half Ounce" => 6, 
+            "Ounce" => 7,
+            
+            "10mg" => 0,
+            "20mg" => 1,
+            "30mg" => 2,
+            "32mg" => 3,
+            "50mg" => 4,
+            "75mg" => 5,
+            "80mg" => 6, 
+            "85mg" => 7,
+            "90mg" => 8,
+            "100mg" => 9,
+            "125mg" => 10,
+            "130mg" => 10,
+            "0.25g" => 11,
+            "300mg" => 12,
+            ".38g" => 13,
+            "400mg" => 14,
+            "500mg" => 14,
+            ".7g" => 15,
+            "750mg" => 16,
+            ".75g" => 17,
+            ".8g" => 18,
+            "1000mg" => 19,
+            "1050mg" => 20,
+            "1.5g" => 21,
+            "1.8g" => 22,
+            "2.5g" => 23,
+            "1oz, 100mg" => 24,
+            "2oz" => 25,
+            
+            "10mg CBD, 10mg THC" => 0,
+            "20mg CBD ,20mg THC" => 1,
+            "40mg CBD, 100mg THC" => 2,
+            "50mg CBD" => 3,
+            "50mg CBD, 50mg THC" => 4,
+            "90mg CBD, 90mg THC" => 5,
+            "100 mg CBD, 2mg THC" => 6,
+            "100mg CBD, 2mg THC" => 7,
+            "100mg CBD, 20mg THC" => 8,
+            "100mg CBD, 100mg THC" => 9,
+            "100mg total; 60mg THC, 20mg CBD" => 10,
+            "120mg CBD, 24mg THC" => 11,
+            "146mg CBD, 4mg THC" => 12,
+            "150mg CBD, 10mg THC" => 13,
+            "175mg CBD" => 14,
+            "182mg CBD, 18mg THC" => 15,
+            "210mg CBD" => 16,
+            "250mg CBD, 50mg THC" => 17,
+            "50mg THC" => 18,
+            "50mg THC, 50mg CBD" => 19,
+            "74.3mg THC, 1oz" => 20,
+            "100mg THC, 33mg CBD" => 21,
+            "100mg THC; 100mg CBD" => 22,
+            "300mg THC, 300mg CBD" => 23,
+            "100mg total; 60mg THC, 20mg CBD" => 24,
+            
+            "2 pack, 0.75g each" => 0,
+            "10 Pack, 165mg CBD, 35mg THC" => 1,
+            "15 pack, 75mg THC, 45mg CBD" => 2,
+            "5ml, 75mg" => 3
         }
-            
-            # "10mg"
-            # "10mg CBD, 10mg THC"
-            # "20mg"
-            # "20mg CBD ,20mg THC"
-            # "30mg"
-            # "32mg"
-            # "40mg CBD, 100mg TH"
-            # "50mg"
-            # "50mg THC"
-            # "50mg CBD"
-            # "50mg CBD, 50mg THC"
-            # "74.3mg THC, 1oz"
-            # "75mg"
-            # "80mg" => 0, 
-            # "85mg"
-            # "90mg" => 1,
-            # "90mg CBD, 90mg THC"
-            # "100mg" => 2,
-            # "100 mg CBD, 2mg THC"
-            # "100mg CBD, 2mg THC"
-            # "100mg CBD, 20mg THC"
-            # "100mg CBD, 100mg THC"
-            # "100mg total; 60mg THC, 20mg CBD"
-            # "120mg CBD, 24mg THC"
-            # "130mg"
-            # "146mg CBD, 4mg THC"
-            # "175mg CBD"
-            # "182mg CBD, 18mg THC"
-            # "210mg CBD"
-            # "250mg CBD, 50mg THC"
-            # "300mg"
-            # "100mg THC, 33mg CBD"
-            # "100mg THC; 100mg CBD"
-            # "300mg THC, 300mg CBD"
-            # "100mg total; 60mg THC, 20mg CBD"
-            # "0.25g"
-            # ".38g" => 1,
-            # "500mg"
-            # ".7g" => 1,
-            # "750mg"
-            # ".75g"
-            # ".8g"
-            # "1000mg"
-            # "1050mg" 
-            # "1.5g"
-            # "1.8g" => 2,
-            # "2.5g"
-            # "1oz, 100mg"
-            # "2oz"
-            # "2 pack, 0.75g each"
-            # "10 Pack, 165mg CBD, 35mg THC"
-            # "15 pack, 75mg THC, 45mg CBD"
-            
-            # "135mg CBD, 9mg THC"
-            
-            # "150mg CBD, 10mg THC"
-            # "10mg CBD, 10mg THC"
-            # "50mg THC, 50mg CBD"
-            # "100mg CBD, 100mg THC"
-            # "5ml, 75mg"
-            # "400mg"
-            # "125mg"
     
         if self.average_price_unit.present? && displays.has_key?(self.average_price_unit)
            self.display_order = displays[self.average_price_unit]
