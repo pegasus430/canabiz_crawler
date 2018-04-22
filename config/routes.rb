@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  #active admin
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  
+  
   #SIDEKIQ Routes
   require 'sidekiq/web'
   require 'sidekiq/cron/web'

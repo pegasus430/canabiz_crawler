@@ -34,10 +34,11 @@ def get_city_limits(text):
     return letters[0], letters[1]
 
 def get_dispensary_filter(arr):
-    if arr and len(arr) > 1:
+    if arr and len(arr) >= 1:
         last_arg = arr[len(arr) - 1]
         if '=' in last_arg:
             l,r = get_city_limits(last_arg)
             state_names = arr[:len(arr) - 1]
             return DispensaryFilter(state_names, l, r)
-    return DispensaryFilter(arr)
+        return DispensaryFilter(arr)
+    return DispensaryFilter([])

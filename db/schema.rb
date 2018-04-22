@@ -11,7 +11,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306175519) do
+ActiveRecord::Schema.define(version: 20180421030920) do
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string   "namespace"
+    t.text     "body"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+
+  create_table "active_admin_managed_resources", force: :cascade do |t|
+    t.string "class_name", null: false
+    t.string "action",     null: false
+    t.string "name"
+  end
+
+  add_index "active_admin_managed_resources", ["class_name", "action", "name"], name: "active_admin_managed_resources_index", unique: true
+
+  create_table "active_admin_permissions", force: :cascade do |t|
+    t.integer "managed_resource_id",                       null: false
+    t.integer "role",                limit: 1, default: 0, null: false
+    t.integer "state",               limit: 1, default: 0, null: false
+  end
+
+  add_index "active_admin_permissions", ["managed_resource_id", "role"], name: "active_admin_permissions_index", unique: true
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string   "email",                            default: "", null: false
+    t.string   "encrypted_password",               default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                    default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.integer  "role",                   limit: 1, default: 0,  null: false
+  end
+
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
   create_table "article_categories", force: :cascade do |t|
     t.integer  "article_id"
@@ -85,6 +135,7 @@ ActiveRecord::Schema.define(version: 20180306175519) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "admin_user_id"
   end
 
   add_index "dispensaries", ["slug"], name: "index_dispensaries_on_slug", unique: true
@@ -157,6 +208,7 @@ ActiveRecord::Schema.define(version: 20180306175519) do
     t.string   "zip_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "admin_user_id"
   end
 
   add_index "dispensary_sources", ["slug"], name: "index_dispensary_sources_on_slug", unique: true

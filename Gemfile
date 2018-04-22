@@ -21,6 +21,14 @@ gem 'owlcarousel-rails', github: 'acrogenesis/owlcarousel-rails', branch: 'maste
 gem 'left_join', '~> 0.2.1' #do left_join queries
 gem 'hairtrigger', '~> 0.2.20' #allow for trigger use
 
+
+#ACTIVE ADMIN
+gem 'devise'
+gem 'cancancan'
+gem 'activeadmin'
+gem 'active_admin_role'
+gem 'active_skin'
+
 #BACKGROUND JOBS
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'sidekiq', '~> 4.2', '>= 4.2.10' #background jobs - switching from sucker punch

@@ -4,9 +4,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   #set lists before all actions
-  before_action :populate_lists
+  before_action :populate_lists, :skip_for_admin?
   
   helper_method :current_user, :logged_in?
+  
+  def skip_for_admin?
+    current_admin_user.blank?
+  end
   
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -58,6 +62,14 @@ class ApplicationController < ActionController::Base
   
   def populate_lists
     require 'will_paginate/array'
+    # redis
+    # redis.write(:news_categories, @news_categories)
+    # unless @news_categories = redis.read(:news_categories)
+    #   @news_categories = Category.news.active.order("name ASC")
+    #   redis.write(:news_categories, @news_categories)
+    # end
+    
+    # @news_categories = redis.read(:news_categories) || Category.news.active.order("name ASC")
     @news_categories = Category.news.active.order("name ASC")
     @product_categories = Category.products.active.order("name ASC")
     @states = State.all.order("name ASC")
@@ -65,7 +77,7 @@ class ApplicationController < ActionController::Base
     @sources = Source.where(:active => true).order("name ASC")
     @az_values = ['#', 'A','B','C','D','E','F','G','H','I','J','K','L','M',
                         'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-    expires_in 10.days, :public => true
+    # expires_in 10.days, :public => true
   end
   
   #redirect to homepage on error

@@ -8,40 +8,7 @@ BEGIN;
 -- Dumped by pg_dump version 10.3 (Ubuntu 10.3-1.pgdg14.04+1)
 
 
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
 
-
---
--- Name: article_categories; Type: TABLE; Schema: public; Owner: qlenhiyjycexiu
---
-
-
-
-
-
---
--- Name: article_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: qlenhiyjycexiu
---
-
-
---
--- Name: article_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: qlenhiyjycexiu
---
-
-
-
---
--- Name: article_states; Type: TABLE; Schema: public; Owner: qlenhiyjycexiu
---
-
-
-
-
---
--- Name: vendors_id_seq; Type: SEQUENCE; Schema: public; Owner: qlenhiyjycexiu
---
 
 
 

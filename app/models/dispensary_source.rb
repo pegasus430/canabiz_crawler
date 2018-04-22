@@ -11,6 +11,10 @@ class DispensarySource < ActiveRecord::Base
     
     #validates_uniqueness_of :product_id, :scope => :dispensary_id #no duplicate products per dispensary
     
+    #scope
+    scope :self, -> { where("source.name = 'Self'") }
+    
+    
     #geocode location
     geocoded_by :location
     after_validation :geocode
@@ -40,4 +44,16 @@ class DispensarySource < ActiveRecord::Base
     def delete_relations
        self.dispensary_source_products.destroy_all
     end
+    
+    #set location if needed
+    before_save :set_location
+    def set_location
+        if self.state.present?
+            self.location = self.street + ', ' + self.city + ', ' + 
+							self.state.name + ' ' + self.zip_code
+        else
+            self.location = self.street + ', ' + self.city + ' ' + self.zip_code
+        end
+    end
+    
 end

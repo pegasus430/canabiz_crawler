@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     def home
         
         #test scraper
-        #NewsFourTwentyTimes.perform_later()
+        ProductHeadset.perform_later()
         
         #dont display nav search
         @nav_search = false

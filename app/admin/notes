@@ -1,0 +1,7 @@
+import csv:
+	https://activeadmin.info/8-custom-actions.html#collection-actions
+	https://stackoverflow.com/questions/7754896/import-csv-data-in-a-rails-app-with-activeadmin
+	
+	
+Read Only:
+	https://stackoverflow.com/questions/12703987/how-to-display-only-the-value-in-edit-page-in-active-admin

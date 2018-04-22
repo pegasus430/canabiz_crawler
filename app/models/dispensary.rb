@@ -2,6 +2,9 @@ class Dispensary < ActiveRecord::Base
 
     #has_many :dispensary_photos --> not using right now
     
+    #scope for admin panel
+    scope :has_admin, -> { where.not(admin_user_id: nil) }
+    
     belongs_to :state
     validates :name, presence: true, length: {minimum: 1, maximum: 300}
     
