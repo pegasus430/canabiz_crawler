@@ -7,10 +7,10 @@ class ProductHeadset < ActiveJob::Base
     def perform(state_name)
         logger.info "Headset background job is running"
         @state_name = state_name
-        @state_record = State.where(name: @state_name).first
-        @categories = Category.products.active
-        @products = Product.where(state_id: @state_record.id)
-        @vendors = Vendor.where(state_id: @state_record.id)
+        #@state_record = State.where(name: @state_name).first
+        #@categories = Category.products.active
+        #@products = Product.where(state_id: @state_record.id)
+        #@vendors = Vendor.where(state_id: @state_record.id)
         scrapeHeadset()
     end    
     
@@ -28,7 +28,8 @@ class ProductHeadset < ActiveJob::Base
 			logger.info contents
 
 			if @contents[@state_name] != nil
-				parseProducts(contents[@state_name])
+				logger.info "HEADSET DID RETURN PRODUCTS"
+				#parseProducts(contents[@state_name])
 			else
 				logger.info "HEADSET DID NOT RETURN ANY PRODUCTS"
 			end

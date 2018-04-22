@@ -2,7 +2,7 @@ import requests
 
 class HttpClient(object):
     def get(self, url, **kwargs):
-        response = requests.get(url, kwargs)
+        response = requests.get(url, **kwargs)
 
         return self._response(response)
 
@@ -14,7 +14,6 @@ class HttpClient(object):
     def _response(self, r):
         if r.status_code == 200:
             return HttpClientResponse(True, r.content)
-        print r.content
         return HttpClientResponse()
 
 
