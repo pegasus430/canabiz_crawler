@@ -21,6 +21,22 @@ ActiveAdmin.register Product do
 
 	index do
 		column :name
+		column :alternate_names
+		column "Description" do |product|
+          truncate(product.description, omision: "...", length: 50)
+        end
+		column "Image" do |product|
+			if product.image.present?
+				image_tag product.image_url, class: 'admin_image_size'
+			end
+		end
+		column :featured_product
+		column "Category" do |product|
+			if product.category.present?
+				link_to product.category.name, admin_category_path(product.category)
+			end
+		end
+		column :sub_category
 		column :updated_at
 		actions
 	end

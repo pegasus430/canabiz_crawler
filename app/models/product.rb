@@ -5,6 +5,7 @@ class Product < ActiveRecord::Base
     
     #lookups
     belongs_to :category
+    belongs_to :state
     
     has_many :vendor_products, -> { order(:units_sold => :desc) }
     has_many :vendors, through: :vendor_products
@@ -62,5 +63,19 @@ class Product < ActiveRecord::Base
        self.dispensary_source_products.destroy_all
        self.average_prices.destroy_all
     end
+    
+    #----------ECOMMERCE STUFF-----------
+    before_destroy :ensure_not_product_item
+	has_many :product_items
+	
+	#method to prevent destroy product if it is in a cart
+	def ensure_not_product_item
+		if product_items.empty?
+			return true
+		else
+			errors.add(:base, 'This item is in a shopping cart')
+			return false
+		end
+	end
     
 end

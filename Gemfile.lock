@@ -76,6 +76,8 @@ GEM
       sass (>= 3.3.4)
     bootstrap-will_paginate (0.0.10)
       will_paginate
+    braintree (2.88.0)
+      builder (>= 2.0.0)
     buftok (0.2.0)
     builder (3.2.3)
     byebug (9.0.6)
@@ -109,6 +111,14 @@ GEM
       pipe-run (>= 0.2.1)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
+    countries (2.1.4)
+      i18n_data (~> 0.8.0)
+      money (~> 6.9)
+      sixarm_ruby_unaccent (~> 1.1)
+      unicode_utils (~> 1.4)
+    country_select (3.1.1)
+      countries (~> 2.0)
+      sort_alphabetical (~> 1.0)
     crass (1.0.3)
     css_parser (1.4.10)
       addressable
@@ -310,6 +320,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
+    i18n_data (0.8.0)
     image_optimizer (1.7.0)
     inflecto (0.0.2)
     inherited_resources (1.8.0)
@@ -359,6 +370,8 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    money (6.11.0)
+      i18n (>= 0.6.4, < 1.1)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -483,10 +496,13 @@ GEM
       rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
+    sixarm_ruby_unaccent (1.2.0)
     skylight (1.5.1)
       activesupport (>= 3.0.0)
     social-share-button (0.9.0)
       coffee-rails
+    sort_alphabetical (1.1.0)
+      unicode_utils (>= 1.2.2)
     spring (2.0.1)
       activesupport (>= 4.2)
     sprockets (3.7.1)
@@ -502,6 +518,8 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.6)
+    toastr-rails (1.0.3)
+      railties (>= 3.1.0)
     trollop (2.1.2)
     truncate_html (0.9.3)
     twitter (6.1.0)
@@ -521,6 +539,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
+    unicode_utils (1.4.0)
     unix-whereis (0.1.1)
       command-builder (>= 0.2.0)
       hash-utils (>= 0.18.0)
@@ -546,6 +565,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.3.6)
   bootstrap-will_paginate (= 0.0.10)
+  braintree
   byebug
   cancancan
   canonical-rails (~> 0.2.1)
@@ -553,6 +573,7 @@ DEPENDENCIES
   carrierwave (~> 0.11.2)
   carrierwave-imageoptimizer (~> 1.4)
   coffee-rails (~> 4.1.0)
+  country_select
   devise
   figaro (~> 1.1, >= 1.1.1)
   fog (~> 1.38)
@@ -593,6 +614,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3
   sucker_punch (~> 2.0)
+  toastr-rails
   truncate_html (~> 0.9.3)
   twitter
   uglifier (>= 1.3.0)

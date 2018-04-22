@@ -9,6 +9,7 @@ class State < ActiveRecord::Base
     
     has_many :dispensaries
     has_many :vendors
+    has_many :products
     
     #validations
     validates :name, presence: true, length: {minimum: 1, maximum: 50}
