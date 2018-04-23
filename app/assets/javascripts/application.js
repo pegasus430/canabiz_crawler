@@ -17,6 +17,7 @@
 //= require jquery.infinitescroll
 //= require social-share-button
 //= require gmaps/google
+//= require toastr
 //= require_tree .
 //= require owl.carousel
 

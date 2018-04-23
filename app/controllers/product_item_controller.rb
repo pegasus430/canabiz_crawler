@@ -12,13 +12,21 @@ class ProductItemsController < ApplicationController
 		
 		logger.info 'product id: ' + params[:product_id]
 		product = Product.find(params[:product_id])
-		
-		
 		logger.info 'HERE IS THE PRODUCT' 
-		logger.info product.title
+		logger.info product.name
+		
+		logger.info 'dispensary id: ' + params[:dispensary_id]
+		dispensary = Disensary.find(params[:dispensary_id])
+		logger.info 'HERE IS THE DISPENSARY' 
+		logger.info dispensary.name
+		
+		logger.info 'dsp_price id: ' + params[:dsp_price_id]
+		dsp_price = DspPrice.find(params[:dsp_price_id])
+		logger.info 'HERE IS THE dsp_price' 
+		logger.info dsp_price.price
 		
 		
-		@product_item = @cart.add_product(product.id)
+		@product_item = @cart.add_product(product.id, dispensary.id, dsp_price.id)
 		if @product_item.save
 		  redirect_to root_path, notice: 'Product added to Cart'
 		else

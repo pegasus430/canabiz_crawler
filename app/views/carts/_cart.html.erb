@@ -1,0 +1,8 @@
+<% @cart.product_items.each do |item| %>
+  <ul>
+	  <li>
+	    <%= item.quantity %>&times;<%= item.product.title %>
+	    <%= number_to_currency item.total_price %>
+	  </li>
+  </ul>
+<% end %>

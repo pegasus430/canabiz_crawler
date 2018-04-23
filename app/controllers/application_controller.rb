@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
   #set lists before all actions
   before_action :populate_lists, :skip_for_admin?
   
+  #set shopping cart before all?
+  #ecommerce
+  include CurrentCart
+  before_action :set_cart
+  
   helper_method :current_user, :logged_in?
   
   def skip_for_admin?

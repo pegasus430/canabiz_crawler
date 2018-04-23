@@ -9,4 +9,8 @@ class ProductItem < ActiveRecord::Base
   belongs_to :dispensary
   belongs_to :dsp_price
   belongs_to :cart
+  
+  def total_price
+    product.price * quantity
+	end
 end

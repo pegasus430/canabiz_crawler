@@ -1,1 +1,7 @@
-here is the shopping cart
+<h2>Shopping Cart Details</h2>
+<br>
+<%= render 'carts/cart' %> 
+<br>
+<h5>Total: <%= number_to_currency @cart.total_price %> </h5>
+
+<%= link_to 'Empty Your Cart', @cart, method: :destroy, data: {confirm: 'You sure?'} %>
