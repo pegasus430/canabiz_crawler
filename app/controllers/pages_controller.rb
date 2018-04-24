@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     def home
         
         #test scraper
-        ProductHeadset.perform_later("washington")
+        #ProductHeadset.perform_later("washington")
         
         #dont display nav search
         @nav_search = false
@@ -29,7 +29,6 @@ class PagesController < ApplicationController
 
         #PRODUCTS
         if @site_visitor_state != nil && @site_visitor_state.product_state
-            
             
             if Rails.env.production? 
                 @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").

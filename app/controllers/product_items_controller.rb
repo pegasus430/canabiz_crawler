@@ -16,7 +16,7 @@ class ProductItemsController < ApplicationController
 		logger.info product.name
 		
 		logger.info 'dispensary id: ' + params[:dispensary_id]
-		dispensary = Disensary.find(params[:dispensary_id])
+		dispensary = Dispensary.find(params[:dispensary_id])
 		logger.info 'HERE IS THE DISPENSARY' 
 		logger.info dispensary.name
 		

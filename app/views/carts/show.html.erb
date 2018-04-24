@@ -1,7 +1,23 @@
-<h2>Shopping Cart Details</h2>
-<br>
-<%= render 'carts/cart' %> 
-<br>
-<h5>Total: <%= number_to_currency @cart.total_price %> </h5>
-
-<%= link_to 'Empty Your Cart', @cart, method: :destroy, data: {confirm: 'You sure?'} %>
+<!-- Start page content -->
+<section id="page-content" class="page-wrapper">
+    <!-- Start contact message area -->
+    <div class="zm-section bg-white pt-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="section-title-2 mb-40  text-center">
+                        <h3 class="inline-block uppercase">Shopping Cart</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="message-box">
+                <%= render 'carts/cart' %>
+                <p class="form-messege"></p>
+                <h5>Total: <%= number_to_currency @cart.total_price %> </h5>
+                <%= link_to 'Empty Your Cart', @cart, method: :destroy, data: {confirm: 'You sure?'} %>
+            </div>
+        </div>
+    </div>
+    <!-- End contact message area -->
+</section>
+<!-- End page content -->

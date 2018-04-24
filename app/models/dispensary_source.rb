@@ -46,14 +46,14 @@ class DispensarySource < ActiveRecord::Base
     end
     
     #set location if needed
-    before_save :set_location
-    def set_location
-        if self.state.present?
-            self.location = self.street + ', ' + self.city + ', ' + 
-							self.state.name + ' ' + self.zip_code
-        else
-            self.location = self.street + ', ' + self.city + ' ' + self.zip_code
-        end
-    end
+    #before_save :set_location
+    # def set_location
+    #     if self.state.present?
+    #         self.location = self.street + ', ' + self.city + ', ' + 
+				# 			self.state.name + ' ' + self.zip_code
+    #     else
+    #         self.location = self.street + ', ' + self.city + ' ' + self.zip_code
+    #     end
+    # end
     
 end

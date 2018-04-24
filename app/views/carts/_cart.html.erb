@@ -1,7 +1,7 @@
 <% @cart.product_items.each do |item| %>
   <ul>
 	  <li>
-	    <%= item.quantity %>&times;<%= item.product.title %>
+	    <%= item.quantity %> <%=item.dsp_price.unit%> of <%= item.product.name %> from <%=item.dispensary.name %>
 	    <%= number_to_currency item.total_price %>
 	  </li>
   </ul>

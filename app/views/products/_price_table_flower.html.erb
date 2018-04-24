@@ -1,15 +1,3 @@
-<style>
-    /*.state-name-row {*/
-    /*    background-color: #eceeef;*/
-    /*}*/
-    /*.dispensary-td, .state-name-row td {*/
-    /*    text-align: left;*/
-    /*}*/
-    /*table td {*/
-    /*    text-align: center;*/
-    /*}*/
-</style>
-
 <div class="col-md-12 mt-20">
     <div class="title">Pricing</div>
     <!-- table -->
@@ -42,9 +30,18 @@
                     
                     <% dispensaries.each do |dispensary_key| %>
                         <tr>
+                            <!--(product_id: product.id)-->
                             <td class="dispensary-td"><%=link_to dispensary_key.name, dispensary_path(dispensary_key.dispensary)%></td>
                             
                             <% value = @dispensary_to_product[dispensary_key.id] %>
+                            
+                            <td>
+                                <%= button_to product_items_path(product_id: @product.id, 
+                                        dispensary_id: dispensary_key.dispensary_id, dsp_price_id: value.dsp_prices.first.id), class: 'btn btn-default' do %>
+								    <i class="fa fa-shopping-cart"></i> Add to cart
+							    <% end %>
+							</td>
+                            
                             
                             <% 
                                 i = 0

@@ -9,7 +9,7 @@ ActiveAdmin.register Dispensary do
     end
     
     #save queries
-	includes :admin_user, :state
+	includes :state
 
     index do
         column :name

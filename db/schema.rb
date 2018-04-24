@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180422193125) do
+ActiveRecord::Schema.define(version: 20180424002759) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -234,8 +234,9 @@ ActiveRecord::Schema.define(version: 20180422193125) do
     t.integer  "dispensary_id"
     t.integer  "dsp_price_id"
     t.integer  "cart_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "quantity",      default: 1
   end
 
   add_index "product_items", ["cart_id"], name: "index_product_items_on_cart_id"
