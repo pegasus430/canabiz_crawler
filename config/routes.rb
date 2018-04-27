@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   #ecommerce
   resources :carts
   resources :product_items
+  resources :orders
   
   #SIDEKIQ Routes
   require 'sidekiq/web'

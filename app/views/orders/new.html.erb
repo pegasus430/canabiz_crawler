@@ -1,0 +1,23 @@
+<header class="secondary">
+	<div class="container align-vertical hero">
+		<div class="row">
+			<div class="col-md-5 text-left">
+				<h1>Your Order</h1>
+			</div>
+		</div><!--end of row-->
+	</div><!--end of container-->
+</header>
+
+<br>
+
+<%= render 'form' %>
+
+<br>
+
+<!-- Script for Braintree -->
+
+<script>
+	braintree.setup('<%= @client_token %>', 'dropin', {
+	  container: 'payment-form'
+	});
+</script>

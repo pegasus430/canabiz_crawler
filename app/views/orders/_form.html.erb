@@ -1,0 +1,66 @@
+<%= form_for @order do |f| %>
+  <%= render 'shared/msg' %>
+  <div class="container">
+	  <div class="col-md-10">
+		  <h3>Please Enter Your Details</h3>
+	  </div>
+	  
+	  <div class="form-group">
+		  <div class="col-md-10">
+			  <%= f.label :name %>
+			  <%= f.text_field :name, size: 40, class: 'form-control' %>
+		  </div>
+	  </div>	  
+	  
+	  <div class="form-group">
+		  <div class="col-md-10">
+			  <%= f.label :email %>
+			  <%= f.email_field :email, size: 40, class: 'form-control' %>
+		  </div>
+	  </div>
+	  
+	  <div class="form-group">
+		  <div class="col-md-10">
+			  <%= f.label :phone %>
+			  <%= telephone_field(:order, :phone)%>
+		  </div>
+	  </div>
+	  
+	  <div class="form-group">
+		  <div class="col-md-10">
+			  <%= f.label :address %>
+			  <%= f.text_area :address, cols: 40, class: 'form-control' %>
+		  </div>
+	  </div>
+	  
+	  <div class="form-group">
+		  <div class="col-md-10">
+			  <%= f.label :city %>
+			  <%= f.text_field :city, size: 40, class: 'form-control' %>
+		  </div>
+	  </div>
+	  
+	  <div class="form-group">
+		  <div class="col-md-10">
+			  <%= f.label :state %>
+			  <%= f.text_field :state, size: 40, class: 'form-control' %>
+		  </div>
+	  </div>
+	  
+	  <div class="form-group">
+		  <div class="col-md-10">
+		  	<%= f.label :country %>
+	  		<%= f.country_select :country %>
+		  </div>
+	  </div>
+	  
+	  <div class="form-group">
+	  	  <div id="payment-form"></div>
+		  <!--<div id="dropin-container"></div> <!-- braintree -->
+		  <div class="col-md-10">
+			  <%= f.submit 'Place Order' %>
+		  </div>
+	  </div>
+	  
+  </div>
+<% end %>

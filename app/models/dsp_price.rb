@@ -78,7 +78,6 @@ class DspPrice < ActiveRecord::Base
             "100mg CBD, 2mg THC" => 7,
             "100mg CBD, 20mg THC" => 8,
             "100mg CBD, 100mg THC" => 9,
-            "100mg total; 60mg THC, 20mg CBD" => 10,
             "120mg CBD, 24mg THC" => 11,
             "146mg CBD, 4mg THC" => 12,
             "150mg CBD, 10mg THC" => 13,

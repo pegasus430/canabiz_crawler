@@ -136,7 +136,7 @@ class DispensariesController < ApplicationController
             @dispensary = Dispensary.friendly.find(params[:id])
         end
         def dispensary_params
-            params.require(:dispensary).permit(:name, :image, :location, :city, :state_id)
+            params.require(:dispensary).permit(:name, :image, :location, :city, :state_id, :has_hypur, :has_payqwick)
         end
         
         def sort_column

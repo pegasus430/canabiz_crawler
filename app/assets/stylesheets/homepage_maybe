@@ -1,24 +1,7 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require_tree .
- *= require_self
- *= require jquery-ui
- */
-
 /*! CSS Used from: Embedded */
 .theiaStickySidebar:after{content:"";display:table;clear:both;}
 /*! CSS Used from: Embedded */
-.owl-carousel{cursor:url(http://cannabiz-staging.herokuapp.com/assets/icons/cursor-fdce96fcd951dea8fbe317c07bd71cd4554d756c8a8419fd437b7ea540aec618.png), auto;}
+.owl-carousel{cursor:url(https://cannabiz-admin2-savon40.c9users.io/assets/icons/cursor-fdce96fcd951dea8fbe317c07bd71cd4554d756c8a8419fd437b7ea540aec618.png), auto;}
 /*! CSS Used from: Embedded */
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
 body{margin:0;}
@@ -370,47 +353,7 @@ button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 input{line-height:normal;}
 input[type="search"]{-webkit-appearance:textfield;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;}
 .flash-messages{text-align:center;font-size:20px;}
+.center{text-align:center;}
 .alignright{text-align:right;}
 .fullwidth{width:100%;}
 .customnavfont{font-family:'Roboto Condensed', sans-serif;font-weight:700;}
-.header-middle-area{display:none;}
-.header-top-right{line-height:50px;}
-.header-top-menu img{width:250px;height:auto;}
-.desktop-homepage,.homepage-recent-news{display:block;}
-.no-desktop-pointer{cursor:auto!important;}
-.mobile-homepage-h2,.homepage-recent-products{display:none;}
-.top-product{border:1px solid black;height:110px;overflow:hidden;}
-.top-product img{height:110px;}
-.top-product .zm-post-title{margin-top:3px;height:56px;overflow:hidden;margin-bottom:-8px;}
-.top-product .zm-category{float:right;margin-right:10px;margin-top:6px;}
-.product-info p{line-height:18px;}
-.top-product-mobile .zm-category{float:right;margin-right:10px;margin-top:6px;}
-.top-product-mobile .zm-post-title{min-height:25px;}
-.top-product-mobile .zm-post-content{min-height:65px;}
-.vendor_path{color:#2ab081!important;}
-.top-product,.top-product img{height:137px;}
-.ipad-show{display:none;}
-@media (max-width: 1200px){
-.ipad-remove{display:none;}
-.ipad-show{display:block;margin-right:0!important;margin-top:0!important;float:none!important;clear:both;}
-.zm-post-lay-a1 .zm-post-thumb img{height:auto;}
-.zm-posts .zm-post-lay-a1{max-height:none;}
-.zm-post-lay-e .zm-post-dis{width:50%;padding-left:0;}
-.zm-post-lay-e .zm-post-thumb{width:46%;}
-.top-product,.top-product img{height:auto;}
-}
-@media screen and (max-width: 991px){
-.header-middle-area{display:block;}
-.hidden-991{display:none!important;}
-.header-top-right{line-height:normal;}
-.mobile-homepage-h2{display:inline-block;}
-.desktop-homepage{display:none;}
-.no-desktop-pointer{cursor:pointer!important;}
-.trending-post-area{display:none;}
-.logo{width:70%;margin:0 auto;}
-.header-middle-area{text-align:center;padding:10px 0;}
-}
-@media screen and (max-width: 500px){
-.section-title h2.header-button{padding:5px 5px;}
-.section-title h2{font-size:13px;}
-}

@@ -1,6 +1,6 @@
 ActiveAdmin.register DispensarySource do
 	
-	menu priority: 4, :if => proc{ current_admin_user.admin? }
+	menu priority: 4, label: 'Dispensary Info'
 	
 	permit_params :name, :image, :location, :street, :city, :zip_code, :admin_user_id,
 					:facebook, :instagram, :twitter, :website, :email, :phone, :min_age,
