@@ -15,8 +15,6 @@ class OrdersController < ApplicationController
 		end
 		@order = Order.new
 		@client_token = Braintree::ClientToken.generate
-		
-		#@client_token = @gateway.client_token.generate
 	end
 	
 	def create
@@ -25,7 +23,7 @@ class OrdersController < ApplicationController
 		@order.add_product_items_from_cart(@cart)
 		if @order.save
 			logger.info 'I AM IN HERE SAVED'
-			redirect_to root_path, notice: 'Thank You for Your Order!'
+			logger.info @cart.total_price
 			charge 
 			if @result.success?
 				Cart.destroy(session[:cart_id]) #no longer need cart with these products if order placed
@@ -39,8 +37,6 @@ class OrdersController < ApplicationController
 			end
 		else
 			logger.info 'I AM IN HERE NOT SAVED'
-			@client_token = Braintree::ClientToken.generate
-		  #@client_token = @gateway.client_token.generate
 		  render :new
 		end
 	end
