@@ -126,9 +126,6 @@
           ga('send', 'pageview');
         </script>
         
-        <!--braintree-->
-        <%= javascript_include_tag 'https://js.braintreegateway.com/js/braintree-2.24.0.min.js' %>
-        
     </head>
     
     <body>
@@ -144,10 +141,26 @@
             <% end %>
         </div>
         
-        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-        <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
-        <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=58c8388905e7400012bc6df2&product=inline-share-buttons"></script>
+        <%= javascript_include_tag 'application' %>
+        <%= javascript_include_tag 'article_help'%>
+        <%= javascript_include_tag 'sticky' %>
+        <%= javascript_include_tag 'endless_scroll' %>
+        
+        <%= javascript_include_tag 'jquery-1.12.1.min' %>
+        <%= javascript_include_tag 'jquery.meanmenu' %>
+        <%= javascript_include_tag 'jquery.meanmenu.min' %>
+        <%= javascript_include_tag 'jquery.scrollUp' %>
+        <%= javascript_include_tag 'main' %>
+        <%= javascript_include_tag 'user_page' %>
+        
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <%= javascript_include_tag 'dispensary_product'%>
+        
+        <%= javascript_include_tag 'age-verification' %>
+        <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
+        
+        <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=58c8388905e7400012bc6df2&product=inline-share-buttons"></script>
+        
         
         <!--owl carousel-->
         <% if current_page?(root_path) %>
