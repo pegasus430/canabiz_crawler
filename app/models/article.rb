@@ -28,11 +28,23 @@ class Article < ActiveRecord::Base
     mount_uploader :image, PhotoUploader
     
     #import CSV files
-    def self.import(file)
-        CSV.foreach(file.path, headers: true) do |row|
+    def self.import_from_csv(articles)
+        CSV.parse(articles, :headers => true).each do |row|
             Article.create! row.to_hash
         end
     end
+    
+#     def self.save_store_from_csv(stores)
+#     csv = CSV.parse(stores, :headers => true)
+#     csv.each do |row|
+#       store  = Store.where("lower(name) =?", row['name'].to_s.downcase).first
+#       if store.present?
+#         store.update_attributes(name: row['name'], admin_user_id: row['admin_user_id'])
+#       else
+#         Store.create! row.to_hash
+#       end
+#     end
+#   end
     
     #export CSV file
     def self.to_csv

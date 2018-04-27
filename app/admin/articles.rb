@@ -9,13 +9,60 @@ ActiveAdmin.register Article do
     	@article = Article.friendly.find(params[:id])
     end
     
-    #save queries
-	includes :category, :source
+    #-----CSV ACTIONS ----------#
+    
+    #import csv
+	action_item only: :index do
+		if current_admin_user.admin?
+			link_to 'Import Articles', admin_articles_import_articles_path, class: 'import_csv'
+		end
+	end
 	
-	index do
+	#export csv
+	csv do
 		column :title
 		column :image
 		column :body
+		column :created_at
+		column :web_url
+		column :source_id
+	end
+	
+	collection_action :import_articles do
+		if request.method == "POST"
+			if params[:article][:file_name].present?
+				file_data = params[:article][:file_name]
+				if file_data.respond_to?(:read)
+					articles = file_data.read
+					Article.import_from_csv(articles)
+					flash[:notice] = "Articles imported successfully."
+				elsif file_data.respond_to?(:path)
+					articles = File.read(file_data.path)
+					Article.import_from_csv(articles)
+					flash[:notice] = "Articles imported successfully."
+				end
+			end
+			redirect_to admin_articles_path
+		end
+	end
+  
+	#-----CSV ACTIONS ----------#
+  
+  
+    
+    #save queries
+	includes :categories, :source
+	
+	index do
+		column "Title" do |article|
+          truncate(article.title, omision: "...", length: 50) if article.title
+        end
+        column "Image" do |article|
+          truncate(article.image_url, omision: "...", length: 50) if article.image
+        end
+        column "Body" do |article|
+          truncate(article.body, omision: "...", length: 50) if article.body
+        end
 		column :created_at
 		column :web_url
 		column :source_id
@@ -25,6 +72,7 @@ ActiveAdmin.register Article do
 	filter :title
 	filter :image
 	filter :body
+	filter :source_id
 	filter :created_at
 	
 	form(:html => { :multipart => true }) do |f|

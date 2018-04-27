@@ -8,6 +8,21 @@ ActiveAdmin.register Category do
     before_filter :only => [:show, :edit, :update, :delete] do
     	@category = Category.friendly.find(params[:id])
     end
+    
+    #import csv
+	action_item only: :index do
+		if current_admin_user.admin?
+			link_to 'Import Categories', admin_categories_import_categories_path, class: 'import_csv'
+		end
+	end
+	
+	#export csv
+	csv do
+		column :name
+		column :keywords
+		column :active
+		column :category_type
+	end
 	
 	scope :all, default: true
 	scope :news

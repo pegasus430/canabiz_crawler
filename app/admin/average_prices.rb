@@ -9,6 +9,22 @@ ActiveAdmin.register AveragePrice do
 	#save queries
 	includes :product
 	
+	#import csv
+	action_item only: :index do
+		if current_admin_user.admin?
+			link_to 'Import Average Prices', admin_average_prices_import_average_prices_path, class: 'import_csv'
+		end
+	end
+	
+	#export csv
+	csv do
+		column :product_id
+		column :average_price
+		column :average_price_unit
+		column :units_sold
+		column :display_order
+	end
+	
 	index do
 		column :product_id
 		column :average_price
