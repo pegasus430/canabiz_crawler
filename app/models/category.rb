@@ -22,9 +22,9 @@ class Category < ActiveRecord::Base
     extend FriendlyId
     friendly_id :name, use: :slugged
     
-    #import CSV file
-    def self.import(file)
-        CSV.foreach(file.path, headers: true) do |row|
+    #import CSV files
+    def self.import_from_csv(categories)
+        CSV.parse(categories, :headers => true).each do |row|
             Category.create! row.to_hash
         end
     end

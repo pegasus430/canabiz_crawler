@@ -24,9 +24,18 @@ class Dispensary < ActiveRecord::Base
     mount_uploader :image, PhotoUploader
     
     #import CSV file
-    def self.import_via_csv(file)
-        CSV.foreach(file.path, headers: true) do |row|
-            Dispensary.create! row.to_hash
+    def self.import_via_csv(dispensaries)
+        CSV.parse(dispensaries, :headers => true).each do |row|
+            #change to update record if id matches
+            disp_hash = row.to_hash
+            dispensary = self.where(id: disp_hash["id"])
+            
+            if dispensary.present? 
+                dispensary.first.update_attributes(disp_hash)
+            else
+                Dispensary.create! disp_hash
+            end
+            
         end
     end
     

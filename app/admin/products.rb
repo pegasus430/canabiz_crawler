@@ -18,6 +18,52 @@ ActiveAdmin.register Product do
 	
 	#save queries
 	includes :category
+	
+	#-----CSV ACTIONS ----------#
+    
+    #import csv
+	action_item only: :index do
+		if current_admin_user.admin?
+			link_to 'Import Products', admin_products_import_products_path, class: 'import_csv'
+		end
+	end
+	
+	#export csv
+	csv do
+		column :name
+		column :image
+		column :description
+		column :featured_product
+		column :alternate_names
+		column :category_id
+		column :sub_category
+		column :is_dom
+		column :cbd
+		column :cbn
+		column :min_thc
+		column :med_thc
+		column :max_thc
+	end
+	
+	collection_action :import_dispensaries do
+		if request.method == "POST"
+			if params[:dispensary][:file_name].present?
+				file_data = params[:dispensary][:file_name]
+				if file_data.respond_to?(:read)
+					dispensaries = file_data.read
+					Dispensary.import_from_csv(dispensaries)
+					flash[:notice] = "Dispensaries imported successfully."
+				elsif file_data.respond_to?(:path)
+					dispensaries = File.read(file_data.path)
+					Dispensary.import_from_csv(dispensaries)
+					flash[:notice] = "Dispensaries imported successfully."
+				end
+			end
+			redirect_to admin_dispensaries_path
+		end
+	end	
+	
+	#-----CSV ACTIONS ----------#
 
 	index do
 		column :name

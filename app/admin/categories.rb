@@ -9,6 +9,8 @@ ActiveAdmin.register Category do
     	@category = Category.friendly.find(params[:id])
     end
     
+    #-----CSV ACTIONS ----------#
+    
     #import csv
 	action_item only: :index do
 		if current_admin_user.admin?
@@ -23,6 +25,26 @@ ActiveAdmin.register Category do
 		column :active
 		column :category_type
 	end
+	
+	collection_action :import_categories do
+		if request.method == "POST"
+			if params[:category][:file_name].present?
+				file_data = params[:category][:file_name]
+				if file_data.respond_to?(:read)
+					categories = file_data.read
+					Category.import_from_csv(categories)
+					flash[:notice] = "Categories imported successfully."
+				elsif file_data.respond_to?(:path)
+					categories = File.read(file_data.path)
+					Category.import_from_csv(categories)
+					flash[:notice] = "Categories imported successfully."
+				end
+			end
+			redirect_to admin_categories_path
+		end
+	end	
+	
+	#-----CSV ACTIONS ----------#
 	
 	scope :all, default: true
 	scope :news

@@ -1,0 +1,6 @@
+<%= semantic_form_for 'dispensary', url: admin_dispensaries_import_dispensaries_path, :authenticity_token => true ,builder: ActiveAdmin::FormBuilder do |f| %>
+    <%= f.inputs "Import Dispensaries" do %>
+      <%= f.input :file_name, as: :file %>
+      <%= f.action :submit, :label => "Upload" %>
+    <% end %>
+<% end %>
