@@ -74,5 +74,30 @@ class OrdersController < ApplicationController
 		  amount: @cart.total_price,
 		  payment_method_nonce: params[:payment_method_nonce] )
 	end
+	
+	after_validation :create_dispensary_source_orders
+	def create_dispensary_source_orders
+		
+		dispensarySourceIds = Set.new
+		self.product_items.each do |product_item|
+			dispensarySourceIds.add(product_item.dispensary_source_id)
+		end
+		
+		dispensary_source_orders = Array.new
+		
+		dispensarySourceIds.each do |setObject|
+            dso = DispensarySourceOrder.create(:dispensary_source_id => setObject, :order_id => self.id)
+            dispensary_source_orders.add(dso)
+        end
+		
+		self.product_items.each do |product_item|
+			
+			dispensary_source_orders.each do |dso|
+				if dso.dispensary_source_id == product_item.dispensary_source_id
+					product_item.update_attribute :dispensary_source_order_id, dso.id
+				end
+			end
+		end 
+	end
   	
 end

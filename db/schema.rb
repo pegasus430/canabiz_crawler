@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428024042) do
+ActiveRecord::Schema.define(version: 20180501184949) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -147,6 +147,14 @@ ActiveRecord::Schema.define(version: 20180428024042) do
 
   add_index "dispensaries", ["slug"], name: "index_dispensaries_on_slug", unique: true
 
+  create_table "dispensary_source_orders", force: :cascade do |t|
+    t.integer  "dispensary_source_id"
+    t.integer  "order_id"
+    t.decimal  "total_price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "dispensary_source_products", force: :cascade do |t|
     t.integer  "dispensary_source_id"
     t.integer  "product_id"
@@ -250,10 +258,12 @@ ActiveRecord::Schema.define(version: 20180428024042) do
     t.integer  "dispensary_id"
     t.integer  "dsp_price_id"
     t.integer  "cart_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "quantity",      default: 1
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.integer  "quantity",                   default: 1
     t.integer  "order_id"
+    t.integer  "dispensary_source_order_id"
+    t.integer  "dispensary_source_id"
   end
 
   add_index "product_items", ["cart_id"], name: "index_product_items_on_cart_id"
