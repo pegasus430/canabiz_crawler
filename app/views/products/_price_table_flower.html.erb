@@ -2,8 +2,7 @@
     <!--modal-->
     <!--render 'product_items/dialog'-->
     
-    <div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
-    <%= link_to 'Add release', get_dsp_values_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
+    <div id="addToCartModal" class="modal" role="dialog"></div>
     
     
     <div class="title">Pricing</div>
@@ -37,11 +36,15 @@
                             </td>
                             <td>
                                 <i class="fa fa-shopping-cart"></i>
+                                <%= link_to 'Add To Cart', get_dsp_values_path(:product_id => @product.id, :dispensary_source_id => dispensary_key.id), 
+                                    {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addToCartModal'}  %>
                                 <!--link_to "New Customer", new_customer_path, remote: true, class: "btn btn-primary"-->
                                 
-                                <%= link_to 'Add to Cart', 
-                                    new_product_item_path(:product_id => @product_id, :dispensary_id => dispensary_key.dispensary_id),
-                                    remote: true %>
+                                <!--data-toggle="modal" data-target="#removeSavedArticleModal"-->
+                                
+                                <!--link_to 'Add to Cart', -->
+                                <!--    new_product_item_path(:product_id => @product_id, :dispensary_id => dispensary_key.dispensary_id),-->
+                                <!--    remote: true -->
                                 <!--(product_id: @product_id, dispensary_id: dispensary_key.dispensary_id)-->
 							</td>
                             

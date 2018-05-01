@@ -17,7 +17,16 @@ class ProductItemsController < ApplicationController
 	
 	def get_dsp_values
 	
+		logger.info 'HERE ARE THE PARAMS: '
+		logger.info params
 		@controller_variable = 'hello steve!!!'
+		
+		params[:product_id]
+		params[:dispensary_source_id]
+		
+		@dispensary_source_products = DispensarySourceProduct.where(product_id: params[:product_id]).
+										where(dispensary_source_id: params[:dispensary_source_id]).includes(:dsp_prices)
+		
 		respond_to do |format|
 			format.html
 			format.js
