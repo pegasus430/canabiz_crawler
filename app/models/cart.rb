@@ -2,7 +2,7 @@ class Cart < ActiveRecord::Base
 	
 	has_many :product_items, dependent: :destroy
 	
-	def add_product(product_id, dispensary_id, dsp_price_id)
+	def add_product(product_id, dispensary_id, dsp_price_id, quantity)
 		#current_item = product_items.find_by(product_id: product_id)
 		#see if this item is currently in this cart
 		current_items = product_items.where(product_id: product_id).

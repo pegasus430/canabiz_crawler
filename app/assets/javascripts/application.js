@@ -13,7 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require bootstrap
+//= require bootstrap-sprockets
+//= require bootstrap-modal
+//= require bootstrap-modalmanager
 //= require jquery.infinitescroll
 //= require social-share-button
 //= require gmaps/google
@@ -21,6 +23,7 @@
 //= require owl.carousel
 
 // $(".owl-carousel").owlCarousel();
+// bootstrap
 
 // change homepage sorting method
 function changeHomeSort(stringValue) {

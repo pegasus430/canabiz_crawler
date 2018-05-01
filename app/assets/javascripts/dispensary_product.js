@@ -1,3 +1,70 @@
+// *** PRODUCT SHOW PAGE ***
+$(document).ready(function() {
+    $('#product-price-table').DataTable({
+        "scrollX": true
+    });
+});
+
+//add product to shopping cart
+function addToCart() {
+	var productId = document.getElementById('productId').value;
+	var dispensaryId = document.getElementById('dispensaryKeyId').value;
+	
+	if (productId != null && productId != '') {
+		$.ajax({
+	        type: "PUT",
+	        url: "/add_to_cart/?productId=" + productId + "&dispensaryId=" + dispensaryId + "&dsppriceId=" + dsppriceId + "&quantity=" + quantity,
+	        beforeSend: function() {
+				// start spinner
+				$(".ajax-spinner").css('display', 'block');
+			},
+	        success: function() {
+	        	$("#tab-2").load();
+	        		//remove the ajax spinner
+	        		$(".ajax-spinner").css('display', 'none');
+	        }
+	    });
+	}
+}
+
+// https://www.benkirane.ch/ajax-bootstrap-modals-rails/ - this looks promising for modals
+
+//set variables for adding product to cart
+function setAddToCartVariables(productId, dispensaryKeyId) {
+	jQuery('[id$=productId]').val(productId);
+	jQuery('[id$=dispensaryKeyId]').val(dispensaryKeyId);
+	
+	if (productId != null && productId != '') {
+		$.ajax({
+	        type: "GET",
+	        url: "/get_dsp_values?disp_source_id=" + dispensaryKeyId + '&productId=' + productId,
+	        beforeSend: function() {
+				// start spinner
+				$(".ajax-spinner").css('display', 'block');
+			},
+	        success: function() {
+	        	// $("#addProductToCartModal").load();
+        		// //remove the ajax spinner
+        		// $(".ajax-spinner").css('display', 'none');
+        		
+        		// $("#addProductModalContent").load(location.href+" #addProductModalContent>*", function() {
+        		// 	$("#addProductToCartModal").show(); 
+	        	// 	//remove the ajax spinner
+	        	// 	$(".ajax-spinner").css('display', 'none');
+	        	// });
+	        	
+	        	var target = $(this).attr("href");
+
+			    // load the url and show modal on success
+			    $("#addProductModalContent").load(target, function() { 
+			         $("#addProductToCartModal").show(); 
+			         $(".ajax-spinner").css('display', 'none');
+			    });
+	        }
+	    });
+	}
+} 
+
 // ****INDEX PAGES (Mostly Product)**
 
 //when user selects an option state

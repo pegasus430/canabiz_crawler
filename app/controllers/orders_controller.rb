@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+	
+	
   
   include CurrentCart
   before_action :set_cart, only: [:new, :create]
@@ -13,6 +15,13 @@ class OrdersController < ApplicationController
 			redirect_to root_path, notice: 'Your Cart is Empty'
 			return
 		end
+		
+		#i can make array of dispensaries here i think - 
+		#or after order is saved i can do after_validation create DispensaryOrder records - 
+		#but have to add the product items to it
+		
+		@dispensary = @cart.product_items[0].dispensary
+		
 		@order = Order.new
 		@client_token = Braintree::ClientToken.generate
 	end
@@ -56,7 +65,7 @@ class OrdersController < ApplicationController
 	end
 	
 	def order_params
-		params.require(:order).permit(:name, :email, :phone, :address, :city, :state, :country)
+		params.require(:order).permit(:name, :email, :phone, :address, :city, :state, :country, :dispensary_source_id)
 	end
 	
 	def charge

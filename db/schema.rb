@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180426122734) do
+ActiveRecord::Schema.define(version: 20180428024042) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -238,9 +238,11 @@ ActiveRecord::Schema.define(version: 20180426122734) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "phone"
+    t.integer  "dispensary_source_id"
+    t.integer  "dispensary_id"
   end
 
   create_table "product_items", force: :cascade do |t|

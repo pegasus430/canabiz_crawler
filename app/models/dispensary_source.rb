@@ -2,6 +2,7 @@ class DispensarySource < ActiveRecord::Base
     belongs_to :source
     belongs_to :dispensary
     belongs_to :state
+    has_many :orders
     
     #many to many with products
     has_many :dispensary_source_products, -> { order(:product_id => :asc) }

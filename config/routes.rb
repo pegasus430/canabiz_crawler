@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   #ecommerce
   resources :carts
   resources :product_items
+  put 'add_to_cart', to: 'product_items#add_to_cart', as: 'add_to_cart'
+  get 'get_dsp_values', to: 'product_items#get_dsp_values', :as => :get_dsp_values
+  # get "new_release" => 'customers#new_release', :as => :new_release
   resources :orders
   
   #SIDEKIQ Routes

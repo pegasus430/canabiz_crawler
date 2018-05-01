@@ -135,6 +135,7 @@ class ProductsController < ApplicationController
         #need a map of dispensary to dispensary source product
         @dispensary_to_product = Hash.new
         @state_to_dispensary = Hash.new
+        @dsp_prices = Array.new
         
         @dispensary_sources.each do |dispSource|
             

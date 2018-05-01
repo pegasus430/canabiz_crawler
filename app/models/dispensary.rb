@@ -12,6 +12,8 @@ class Dispensary < ActiveRecord::Base
     has_many :dispensary_sources
     has_many :sources, through: :dispensary_sources
     
+    has_many :orders
+    
     #geocode location
     geocoded_by :location
     after_validation :geocode

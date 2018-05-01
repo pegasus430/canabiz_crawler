@@ -32,6 +32,7 @@ gem 'active_skin'
 #ECOMMERCE
 gem 'toastr-rails' #for notifications
 gem "braintree" #payment processing
+gem 'bootstrap-modal-rails', '~> 2.2', '>= 2.2.5' #for customer to select quantity and unit
 
 
 #BACKGROUND JOBS

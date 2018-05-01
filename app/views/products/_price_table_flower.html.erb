@@ -1,7 +1,14 @@
 <div class="col-md-12 mt-20">
+    <!--modal-->
+    <!--render 'product_items/dialog'-->
+    
+    <div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+    <%= link_to 'Add release', get_dsp_values_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
+    
+    
     <div class="title">Pricing</div>
     <!-- table -->
-    <div class="table-responsive">
+    <!--<div class="table-responsive">-->
         <table id="product-price-table" class="display" style="width: 100% !important;">
             <thead>
                 <tr>
@@ -20,19 +27,8 @@
                 <!--loop through dispensaries-->
                 <% @state_to_dispensary.each do |state_name, dispensaries| %>
                     
-                    <!--<tr class='state-name-row'>-->
-                    <!--    <td>state_name.upcase</td>-->
-                    <!--    <td>&nbsp;</td>-->
-                    <!--    <td>&nbsp;</td>-->
-                    <!--    <td>&nbsp;</td>-->
-                    <!--    <td>&nbsp;</td>-->
-                    <!--    <td>&nbsp;</td>-->
-                    <!--    <td>&nbsp;</td>-->
-                    <!--</tr>-->
-                    
                     <% dispensaries.each do |dispensary_key| %>
                         <tr>
-                            <!--(product_id: product.id)-->
                             <td class="dispensary-td"><%=link_to dispensary_key.name, dispensary_path(dispensary_key.dispensary)%></td>
                             
                             <% value = @dispensary_to_product[dispensary_key.id] %>
@@ -40,10 +36,13 @@
                                 <%=dispensary_key.location%>
                             </td>
                             <td>
-                                <%= button_to product_items_path(product_id: @product.id, 
-                                        dispensary_id: dispensary_key.dispensary_id, dsp_price_id: value.dsp_prices.first.id), class: 'btn btn-default' do %>
-								    <i class="fa fa-shopping-cart"></i> Add to cart
-							    <% end %>
+                                <i class="fa fa-shopping-cart"></i>
+                                <!--link_to "New Customer", new_customer_path, remote: true, class: "btn btn-primary"-->
+                                
+                                <%= link_to 'Add to Cart', 
+                                    new_product_item_path(:product_id => @product_id, :dispensary_id => dispensary_key.dispensary_id),
+                                    remote: true %>
+                                <!--(product_id: @product_id, dispensary_id: dispensary_key.dispensary_id)-->
 							</td>
                             
                             
@@ -71,5 +70,5 @@
                 <% end %> <!--end of state to dispensary loop-->
             
         </table>
-    </div>
+    <!--</div>-->
 </div>
