@@ -3,7 +3,7 @@ class ProductItemsController < ApplicationController
 	# https://www.benkirane.ch/ajax-bootstrap-modals-rails/
 	
 	include CurrentCart
-	before_action :set_cart, only: [:create]
+	before_action :set_cart, only: [:create, :get_dsp_values]
 	before_action :set_product_item, only: [:show, :destroy]
 	skip_before_action :verify_authenticity_token #for ajax
 	
@@ -16,16 +16,28 @@ class ProductItemsController < ApplicationController
 	end
 	
 	def get_dsp_values
-	
-		logger.info 'HERE ARE THE PARAMS: '
-		logger.info params
-		@controller_variable = 'hello steve!!!'
 		
-		params[:product_id]
-		params[:dispensary_source_id]
-		
-		@dispensary_source_products = DispensarySourceProduct.where(product_id: params[:product_id]).
+		dispensary_source_products = DispensarySourceProduct.where(product_id: params[:product_id]).
 										where(dispensary_source_id: params[:dispensary_source_id]).includes(:dsp_prices)
+										
+		if dispensary_source_products.size > 0
+			@dsp_values = dispensary_source_products[0].dsp_prices
+			@product_name = dispensary_source_products[0].product.name
+			@product_id = params[:product_id]
+			@dispensary_name = dispensary_source_products[0].dispensary_source.dispensary.name
+			@dispensary_id = dispensary_source_products[0].dispensary_source.dispensary.id
+			@dispensary_source_id = params[:dispensary_source_id]
+		else 
+			redirect_to root_path	
+		end
+		
+		@product_item = ProductItem.new
+		
+		# params[@product_item][:cart_id] = @cart.id
+		
+		# @product_item.cart_id = @cart.id
+		# @product_item.product_id = params[:product_id]
+		# @product_item.dispensary_id = dispensary_source_products[0].dispensary_source.dispensary.id
 		
 		respond_to do |format|
 			format.html
@@ -38,24 +50,15 @@ class ProductItemsController < ApplicationController
 		#we either get the shopping cart from the CurrentCart or create one if they dont have
 		#i need to get the product, dispensary, and dspprice to create:
 			# maybe the price will be popup when they click buy? and then i set param
+			
+			logger.info 'HERE ARE THE PARAMS'
+		logger.info params
 		
-		logger.info 'product id: ' + params[:product_id]
-		product = Product.find(params[:product_id])
-		logger.info 'HERE IS THE PRODUCT' 
-		logger.info product.name
+		@product_item = ProductItem.create(product_item_params) 
+		#have to see if item is already in cart and if so add to it
+		#that cart build method used to do this
 		
-		logger.info 'dispensary id: ' + params[:dispensary_id]
-		dispensary = Dispensary.find(params[:dispensary_id])
-		logger.info 'HERE IS THE DISPENSARY' 
-		logger.info dispensary.name
-		
-		logger.info 'dsp_price id: ' + params[:dsp_price_id]
-		dsp_price = DspPrice.find(params[:dsp_price_id])
-		logger.info 'HERE IS THE dsp_price' 
-		logger.info dsp_price.price
-		
-		
-		@product_item = @cart.add_product(product.id, dispensary.id, dsp_price.id, 5)
+		#@product_item = @cart.add_product(product.id, dispensary.id, dsp_price.id, 5)
 		if @product_item.save
 		  redirect_to root_path, notice: 'Product added to Cart'
 		else
@@ -93,7 +96,7 @@ class ProductItemsController < ApplicationController
 	end
 	
 	def product_item_params
-		params.require(:product_item).permit(:product_id) 
+		params.require(:product_item).permit(:product_id, :cart_id, :quantity, :dispensary_id, :dsp_price_id) 
 	end
 	
 end

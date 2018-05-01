@@ -2,14 +2,15 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Modal header</h3>
+            <h3 id="myModalLabel"><%= "Buy #{@product_name} from #{@dispensary_name}"%></h3>
         </div>
         <div class="modal-body">
-            Displayed from controller: <%= @controller_variable %>
+            <h4>Select Unit and Quantity</h4>
+            <%= render 'product_items/form' %>
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn" style="background-color: #2ab081;border-color: #2ab081;">Add to Cart</button>
+            <button class="btn" style="background-color: #2ab081;border-color: #2ab081; color: #fff;">Add to Cart</button>
         </div>
     </div>
 </div>
