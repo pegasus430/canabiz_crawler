@@ -11,10 +11,10 @@ class Cart < ActiveRecord::Base
 		current_item = nil
 		if current_items.size > 0
 			current_item = current_items[0]
-			current_item.quantity += 1
+			current_item.quantity += quantity
 		else
 			current_item = product_items.build(product_id: product_id, 
-								dispensary_id: dispensary_id, dsp_price_id: dsp_price_id)
+								dispensary_id: dispensary_id, dsp_price_id: dsp_price_id, quantity: quantity)
 		end
 		current_item
 	end
