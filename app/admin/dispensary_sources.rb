@@ -2,7 +2,8 @@ ActiveAdmin.register DispensarySource do
 	
 	menu priority: 4, label: 'Dispensary Info'
 	
-	permit_params :name, :image, :location, :street, :city, :zip_code, :admin_user_id,
+	permit_params :name, :admin_user_id, :state_id, :dispensary_id, :source_id,
+					:image, :location, :street, :city, :zip_code, :last_menu_update,
 					:facebook, :instagram, :twitter, :website, :email, :phone, :min_age,
 					:monday_open_time, :monday_close_time, :tuesday_open_time, :tuesday_close_time,
 					:wednesday_open_time, :wednesday_close_time, :thursday_open_time, :thursday_close_time,
@@ -99,23 +100,24 @@ ActiveAdmin.register DispensarySource do
 			end
 			
 			if current_admin_user.admin?
+				f.input :name
 				f.input :admin_user_id, :label => 'Admin User', :as => :select, 
-                :collection => AdminUser.all.map{|u| ["#{u.email}", u.id]}
+                :collection => AdminUser.order('email ASC').map{|u| ["#{u.email}", u.id]}
 				f.input :dispensary_id, :label => 'Dispensary', :as => :select, 
-						:collection => Dispensary.all.map{|u| ["#{u.name}", u.id]}
+						:collection => Dispensary.order('name ASC').map{|u| ["#{u.name}", u.id]}
 				f.input :source_id, :label => 'Source', :as => :select, 
-						:collection => Source.where(source_type: ['Dispensary', 'Both']).map{|u| ["#{u.name}", u.id]}
+						:collection => Source.where(source_type: ['Dispensary', 'Both']).order('name ASC').
+										map{|u| ["#{u.name}", u.id]}
 				f.input :state_id, :label => 'State', :as => :select, 
-					:collection => State.all.map{|u| ["#{u.name}", u.id]}
+					:collection => State.order('name ASC').map{|u| ["#{u.name}", u.id]}
 				f.input :source_rating
+				f.input :last_menu_update
 			end
 			
 			f.input :image, :as => :file
 			f.input :street
 			f.input :city
 			f.input :zip_code
-			f.input :state_id, :label => 'State', :as => :select, 
-					:collection => State.all.map{|u| ["#{u.name}", u.id]} 
 			
 			f.input :instagram
 		    f.input :twitter

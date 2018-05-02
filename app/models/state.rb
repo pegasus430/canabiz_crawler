@@ -17,6 +17,9 @@ class State < ActiveRecord::Base
     validates_uniqueness_of :name
     validates_uniqueness_of :abbreviation
     
+    #scope
+    scope :product_state, -> { where(product_state: true) }
+    
     #friendly url
     extend FriendlyId
     friendly_id :name, use: :slugged

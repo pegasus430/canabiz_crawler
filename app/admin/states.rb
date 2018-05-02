@@ -8,6 +8,9 @@ ActiveAdmin.register State do
     before_filter :only => [:show, :edit, :update, :delete] do
     	@state = State.friendly.find(params[:id])
     end
+    
+    filter :name
+    filter :product_state
 	
 	index do
 		column :name
