@@ -109,54 +109,57 @@ class ProductsController < ApplicationController
     def show
         
         #only show featured product
-        if @product.featured_product == false
-            redirect_to root_path 
-        end
+            if @product.featured_product == false
+                redirect_to root_path 
+            end
         
         #similar products - include is_dom and sub_category as well
-        if @product.is_dom.present?
-            @similar_products = Product.featured.where.not(id: @product.id).
-                        where(is_dom: @product.is_dom).order("Random()").limit(4)
-
-        elsif @product.sub_category.present? 
-            @similar_products = Product.featured.where.not(id: @product.id).
-                        where(sub_category: @product.sub_category).
-                        order("Random()").limit(4)
+            if @product.is_dom.present?
+                @similar_products = Product.featured.where.not(id: @product.id).
+                            where(is_dom: @product.is_dom).order("Random()").limit(4)
+    
+            elsif @product.sub_category.present? 
+                @similar_products = Product.featured.where.not(id: @product.id).
+                            where(sub_category: @product.sub_category).
+                            order("Random()").limit(4)
+            
+            elsif @product.category.present?
+                @similar_products = @product.category.products.
+                        featured.where.not(id: @product.id).order("Random()").limit(4)
+            end
         
-        elsif @product.category.present?
-            @similar_products = @product.category.products.
-                    featured.where.not(id: @product.id).order("Random()").limit(4)
-        end
-        
-        @dispensary_source_products = DispensarySourceProduct.where(product: @product).joins(:dsp_prices)
-        dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
-        @dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC').order("name ASC")
-        
+        #populate page maps
+        @dispensary_sources = @product.dispensary_sources.where(state_id: @site_visitor_state.id).
+                                includes(:dispensary, :dispensary_source_products => :dsp_prices).
+                                order('last_menu_update DESC').order("name ASC")
+                                
         #need a map of dispensary to dispensary source product
         @dispensary_to_product = Hash.new
-        @state_to_dispensary = Hash.new
-        @dsp_prices = Array.new
+        @table_headers = Hash.new #for product table
         
         @dispensary_sources.each do |dispSource|
             
-            #state dispensaries
-            if @state_to_dispensary.has_key?(dispSource.state.name)
-                @state_to_dispensary[dispSource.state.name].push(dispSource)
-            else
-                dispensaries = []
-                dispensaries.push(dispSource)
-                @state_to_dispensary.store(dispSource.state.name, dispensaries) 
+            #get the th from dsp_prices
+            dispSource.dispensary_source_products.each do |dsp|
+                dsp.dsp_prices.each do |dsp_price|
+                    if dsp_price.display_order != nil
+                       @table_headers.store(dsp_price.display_order, dsp_price.unit)
+                    end
+                end
             end
             
             #dispensary products
-            if !@dispensary_to_product.has_key?(dispSource.id)
-               
-                if @dispensary_source_products.where(dispensary_source_id: dispSource.id).any?
-                    @dispensary_to_product.store(dispSource.id, 
-                        @dispensary_source_products.where(dispensary_source_id: dispSource.id).first)
+            if !@dispensary_to_product.has_key?(dispSource)
+                
+                dsps = dispSource.dispensary_source_products.select { |dsp| dsp.product_id == @product.id}
+                
+                if dsps.size > 0
+                    @dispensary_to_product.store(dispSource, dsps[0])
                 end
             end
         end
+        
+        @table_headers = Hash[@table_headers.sort_by {|k,v| k.to_i }]
     end
 
     #-------------------------------------------

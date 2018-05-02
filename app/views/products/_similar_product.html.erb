@@ -1,6 +1,6 @@
 <div class="col-md-3 productspacer similar_product">
     <a href="<%= product_path(product) %>">
-        <% if product.image_url != nil %>
+        <% if Rails.env.production? && product.image_url != nil %>
             <img src="<%= product.image_url(:product_show)%>" onerror="this.src='<%= asset_path 'substitutes/product-substitute.png' %>'" alt="<%=product.name%>">
         <% else %>
             <%= image_tag('product2.png') %>

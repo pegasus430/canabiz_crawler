@@ -1,0 +1,53 @@
+<div class="col-md-12 mt-20">
+    <!--modal-->
+    <div id="addToCartModal" class="modal" role="dialog"></div>
+    
+    <div class="title">Pricing</div>
+    <!-- table -->
+    <table id="product-price-table" class="display" style="width: 100% !important;">
+        <thead>
+            <tr>
+                <th>Dispensary</th>
+                <th>Location</th>
+                <th>Buy</th>
+                <% @table_headers.each do |display_order, unit| %>
+                    <th><%= unit %></th>
+                <% end %>
+            </tr>
+        </thead>
+
+        <!--loop through dispensaries-->
+        <% @dispensary_to_product.each do |dispensary_source, product| %>
+            <tr>
+                <td class="dispensary-td">
+                    <%=link_to dispensary_source.name, dispensary_path(dispensary_source.dispensary)%>
+                </td>
+                <td>
+                    <%=dispensary_source.location%>
+                </td>
+                <td>
+                    <% if %>
+                        <i class="fa fa-shopping-cart"></i>
+                        <%= link_to 'Add To Cart', get_dsp_values_path(:product_id => @product.id, :dispensary_source_id => dispensary_source.id), 
+                            {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addToCartModal'}  %>
+				    <% end %>
+				</td>
+				<% 
+                    i = 0
+                    loop do 
+                        #if value.dsp_prices.where(display_order: i).any?
+                        dsps = product.dsp_prices.select { |dsp| dsp.display_order == i }
+                        if dsps.size > 0
+                %>
+                            <td style="text-align:center;">$<%=dsps.first.price%></td>    
+                        <% else %>
+                            <td style="text-align:center;">--</td>
+                        <% end
+                        break if i == 5
+                        i += 1
+                    end
+                %>
+            </tr>
+        <% end %>
+    </table>
+</div>

@@ -7,7 +7,7 @@
                 <% if Rails.env.production? && disp_product.image != nil %>
                     <%= image_tag(disp_product.image_url(:profile_size))%>
                 <% else %>
-                    <%= image_tag("substitutes/product-substitute.png") %>
+                    <%= image_tag("home_top_product.jpg") %>
                 <% end %>
             </a>
         </div>
