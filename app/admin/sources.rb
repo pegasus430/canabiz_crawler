@@ -1,4 +1,4 @@
-ActiveAdmin.register Source do
+ActiveAdmin.register Source, :as => 'Source' do
 
 	menu :if => proc{ current_admin_user.admin? }
 	

@@ -11,14 +11,22 @@ ActiveAdmin.register DispensarySource do
 					
 	
 	scope :all, default: true, :if => proc{ current_admin_user.admin? }
-    #scope :self, :if => proc{ current_admin_user.admin? } - not working
+    scope :has_admin, :if => proc{ current_admin_user.admin? }
+    
+    filter :name
+    filter :state_id
     
     #save queries
-	includes :dispensary, :source, :state
+	includes :dispensary, :source, :state, :admin_user
     
     index do
         column :name
-        column :image
+        
+        column "Image" do |dispensary|
+			if dispensary.image.present?
+				image_tag dispensary.image_url, class: 'admin_image_size'
+			end
+		end
         
         if current_admin_user.admin?
         	
@@ -32,8 +40,9 @@ ActiveAdmin.register DispensarySource do
 					link_to ds.source.name, admin_source_path(ds.source_id)
 				end
 			end
+			column :source_rating
 			column "Admin User" do |ds|
-			  #link_to admin.email, admin_admin_user_path(ds.admin_user_id)
+			  link_to ds.admin_user.email, admin_admin_user_path(ds.admin_user_id) if ds.admin_user
 			end
 			column "State" do |ds|
 				if ds.state.present?
@@ -53,28 +62,29 @@ ActiveAdmin.register DispensarySource do
 		column :zip_code
 		column :location
 		
-		column :source_rating
-		column :instagram
-		column :twitter
-		column :website
-		column :email
-		column :phone, label: 'Phone Number'
-		column	:min_age, label: 'Minimum Age'
-		
-		column :monday_open_time
-		column :tuesday_open_time
-		column :wednesday_open_time
-		column :thursday_open_time
-		column :friday_open_time
-		column :saturday_open_time
-		column :sunday_open_time
-		column :monday_close_time
-		column :tuesday_close_time
-		column :wednesday_close_time
-		column :thursday_close_time
-		column :friday_close_time
-		column :saturday_close_time
-		column :sunday_close_time
+		if !current_admin_user.admin?
+			column	:instagram
+			column	:twitter
+			column	:website
+			column	:email
+			column	:phone, label: 'Phone Number'
+			column	:min_age, label: 'Minimum Age'
+			
+			column	:monday_open_time
+			column	:tuesday_open_time
+			column	:wednesday_open_time
+			column	:thursday_open_time
+			column	:friday_open_time
+			column	:saturday_open_time
+			column	:sunday_open_time
+			column	:monday_close_time
+			column	:tuesday_close_time
+			column	:wednesday_close_time
+			column	:thursday_close_time
+			column	:friday_close_time
+			column	:saturday_close_time
+			column	:sunday_close_time
+		end
 		
 		column :updated_at
 		#should make a new column thats like - awaiting approval - everytime they change it I set it

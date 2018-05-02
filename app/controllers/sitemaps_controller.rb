@@ -5,6 +5,7 @@ class SitemapsController < ApplicationController
     @vendors = Vendor.all
     @dispensaries = Dispensary.all
     @articles = Article.all
+    @categories = Category.all
 
     respond_to do |format|
       format.xml

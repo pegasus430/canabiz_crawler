@@ -5,23 +5,6 @@ class StatesController < ApplicationController
 
     def index
     end
-
-    def admin
-        @states = State.all.order("name ASC")
-        
-        #method is used for csv file upload
-        def import
-            State.import(params[:file])
-            flash[:success] = 'States were successfully imported'
-            redirect_to states_admin_path 
-        end        
-    
-        #for csv downloader
-        respond_to do |format|
-            format.html
-            format.csv {render text: @states.to_csv }
-        end
-    end
     
     def new
       @state = State.new

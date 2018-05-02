@@ -73,16 +73,16 @@ class ApplicationController < ActionController::Base
     #   @news_categories = Category.news.active.order("name ASC")
     #   redis.write(:news_categories, @news_categories)
     # end
-    
     # @news_categories = redis.read(:news_categories) || Category.news.active.order("name ASC")
+    
+    
     @news_categories = Category.news.active.order("name ASC")
     @product_categories = Category.products.active.order("name ASC")
-    @states = State.all.order("name ASC")
-    @product_states = @states.where(product_state: true)
-    @sources = Source.where(:active => true).order("name ASC")
+    @all_states = State.all.order("name ASC")
+    @product_states = @all_states.where(product_state: true)
+    @active_sources = Source.where(:active => true).order("name ASC")
     @az_values = ['#', 'A','B','C','D','E','F','G','H','I','J','K','L','M',
                         'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-    # expires_in 10.days, :public => true
   end
   
   #redirect to homepage on error

@@ -2,32 +2,6 @@ class SourcesController < ApplicationController
     
     before_action :set_source, only: [:edit, :update, :destroy, :show] #
     before_action :require_admin, except: [:show]
-
-    #--------ADMIN PAGE-------------------------
-    def admin
-        @sources = Source.all.order(sort_column + " " + sort_direction)
-    
-        #for csv downloader
-        respond_to do |format|
-            format.html
-            format.csv {render text: @sources.to_csv }
-        end
-    end
-    
-    #method is used for csv file upload
-    def import
-        Source.import(params[:file])
-        flash[:success] = 'Sources were successfully imported'
-        redirect_to source_admin_path 
-    end
-    
-    def search
-        @q = "%#{params[:query]}%"
-        @sources = Source.where("name LIKE ? or source_type LIKE ?", @q, @q).order(sort_column + " " + 
-                                    sort_direction).paginate(page: params[:page], per_page: 50)
-        render 'admin'
-    end
-    #--------ADMIN PAGE-------------------------
     
     #-------------------------------------------
     def new

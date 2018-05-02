@@ -53,13 +53,13 @@
 							    </ul>
 						    <li>Sources:</li>
 							    <ul style="padding-left: 20px">
-							    	<% @sources.each do |source| %>
+							    	<% @active_sources.each do |source| %>
 							    		<li><%=link_to source.name, source_path(source)%></li>
 							    	<% end %>
 							    </ul>
 						    <li>States:</li>
 							    <ul style="padding-left: 20px">
-							        <% @states.each do |state| %>
+							        <% @all_states.each do |state| %>
 							        	<li><%=link_to state.name, state_path(state)%></li>
 							        <% end %>
 							    </ul>

@@ -1,8 +1,10 @@
 class DispensarySource < ActiveRecord::Base
+    #relations
     belongs_to :source
     belongs_to :dispensary
     belongs_to :state
-
+    belongs_to :admin_user
+    
     has_many :dispensary_source_orders
     has_many :product_items
     
@@ -10,13 +12,11 @@ class DispensarySource < ActiveRecord::Base
     has_many :dispensary_source_products, -> { order(:product_id => :asc) }
     has_many :products, through: :dispensary_source_products
     
-    validates :dispensary_id, presence: true
-    
-    #validates_uniqueness_of :product_id, :scope => :dispensary_id #no duplicate products per dispensary
-    
-    #scope
+    #scope for admin panel
+    scope :has_admin, -> { where.not(admin_user_id: nil) }
     scope :self, -> { where("source.name = 'Self'") }
     
+    validates :dispensary_id, presence: true
     
     #geocode location
     geocoded_by :location
