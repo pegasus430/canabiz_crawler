@@ -2,32 +2,6 @@ class DispensariesController < ApplicationController
     before_action :set_dispensary, only: [:edit, :update, :destroy, :show, :all_products]
     before_action :require_admin, only: [:admin, :edit, :update, :destroy]
     before_action :site_visitor_state, only: [:index, :show]
-
-    #--------ADMIN PAGE-------------------------
-    def admin
-        @dispensaries = Dispensary.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 50)
-    
-        respond_to do |format|
-            format.html
-            format.csv {render text: @dispensaries.to_csv }
-        end
-    end
-    
-    #method is used for csv file upload
-    def import_via_csv
-        Dispensary.import_via_csv(params[:file])
-        flash[:success] = 'Dispensaries were successfully imported'
-        redirect_to dispensary_admin_path 
-    end
-    
-    def search
-        query = "%#{params[:query]}%"
-        @dispensaries = Dispensary.where("name LIKE ? or location LIKE ? or city LIKE ?", query, query, query).order(sort_column + " " + 
-                                    sort_direction).paginate(page: params[:page], per_page: 50)
-        render 'admin'
-    end
-    
-    #--------ADMIN PAGE-------------------------
     
     def index
         

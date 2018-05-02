@@ -25,8 +25,6 @@ class SourcesController < ApplicationController
                             order("created_at DESC").page(params[:page]).per_page(24)
             @mostviews = @source.articles.includes(:source, :categories, :states).
                             order("num_views DESC").page(params[:page]).per_page(24)
-                            
-            expires_in 10.minutes, :public => true
         else
             redirect_to root_path
         end

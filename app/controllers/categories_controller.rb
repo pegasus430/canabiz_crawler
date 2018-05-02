@@ -2,32 +2,6 @@ class CategoriesController < ApplicationController
     
     before_action :set_category, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, except: [:show]
-
-    #--------ADMIN PAGE-------------------------
-    def admin
-        @categories = Category.all.order(sort_column + " " + sort_direction)
-    
-        #for csv downloader
-        respond_to do |format|
-            format.html
-            format.csv {render text: @categories.to_csv }
-        end
-    end
-    
-    #method is used for csv file upload
-    def import
-        Category.import(params[:file])
-        flash[:success] = 'Categories were successfully imported'
-        redirect_to category_admin_path 
-    end
-    
-    def search
-        @q = "%#{params[:query]}%"
-        @categories = Category.where("name LIKE ? or keywords LIKE ?", @q, @q).order(sort_column + " " + 
-                                    sort_direction).paginate(page: params[:page], per_page: 50)
-        render 'admin'
-    end
-    #--------ADMIN PAGE-------------------------
     
     #-------------------------------------------
     def new

@@ -3,37 +3,9 @@ class VendorsController < ApplicationController
     before_action :set_vendor, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, except: [:show, :index]
     before_action :site_visitor_state, only: [:index, :show]
-
-    #--------ADMIN PAGE-------------------------
-    def admin
-        
-        @vendors = Vendor.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 50)
-        #for csv downloader
-        respond_to do |format|
-            format.html
-            format.csv {render text: Vendor.all.to_csv }
-        end
-    end
-    
-    #method is used for csv file upload
-    def import
-        Vendor.import(params[:file])
-        flash[:success] = 'Vendors were successfully imported'
-        redirect_to vendor_admin_path 
-    end
-    
-    def search
-        @q = "%#{params[:query]}%"
-        @vendors = Vendor.where("name LIKE ?", @q).order(sort_column + " " + 
-                                    sort_direction).paginate(page: params[:page], per_page: 50)
-        render 'admin'
-    end
-    #--------ADMIN PAGE-------------------------
     
     def index
-
         @vendors = Vendor.order("RANDOM()").paginate(page: params[:page], per_page: 16)
-
     end
     
     def refine_index

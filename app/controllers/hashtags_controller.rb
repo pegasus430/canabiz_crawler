@@ -2,32 +2,6 @@ class HashtagsController < ApplicationController
     
     before_action :set_hashtag, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, except: [:show]
-
-    #--------ADMIN PAGE-------------------------
-    def admin
-        @hashtags = Hashtag.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 100)
-    
-        #for csv downloader
-        respond_to do |format|
-            format.html
-            format.csv {render text: @hashtags.to_csv }
-        end
-    end
-    
-    #method is used for csv file upload
-    def import
-        Hashtag.import(params[:file])
-        flash[:success] = 'Hashtags were successfully imported'
-        redirect_to hashtag_admin_path 
-    end
-    
-    def search
-        @q = "%#{params[:query]}%"
-        @categories = Category.where("name LIKE ? or keywords LIKE ?", @q, @q).order(sort_column + " " + 
-                                    sort_direction).paginate(page: params[:page], per_page: 50)
-        render 'admin'
-    end
-    #--------ADMIN PAGE-------------------------
     
     #-------------------------------------------
     def new

@@ -2,33 +2,6 @@ class ArticlesController < ApplicationController
     before_action :set_article, only: [:edit, :update, :destroy, :show, :tweet, :send_tweet]
     before_action :require_admin, except: [:index, :show]
     skip_before_action :verify_authenticity_token #for saving article via ajax
-
-    #--------ADMIN PAGE-------------------------
-    def admin
-        @articles = Article.order(sort_column + " " + sort_direction)
-                        .paginate(page: params[:page], per_page: 100)
-    
-        #for csv downloader
-        respond_to do |format|
-            format.html
-            format.csv {render text: @articles.to_csv }
-        end
-    end
-    
-    #method is used for csv file upload
-    def import
-        Article.import(params[:file])
-        flash[:success] = 'Articles were successfully imported'
-        redirect_to article_admin_path 
-    end
-    
-    def search
-        @q = "%#{params[:query]}%"
-        @articles = Article.where("title LIKE ? or abstract LIKE ?", @q, @q)
-                            .order(sort_column + " " + sort_direction)
-                            .paginate(page: params[:page], per_page: 24)
-        render 'admin'
-    end
     
     def tweet
         #not on admin page but admin functionality

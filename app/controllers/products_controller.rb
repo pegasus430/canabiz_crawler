@@ -4,33 +4,6 @@ class ProductsController < ApplicationController
     before_action :site_visitor_ip, only: [:index, :refine_index]
     before_action :require_admin, only: [:admin, :edit, :update, :delete]
 
-    #--------ADMIN PAGE-------------------------
-    def admin
-        @requires_admin = true
-        @products = Product.order(sort_column + " " + sort_direction).paginate(page: params[:page], per_page: 50)
-        #for csv downloader
-        respond_to do |format|
-            format.html
-            format.csv {render text: Product.all.to_csv }
-        end
-    end
-    
-    #method is used for csv file upload
-    def import
-        Product.import(params[:file])
-        flash[:success] = 'Products were successfully imported'
-        redirect_to product_admin_path 
-    end
-    
-    def search
-        query = "%#{params[:query]}%"
-        @products = Product.where("name LIKE ?", query).order(sort_column + " " + 
-                                    sort_direction).paginate(page: params[:page], per_page: 50)
-                        
-        render 'admin'
-    end
-    #--------ADMIN PAGE-------------------------
-    
     def index
         
         if params[:format].present?

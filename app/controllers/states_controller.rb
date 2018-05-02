@@ -43,7 +43,6 @@ class StatesController < ApplicationController
                         paginate(:page => params[:page], :per_page => 24)
         end
 
-        expires_in 10.minutes, :public => true
     end
     
     #refine the products on the state index

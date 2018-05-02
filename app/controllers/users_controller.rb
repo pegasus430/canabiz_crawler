@@ -4,31 +4,6 @@ class UsersController < ApplicationController
     #before_action :require_admin, only: [:destroy]
     skip_before_action :verify_authenticity_token #for ajax
   
-  
-    def admin
-        @users = User.paginate(page: params[:page], per_page: 100)
-        
-        #method is used for csv file upload
-        def import
-            State.import(params[:file])
-            flash[:success] = 'Users were successfully imported'
-            redirect_to users_admin_path 
-        end        
-        
-        #for csv downloader
-        respond_to do |format|
-            format.html
-            format.csv {render text: @users.to_csv }
-        end
-    end  
-  
-    def search
-        @q = "%#{params[:query]}%"
-        @users = User.where("username LIKE ? or email LIKE ?", @q, @q).order(sort_column + " " + sort_direction)
-        
-        render 'admin'
-    end
-  
     def new
         @user = User.new
     end
