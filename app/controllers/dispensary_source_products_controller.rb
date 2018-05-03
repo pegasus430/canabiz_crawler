@@ -60,9 +60,7 @@ class DispensarySourceProductsController < ApplicationController
         end
         
         def dispensary_source_product_params
-            params.require(:dispensary_source_product).permit(:product_id, :dispensary_source_id, :image, :price, :price_gram,
-                                                :price_eighth, :price_quarter, :price_two_grams, :price_half_ounce,
-                                                :price_ounce, :price_half_gram)
+            params.require(:dispensary_source_product).permit(:product_id, :dispensary_source_id)
         end
         
         def sort_column

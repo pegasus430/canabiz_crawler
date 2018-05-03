@@ -8,6 +8,7 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
 	includes :dispensary_source, :product
 	
 	index do
+		column :id
 		column "Dispensary Source" do |dsp|
 			if dsp.dispensary_source.present?
 				link_to "#{dsp.dispensary_source.name} - #{dsp.dispensary_source.source.name}", admin_dispensary_source_path(dsp.dispensary_source)
@@ -20,11 +21,12 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
 		end
 		column :created_at
 		column :updated_at
+		actions
 	end
 
 	form do |f|
 		f.input :dispensary_source_id, :label => 'Dispensary Source', :as => :select, 
-				:collection => DispensarySource.order('name ASC').map{|u| ["#{u.name}", u.id]}
+				:collection => DispensarySource.order('name ASC').map{|u| ["#{u.name} - #{u.source_id}", u.id]}
 		f.input :product_id, :label => 'Product', :as => :select, 
 				:collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
     	f.actions
