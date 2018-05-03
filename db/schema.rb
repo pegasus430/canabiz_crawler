@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180501184949) do
+ActiveRecord::Schema.define(version: 20180503002547) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -158,28 +158,6 @@ ActiveRecord::Schema.define(version: 20180501184949) do
   create_table "dispensary_source_products", force: :cascade do |t|
     t.integer  "dispensary_source_id"
     t.integer  "product_id"
-    t.string   "image"
-    t.decimal  "price"
-    t.decimal  "price_gram"
-    t.decimal  "price_eighth"
-    t.decimal  "price_quarter"
-    t.decimal  "price_half_gram"
-    t.decimal  "price_two_grams"
-    t.decimal  "price_half_ounce"
-    t.decimal  "price_ounce"
-    t.decimal  "price_80mg"
-    t.decimal  "price_160mg"
-    t.decimal  "price_180mg"
-    t.decimal  "price_100mg"
-    t.decimal  "price_40mg"
-    t.decimal  "price_25mg"
-    t.decimal  "price_150mg"
-    t.decimal  "price_10mg"
-    t.decimal  "price_50mg"
-    t.decimal  "price_240mg"
-    t.decimal  "price_1mg"
-    t.decimal  "price_2_5mg"
-    t.decimal  "one"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -235,10 +213,6 @@ ActiveRecord::Schema.define(version: 20180501184949) do
     t.integer "display_order"
   end
 
-  create_table "hashtags", force: :cascade do |t|
-    t.string "name"
-  end
-
   create_table "orders", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -275,12 +249,10 @@ ActiveRecord::Schema.define(version: 20180501184949) do
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.string   "image"
-    t.boolean  "ancillary"
     t.string   "product_type"
     t.string   "slug"
     t.string   "description"
     t.boolean  "featured_product"
-    t.string   "short_description"
     t.integer  "category_id"
     t.decimal  "year"
     t.decimal  "month"
@@ -299,11 +271,6 @@ ActiveRecord::Schema.define(version: 20180501184949) do
   end
 
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true
-
-  create_table "source_hashtags", force: :cascade do |t|
-    t.integer "source_id"
-    t.integer "hashtag_id"
-  end
 
   create_table "sources", force: :cascade do |t|
     t.string   "name"
