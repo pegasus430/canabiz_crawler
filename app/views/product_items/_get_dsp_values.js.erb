@@ -1,16 +1,48 @@
 <div class="modal-dialog">
     <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel"><%= "Buy #{@product_name} from #{@dispensary_name}"%></h3>
-        </div>
-        <div class="modal-body">
-            <h4>Select Unit and Quantity</h4>
-            <%= render 'product_items/form' %>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn" style="background-color: #2ab081;border-color: #2ab081; color: #fff;">Add to Cart</button>
-        </div>
+        <%= form_for(@product_item, remote: true, :html => { :role => "form" }) do |f| %>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel"><%= "Buy #{@product_name} from #{@dispensary_name}"%></h3>
+            </div>
+            <div class="modal-body">
+                <h4>Select Unit and Quantity</h4>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="control-label col-sm-2">
+                            <b>Quantity</b>
+                        </div>
+                        <div class="col-sm-8">
+                            <%= f.number_field :quantity, :class => 'text_field'%>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="control-label col-sm-2">
+                            <b>Unit</b>
+                        </div>
+                        <div class="col-sm-8">
+                            <%= f.collection_select :dsp_price_id, @dsp_values, :id, :unit %>
+                        </div>
+                    </div>
+                </div>
+                <%= f.hidden_field :cart_id, :value => @cart.id %>
+                <%= f.hidden_field :product_id, :value => @product_id %>
+                <%= f.hidden_field :dispensary_source_id, :value => @dispensary_source_id %>
+            
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <%= f.submit "Add To Cart", :class => "btn btn-green" %>
+                <style>
+                    .btn-green {
+                        background-color: #2ab081;border-color: #2ab081; color: #fff;
+                    }
+                </style>
+                <!--<input type="submit" name="commit" value="Add To Cart" class="btn" data-dismiss="modal" style="background-color: #2ab081;border-color: #2ab081; color: #fff;">-->
+                <!--<button class="btn" style="background-color: #2ab081;border-color: #2ab081; color: #fff;">Add to Cart</button>-->
+            </div>
+        <% end %>
     </div>
 </div>

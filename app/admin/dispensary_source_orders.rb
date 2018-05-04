@@ -4,6 +4,20 @@ ActiveAdmin.register DispensarySourceOrder do
 	
 	permit_params :shipped, :picked_up
 	
+	filter :created_at
+	filter :updated_at
+	filter :shipped, label: 'Delivered'
+	filter :picked_up
+	
+	form(:html => { :multipart => true }) do |f|
+		f.inputs do
+			# f.input :name, input_html: { disabled: true } --> maybe display some other fields
+			f.input :shipped, label: 'Delivered'
+			f.input :picked_up
+		end
+		f.actions
+	end
+	
 	index do
 		
 		if current_admin_user.admin?
@@ -19,8 +33,27 @@ ActiveAdmin.register DispensarySourceOrder do
 				end
 			end
 		end
+		
+		if current_admin_user.dispensary_admin_user?
+			column "Customer" do |dso|
+				if dso.order.present?
+					dso.order.name
+				end
+			end
+			column "Location" do |dso|
+				if dso.order.present?
+					dso.order.address + ', ' + dso.order.city
+				end
+			end
+		end
+		
+		column "Total Price" do |dso|
+			'$' + dso.total_price.to_s	
+		end
+		
 		column :shipped, label: 'Delivered'
 		column :picked_up
+		
 		column :created_at
 		column :updated_at
 		actions
