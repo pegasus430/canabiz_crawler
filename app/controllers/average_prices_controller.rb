@@ -92,12 +92,4 @@ class AveragePricesController < ApplicationController
             params.require(:average_price).permit(:average_price, :average_price_unit, 
                                 :display_order, :units_sold, :product_id)
         end
-      
-        def sort_column
-            params[:sort] || "product_id"
-        end
-        def sort_direction
-            params[:direction] || 'desc'
-        end
-          
 end

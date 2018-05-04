@@ -16,7 +16,9 @@
                 <h5>Total: <%= number_to_currency @cart.total_price %> </h5>
                 <br/>
                 <%= button_to 'Checkout', new_order_path, method: :get %>
-                <%= link_to 'Empty Your Cart', @cart, method: :destroy, data: {confirm: 'You sure?'} %>
+                <td><%= link_to "Empty Your Cart", cart_path(@cart), method: :delete,
+		                  data: { confirm: "Are you sure you want to empty your cart?"},
+		                  class: "btn" %></td>
             </div>
         </div>
     </div>

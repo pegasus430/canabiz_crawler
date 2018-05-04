@@ -62,11 +62,4 @@ class VendorProductsController < ApplicationController
         def vendor_product_params
             params.require(:vendor_product).permit(:product_id, :vendor_id, :units_sold)
         end
-        
-        def sort_column
-            params[:sort] || "vendor_id"
-        end
-        def sort_direction
-            params[:direction] || 'desc'
-        end 
 end

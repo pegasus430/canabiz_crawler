@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180503002547) do
+ActiveRecord::Schema.define(version: 20180503175559) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -150,9 +150,10 @@ ActiveRecord::Schema.define(version: 20180503002547) do
   create_table "dispensary_source_orders", force: :cascade do |t|
     t.integer  "dispensary_source_id"
     t.integer  "order_id"
-    t.decimal  "total_price"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "shipped"
+    t.boolean  "picked_up"
   end
 
   create_table "dispensary_source_products", force: :cascade do |t|

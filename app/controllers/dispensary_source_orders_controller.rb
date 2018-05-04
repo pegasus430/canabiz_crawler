@@ -1,4 +1,4 @@
-class DispensarySourceProductsController < ApplicationController
+class DispensarySourceOrdersController < ApplicationController
     
     before_action :set_dispensary_source_product, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, except: [:show]
@@ -60,6 +60,6 @@ class DispensarySourceProductsController < ApplicationController
         end
         
         def dispensary_source_product_params
-            params.require(:dispensary_source_product).permit(:product_id, :dispensary_source_id)
+            params.require(:dispensary_source_product).permit(:order_id, :shipped, :picked_up)
         end
 end

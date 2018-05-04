@@ -17,6 +17,8 @@ class Product < ActiveRecord::Base
     has_many :dispensary_source_products
     has_many :dispensary_sources, through: :dispensary_source_products
     
+    has_many :product_items
+    
     #friendly url
     extend FriendlyId
     friendly_id :name, use: :slugged

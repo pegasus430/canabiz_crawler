@@ -70,11 +70,4 @@ class DigestEmailsController < ApplicationController
         def digest_email_params
           params.require(:digest_email).permit(:email, :active)
         end  
-        
-        def sort_column
-            params[:sort] || "email"
-        end
-        def sort_direction
-            params[:direction] || 'desc'
-        end
 end

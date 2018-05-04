@@ -185,11 +185,4 @@ class ProductsController < ApplicationController
                                             :sub_category, :cbd, :cbn, :min_thc, :med_thc, :max_thc, :is_dom,
                                             :year, :month, :category_id, :description, dispensary_source_ids: [], vendor_ids: [])
         end  
-        
-        def sort_column
-            params[:sort] || "name"
-        end
-        def sort_direction
-            params[:direction] || 'desc'
-        end
 end

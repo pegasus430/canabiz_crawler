@@ -1,12 +1,7 @@
 ActiveAdmin.register Order do
 
 	show do |order|
-	  
-		if current_admin_user.admin?
-			#show dispensary information
-			#if not admin they only see their orders
-		end
-		
+
 		panel 'Customer Details' do
 			attributes_table_for order, :name, :email, :phone, :address, :city, :country
 		end

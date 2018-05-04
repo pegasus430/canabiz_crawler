@@ -112,11 +112,4 @@ class DispensariesController < ApplicationController
         def dispensary_params
             params.require(:dispensary).permit(:name, :image, :location, :city, :state_id, :has_hypur, :has_payqwick)
         end
-        
-        def sort_column
-            params[:sort] || "name"
-        end
-        def sort_direction
-            params[:direction] || 'asc'
-        end
 end

@@ -90,11 +90,4 @@ class VendorsController < ApplicationController
                         :tier, :vendor_type, :address, :total_sales, :license_number, :ubi_number, 
                         :dba, :month_inc, :year_inc, :month_inc_num, :longitude, :latitude, product_ids:[])
         end  
-        
-        def sort_column
-            params[:sort] || "name"
-        end
-        def sort_direction
-            params[:direction] || 'desc'
-        end
 end

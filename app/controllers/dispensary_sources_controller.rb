@@ -71,11 +71,4 @@ class DispensarySourcesController < ApplicationController
                                                             :sunday_close_time, :facebook, :instagram, :twitter, :website, 
                                                             :email, :phone, :min_age)
         end
-        
-        def sort_column
-            params[:sort] || "dispensary_id"
-        end
-        def sort_direction
-            params[:direction] || 'desc'
-        end 
 end

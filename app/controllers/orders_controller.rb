@@ -18,19 +18,15 @@ class OrdersController < ApplicationController
 		#or after order is saved i can do after_validation create DispensaryOrder records - 
 		#but have to add the product items to it
 		
-		@dispensary = @cart.product_items[0].dispensary
-		
 		@order = Order.new
 		@client_token = Braintree::ClientToken.generate
 	end
 	
 	def create
-		logger.info 'I AM IN HERE'
 		@order = Order.new(order_params)
 		@order.add_product_items_from_cart(@cart)
 		if @order.save
-			logger.info 'I AM IN HERE SAVED'
-			logger.info @cart.total_price
+			@order.create_dispensary_source_orders(@order)
 			charge 
 			if @result.success?
 				Cart.destroy(session[:cart_id]) #no longer need cart with these products if order placed
@@ -58,44 +54,19 @@ class OrdersController < ApplicationController
 	
 	private
 	
-	def set_order
-		@order = Order.find(params[:id])
-	end
-	
-	def order_params
-		params.require(:order).permit(:name, :email, :phone, :address, :city, :state, :country, :dispensary_source_id)
-	end
-	
-	def charge
-		#test braintree transaction
-		@result = Braintree::Transaction.sale(
-		  amount: @cart.total_price,
-		  payment_method_nonce: params[:payment_method_nonce] )
-	end
-	
-	after_validation :create_dispensary_source_orders
-	def create_dispensary_source_orders
-		
-		dispensarySourceIds = Set.new
-		self.product_items.each do |product_item|
-			dispensarySourceIds.add(product_item.dispensary_source_id)
+		def set_order
+			@order = Order.find(params[:id])
 		end
 		
-		dispensary_source_orders = Array.new
+		def order_params
+			params.require(:order).permit(:name, :email, :phone, :address, :city, :state, :country, :dispensary_source_id)
+		end
 		
-		dispensarySourceIds.each do |setObject|
-            dso = DispensarySourceOrder.create(:dispensary_source_id => setObject, :order_id => self.id)
-            dispensary_source_orders.add(dso)
-        end
-		
-		self.product_items.each do |product_item|
-			
-			dispensary_source_orders.each do |dso|
-				if dso.dispensary_source_id == product_item.dispensary_source_id
-					product_item.update_attribute :dispensary_source_order_id, dso.id
-				end
-			end
-		end 
-	end
-  	
+		def charge
+			#test braintree transaction
+			@result = Braintree::Transaction.sale(
+			  amount: @cart.total_price,
+			  payment_method_nonce: params[:payment_method_nonce] )
+		end
+	
 end

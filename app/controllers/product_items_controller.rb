@@ -42,9 +42,8 @@ class ProductItemsController < ApplicationController
 		#have to see if item is already in cart and if so add to it
 		#that cart build method used to do this
 		
-		
-		
-		@product_item = @cart.add_product(@product_item.product_id, @product_item.dispensary_id, @product_item.dsp_price_id, 5)
+		@product_item = @cart.add_product(@product_item.product_id, 
+			@product_item.dispensary_source_id, @product_item.dsp_price_id, 5)
 		if @product_item.save
 		  redirect_to root_path, notice: 'Product added to Cart'
 		else
@@ -52,28 +51,12 @@ class ProductItemsController < ApplicationController
 		end
 	end
 	
-	def add_to_cart
+	def edit
 	end
 	
-	# def get_dsp_values
-	# 	logger.info 'here is the id: ' + params[:disp_source_id]
-	# 	logger.info 'here is the product id: ' + params[:productId]
-		
-	# 	dispensary_source_products = DispensarySourceProduct.where(dispensary_source_id: params[:disp_source_id])
-	# 									.where(product_id: params[:productId]).includes(:dsp_prices)
-										
-	# 	if dispensary_source_products.size > 0 
-	# 		@dsp_prices = dispensary_source_products[0].dsp_prices
-	# 	else
-	# 		redirect_to root_path	
-	# 	end
-		
-	# 	#@dsp_prices_for_cart = DSPPrice.where()
-		
-	# 	# if @dispensary_to_product.has_key?(params[:dispensary_key_id])
-			
-	# 	# end
-	# end
+	def update
+	end
+	
 	
 	private
 	
@@ -82,7 +65,7 @@ class ProductItemsController < ApplicationController
 	end
 	
 	def product_item_params
-		params.require(:product_item).permit(:product_id, :cart_id, :quantity, :dispensary_id, :dsp_price_id) 
+		params.require(:product_item).permit(:product_id, :cart_id, :quantity, :dispensary_source_id, :dsp_price_id, :dispensary_source_order_id) 
 	end
 	
 end

@@ -226,12 +226,4 @@ class ArticlesController < ApplicationController
             params.require(:article).permit(:title, :abstract, :body, :date, :image, :remote_image_url, :web_url,
                                     :source_id, :include_in_digest, state_ids: [], category_ids: [])
         end
-      
-        def sort_column
-            params[:sort] || "date"
-        end
-        def sort_direction
-            params[:direction] || 'desc'
-        end
-          
 end
