@@ -28,8 +28,8 @@
 	  
 	  <div class="form-group">
 		  <div class="col-md-10">
-			  <%= f.label :address %>
-			  <%= f.text_area :address, cols: 40, class: 'form-control' %>
+			  <%= f.label :street %>
+			  <%= f.text_area :street, cols: 40, class: 'form-control' %>
 		  </div>
 	  </div>
 	  
@@ -37,6 +37,13 @@
 		  <div class="col-md-10">
 			  <%= f.label :city %>
 			  <%= f.text_field :city, size: 40, class: 'form-control' %>
+		  </div>
+	  </div>
+	  
+		<div class="form-group">
+		  <div class="col-md-10">
+			  <%= f.label :zip_code %>
+			  <%= f.text_field :zip_code, size: 40, class: 'form-control' %>
 		  </div>
 	  </div>
 	  
@@ -48,15 +55,7 @@
 	  </div>
 	  
 	  <div class="form-group">
-		  <div class="col-md-10">
-		  	<%= f.label :country %>
-	  		<%= f.country_select :country %>
-		  </div>
-	  </div>
-	  
-	  <div class="form-group">
 	  	  <div id="payment-form"></div>
-		  <!--<div id="dropin-container"></div> <!-- braintree -->
 		  <div class="col-md-10">
 			  <%= f.submit 'Place Order' %>
 		  </div>

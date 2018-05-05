@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180503175559) do
+ActiveRecord::Schema.define(version: 20180504233406) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -152,8 +152,8 @@ ActiveRecord::Schema.define(version: 20180503175559) do
     t.integer  "order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "shipped"
     t.boolean  "picked_up"
+    t.boolean  "delivered"
   end
 
   create_table "dispensary_source_products", force: :cascade do |t|
@@ -217,15 +217,13 @@ ActiveRecord::Schema.define(version: 20180503175559) do
   create_table "orders", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.text     "address"
     t.string   "city"
     t.string   "state"
-    t.string   "country"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "phone"
-    t.integer  "dispensary_source_id"
-    t.integer  "dispensary_id"
+    t.text     "street"
+    t.text     "zip_code"
   end
 
   create_table "product_items", force: :cascade do |t|

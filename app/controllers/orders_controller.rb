@@ -14,10 +14,6 @@ class OrdersController < ApplicationController
 			return
 		end
 		
-		#i can make array of dispensaries here i think - 
-		#or after order is saved i can do after_validation create DispensaryOrder records - 
-		#but have to add the product items to it
-		
 		@order = Order.new
 		@client_token = Braintree::ClientToken.generate
 	end
@@ -59,7 +55,7 @@ class OrdersController < ApplicationController
 		end
 		
 		def order_params
-			params.require(:order).permit(:name, :email, :phone, :address, :city, :state, :country, :dispensary_source_id)
+			params.require(:order).permit(:name, :email, :phone, :street, :city, :zip_code, :state, :dispensary_source_id)
 		end
 		
 		def charge

@@ -16,6 +16,10 @@ class Order < ActiveRecord::Base
 		product_items.map(&:total_price).sum	
 	end
 	
+	def address
+		"#{street}, #{city} #{zip_code}"
+	end
+	
 	#after_validation :create_dispensary_source_orders, on: [ :create ]
 	def create_dispensary_source_orders(order)
 		

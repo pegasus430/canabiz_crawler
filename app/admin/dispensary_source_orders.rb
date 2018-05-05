@@ -2,17 +2,17 @@ ActiveAdmin.register DispensarySourceOrder do
 
 	menu priority: 4, label: 'Dispensary Orders'
 	
-	permit_params :shipped, :picked_up
+	permit_params :delivered, :picked_up
 	
 	filter :created_at
 	filter :updated_at
-	filter :shipped, label: 'Delivered'
+	filter :delivered
 	filter :picked_up
 	
 	form(:html => { :multipart => true }) do |f|
 		f.inputs do
-			# f.input :name, input_html: { disabled: true } --> maybe display some other fields
-			f.input :shipped, label: 'Delivered'
+			# f.input :name, input_html: { disabled: true } --> maybe display some other fields disabled
+			f.input :delivered
 			f.input :picked_up
 		end
 		f.actions
@@ -40,9 +40,14 @@ ActiveAdmin.register DispensarySourceOrder do
 					dso.order.name
 				end
 			end
-			column "Location" do |dso|
+			column "Address" do |dso|
 				if dso.order.present?
-					dso.order.address + ', ' + dso.order.city
+					dso.order.address
+				end
+			end
+			column "Phone" do |dso|
+				if dso.order.present?
+					dso.order.phone
 				end
 			end
 		end
@@ -51,7 +56,7 @@ ActiveAdmin.register DispensarySourceOrder do
 			'$' + dso.total_price.to_s	
 		end
 		
-		column :shipped, label: 'Delivered'
+		column :delivered
 		column :picked_up
 		
 		column :created_at
@@ -68,7 +73,7 @@ ActiveAdmin.register DispensarySourceOrder do
 		
 		panel 'Customer Details' do
 			if dispensary_order.order.present?
-				attributes_table_for dispensary_order.order, :name, :email, :phone, :address, :city, :country
+				attributes_table_for dispensary_order.order, :name, :email, :phone, :street, :city, :zip_code
 			end
 		end
 		
@@ -78,7 +83,7 @@ ActiveAdmin.register DispensarySourceOrder do
 					"#{time_ago_in_words dispensary_order.created_at} ago"
 				end
 				column 'Delivered' do |dso|
-					dso.shipped
+					dso.delivered
 				end
 				column 'Picked Up' do |dso|
 					dso.picked_up

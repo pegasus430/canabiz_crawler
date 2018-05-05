@@ -60,6 +60,6 @@ class DispensarySourceOrdersController < ApplicationController
         end
         
         def dispensary_source_product_params
-            params.require(:dispensary_source_product).permit(:order_id, :shipped, :picked_up)
+            params.require(:dispensary_source_product).permit(:order_id, :delivered, :picked_up)
         end
 end

@@ -20,7 +20,7 @@ class ProductHeadset < ActiveJob::Base
         require 'open-uri'
         
         begin
-	        output = IO.popen(["python", "#{Rails.root}/app/scrapers/scrapers_env_info.py"])
+	        output = IO.popen(["python", "#{Rails.root}/app/scrapers/headset_disp_scraper.py", @state_name])
 	        contents = JSON.parse(output.read)
 	        
 	        #call method
