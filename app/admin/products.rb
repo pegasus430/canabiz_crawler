@@ -10,14 +10,21 @@ ActiveAdmin.register Product do
 		@product = Product.friendly.find(params[:id])
 	end
   
-	actions :index, :show, :new, :create, :update, :edit
+	#actions :index, :show, :new, :create, :update, :edit
   
 	#scopes
 	scope :all, default: true
 	scope :featured
 	
 	#save queries
-	includes :category
+	includes :category, :state
+	
+	#filters
+	filter :name
+    filter :featured_product
+    filter :state_id
+    filter :category_id
+    filter :sub_category
 	
 	#-----CSV ACTIONS ----------#
     
@@ -67,6 +74,7 @@ ActiveAdmin.register Product do
 
 	index do
 		selectable_column
+		id_column
 		column :name
 		column :alternate_names
 		column "Description" do |product|
@@ -81,6 +89,11 @@ ActiveAdmin.register Product do
 		column "Category" do |product|
 			if product.category.present?
 				link_to product.category.name, admin_category_path(product.category)
+			end
+		end
+		column "State" do |product|
+			if product.state.present?
+				link_to product.state.name, admin_category_path(product.state)
 			end
 		end
 		column :sub_category

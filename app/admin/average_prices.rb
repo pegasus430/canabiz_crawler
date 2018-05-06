@@ -26,11 +26,17 @@ ActiveAdmin.register AveragePrice do
 	end
 	
 	index do
-		column :product_id
+		column "Product" do |ap|
+			if ap.product.present?
+				link_to ap.product.name, admin_product_path(ap.product)
+			end
+		end
 		column :average_price
 		column :average_price_unit
 		column :units_sold
 		column :display_order
+		column :created_at
+		column :updated_at
 	end
 
 	form do |f|

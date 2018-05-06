@@ -64,9 +64,13 @@ ActiveAdmin.register Article do
         column "Body" do |article|
           truncate(article.body, omision: "...", length: 50) if article.body
         end
-		column :created_at
+        column "Source" do |article|
+			if article.source.present?
+				link_to article.source.name, admin_source_path(article.source)
+			end
+		end
 		column :web_url
-		column :source_id
+		column :created_at
 		actions
 	end
 	

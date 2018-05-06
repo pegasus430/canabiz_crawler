@@ -6,9 +6,10 @@ class Ability
     user ||= AdminUser.new
     if user.super_user?
       can :manage, :all
+      
     elsif user.dispensary_admin_user?
       can :read, Product
-      can :manage, AdminUser
+      can :manage, AdminUser, :id => user.id
       
       can :manage, DispensarySource, :admin_user_id => user.id
       cannot [:destroy, :create], DispensarySource

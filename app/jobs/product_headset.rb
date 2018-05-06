@@ -182,7 +182,7 @@ class ProductHeadset < ActiveJob::Base
 		end
 
 		# #check average price - if exists, update price, if not create
-		average_price = AveragePrice.where(product_id: product.id).where(average_price_unit: average_price_unit)
+		average_prices = AveragePrice.where(product_id: product.id).where(average_price_unit: average_price_unit)
 		
 		price = nil
 		if item['product_price'].index('$') != nil
@@ -191,17 +191,17 @@ class ProductHeadset < ActiveJob::Base
 			price = item['product_price'].to_f
 		end
 
-		if (average_price.size == 0)
-			vendor_product = AveragePrice.new(
-				:product_id => vendor.id, 
+		if (average_prices.size == 0)
+			average = AveragePrice.new(
+				:product_id => product.id, 
 				:average_price => price,
 				:average_price_unit => average_price_unit
         	)
-        	unless vendor_product.save
-        		puts "vendor_product Save Error: #{vendor_product.errors.messages}"
+        	unless average.save
+        		puts "average Save Error: #{average.errors.messages}"
         	end
 		else
-			average_price[0].update_attribute :average_price, price
+			average_prices[0].update_attribute :average_price, price
 		end
 
 

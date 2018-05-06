@@ -4,26 +4,33 @@ ActiveAdmin.register VendorProduct do
 
 	menu :if => proc{ current_admin_user.admin? }
 	
-	permit_params :product_id, :average_price, :average_price_unit, :units_sold, :display_order
+	permit_params :product_id, :vendor_id, :units_sold
 	
 	#save queries
-	includes :product
+	includes :product, :vendor
 	
 	index do
-		column :product_id
-		column :average_price
-		column :average_price_unit
+		column "Product" do |vp|
+			if vp.product.present?
+				link_to vp.product.name, admin_product_path(vp.product)
+			end
+		end
+		column "Vendor" do |vp|
+			if vp.vendor.present?
+				link_to vp.vendor.name, admin_vendor_path(vp.vendor)
+			end
+		end
 		column :units_sold
-		column :display_order
+		column :created_at
+		column :updated_at
 	end
 
 	form do |f|
 		f.input :product_id, :label => 'Product', :as => :select, 
-				:collection => Product.all.map{|u| ["#{u.name}", u.id]}
-		f.input :average_price
-		f.input :average_price_unit
+				:collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
+		f.input :vendor_id, :label => 'Vendor', :as => :select, 
+				:collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
 		f.input :units_sold
-		f.input :display_order
     	f.actions
     end
 
