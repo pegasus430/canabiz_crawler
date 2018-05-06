@@ -54,6 +54,7 @@ ActiveAdmin.register Article do
 	includes :categories, :source
 	
 	index do
+		selectable_column
 		column "Title" do |article|
           truncate(article.title, omision: "...", length: 50) if article.title
         end

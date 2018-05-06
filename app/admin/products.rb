@@ -22,11 +22,11 @@ ActiveAdmin.register Product do
 	#-----CSV ACTIONS ----------#
     
     #import csv
-	action_item only: :index do
-		if current_admin_user.admin?
-			link_to 'Import Products', admin_products_import_products_path, class: 'import_csv'
-		end
-	end
+	# action_item only: :index do
+	# 	if current_admin_user.admin?
+	# 		link_to 'Import Products', admin_products_import_products_path, class: 'import_csv'
+	# 	end
+	# end
 	
 	#export csv
 	csv do
@@ -66,6 +66,7 @@ ActiveAdmin.register Product do
 	#-----CSV ACTIONS ----------#
 
 	index do
+		selectable_column
 		column :name
 		column :alternate_names
 		column "Description" do |product|

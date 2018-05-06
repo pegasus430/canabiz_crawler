@@ -7,10 +7,10 @@ class ProductHeadset < ActiveJob::Base
     def perform(state_name)
         logger.info "Headset background job is running"
         @state_name = state_name
-        #@state_record = State.where(name: @state_name).first
-        #@categories = Category.products.active
-        #@products = Product.where(state_id: @state_record.id)
-        #@vendors = Vendor.where(state_id: @state_record.id)
+        @state_record = State.where(name: @state_name.titlecase).first
+        @categories = Category.products.active
+        @products = Product.all
+        @vendors = Vendor.where(state_id: @state_record.id)
         scrapeHeadset()
     end    
     
@@ -25,11 +25,11 @@ class ProductHeadset < ActiveJob::Base
 	        
 	        #call method
 			logger.info "here are the results: " 
-			logger.info contents
+			# logger.info contents
 
-			if @contents[@state_name] != nil
+			if contents[@state_name] != nil
 				logger.info "HEADSET DID RETURN PRODUCTS"
-				#parseProducts(contents[@state_name])
+				parseProducts(contents[@state_name])
 			else
 				logger.info "HEADSET DID NOT RETURN ANY PRODUCTS"
 			end
@@ -40,29 +40,61 @@ class ProductHeadset < ActiveJob::Base
     end
 
     def parseProducts(state_products)
+    	
+    	state_products.each do |product_grouping|
+    		
+    		# logger.info product_grouping
+    		
+    		@categories.each do |category|
+    			
+    			if product_grouping[category.name] != nil
+					logger.info 'this category is here: '
+    				logger.info category.name
+    				
+    				product_grouping[category.name]['items'].each do |item|
+    					checkVendorAndProduct(item, category)
+    				end
+    			end
+    		end
+    	end
+    	
+    	# logger.info state_products[1]
+    	
+    	# @categories.each do |category|
+    		
+    	# 	logger.info 'CATEGORY: ' 
+    	# 	logger.info category.name
+    		
+    		
+    	# 	# if state_products[category.name] != nil
+    			
+    	# 	# 	logger.info 'this category is here: '
+    	# 	# 	category.name
+    	# 	# end
+    	# end
 
-    	state_products.each do |category|
+   # 	state_products.each do |category|
 
-    		logger.info 'category: ' 
-    		logger.info category
+   # 		logger.info 'category: ' 
+   # 		logger.info category[0]
 
-    		#check if the category itself is in the system
-			existing_categories = @categories.select { |product_category| product_category.name.casecmp(category) == 0 }
+   # 		#check if the category itself is in the system
+			# existing_categories = @categories.select { |product_category| product_category.name.casecmp(category) == 0 }
 
-			if existing_categories.size > 0
-				product_category = existing_categories[0]
+			# if existing_categories.size > 0
+			# 	product_category = existing_categories[0]
 
-				category['items'].each do |item|
+			# 	category['items'].each do |item|
 
-					checkVendorAndProduct(item)
-				end
-			end
-    	end #end of category loop
+			# 		# checkVendorAndProduct(item)
+			# 	end
+			# end
+   # 	end #end of category loop
     end #end of parseProducts method
 
 
     #method to check if product and vendor are in system - if not create
-    def checkVendorAndProduct(item)
+    def checkVendorAndProduct(item, category)
     	
     	#check if the vendor itself is in the system
 		existing_vendors = @vendors.select { |vendor| vendor.name.casecmp(item['brand_name']) == 0 }
@@ -72,27 +104,50 @@ class ProductHeadset < ActiveJob::Base
 			vendor = existing_vendors[0]
 		else
 			#vendor not in system - create
+			
+			logger.info 'VENDOR NOT IN SYSTEM HERE IS THE IMAGE: '
+			
+			image_url = ''
+        	if item['brand_image'].index('?') != nil
+        		
+        		image_url = item['brand_image'][0, item['brand_image'].index('?')].strip
+        		
+        	else 
+        		image_url = item['brand_image']
+        	end
+			
+			
+			logger.info image_url
+			
 			vendor = Vendor.new(
-				:title => item["brand_name"], 
-				:remote_image_url => item["brand_image"],
+				:name => item["brand_name"], 
+				:remote_image_url => image_url,
 				:state_id => @state_record.id
         	)
         	unless vendor.save
         		puts "vendor Save Error: #{vendor.errors.messages}"
         	end
+        	@vendors.push(vendor)
 		end
 
 		#check if the product itself is in the system
     	product_name = ''
     	average_price_unit = ''
+    	
+    	logger.info 'PRODUCT ITEM BEFORE MANIPULATION: ' + item['product_name']
+    	
     	if item['product_name'].index('(') != nil
     		product_name = item['product_name'][0, item['product_name'].index('(') - 1].strip
-    		average_price_unit = item['product_name'][item['product_name'].index('(') + 1, 
-    								item['product_name'].index(')') - 1].strip
+    		
+    		average_price_unit = item['product_name'][(item['product_name'].index('(') + 1), 
+    									item['product_name'].length].chomp(')').strip
     	else
     		product_name = item['product_name']
-    		average_price_unit = 'unit'
+    		average_price_unit = 'Unit'
     	end
+
+		logger.info 'HERE IS THE PRODUCT NAME: ' + product_name
+		logger.info 'HERE IS THE AVERAGE PRICE UNIT: ' + average_price_unit
 
 		existing_products = @products.select { |product| product.name.casecmp(product_name) == 0 }
 		product = nil
@@ -102,13 +157,15 @@ class ProductHeadset < ActiveJob::Base
 		else
 			#product not in system - create
 			product = Product.new(
-				:title => item["brand_name"], 
-				:remote_image_url => item["brand_image"],
-				:state_id => @state_record.id
+				:name => product_name, 
+				:state_id => @state_record.id,
+				:featured_product => false,
+				:category_id => category.id
         	)
         	unless product.save
         		puts "product Save Error: #{product.errors.messages}"
         	end
+        	@products.push(product)
 		end
 
 		#check vendor product
@@ -124,14 +181,14 @@ class ProductHeadset < ActiveJob::Base
         	end
 		end
 
-		#check average price - if exists, update price, if not create
+		# #check average price - if exists, update price, if not create
 		average_price = AveragePrice.where(product_id: product.id).where(average_price_unit: average_price_unit)
 		
 		price = nil
 		if item['product_price'].index('$') != nil
-			price = item['product_price'][0, item['product_price'].index('$') - 1].strip
+			price = item['product_price'].chomp('$').strip.to_f
 		else 
-			price = item['product_price']
+			price = item['product_price'].to_f
 		end
 
 		if (average_price.size == 0)

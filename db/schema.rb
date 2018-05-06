@@ -361,6 +361,8 @@ ActiveRecord::Schema.define(version: 20180504233406) do
     t.datetime "updated_at"
     t.string   "image"
     t.integer  "state_id"
+    t.float    "longitude"
+    t.float    "latitude"
     t.integer  "tier"
     t.string   "vendor_type"
     t.string   "address"
@@ -371,8 +373,6 @@ ActiveRecord::Schema.define(version: 20180504233406) do
     t.string   "month_inc"
     t.integer  "year_inc"
     t.integer  "month_inc_num"
-    t.float    "longitude"
-    t.float    "latitude"
   end
 
   add_index "vendors", ["slug"], name: "index_vendors_on_slug", unique: true
