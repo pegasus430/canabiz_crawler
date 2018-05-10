@@ -1,0 +1,130 @@
+<%= semantic_form_for [:admin, @dispensary_source], :authenticity_token => true, :multipart => true, builder: ActiveAdmin::FormBuilder do |f| %>
+    <%= f.inputs "Dispensary Details" do
+            
+            if current_admin_user.dispensary_admin_user?
+                f.input :name, input_html: { disabled: true } 
+            end
+            
+            if current_admin_user.admin?
+                f.input :name
+                f.input :admin_user_id, :label => 'Admin User', :as => :select, 
+                :collection => AdminUser.order('email ASC').map{|u| ["#{u.email}", u.id]}
+                f.input :dispensary_id, :label => 'Dispensary', :as => :select, 
+                        :collection => Dispensary.order('name ASC').map{|u| ["#{u.name}", u.id]}
+                f.input :source_id, :label => 'Source', :as => :select, 
+                        :collection => Source.where(source_type: ['Dispensary', 'Both']).order('name ASC').
+                                        map{|u| ["#{u.name}", u.id]}
+                f.input :state_id, :label => 'State', :as => :select, 
+                    :collection => State.order('name ASC').map{|u| ["#{u.name}", u.id]}
+                f.input :source_rating
+                f.input :last_menu_update
+            end
+            
+            f.input :image, :as => :file
+            f.input :street
+            f.input :city
+            f.input :zip_code
+            
+            f.input :instagram
+            f.input :twitter
+            f.input :website
+            f.input :email
+            f.input :phone, label: 'Phone Number'
+            f.input :min_age, label: 'Minimum Age'
+            
+            f.input :monday_open_time
+            f.input :tuesday_open_time
+            f.input :wednesday_open_time
+            f.input :thursday_open_time
+            f.input :friday_open_time
+            f.input :saturday_open_time
+            f.input :sunday_open_time
+            f.input :monday_close_time
+            f.input :tuesday_close_time
+            f.input :wednesday_close_time
+            f.input :thursday_close_time
+            f.input :friday_close_time
+            f.input :saturday_close_time
+            f.input :sunday_close_time
+        end
+        f.actions
+    end
+        <%= f.input :name %>
+        <%= f.action :submit, :label => (@dispensary_source.id.present? ? 'Update Dispensary' : 'Create Dispensary') %>
+    <% end %>
+<% end %>
+
+<% if current_admin_user.seller_user? %>
+  <% if @store.products.any? %>
+    <h3>Owned Products</h3>
+    <%= render partial: 'product_stores', locals: {product_stores: @store.product_stores} %>
+  <% else %>
+    <p>There is no product in this store! Please add from below products</p>
+  <% end %>
+
+  <h3>Products</h3>
+  <%= render partial: 'products', locals: {products: Product.all} %>
+<% end %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    
+    // Add selling price 
+    $(document).on('click', ".add_to_store", function(){
+      product_id = $(this).attr('product_id')
+      store_id = "<%=@store.id %>";
+      ActiveAdmin.modal_dialog("Enter Selling Price", {price: 'number'}, function(inputs) {
+        $.ajax({
+          type: "POST",
+          url: "/admin/stores/" + store_id +"/add_to_store",
+          data: {
+            product_id: product_id,
+            price: $("input[name='price']").last().val()
+          },
+          success: function(data) {
+            window.location.reload()
+            return false;
+          },
+          error: function(data) {
+            return false;
+          }
+        });
+      });
+    });
+
+    // Update selling price
+    $(document).on('click', ".edit_price", function(){
+      $(this).parent().parent().parent().find('span').hide();
+      $(this).parent().parent().parent().find('div').show();
+    });
+    $(document).on('click', ".edit_cancel", function(){
+      $(this).parent().hide();
+      $(this).parent().parent().find('span').show();
+    });
+
+    $(document).on('click', ".save", function(){
+      pstore_id = $(this).attr('pstore_id');
+      store_id = "<%=@store.id %>";
+      price = $(this).parent().find('input').val()
+      that = $(this);
+      console.log("pstore_id", pstore_id)
+      console.log("store_id", store_id)
+      console.log("price", price)
+      $.ajax({
+        type: "PUT",
+        url: "/admin/stores/"+store_id+"/update_product_store",
+        data: {
+          product_store_id: pstore_id,
+          price: price
+        },
+        success: function(data) {
+          window.location.reload()
+          return false;
+        },
+        error: function(data) {
+          return false;
+        }
+      });
+    });
+  });
+
+</script>

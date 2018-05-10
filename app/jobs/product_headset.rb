@@ -4,14 +4,19 @@ class ProductHeadset < ActiveJob::Base
  	#have to make work for multiple states - state_name would be a string like 'washington nevada'
  	#I have to split into array and populate lists based on array
  	#how to split: https://stackoverflow.com/questions/975769/how-to-split-a-delimited-string-in-ruby-and-convert-it-to-an-array
-    def perform(state_name)
+    def perform(state_string)
+    	
+    	@state_names = state_string.split(/\W+/)
+    	@state_string = state_string
+    	
         logger.info "Headset background job is running"
-        @state_name = state_name
-        @state_record = State.where(name: @state_name.titlecase).first
+        #@state_name = state_name
+        
         @categories = Category.products.active
         @products = Product.all
-        @vendors = Vendor.where(state_id: @state_record.id)
+        
         scrapeHeadset()
+
     end    
     
     def scrapeHeadset()
@@ -20,18 +25,21 @@ class ProductHeadset < ActiveJob::Base
         require 'open-uri'
         
         begin
-	        output = IO.popen(["python", "#{Rails.root}/app/scrapers/headset_disp_scraper.py", @state_name])
-	        contents = JSON.parse(output.read)
-	        
-	        #call method
-			logger.info "here are the results: " 
-			# logger.info contents
+        
+        	@state_names.each do |state_name|
+        
+		        output = IO.popen(["python", "#{Rails.root}/app/scrapers/headset_disp_scraper.py", state_name])
+		        contents = JSON.parse(output.read)
+				
+				@state_record = State.where(name: state_name.titlecase).first
+				@vendors = Vendor.where(state_id: @state_record.id)
 
-			if contents[@state_name] != nil
-				logger.info "HEADSET DID RETURN PRODUCTS"
-				parseProducts(contents[@state_name])
-			else
-				logger.info "HEADSET DID NOT RETURN ANY PRODUCTS"
+				if contents[state_name] != nil
+					logger.info "HEADSET DID RETURN PRODUCTS FOR STATE: " + state_name
+					parseProducts(contents[state_name])
+				else
+					logger.info "HEADSET DID NOT RETURN ANY PRODUCTS FOR STATE " + state_name
+				end
 			end
 		rescue => ex
 			logger.info "THERE WAS A HEADSET ERROR: "
@@ -43,13 +51,9 @@ class ProductHeadset < ActiveJob::Base
     	
     	state_products.each do |product_grouping|
     		
-    		# logger.info product_grouping
-    		
     		@categories.each do |category|
     			
     			if product_grouping[category.name] != nil
-					logger.info 'this category is here: '
-    				logger.info category.name
     				
     				product_grouping[category.name]['items'].each do |item|
     					checkVendorAndProduct(item, category)
@@ -57,39 +61,6 @@ class ProductHeadset < ActiveJob::Base
     			end
     		end
     	end
-    	
-    	# logger.info state_products[1]
-    	
-    	# @categories.each do |category|
-    		
-    	# 	logger.info 'CATEGORY: ' 
-    	# 	logger.info category.name
-    		
-    		
-    	# 	# if state_products[category.name] != nil
-    			
-    	# 	# 	logger.info 'this category is here: '
-    	# 	# 	category.name
-    	# 	# end
-    	# end
-
-   # 	state_products.each do |category|
-
-   # 		logger.info 'category: ' 
-   # 		logger.info category[0]
-
-   # 		#check if the category itself is in the system
-			# existing_categories = @categories.select { |product_category| product_category.name.casecmp(category) == 0 }
-
-			# if existing_categories.size > 0
-			# 	product_category = existing_categories[0]
-
-			# 	category['items'].each do |item|
-
-			# 		# checkVendorAndProduct(item)
-			# 	end
-			# end
-   # 	end #end of category loop
     end #end of parseProducts method
 
 
@@ -104,9 +75,6 @@ class ProductHeadset < ActiveJob::Base
 			vendor = existing_vendors[0]
 		else
 			#vendor not in system - create
-			
-			logger.info 'VENDOR NOT IN SYSTEM HERE IS THE IMAGE: '
-			
 			image_url = ''
         	if item['brand_image'].index('?') != nil
         		
@@ -134,8 +102,6 @@ class ProductHeadset < ActiveJob::Base
     	product_name = ''
     	average_price_unit = ''
     	
-    	logger.info 'PRODUCT ITEM BEFORE MANIPULATION: ' + item['product_name']
-    	
     	if item['product_name'].index('(') != nil
     		product_name = item['product_name'][0, item['product_name'].index('(') - 1].strip
     		
@@ -146,21 +112,23 @@ class ProductHeadset < ActiveJob::Base
     		average_price_unit = 'Unit'
     	end
 
-		logger.info 'HERE IS THE PRODUCT NAME: ' + product_name
-		logger.info 'HERE IS THE AVERAGE PRICE UNIT: ' + average_price_unit
-
 		existing_products = @products.select { |product| product.name.casecmp(product_name) == 0 }
 		product = nil
 		if existing_products.size > 0
 			#still need to check if vendor product 
 			product = existing_products[0]
+			product.increment_counters
 		else
 			#product not in system - create
 			product = Product.new(
 				:name => product_name, 
 				:state_id => @state_record.id,
 				:featured_product => false,
-				:category_id => category.id
+				:category_id => category.id,
+				:headset_alltime_count => 1,
+				:headset_monthly_count => 1,
+				:headset_weekly_count => 1,
+				:headset_daily_count => 1,
         	)
         	unless product.save
         		puts "product Save Error: #{product.errors.messages}"

@@ -1,7 +1,8 @@
 ActiveAdmin.register Product do
 	permit_params :name, :image, :ancillary, :product_type, :slug, :description, :featured_product, 
 	  :short_description, :category_id, :year, :month, :alternate_names, :sub_category, :is_dom, :cbd, 
-	  :cbn, :min_thc, :med_thc, :max_thc, :dsp_count
+	  :cbn, :min_thc, :med_thc, :max_thc, :dsp_count, :headset_alltime_count, :headset_monthly_count,
+	  :headset_weekly_count, :headset_daily_count
   
 	menu priority: 6, :if => proc{ current_admin_user.admin? }
   
@@ -50,23 +51,27 @@ ActiveAdmin.register Product do
 		column :min_thc
 		column :med_thc
 		column :max_thc
+		column :headset_alltime_count
+		column :headset_monthly_count
+		column :headset_weekly_count 
+		column :headset_daily_count
 	end
 	
-	collection_action :import_dispensaries do
+	collection_action :import_products do
 		if request.method == "POST"
-			if params[:dispensary][:file_name].present?
-				file_data = params[:dispensary][:file_name]
+			if params[:product][:file_name].present?
+				file_data = params[:product][:file_name]
 				if file_data.respond_to?(:read)
-					dispensaries = file_data.read
-					Dispensary.import_from_csv(dispensaries)
-					flash[:notice] = "Dispensaries imported successfully."
+					products = file_data.read
+					Product.import_from_csv(products)
+					flash[:notice] = "Products imported successfully."
 				elsif file_data.respond_to?(:path)
-					dispensaries = File.read(file_data.path)
-					Dispensary.import_from_csv(dispensaries)
-					flash[:notice] = "Dispensaries imported successfully."
+					products = File.read(file_data.path)
+					Product.import_from_csv(products)
+					flash[:notice] = "Products imported successfully."
 				end
 			end
-			redirect_to admin_dispensaries_path
+			redirect_to admin_products_path
 		end
 	end	
 	
@@ -98,6 +103,10 @@ ActiveAdmin.register Product do
 		end
 		column :sub_category
 		column :updated_at
+		column :headset_alltime_count
+		column :headset_monthly_count
+		column :headset_weekly_count 
+		column :headset_daily_count
 		actions
 	end
 	

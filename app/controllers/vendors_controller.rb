@@ -5,7 +5,8 @@ class VendorsController < ApplicationController
     before_action :site_visitor_state, only: [:index, :show]
     
     def index
-        @vendors = Vendor.order("RANDOM()").paginate(page: params[:page], per_page: 16)
+        state_ids = State.product_state.pluck(:id)
+        @vendors = Vendor.where(state_id: state_ids).order("RANDOM()").paginate(page: params[:page], per_page: 16)
     end
     
     def refine_index

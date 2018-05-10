@@ -30,33 +30,14 @@ class Product < ActiveRecord::Base
     validates :name, presence: true
     validates_uniqueness_of :name, :scope => :category_id #no duplicate products per category
     
-    #import CSV file
-    def self.import_via_csv(products)
-        CSV.parse(products, :headers => true).each do |row|
-            
-            #change to update record if id matches
-            product_hash = row.to_hash
-            product = self.where(id: product_hash["id"])
-            
-            if product.present? 
-                product.first.update_attributes(product_hash)
-            else
-                Product.create! product_hash
-            end
-        end
-    end    
-    
-    #export CSV file
-    def self.to_csv
-        CSV.generate do |csv|
-            csv << column_names
-            all.each do |product|
-                values = product.attributes.values_at(*column_names)
-                values += [product.image.to_s]
-                values += [product.category.name] if product.category
-                csv << values
-            end
-        end
+    #increment the counters for headset whenever an existing product appears
+    def increment_counters
+        puts 'I AM UPDATING COUNTERS!!!'
+       self.headset_alltime_count += 1 
+       self.headset_monthly_count += 1
+       self.headset_weekly_count += 1
+       self.headset_daily_count += 1
+       self.save
     end
     
     #delete relations

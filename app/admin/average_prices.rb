@@ -26,6 +26,7 @@ ActiveAdmin.register AveragePrice do
 	end
 	
 	index do
+		selectable_column
 		column "Product" do |ap|
 			if ap.product.present?
 				link_to ap.product.name, admin_product_path(ap.product)
