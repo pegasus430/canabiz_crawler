@@ -1,6 +1,6 @@
 class Category < ActiveRecord::Base
     
-    #so I can just say Category.active in query
+    #scopes
     scope :active, -> { where(active: true) }
     scope :news, -> { where(category_type: 'News') }
     scope :products, -> { where(category_type: 'Product') }
@@ -21,23 +21,6 @@ class Category < ActiveRecord::Base
     #friendly url
     extend FriendlyId
     friendly_id :name, use: :slugged
-    
-    #import CSV files
-    def self.import_from_csv(categories)
-        CSV.parse(categories, :headers => true).each do |row|
-            Category.create! row.to_hash
-        end
-    end
-    
-    #export CSV file
-    def self.to_csv
-        CSV.generate do |csv|
-            csv << column_names
-            all.each do |category|
-                csv << category.attributes.values_at(*column_names)
-            end
-        end
-    end
     
     #delete related article_categories and user_categories on delete
     before_destroy :delete_relations

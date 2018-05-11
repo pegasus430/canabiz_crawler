@@ -65,7 +65,8 @@ class ProductItemsController < ApplicationController
 	end
 	
 	def product_item_params
-		params.require(:product_item).permit(:product_id, :cart_id, :quantity, :dispensary_source_id, :dsp_price_id, :dispensary_source_order_id) 
+		params.require(:product_item).permit(:product_id, :cart_id, :quantity, 
+						:dispensary_source_id, :dsp_price_id, :dispensary_source_order_id) 
 	end
 	
 end

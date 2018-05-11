@@ -1,23 +1,25 @@
 class Product < ActiveRecord::Base
     
-    #so I can just say Product.featured in query
+    #scope
     scope :featured, -> { where(featured_product: true).where.not(image: nil) }
     
-    #lookups
+    #relationships
     belongs_to :category
     belongs_to :state
     
     has_many :vendor_products, -> { order(:units_sold => :desc) }
     has_many :vendors, through: :vendor_products
     
-    #average prices has lookup to product
     has_many :average_prices, -> { order(:display_order => :asc) }
     
-    #many-to-many with
     has_many :dispensary_source_products
     has_many :dispensary_sources, through: :dispensary_source_products
     
     has_many :product_items
+    
+    #validations
+    validates :name, presence: true
+    validates_uniqueness_of :name, :scope => :category_id #no duplicate products per category
     
     #friendly url
     extend FriendlyId
@@ -26,13 +28,8 @@ class Product < ActiveRecord::Base
     #photo aws storage
     mount_uploader :image, PhotoUploader
     
-    #validations
-    validates :name, presence: true
-    validates_uniqueness_of :name, :scope => :category_id #no duplicate products per category
-    
     #increment the counters for headset whenever an existing product appears
     def increment_counters
-        puts 'I AM UPDATING COUNTERS!!!'
        self.headset_alltime_count += 1 
        self.headset_monthly_count += 1
        self.headset_weekly_count += 1

@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
     
+    #validations
     validates :username, presence: true, uniqueness: { case_sensitive: false }, length: {minimum: 1, maximum: 25}
     has_secure_password
     
+    #relationships
     has_many :user_categories
     has_many :categories, through: :user_categories
 
@@ -18,23 +20,6 @@ class User < ActiveRecord::Base
     #friendly url
     extend FriendlyId
     friendly_id :username, use: :slugged
-    
-    #import CSV file
-    def self.import(file)
-        CSV.foreach(file.path, headers: true) do |row|
-            User.create! row.to_hash
-        end
-    end    
-    
-    #export CSV file
-    def self.to_csv
-        CSV.generate do |csv|
-            csv << column_names
-            all.each do |user|
-                csv << user.attributes.values_at(*column_names)
-            end
-        end
-    end 
     
     #password reset token
     def generate_password_reset_token!

@@ -21,6 +21,7 @@ class OrdersController < ApplicationController
 	def create
 		@order = Order.new(order_params)
 		@order.add_product_items_from_cart(@cart)
+		@order.state_id = @site_visitor_state.id
 		if @order.save
 			@order.create_dispensary_source_orders(@order)
 			charge 
@@ -55,7 +56,7 @@ class OrdersController < ApplicationController
 		end
 		
 		def order_params
-			params.require(:order).permit(:name, :email, :phone, :street, :city, :zip_code, :state, :dispensary_source_id)
+			params.require(:order).permit(:name, :email, :phone, :street, :city, :zip_code, :state)
 		end
 		
 		def charge
