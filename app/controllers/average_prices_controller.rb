@@ -4,25 +4,6 @@ class AveragePricesController < ApplicationController
     before_action :require_admin, only: [:edit, :update, :destroy, :admin]
     
     
-    def index
-    end
-
-    def new
-      @average_price = AveragePrice.new
-    end
-    
-    def create
-        @average_price = AveragePrice.new(average_price_params)
-        
-        if @average_price.save
-            flash[:success] = 'Article was successfully created'
-            redirect_to average_price_admin_path
-        else 
-            render 'new'
-        end
-    end 
-    #-----------------------------------
-    
     def show
         @product = @average_price.product
         @dispensary_source_products = DispensarySourceProduct.
@@ -50,31 +31,6 @@ class AveragePricesController < ApplicationController
         end
     end
     
-    #-----------------------------------
-    def edit
-    end   
-    def update
-        if @average_price.update(average_price_params)
-            flash[:success] = 'Article was successfully updated'
-            redirect_to average_price_admin_path
-        else 
-            render 'edit'
-        end
-    end 
-    #-----------------------------------
-   
-    def destroy
-        @average_price.destroy
-        flash[:success] = 'Article was successfully deleted'
-        redirect_to average_price_admin_path
-    end 
-   
-    def destroy_multiple
-      AveragePrice.destroy(params[:average_prices])
-      flash[:success] = 'Average Prices were successfully deleted'
-      redirect_to average_price_admin_path        
-    end   
-    
     private 
         def require_admin
             if !logged_in? || (logged_in? and !current_user.admin?)
@@ -87,9 +43,5 @@ class AveragePricesController < ApplicationController
             if @average_price.blank?
                 redirect_to root_path 
             end
-        end
-        def average_price_params
-            params.require(:average_price).permit(:average_price, :average_price_unit, 
-                                :display_order, :units_sold, :product_id)
         end
 end

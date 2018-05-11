@@ -3,25 +3,7 @@ class StatesController < ApplicationController
     before_action :set_state, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, only: [:edit, :update, :destroy, :admin]
 
-    def index
-    end
-    
-    def new
-      @state = State.new
-    end
-    
-    def create
-      @state = State.new(state_params)
-      if @state.save
-         flash[:success] = 'State was successfully created'
-         redirect_to states_admin_path
-      else 
-         render 'new'
-      end
-    end 
-    
     def show
-        
         #state articles
         @recents = @state.articles.active_source.
                         includes(:source, :categories, :states).
@@ -33,7 +15,6 @@ class StatesController < ApplicationController
             #get products available at dispensaries in state
             @products = Product.featured.includes(:dispensary_sources, :vendors, :category, :average_prices).
                                     where(:dispensary_sources => {state_id: @state.id}).
-                                    #order("dsp_count DESC").
                                     paginate(:page => params[:page], :per_page => 16)
             @search_string = @state.name
         else
@@ -67,36 +48,9 @@ class StatesController < ApplicationController
         render 'show'
     end
     
-    def edit
-    end   
-   
-   def update
-      if @state.update(state_params)
-         flash[:success] = 'State was successfully updated'
-         redirect_to states_admin_path
-      else 
-         render 'edit'
-      end
-   end 
-   
-   def destroy
-      @state.destroy
-      flash[:success] = 'State was successfully deleted'
-      redirect_to states_admin_path
-   end    
-    
     private 
+
         def set_state
             @state = State.friendly.find(params[:id])
         end
-        def state_params
-            params.require(:state).permit(:name, :abbreviation, :timezone_id, :keywords, 
-                            :logo, :slug, :product_state, dispensary_ids: [])
-        end  
-        def require_admin
-            if !logged_in? || (logged_in? and !current_user.admin?)
-                redirect_to root_path
-            end
-        end
-    
 end

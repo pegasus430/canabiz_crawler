@@ -29,7 +29,13 @@ class ApplicationController < ActionController::Base
             flash[:danger] = "You must be logged in to perform that action"
             redirect_to root_path
         end
-    end 
+    end
+    
+    def require_admin
+        if !logged_in? || (logged_in? and !current_user.admin?)
+            redirect_to root_path
+        end
+    end
   
     def site_visitor_location
         begin 

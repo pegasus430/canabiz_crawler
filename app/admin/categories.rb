@@ -52,8 +52,11 @@ ActiveAdmin.register Category do
 	scope :active
 	
 	index do
+		selectable_column
 		column :name
-		column :keywords
+		column "Keywords" do |category|
+          truncate(category.keywords, omision: "...", length: 100) if category.keywords
+        end
 		column :active
 		column :category_type
 		column :created_at
