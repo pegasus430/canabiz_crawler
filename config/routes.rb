@@ -9,12 +9,15 @@ Rails.application.routes.draw do
   match "/admin/categories/import_categories" => 'admin/categories#import_categories', via: [:get, :post]
   match "/admin/dispensaries/import_dispensaries" => 'admin/dispensaries#import_dispensaries', via: [:get, :post]
   
+  match "/admin/dispensary_sources/:id/add_to_store" => 'admin/dispensary_sources#add_to_store', via: :post
+  match "/admin/dispensary_sources/:id/delete_from_store" => 'admin/dispensary_sources#delete_from_store', via: :post
+  match "/admin/dispensary_sources/:id/update_product_store" => 'admin/dispensary_sources#update_product_store', via: :put
+  
   #ecommerce
   resources :carts
   resources :product_items
   put 'add_to_cart', to: 'product_items#add_to_cart', as: 'add_to_cart'
   get 'get_dsp_values/:product_id/:dispensary_source_id', to: 'product_items#get_dsp_values', :as => :get_dsp_values
-  # get "new_release" => 'customers#new_release', :as => :new_release
   resources :orders
   
   #SIDEKIQ Routes

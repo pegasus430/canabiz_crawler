@@ -14,11 +14,11 @@ class Ability
       can :manage, DispensarySource, :admin_user_id => user.id
       cannot [:destroy, :create], DispensarySource
       
-      can :manage, DispensarySourceOrder, {dispensary_source: {admin_user_id: user.id}}
+      can [:manage, :read], DispensarySourceOrder, {dispensary_source: {admin_user_id: user.id}}
       cannot [:destroy, :create], DispensarySourceOrder
       
-      #can :manage, DispensarySourceProduct, {dispensary_source: {admin_user_id: user.id}}
-      #can :manage, DspPrice, {dispensary_source_product: {dispensary_source: {dispensary: {admin_user_id: user.id}}}}
+      can :manage, DispensarySourceProduct, {dispensary_source: {admin_user_id: user.id}}
+      can :manage, DspPrice, {dispensary_source_product: {dispensary_source: {dispensary: {admin_user_id: user.id}}}}
       
     end
 

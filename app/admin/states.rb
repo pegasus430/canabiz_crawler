@@ -9,6 +9,9 @@ ActiveAdmin.register State do
     	@state = State.friendly.find(params[:id])
     end
     
+    scope :all, default: true, :if => proc{ current_admin_user.admin? }
+    scope :product_state, :if => proc{ current_admin_user.admin? }
+    
     filter :name
     filter :product_state
 	

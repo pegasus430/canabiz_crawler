@@ -1,0 +1,28 @@
+<table border="0" cellspacing="0" cellpadding="0" id="index_table_stores" class="index_table index" paginator="true">
+    <thead>
+        <tr>
+            <th class="sortable col-name">Name</th>
+            <th class="col col-actions">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% index_count = 0 %>
+        <% products.each do |product| %>
+            <tr class="<%= ((index_count % 2) == 0) ? 'even' : 'odd' %>">
+                <td class="col"><%=product.name %></td>
+                <td class="col col-actions">
+                    <% unless @dispensary_source.products.include?(product) %>
+                        <%= link_to "Add to Store", "javascript:void(0)", product_id: product.id, 
+                            class: "add_to_store", method: :post %>
+                    <% else %>
+                        <%= link_to "Remove from Store", 
+                            delete_from_store_admin_dispensary_source_path(@dispensary_source, 
+                                product_id: product.id), 
+                            class: "remove", method: :post %>
+                    <% end %>
+                </td>
+            </tr>
+            <% index_count += 1 %>
+        <% end %>
+    </tbody>
+</table>

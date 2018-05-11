@@ -22,7 +22,5 @@ ActiveAdmin.register DspPrice do
 		f.input :display_order
     	f.actions
     end
-    
-    
 
 end
