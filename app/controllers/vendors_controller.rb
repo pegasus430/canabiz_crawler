@@ -2,11 +2,10 @@ class VendorsController < ApplicationController
     
     before_action :set_vendor, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, except: [:show, :index]
-    before_action :site_visitor_state, only: [:index, :show]
     
     def index
-        state_ids = State.product_state.pluck(:id)
-        @vendors = Vendor.where(state_id: state_ids).order("RANDOM()").paginate(page: params[:page], per_page: 16)
+        @vendors = Vendor.where(state_id: @site_visitor_state.id).
+                    order("RANDOM()").paginate(page: params[:page], per_page: 16)
     end
     
     def refine_index

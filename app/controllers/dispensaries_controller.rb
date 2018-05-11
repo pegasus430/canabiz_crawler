@@ -1,7 +1,6 @@
 class DispensariesController < ApplicationController
     before_action :set_dispensary, only: [:edit, :update, :destroy, :show, :all_products]
     before_action :require_admin, only: [:admin, :edit, :update, :destroy]
-    before_action :site_visitor_state, only: [:index, :show]
     
     def index
         

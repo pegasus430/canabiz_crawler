@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
-    before_action :site_visitor_state, only: [:show, :index]
+
     before_action :set_product, only: [:edit, :update, :destroy, :show]
-    before_action :site_visitor_ip, only: [:index, :refine_index]
     before_action :require_admin, only: [:admin, :edit, :update, :delete]
 
     def index

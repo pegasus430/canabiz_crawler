@@ -1,13 +1,11 @@
 class PagesController < ApplicationController
     
-    before_action :site_visitor_state, only: [:home, :search]
-    before_action :site_visitor_ip, only: [:home, :search]
     before_action :require_admin, only: [:admin]
     
     def home
         
         #test scraper
-        ProductHeadset.perform_later("nevada")
+        #ProductHeadset.perform_later("nevada")
         
         #dont display nav search
         @nav_search = false
