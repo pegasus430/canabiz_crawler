@@ -1,8 +1,47 @@
-<% @cart.product_items.each do |item| %>
-  <ul>
-	  <li>
-	    <%= item.quantity %> <%=item.dsp_price.unit%> of <%= item.product.name %> from <%=item.dispensary_source.name %>
-	    <%= number_to_currency item.total_price %>
-	  </li>
-  </ul>
-<% end %>
+<div id="cart-line-items" class="tab-content" style="display: block;">
+    <div class = 'ajax-spinner'>
+        <%= image_tag("icons/ajax-loader.gif") %>
+    </div>
+	<table data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable" style="width: 100%;">
+		<thead>
+			<tr>
+				<th>Product</th>
+				<th>Dispensary</th>
+				<th>Quantity</th>
+				<th>Unit</th>
+				<th>Price</th>
+				<th data-priority="1" class="delbtn">Remove Item</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!--loop through saved articles and add to row-->
+			<% @cart.product_items.each do |item| %>
+				<tr>
+				    
+					<td style="padding: 4px 4px; border-bottom: 1px solid #7c8c99">
+					    <%=link_to item.product.name, product_path(item.product)%>
+					</td>
+					<td style="padding: 4px 4px; border-bottom: 1px solid #7c8c99">
+					    <%=item.dispensary_source.name %>
+				    </td>
+				    <td style="padding: 4px 4px; border-bottom: 1px solid #7c8c99">
+					    <%=item.quantity %>
+				    </td>
+				    <td style="padding: 4px 4px; border-bottom: 1px solid #7c8c99">
+					    <%=item.dsp_price.unit %>
+				    </td>
+				    <td style="padding: 4px 4px; border-bottom: 1px solid #7c8c99">
+					    <%= number_to_currency item.total_price %>
+				    </td>
+					<td class="delbtn" style="padding: 4px 4px; border-bottom: 1px solid #7c8c99">
+						<span class="btn btn-default btn-sm">
+						    <%= link_to "Remove", product_item_path(item), method: :delete,
+		                      data: { confirm: "Remove Item From Cart?"},
+		                      class: "btn" %>
+						</span>
+					</td>          
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

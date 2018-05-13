@@ -3,7 +3,7 @@ class ProductItemsController < ApplicationController
 	# https://www.benkirane.ch/ajax-bootstrap-modals-rails/
 	
 	include CurrentCart
-	before_action :set_cart, only: [:create, :get_dsp_values]
+	before_action :set_cart, only: [:create, :get_dsp_values, :destroy]
 	before_action :set_product_item, only: [:show, :destroy]
 	skip_before_action :verify_authenticity_token #for ajax
 	
@@ -57,6 +57,10 @@ class ProductItemsController < ApplicationController
 	def update
 	end
 	
+	def destroy
+		@product_item.destroy
+		redirect_to @cart
+	end
 	
 	private
 	

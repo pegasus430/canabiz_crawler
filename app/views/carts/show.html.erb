@@ -11,17 +11,25 @@
                 </div>
             </div>
             <div class="message-box">
-                <%= render 'carts/cart' %>
-                <p class="form-messege"></p>
-                <h5>Total: <%= number_to_currency @cart.total_price %> </h5>
-                <br/>
-                <%= button_to 'Checkout', new_order_path, method: :get %>
-                <td><%= link_to "Empty Your Cart", cart_path(@cart), method: :delete,
-		                  data: { confirm: "Are you sure you want to empty your cart?"},
-		                  class: "btn" %></td>
+                
+                <% if @cart.product_items.any? %>
+                    <div style = "float: right; margin-right: 20px;">
+                        <%= link_to "Empty Your Cart", cart_path(@cart), method: :delete,
+    		                  data: { confirm: "Are you sure you want to empty your cart?"},
+    		                  class: "btn" %>
+                    </div>
+                    <%= render 'carts/cart' %>
+                    <div style = "float: right; margin: 20px 20px 0 0;">
+                        <h5 style = "margin-botton: 10px;">Total: <%= number_to_currency @cart.total_price %> </h5>
+                        <%= button_to 'Checkout', new_order_path, method: :get %>
+                    </div>
+                    
+                <% else %>
+                    <p>No Items In Cart</p>
+                <% end %>
+
             </div>
         </div>
     </div>
-    <!-- End contact message area -->
 </section>
 <!-- End page content -->
