@@ -29,7 +29,7 @@ ActiveAdmin.register VendorProduct do
 		f.input :product_id, :label => 'Product', :as => :select, 
 				:collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
 		f.input :vendor_id, :label => 'Vendor', :as => :select, 
-				:collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
+				:collection => Vendor.order('name ASC').map{|u| ["#{u.name}", u.id]}
 		f.input :units_sold
     	f.actions
     end

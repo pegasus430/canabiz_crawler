@@ -5,6 +5,10 @@ class Vendor < ActiveRecord::Base
     has_many :products, through: :vendor_products
     belongs_to :state
     
+    #validations
+    validates :name, presence: true
+    validates_uniqueness_of :name
+    
     #friendly url
     extend FriendlyId
     friendly_id :name, use: :slugged
