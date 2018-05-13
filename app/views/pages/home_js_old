@@ -6,10 +6,3 @@ if ($('#article-index-views').css('display') == 'block') {
 	$('#article-index-views').append('<%= escape_javascript render(@mostviews) %>');
 	$('.article-index-views-pagination .pagination').replaceWith('<%= escape_javascript will_paginate(@mostviews) %>');
 }
-
-
-
-
- 
-
-
