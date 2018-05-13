@@ -43,7 +43,7 @@ class ProductItemsController < ApplicationController
 		#that cart build method used to do this
 		
 		@product_item = @cart.add_product(@product_item.product_id, 
-			@product_item.dispensary_source_id, @product_item.dsp_price_id, 5)
+			@product_item.dispensary_source_id, @product_item.dsp_price_id, @product_item.quantity)
 		if @product_item.save
 		  redirect_to root_path, notice: 'Product added to Cart'
 		else

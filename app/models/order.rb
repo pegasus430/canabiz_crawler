@@ -40,6 +40,11 @@ class Order < ActiveRecord::Base
 					product_item.update_attribute :dispensary_source_order_id, dso.id
 				end
 			end
-		end 
+		end
+		
+		#emails
+		dispensary_source_orders.each do |dso|
+			DispensaryOrder.email(dso.dispensary_source, dso).deliver	
+		end
 	end
 end

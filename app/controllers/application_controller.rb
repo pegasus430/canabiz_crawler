@@ -2,13 +2,11 @@ class ApplicationController < ActionController::Base
 
     protect_from_forgery with: :exception
     
+    #shopping cart included on every page
+    include CurrentCart
+    
     #these methods will be called before every action
     before_action :populate_lists, :skip_for_admin?, :site_visitor_location, :set_cart
-    
-    #set shopping cart before all?
-    #ecommerce
-    include CurrentCart
-    before_action 
     
     helper_method :current_user, :logged_in?
   
@@ -38,14 +36,17 @@ class ApplicationController < ActionController::Base
     end
   
     def site_visitor_location
-        begin 
-            if request.location && request.location.state
+        begin
+            if session[:state_id] != nil
+                @site_visitor_state = State.where(id: session[:state_id]).first
+            elsif request.location && request.location.state
                 @site_visitor_state = State.where(name: request.location.state).first
             
                 if @site_visitor_state.product_state
                     @site_visitor_city = request.location.city
                     @site_visitor_zip = request.location.zip_code
                     @site_visitor_ip = request.location.ip
+                    session[:state_id] = @site_visitor_state.id
                 else
                     default_visitor_location    
                 end
@@ -61,7 +62,8 @@ class ApplicationController < ActionController::Base
         @site_visitor_state = State.where(name: 'Washington').first
         @site_visitor_city = 'Seattle'
         @site_visitor_zip = '98101'
-        @site_visitor_ip = '75.172.101.74'    
+        @site_visitor_ip = '75.172.101.74'
+        session[:state_id] = @site_visitor_state.id
     end
   
     def populate_lists
@@ -84,9 +86,9 @@ class ApplicationController < ActionController::Base
     
     private
   
-    def handle_error
-        if Rails.env.Production? 
-            redirect_to root_path
+        def handle_error
+            if Rails.env.Production? 
+                redirect_to root_path
+            end
         end
-    end
 end

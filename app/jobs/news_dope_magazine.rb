@@ -16,14 +16,19 @@ class NewsDopeMagazine < ActiveJob::Base
 	        output = IO.popen(["python", "#{Rails.root}/app/scrapers/newsparser_dopemagazine.py"]) #cmd,
 	        contents = JSON.parse(output.read)
 	        
+	        logger.info 'dope magazine contents: '
+	        logger.info contents
+	        
 			#call method
 	        if contents["articles"].present?
-	        	NewsScraperHelper.new(contents["articles"], 'Dope Magazine').addArticles
+	        	#NewsScraperHelper.new(contents["articles"], 'Dope Magazine').addArticles
 	        else 
-	        	ScraperError.email('Dope Magazine News', 'No Articles were returned').deliver_now	
+	        	#ScraperError.email('Dope Magazine News', 'No Articles were returned').deliver_now	
 	        end
 	    rescue => ex
-        	ScraperError.email('Dope Magazine News', ex.message).deliver_now
+	        logger.info 'error in dope magazine script: '
+	        logger.info ex
+        	#ScraperError.email('Dope Magazine News', ex.message).deliver_now
 		end
     end
 end

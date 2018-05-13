@@ -8,7 +8,7 @@ module CurrentCart
 		@cart = Cart.find(session[:cart_id]) #see if a cart currently exists for this session
 		
 		rescue ActiveRecord::RecordNotFound #cart not found
-		@cart = Cart.create #create a new cart
-		session[:cart_id] = @cart.id #set the session cart
+			@cart = Cart.create #create a new cart
+			session[:cart_id] = @cart.id #set the session cart
 	end
 end
