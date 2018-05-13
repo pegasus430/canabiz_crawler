@@ -29,6 +29,16 @@ function addToCart() {
 
 // https://www.benkirane.ch/ajax-bootstrap-modals-rails/ - this looks promising for modals
 
+function add_product_to_cart(){
+	$(".ajax-spinner-product").css('display', 'block');
+	$('new_product_item').submit();
+	location.reload();
+}
+
+// function openProductModal() {
+	
+// }
+
 //set variables for adding product to cart
 function setAddToCartVariables(productId, dispensaryKeyId) {
 	jQuery('[id$=productId]').val(productId);

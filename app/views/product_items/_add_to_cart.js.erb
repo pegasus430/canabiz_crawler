@@ -1,5 +1,27 @@
 <div class="modal-dialog">
     <div class="modal-content">
+        
+        <!--spinner for add to cart-->
+        <div class = 'ajax-spinner-product'>
+            <%= image_tag("icons/ajax-loader.gif") %>
+        </div>
+        <style>
+            /* Absolute Center Spinner */
+            .ajax-spinner-product {
+              position: fixed;
+              z-index: 999;
+              height: 2em;
+              width: 2em;
+              overflow: show;
+              margin: auto;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              display: none;
+            }
+        </style>
+        
         <%= form_for(@product_item, remote: true, :html => { :role => "form" }) do |f| %>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -34,7 +56,11 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                <%= f.submit "Add To Cart", :class => "btn btn-green" %>
+                <button class="btn btn-green" onclick="add_product_to_cart();"
+                    onsubmit="setTimeout(function () { window.location.reload(); }, 30)">
+                        Add to Cart
+                </button>
+                 <!--f.submit "Add To Cart", :class => "btn btn-green" %>-->
                 <style>
                     .btn-green {
                         background-color: #2ab081;border-color: #2ab081; color: #fff;

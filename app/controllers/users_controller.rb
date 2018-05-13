@@ -97,7 +97,8 @@ class UsersController < ApplicationController
         end
         
         if (state_article_ids.any? || category_article_ids.any? || source_ids.any?)
-            @recents = @recents.where("id IN (?) OR id IN (?) OR source_id IN (?)", state_article_ids, category_article_ids, source_ids)
+            @recents = @recents.where("id IN (?) OR id IN (?) OR source_id IN (?)", 
+                state_article_ids, category_article_ids, source_ids).includes(:source, :states, :categories)
         end
        
         #saved articles
