@@ -37,7 +37,7 @@ function setAddToCartVariables(productId, dispensaryKeyId) {
 	if (productId != null && productId != '') {
 		$.ajax({
 	        type: "GET",
-	        url: "/get_dsp_values?disp_source_id=" + dispensaryKeyId + '&productId=' + productId,
+	        url: "/add_to_cart?disp_source_id=" + dispensaryKeyId + '&productId=' + productId,
 	        beforeSend: function() {
 				// start spinner
 				$(".ajax-spinner").css('display', 'block');

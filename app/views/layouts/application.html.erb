@@ -133,12 +133,12 @@
         
         <!--wrapper for all pages including header-->
         <div class="wrapper">
-            <%= render 'layouts/header' %>
+            <%= render 'shared/header' %>
             <%= render 'shared/messages' %>
             <%= yield %>
             <!--removed footer rendering on all pages-->
             <% if @recents == nil || (@state.present? && @state.product_state)  %>
-                <%= render 'layouts/footer' %>
+                <%= render 'shared/footer' %>
             <% end %>
         </div>
         

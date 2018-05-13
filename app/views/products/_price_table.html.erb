@@ -30,7 +30,7 @@
                         (dispensary_source.dispensary.has_payqwick || dispensary_source.dispensary.has_hypur) %>
                         
                         <i class="fa fa-shopping-cart"></i>
-                        <%= link_to 'Add To Cart', get_dsp_values_path(:product_id => @product.id, :dispensary_source_id => dispensary_source.id), 
+                        <%= link_to 'Add To Cart', add_to_cart_path(:product_id => @product.id, :dispensary_source_id => dispensary_source.id), 
                             {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addToCartModal'}  %>
 				    <% end %>
 				</td>

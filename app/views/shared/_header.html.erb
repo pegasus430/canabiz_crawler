@@ -159,13 +159,13 @@
         <div class="archive-inner">
             <div class="archive-filter">
                 <% if @recents.present? || @article.present? %>
-                    <%= render 'layouts/sticky_header_news' %>	                    
+                    <%= render 'shared/sticky_header_news' %>	                    
 				<% elsif @products.present? || @product.present? %>
-					<%= render 'layouts/sticky_header_products' %>
+					<%= render 'shared/sticky_header_products' %>
 				<% elsif @dispensary.present? && current_page?(dispensary_path(@dispensary)) %>
-				    <%= render 'layouts/sticky_header_dispensary' %>
+				    <%= render 'shared/sticky_header_dispensary' %>
 				<% else %>
-				    <%= render 'layouts/sticky_header_home' %>
+				    <%= render 'shared/sticky_header_home' %>
 				<% end %>
             </div>
         </div>

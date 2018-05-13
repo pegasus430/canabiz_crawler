@@ -3,11 +3,11 @@ class ProductItemsController < ApplicationController
 	# https://www.benkirane.ch/ajax-bootstrap-modals-rails/
 	
 	include CurrentCart
-	before_action :set_cart, only: [:create, :get_dsp_values, :destroy]
+	before_action :set_cart, only: [:create, :add_to_cart, :destroy]
 	before_action :set_product_item, only: [:show, :destroy]
 	skip_before_action :verify_authenticity_token #for ajax
 	
-	def get_dsp_values
+	def add_to_cart
 		
 		dispensary_source_products = DispensarySourceProduct.where(product_id: params[:product_id]).
 										where(dispensary_source_id: params[:dispensary_source_id]).includes(:dsp_prices)
@@ -45,9 +45,20 @@ class ProductItemsController < ApplicationController
 		@product_item = @cart.add_product(@product_item.product_id, 
 			@product_item.dispensary_source_id, @product_item.dsp_price_id, @product_item.quantity)
 		if @product_item.save
-		  redirect_to root_path, notice: 'Product added to Cart'
+			logger.info 'i am in here'
+			#redirect_to product_path(@product_item.product), notice: 'Product added to Cart'
+			@product = @product_item.product
+			flash[:success] = 'Product added to Cart!'
+			render 'products/show' do |page|
+				page << 'window.location.reload()'
+			end
 		else
-		  redirect_to root_path, notice: 'Could Not Add Item To Cart'
+			@product = @product_item.product
+			flash[:danger] = 'Could not add Product to Cart'
+			render 'products/show' do |page|
+				page << 'window.location.reload()'
+			end
+			#redirect_to product_path(@product_item.product), notice: 'Could Not Add Item To Cart'
 		end
 	end
 	

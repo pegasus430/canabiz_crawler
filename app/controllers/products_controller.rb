@@ -102,7 +102,7 @@ class ProductsController < ApplicationController
         
         #populate page maps
         @dispensary_sources = @product.dispensary_sources.where(state_id: @site_visitor_state.id).
-                                includes(:dispensary, :dispensary_source_products => :dsp_prices).
+                                includes(:dispensary, :state, :dispensary_source_products => :dsp_prices).
                                 order('last_menu_update DESC').order("name ASC")
                                 
         #need a map of dispensary to dispensary source product
