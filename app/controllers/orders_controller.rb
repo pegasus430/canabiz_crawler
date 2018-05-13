@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
 			if @result.success?
 				Cart.destroy(session[:cart_id]) #no longer need cart with these products if order placed
 				session[:cart_id] = nil
-				#OrderNotifier.received(@order).deliver --> we should send email to us and dispensary email
+				CustomerOrder.email(@order).deliver #send email to customer
 				redirect_to root_path, notice: 'Thank You for Your Order!'
 			else 
 				flash[:error] = 'There was an error with payment'
