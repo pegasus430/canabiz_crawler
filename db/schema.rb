@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180511023528) do
+ActiveRecord::Schema.define(version: 20180513031400) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -123,11 +123,6 @@ ActiveRecord::Schema.define(version: 20180511023528) do
 
   add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true
 
-  create_table "digest_emails", force: :cascade do |t|
-    t.string  "email"
-    t.boolean "active"
-  end
-
   create_table "dispensaries", force: :cascade do |t|
     t.string   "name"
     t.string   "image"
@@ -217,12 +212,12 @@ ActiveRecord::Schema.define(version: 20180511023528) do
     t.string   "name"
     t.string   "email"
     t.string   "city"
-    t.string   "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "phone"
     t.text     "street"
     t.text     "zip_code"
+    t.integer  "state_id"
   end
 
   create_table "product_items", force: :cascade do |t|

@@ -26,19 +26,30 @@ ActiveAdmin.register DispensarySource do
 		product = Product.find_by(id: params[:product_id])
 		dsp = DispensarySourceProduct.create(product_id: params[:product_id], 
 			dispensary_source_id: disp.id) if product
+		
+		#create several dsp_prices with all the price and unit inputs
+		
 			
 		#DspPrice.create(dispensary_source_product_id: dsp.id)
 	
 		redirect_to edit_admin_dispensary_source_path(disp)
 	end
 	
+	#delete product entirely from store
 	member_action :delete_from_store, :method => :get do
 		disp = DispensarySource.find(params[:id])
 		dsp = DispensarySourceProduct.find_by(product_id: params[:product_id], 
 							dispensary_source_id: disp.id)
 		dsp.delete
 		redirect_to edit_admin_dispensary_source_path(disp)
+		
 	end
+	
+	
+	#delete individual dsp_prices
+	
+	
+	#in-line update multiple dsp_prices
 	
 	# member_action :update_product_store, :method => :put do
 	# 	store = Store.find(params[:id])

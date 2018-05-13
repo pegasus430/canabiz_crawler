@@ -68,6 +68,9 @@ Rails.application.routes.draw do
   put 'user_category_save/:category_id', to: 'users#user_category_save', as: 'user_category_save'
   put 'user_state_save/:state_id', to: 'users#user_state_save', as: 'user_state_save'
   
+  #RESET PASSWORD
+  resources :password_resets, only: [:new, :create, :edit, :update]
+  
   #ERROR FILES
   get 'errors/not_found'
   get 'errors/internal_server_error'
@@ -78,36 +81,17 @@ Rails.application.routes.draw do
   match "/500", :to => "errors#internal_server_error", :via => :all
   match "/503", :to => "errors#application_error", :via => :all
   
-  #RESET PASSWORD
-  resources :password_resets, only: [:new, :create, :edit, :update]
-  
-  #DIGEST EMAILS
-  resources :digest_emails do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  get 'digest_emails-admin', to: 'digest_emails#admin'
-  
-  
-  #STATES
-  resources :states do
-    collection {post :import}
-  end
-  get 'states-admin', to: 'states#admin'
-  post 'states/:id/refine_products' => 'states#refine_products', as: 'refine_state_products'
-
+  resources :categories
+  resources :sources
+  resources :average_prices
+  resources :vendor_products
+  resources :dispensary_sources
+  resources :dispensary_source_products
+  resources :dsp_prices
+  resources :dispensary_products
 
   #ARTICLES
-  resources :articles do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'articles/search' => 'articles#search', as: 'search_articles'
-  get 'article-admin', to: 'articles#admin'
+  resources :articles
   get 'digest', to: 'articles#digest'
   get 'send_weekly_digest', to: 'articles#send_weekly_digest'
   get 'tweet/:id', to: 'articles#tweet', as: 'tweet'
@@ -117,141 +101,22 @@ Rails.application.routes.draw do
   get 'update_states_categories', to: 'articles#update_states_categories'
   get 'update_article_tags', to: 'articles#update_article_tags'
   
-  
-  #CATEGORIES  
-  resources :categories do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'categories/search' => 'categories#search', as: 'search_categories'
-  get 'category-admin', to: 'categories#admin'
-  get 'sidekiqtest', to: 'categories#sidekiqtest'
-  
-  
-  #SOURCES  
-  resources :sources do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'sources/search' => 'sources#search', as: 'search_sources'
-  get 'source-admin', to: 'sources#admin'
-  
-  
-  #HASHTAGS
-  resources :hashtags do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'hashtags/search' => 'hashtags#search', as: 'search_hashtags'
-  get 'hashtag-admin', to: 'hashtags#admin'  
-  
-  #FROM HERE DOWN IS EVERYTHING RELATED TO THE ADDITION OF PRODUCTS
-  
   #PRODUCTS
-  resources :products do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'products/search' => 'products#search', as: 'search_products'
+  resources :products
   get "products_refine_index", to: "products#refine_index"
   post "products_refine_index", to: "products#refine_index"
-  #get 'products/:category'
-  get 'product-admin', to: 'products#admin'
   
-  #AVERAGE PRICE
-  resources :average_prices do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'average_prices/search' => 'average_prices#search', as: 'search_average_prices'
-  get 'average_price-admin', to: 'average_prices#admin'
+  #STATES
+  resources :states
+  post 'states/:id/refine_products' => 'states#refine_products', as: 'refine_state_products'
 
   #VENDORS
-  resources :vendors do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'vendors/search' => 'vendors#search', as: 'search_vendors'
+  resources :vendors
   post 'vendors/refine_index' => 'vendors#refine_index', as: 'refine_vendor_index'
-  get 'vendor-admin', to: 'vendors#admin'
-  
-  #VENDOR PRODUCTS
-  resources :vendor_products do
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'vendor_products/search' => 'vendor_products#search', as: 'search_vendor_products'
-  get 'vendor_products-admin', to: 'vendor_products#admin'
-  
+
   #DISPENSARIES
-  resources :dispensaries do
-    collection {post :import_via_csv}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'dispensaries/search' => 'dispensaries#search', as: 'search_dispensaries'
+  resources :dispensaries
   post 'dispensaries/refine_index' => 'dispensaries#refine_index', as: 'refine_dispensary_index'
   get 'dispensaries/:id/products', to: 'dispensaries#all_products', as: 'all_products'
-  get 'dispensary-admin', to: 'dispensaries#admin'
-  
-  #prob delete
-  get 'dispensaries_in_state', to: 'dispensaries#dispensaries_in_state'
-  get 'test_geocode', to: 'dispensaries#test_geocode'
-  get 'test_python', to: 'dispensaries#test_python'
-  
-  #DISPENSARY SOURCES
-  resources :dispensary_sources do 
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'dispensary_sources/search' => 'dispensary_sources#search', as: 'search_dispensary_sources'
-  get 'dispensary_sources-admin', to: 'dispensary_sources#admin'
 
-  #DISPENSARY SOURCE PRODUCTS
-  resources :dispensary_source_products do 
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'dispensary_source_products/search' => 'dispensary_source_products#search', as: 'search_dispensary_source_products'
-  get 'dispensary_source_products-admin', to: 'dispensary_source_products#admin'
-  
-  #DISPENSARY SOURCE PRODUCT PRICES
-  resources :dsp_prices do 
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'dsp_prices/search' => 'dsp_prices#search', as: 'search_dsp_prices'
-  get 'dsp_prices-admin', to: 'dsp_prices#admin'
-  
-  #DISPENSARY PRODUCTS
-  resources :dispensary_products do 
-    collection {post :import}
-    collection do
-      delete 'destroy_multiple'
-    end
-  end
-  post 'dispensary_products/search' => 'dispensary_products#search', as: 'search_dispensary_products'
-  get 'dispensary_products-admin', to: 'dispensary_products#admin' 
-  
 end

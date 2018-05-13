@@ -36,7 +36,6 @@ class OrdersController < ApplicationController
 				@order.destroy
 			end
 		else
-			logger.info 'I AM IN HERE NOT SAVED'
 		  render :new
 		end
 	end
@@ -56,7 +55,7 @@ class OrdersController < ApplicationController
 		end
 		
 		def order_params
-			params.require(:order).permit(:name, :email, :phone, :street, :city, :zip_code, :state)
+			params.require(:order).permit(:name, :email, :phone, :street, :city, :zip_code, :state_id)
 		end
 		
 		def charge
