@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   #ecommerce
   resources :carts
   resources :product_items
-  # put 'add_to_cart', to: 'product_items#add_to_cart', as: 'add_to_cart'
   get 'add_to_cart/:product_id/:dispensary_source_id', to: 'product_items#add_to_cart', :as => :add_to_cart
   resources :orders
   

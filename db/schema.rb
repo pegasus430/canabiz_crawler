@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513031400) do
+ActiveRecord::Schema.define(version: 20180514215333) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -43,6 +43,20 @@ ActiveRecord::Schema.define(version: 20180513031400) do
   end
 
   add_index "active_admin_permissions", ["managed_resource_id", "role"], name: "active_admin_permissions_index", unique: true
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "street"
+    t.string   "street2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
+    t.decimal  "latitude",            precision: 15, scale: 10
+    t.decimal  "longitude",           precision: 15, scale: 10
+    t.text     "verification_info"
+    t.text     "original_attributes"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                            default: "", null: false
