@@ -2,10 +2,10 @@
     <option value = "">State</option>
     <% @product_states.each do |state| %>
     
-        <% if @site_visitor_state != nil && @site_visitor_state.name == state.name %>
+        <% if @searched_state != nil && @searched_state.name == state.name %>
             <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
             <% @set_state = state.name %>
-        <% elsif @searched_state != nil && @searched_state.name == state.name%>
+        <% elsif @site_visitor_state != nil && @site_visitor_state.name == state.name%>
             <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
 			<% @set_state = state.name %>
         <% elsif @state != nil && @state.name == state.name%>

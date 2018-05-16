@@ -67,67 +67,44 @@ class ProductsController < ApplicationController
     def show
         
         #only show featured product
-            if @product.featured_product == false
-                redirect_to root_path 
-            end
-        
-        #similar products - include is_dom and sub_category as well
-            if @product.is_dom.present?
-                @similar_products = Product.featured.where.not(id: @product.id).
-                            where(is_dom: @product.is_dom).order("Random()").limit(4)
-    
-            elsif @product.sub_category.present? 
-                @similar_products = Product.featured.where.not(id: @product.id).
-                            where(sub_category: @product.sub_category).
-                            order("Random()").limit(4)
-            
-            elsif @product.category.present?
-                @similar_products = @product.category.products.
-                        featured.where.not(id: @product.id).order("Random()").limit(4)
-            end
-        
-        #populate page maps
-        @dispensary_sources = @product.dispensary_sources.where(state_id: @site_visitor_state.id).
-                                includes(:dispensary, :state, :dispensary_source_products => :dsp_prices).
-                                order('last_menu_update DESC').order("name ASC")
-                                
-        #need a map of dispensary to dispensary source product
-        @dispensary_to_product = Hash.new
-        @table_headers = Hash.new #for product table
-        
-        @dispensary_sources.each do |dispSource|
-            
-            #get the th from dsp_prices
-            dispSource.dispensary_source_products.each do |dsp|
-                dsp.dsp_prices.each do |dsp_price|
-                    if dsp_price.display_order != nil
-                       @table_headers.store(dsp_price.display_order, dsp_price.unit)
-                    end
-                end
-            end
-            
-            #dispensary products
-            if !@dispensary_to_product.has_key?(dispSource)
-                
-                dsps = dispSource.dispensary_source_products.select { |dsp| dsp.product_id == @product.id}
-                
-                if dsps.size > 0
-                    @dispensary_to_product.store(dispSource, dsps[0])
-                end
-            end
+        if @product.featured_product == false
+            redirect_to root_path 
         end
         
-        @table_headers = Hash[@table_headers.sort_by {|k,v| k.to_i }]
+        begin 
+            result = ProductHelper.new(@product, @site_visitor_state).buildProductDisplay
+            
+            @similar_products, @dispensary_to_product, @table_headers = 
+                    result[0], result[1], result[2]
+                    
+        rescue
+            redirect_to root_path
+        end
     end
     
     def change_state
-        puts 'i am in here'
-        puts params
-        render 'show'
         
+        #only show featured product
+        if @product.featured_product == false
+            redirect_to root_path 
+        end
+
+        if params[:State] != nil 
+            begin 
+                @searched_state = State.where(name: params[:State]).first
+                result = ProductHelper.new(@product, @searched_state).buildProductDisplay
+                
+                @similar_products, @dispensary_to_product, @table_headers = 
+                        result[0], result[1], result[2]
+                        
+                render 'show'
+            rescue
+                redirect_to root_path
+            end
+        else
+          redirect_to root_path 
+        end
         
-        # CHANGE PRODUCT HELPER - USE THAT TO POPULATE THE MAPS 
-            # AND SUCH THAT WE SEE ABOVE SINCE IT WILL BE THE SAME STUFF AS SHOW
     end
   
     private
