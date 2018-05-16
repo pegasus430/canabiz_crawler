@@ -47,6 +47,7 @@ class ApplicationController < ActionController::Base
                     @site_visitor_zip = request.location.zip_code
                     @site_visitor_ip = request.location.ip
                     session[:state_id] = @site_visitor_state.id
+                    session[:product_state] = true
                 else
                     default_visitor_location    
                 end
@@ -64,6 +65,7 @@ class ApplicationController < ActionController::Base
         @site_visitor_zip = '98101'
         @site_visitor_ip = '75.172.101.74'
         session[:state_id] = @site_visitor_state.id
+        session[:product_state] = false
     end
   
     def populate_lists

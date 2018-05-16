@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 
-    before_action :set_product, only: [:edit, :update, :destroy, :show]
+    before_action :set_product, only: [:edit, :update, :destroy, :show, :change_state]
     before_action :require_admin, only: [:admin, :edit, :update, :delete]
 
     def index
@@ -62,21 +62,7 @@ class ProductsController < ApplicationController
         render 'index' 
     end
     
-    #-------------------------------------------
-    def new
-      @product = Product.new
-    end
-    def create
-        @product = Product.new(product_params)
-        if @product.save
-            flash[:success] = 'Product was successfully created'
-            redirect_to product_admin_path
-        else 
-            render 'new'
-        end
-    end
-    
-    #-------------------------------------------
+    #------------------------------------
     
     def show
         
@@ -133,37 +119,16 @@ class ProductsController < ApplicationController
         
         @table_headers = Hash[@table_headers.sort_by {|k,v| k.to_i }]
     end
-
-    #-------------------------------------------
     
-    def edit
-        @requires_admin = true
-    end   
-    def update
-        if @product.update(product_params)
-            flash[:success] = 'Product was successfully updated'
-            redirect_to product_admin_path
-        else 
-            render 'edit'
-        end
-    end 
-    
-    #-------------------------------------------
-   
-    def destroy
-        @product.destroy
-        flash[:success] = 'Product was successfully deleted'
-        redirect_to product_admin_path
+    def change_state
+        puts 'i am in here'
+        puts params
+        render 'show'
+        
+        
+        # CHANGE PRODUCT HELPER - USE THAT TO POPULATE THE MAPS 
+            # AND SUCH THAT WE SEE ABOVE SINCE IT WILL BE THE SAME STUFF AS SHOW
     end
-   
-    def destroy_multiple
-        Product.destroy(params[:products])
-        flash[:success] = 'Products were successfully deleted'
-        redirect_to product_admin_path        
-    end
-    
-    #-------------------------------------------
-
   
     private
     

@@ -102,8 +102,8 @@ Rails.application.routes.draw do
   
   #PRODUCTS
   resources :products
-  get "products_refine_index", to: "products#refine_index"
   post "products_refine_index", to: "products#refine_index"
+  post 'products/:id/change_state' => 'products#change_state', as: 'change_state_product'
   
   #STATES
   resources :states
@@ -116,6 +116,5 @@ Rails.application.routes.draw do
   #DISPENSARIES
   resources :dispensaries
   post 'dispensaries/refine_index' => 'dispensaries#refine_index', as: 'refine_dispensary_index'
-  get 'dispensaries/:id/products', to: 'dispensaries#all_products', as: 'all_products'
 
 end
