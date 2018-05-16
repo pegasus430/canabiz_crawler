@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   #ecommerce
   resources :carts
   resources :product_items
-  # put 'add_to_cart', to: 'product_items#add_to_cart', as: 'add_to_cart'
   get 'add_to_cart/:product_id/:dispensary_source_id', to: 'product_items#add_to_cart', :as => :add_to_cart
   resources :orders
   
@@ -104,8 +103,8 @@ Rails.application.routes.draw do
   
   #PRODUCTS
   resources :products
-  get "products_refine_index", to: "products#refine_index"
   post "products_refine_index", to: "products#refine_index"
+  post 'products/:id/change_state' => 'products#change_state', as: 'change_state_product'
   
   #STATES
   resources :states
@@ -118,6 +117,5 @@ Rails.application.routes.draw do
   #DISPENSARIES
   resources :dispensaries
   post 'dispensaries/refine_index' => 'dispensaries#refine_index', as: 'refine_dispensary_index'
-  get 'dispensaries/:id/products', to: 'dispensaries#all_products', as: 'all_products'
 
 end

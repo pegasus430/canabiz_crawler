@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513031400) do
+ActiveRecord::Schema.define(version: 20180516000506) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -237,6 +237,11 @@ ActiveRecord::Schema.define(version: 20180513031400) do
   add_index "product_items", ["order_id"], name: "index_product_items_on_order_id"
   add_index "product_items", ["product_id"], name: "index_product_items_on_product_id"
 
+  create_table "product_states", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "state_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.string   "image"
@@ -347,6 +352,11 @@ ActiveRecord::Schema.define(version: 20180513031400) do
     t.decimal  "units_sold"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "vendor_states", force: :cascade do |t|
+    t.integer "vendor_id"
+    t.integer "state_id"
   end
 
   create_table "vendors", force: :cascade do |t|

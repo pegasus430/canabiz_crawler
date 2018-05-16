@@ -2,6 +2,14 @@
     <!--modal-->
     <div id="addToCartModal" class="modal" role="dialog"></div>
     
+    <!-- state dropdown -->
+    <div style="overflow: visible; float: right;">
+        <%= form_tag change_state_product_path do %>
+            <%= render 'shared/dropdown_states' %>
+            <button type="submit" class="button" style="margin-bottom: 0px; margin: 10px 0px;">Change State</button>
+        <% end %>
+    </div>
+    
     <div class="title">Pricing</div>
     <!-- table -->
     <table id="product-price-table" class="display" style="width: 100% !important;">
@@ -9,7 +17,9 @@
             <tr>
                 <th>Dispensary</th>
                 <th>Location</th>
-                <th>Buy</th>
+                <% if session[:product_state] || !Rails.env.Production? %>
+                    <th>Buy</th>
+                <% end %>
                 <% @table_headers.each do |display_order, unit| %>
                     <th><%= unit %></th>
                 <% end %>
@@ -25,16 +35,18 @@
                 <td>
                     <%=dispensary_source.location%>
                 </td>
-                <td>
-                    <% if dispensary_source.admin_user_id.present? && 
-                        (dispensary_source.dispensary.has_payqwick || dispensary_source.dispensary.has_hypur) %>
-                        
-                        <i class="fa fa-shopping-cart"></i>
-                        <%= link_to 'Add To Cart', 
-                            add_to_cart_path(:product_id => @product.id, :dispensary_source_id => dispensary_source.id),
-                            {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addToCartModal'}  %>
-				    <% end %>
-				</td>
+                <% if session[:product_state] || !Rails.env.Production? %>
+                    <td>
+                        <% if dispensary_source.admin_user_id.present? && 
+                            (dispensary_source.dispensary.has_payqwick || dispensary_source.dispensary.has_hypur) %>
+                            
+                            <i class="fa fa-shopping-cart"></i>
+                            <%= link_to 'Add To Cart', 
+                                add_to_cart_path(:product_id => @product.id, :dispensary_source_id => dispensary_source.id),
+                                {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#addToCartModal'}  %>
+    				    <% end %>
+    				</td>
+    			<% end %>
 				<% 
                     i = 0
                     loop do 

@@ -1,24 +1,31 @@
 <!--braintree-->
 <%= javascript_include_tag 'https://js.braintreegateway.com/js/braintree-2.24.0.min.js' %>
 
-<header class="secondary">
-	<div class="container align-vertical hero">
-		<div class="row">
-			<div class="col-md-5 text-left">
-				<h1>Your Order</h1>
-			</div>
-		</div><!--end of row-->
-	</div><!--end of container-->
-</header>
 
-<br>
-
-<%= render 'form' %>
-
-<br>
+<!-- Start page content -->
+<section id="page-content" class="page-wrapper">
+    <!-- Start order form area -->
+    <div class="zm-section bg-white pt-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="section-title-2 mb-40  text-center">
+                        <h3 class="inline-block uppercase">Place Order</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="message-box">
+            	
+            	<%= render 'form' %>
+            	
+            </div>
+        </div>
+    </div>
+    <!-- End order form area -->
+</section>
+<!-- End page content -->
 
 <!-- Script for Braintree -->
-
 <script>
 	braintree.setup('<%= @client_token %>', 'dropin', {
 	  container: 'payment-form'
