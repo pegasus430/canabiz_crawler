@@ -20,20 +20,20 @@ ActiveAdmin.register DispensarySource do
     #save queries
 	includes :dispensary, :source, :state, :admin_user
 	
-	#ACTIONS FOR DISPENSARY ADMIN TO ADD / EDIT / REMOVE PRODUCTS FROM STORE
-	member_action :add_to_store, :method => :post do
-		disp = DispensarySource.find(params[:id])
-		product = Product.find_by(id: params[:product_id])
-		dsp = DispensarySourceProduct.create(product_id: params[:product_id], 
-			dispensary_source_id: disp.id) if product
+	# #ACTIONS FOR DISPENSARY ADMIN TO ADD / EDIT / REMOVE PRODUCTS FROM STORE
+	# member_action :add_to_store, :method => :post do
+	# 	disp = DispensarySource.find(params[:id])
+	# 	product = Product.find_by(id: params[:product_id])
+	# 	dsp = DispensarySourceProduct.create(product_id: params[:product_id], 
+	# 		dispensary_source_id: disp.id) if product
 		
-		#create several dsp_prices with all the price and unit inputs
+	# 	#create several dsp_prices with all the price and unit inputs
 		
 			
-		#DspPrice.create(dispensary_source_product_id: dsp.id)
+	# 	#DspPrice.create(dispensary_source_product_id: dsp.id)
 	
-		redirect_to edit_admin_dispensary_source_path(disp)
-	end
+	# 	redirect_to edit_admin_dispensary_source_path(disp)
+	# end
 	
 	#delete product entirely from store
 	member_action :delete_from_store, :method => :get do

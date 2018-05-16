@@ -2,10 +2,23 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
 	
 	menu priority: 5
 	
-	permit_params :dispensary_source_id, :product_id
+	permit_params :dispensary_source_id, :product_id, dsp_prices_attributes: [:id, :price, :unit]
+	 
 	
 	#save queries
 	includes :dispensary_source, :product
+
+	#ACTIONS FOR DISPENSARY ADMIN TO ADD / EDIT / REMOVE PRODUCTS FROM STORE
+	collection_action :add_to_store, :method => :post do
+		dispensary_source = current_admin_user.dispensary_source
+		product = Product.find_by(id: params[:dispensary_source_product][:product_id])
+		if product
+			dispensary_source_product = DispensarySourceProduct.new(params.require(:dispensary_source_product).permit!) 
+	  	dispensary_source_product.dispensary_source_id = dispensary_source.id
+	  	dispensary_source_product.save
+	  end
+	  redirect_to edit_admin_dispensary_source_path(dispensary_source)
+	end
 	
 	index do
 		column :id
@@ -24,12 +37,22 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
 		actions
 	end
 
-	form do |f|
-		f.input :dispensary_source_id, :label => 'Dispensary Source', :as => :select, 
+	form url: "/admin/dispensary_products/add_to_store", method: :post  do |f|
+		if f.object.persisted?
+			f.input :dispensary_source_id, :label => 'Dispensary Source', :as => :select, 
 				:collection => DispensarySource.order('name ASC').map{|u| ["#{u.name} - #{u.source_id}", u.id]}
+		end
 		f.input :product_id, :label => 'Product', :as => :select, 
 				:collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
+			f.inputs do
+      f.has_many :dsp_prices do |t|
+      #t.select :unit, ['1 gram', '1 Eighth', 'Half Ounce']
+      t.input :unit, :collection => produce_unit_methods.collect { |x| x }, :prompt => "Select Unit"
+      t.input :price			
+      end	
     	f.actions
+  	
     end
+  end
 
 end

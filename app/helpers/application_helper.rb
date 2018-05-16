@@ -5,4 +5,9 @@ module ApplicationHelper
         direction = column == params[:sort] && params[:direction] == 'asc' ? 'desc' : 'asc'
         link_to title, :sort => column, :direction => direction
     end
+  
+  def produce_unit_methods
+    ['1 gram','1 Eighth','Half Ounce']
+  end
+  
 end

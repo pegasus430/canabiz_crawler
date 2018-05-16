@@ -1,8 +1,8 @@
 class DspPrice < ActiveRecord::Base
     
     #relations
-    belongs_to :dispensary_source_product
-    validates :dispensary_source_product_id, presence: true
+    belongs_to :dispensary_source_product#, inverse_of: :dsp_prices
+    # validates :dispensary_source_product_id, presence: true
     validates :price, numericality: {greater_than_or_equal_to: 0.01}
     
     #validations - no duplicate units per dispensary source product
@@ -23,7 +23,6 @@ class DspPrice < ActiveRecord::Base
             "Quarter Ounce" => 5,
             "Half Ounce" => 6, 
             "Ounce" => 7,
-            
             "10mg" => 0,
             "20mg" => 1,
             "30mg" => 2,
@@ -85,9 +84,9 @@ class DspPrice < ActiveRecord::Base
         }
     
         if self.unit.present? && displays.has_key?(self.unit)
-           self.display_order = displays[self.unit]
+            self.display_order = displays[self.unit]
         else 
-            puts "need to add the following value to displays map: " + self.unit
+            puts "need to add the following value to displays map: " + self.unit.to_s
         end
     end
 end

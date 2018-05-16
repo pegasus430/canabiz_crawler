@@ -10,9 +10,11 @@ class Ability
     elsif user.dispensary_admin_user?
       can :read, Product
       can :manage, AdminUser, :id => user.id
-      
+      can :manage, DispensarySourceProduct, :dispensary_source_id => user.dispensary_source.id
+      can :create, DispensarySourceProduct
+
       can :manage, DispensarySource, :admin_user_id => user.id
-      cannot [:destroy, :create], DispensarySource
+      cannot [:destroy], DispensarySource
       
       can [:manage, :read], DispensarySourceOrder, {dispensary_source: {admin_user_id: user.id}}
       cannot [:destroy, :create], DispensarySourceOrder
