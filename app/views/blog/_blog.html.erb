@@ -8,7 +8,8 @@
                     <a href="<%= blog_path(blog) %>"><%= blog.title %></a></h2>
 
                 <div class="zm-post-content">
-                    <p><%=blog.body.truncate(300) if blog.body%></p>
+                    <%frag = Nokogiri::HTML(blog.body)%>
+                    <%= truncate_html frag, :length => 300 %>
                 </div>
 
             </div>
