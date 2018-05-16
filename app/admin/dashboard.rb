@@ -18,7 +18,7 @@ ActiveAdmin.register_page "Dashboard" do
                         number_to_currency order.total_price
                     end
                     column :created_at do |order|
-                        time_ago_in_words order.created_at
+                        "#{time_ago_in_words order.created_at} ago"
                     end
                 end 
                 strong {link_to 'View All Orders', admin_orders_path}

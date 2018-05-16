@@ -107,7 +107,6 @@ class PagesController < ApplicationController
                redirect_to root_path
             else
                 DigestEmail.create(email: params[:email], active: true)
-                #flash.now[:message] = 'Thank you for signing up to the Weekly Roll Up!'
                 flash[:success] = 'Thank you for signing up to the Weekly Roll Up!'
                 redirect_to root_path
             end
@@ -166,20 +165,6 @@ class PagesController < ApplicationController
         @states = State.all.order("name ASC")
         #need to update sitemap
     end
-    
-    # Exchange your oauth_token and oauth_token_secret for an AccessToken instance.
-    #def prepare_access_token(oauth_token, oauth_token_secret)
-
-    #    consumer = OAuth::Consumer.new("PeKIPXsMPl80fKm6SipbqrRVL", "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO", 
-    #                                    { :site => "https://api.twitter.com", :scheme => :header })
-         
-        # now create the access token object from passed values
-    #    token_hash = { :oauth_token => oauth_token, :oauth_token_secret => oauth_token_secret }
-    #    access_token = OAuth::AccessToken.from_hash(consumer, token_hash )
-     
-    #    return access_token
-    #end
-    #helper_method :prepare_access_token
     
     private
         def require_admin

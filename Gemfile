@@ -21,7 +21,6 @@ gem 'owlcarousel-rails', github: 'acrogenesis/owlcarousel-rails', branch: 'maste
 gem 'left_join', '~> 0.2.1' #do left_join queries
 gem 'hairtrigger', '~> 0.2.20' #allow for trigger use
 gem 'country_select' #select list of countries
-gem 'mainstreet' #address validation
 
 #ACTIVE ADMIN
 gem 'devise'
