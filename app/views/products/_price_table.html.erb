@@ -17,7 +17,8 @@
             <tr>
                 <th>Dispensary</th>
                 <th>Location</th>
-                <% if session[:product_state] || !Rails.env.Production? %>
+                <% if (session[:product_state] || !Rails.env.Production?) &&
+                    (@searched_state == nil || @searched_state.id == @site_visitor_state.id) %>
                     <th>Buy</th>
                 <% end %>
                 <% @table_headers.each do |display_order, unit| %>

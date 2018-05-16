@@ -6,8 +6,8 @@ module ApplicationHelper
         link_to title, :sort => column, :direction => direction
     end
   
-  def produce_unit_methods
-    ['1 gram','1 Eighth','Half Ounce']
-  end
+    def produce_unit_methods
+        ['Gram','Eighth','Half Ounce']
+    end
   
 end
