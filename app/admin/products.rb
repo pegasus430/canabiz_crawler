@@ -18,7 +18,7 @@ ActiveAdmin.register Product do
 	scope :featured
 	
 	#save queries
-	includes :category, :state
+	includes :category
 	
 	#filters
 	filter :name
@@ -96,11 +96,6 @@ ActiveAdmin.register Product do
 				link_to product.category.name, admin_category_path(product.category)
 			end
 		end
-		column "State" do |product|
-			if product.state.present?
-				link_to product.state.name, admin_category_path(product.state)
-			end
-		end
 		column :sub_category
 		column :updated_at
 		column :headset_alltime_count
@@ -109,10 +104,6 @@ ActiveAdmin.register Product do
 		column :headset_daily_count
 		actions
 	end
-	
-	# index as: :grid do |product|
-	#   link_to image_tag(product.image), admin_product_path(product)
-	# end
   
   	#edit and new form - multipart allows for carrierwave connection
 	form(:html => { :multipart => true }) do |f|

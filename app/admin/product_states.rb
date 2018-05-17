@@ -8,18 +8,20 @@ ActiveAdmin.register ProductState do
 	includes :product, :state
 	
 	index do
-		column "Product" do |vp|
-			if vp.product.present?
-				link_to vp.product.name, admin_product_path(vp.product)
+		selectable_column
+		column "Product" do |ps|
+			if ps.product.present?
+				link_to ps.product.name, admin_product_path(ps.product)
 			end
 		end
-		column "State" do |vp|
-			if vp.state.present?
-				link_to vp.state.name, admin_vendor_path(vp.state)
+		column "State" do |ps|
+			if ps.state.present?
+				link_to ps.state.name, admin_vendor_path(ps.state)
 			end
 		end
 		column :created_at
 		column :updated_at
+		actions
 	end
 
 	form do |f|
