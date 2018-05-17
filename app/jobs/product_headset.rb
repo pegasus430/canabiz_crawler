@@ -100,8 +100,7 @@ class ProductHeadset < ActiveJob::Base
 			
 			vendor = Vendor.new(
 				:name => item["brand_name"], 
-				:remote_image_url => image_url,
-				:state_id => @state_record.id
+				:remote_image_url => image_url
         	)
         	unless vendor.save
         		puts "vendor Save Error: #{vendor.errors.messages}"
@@ -153,7 +152,6 @@ class ProductHeadset < ActiveJob::Base
 			#product not in system - create
 			product = Product.new(
 				:name => product_name, 
-				:state_id => @state_record.id,
 				:featured_product => false,
 				:category_id => category.id,
 				:headset_alltime_count => 1,
