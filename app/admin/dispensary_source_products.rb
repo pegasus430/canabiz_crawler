@@ -38,21 +38,22 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
 	end
 
 	form url: "/admin/dispensary_products/add_to_store", method: :post  do |f|
-		if f.object.persisted?
-			f.input :dispensary_source_id, :label => 'Dispensary Source', :as => :select, 
-				:collection => DispensarySource.order('name ASC').map{|u| ["#{u.name} - #{u.source_id}", u.id]}
-		end
+				if f.object.persisted?
+					f.input :dispensary_source_id, :label => 'Dispensary Source', :as => :select, 
+						:collection => DispensarySource.order('name ASC').map{|u| ["#{u.name} - #{u.source_id}", u.id]}
+		    end
+		  
 		f.input :product_id, :label => 'Product', :as => :select, 
 				:collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
 			f.inputs do
-      f.has_many :dsp_prices do |t|
-      #t.select :unit, ['1 gram', '1 Eighth', 'Half Ounce']
-      t.input :unit, :collection => produce_unit_methods.collect { |x| x }, :prompt => "Select Unit"
-      t.input :price			
-      end	
+        f.has_many :dsp_prices do |t|
+          t.input :unit, :collection =>  DspPrice::UNIT_PRICES_OPTIONS.sort, :prompt => "Select Unit"      
+          t.input :price
+        end	
     	f.actions
-  	
     end
   end
 
 end
+
+
