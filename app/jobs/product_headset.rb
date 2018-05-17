@@ -168,7 +168,7 @@ class ProductHeadset < ActiveJob::Base
         	
         	#create product state
         	product_state = ProductState.new(
-				:vendor_id => vendor.id, 
+				:product_id => product.id, 
 				:state_id => @state_record.id
         	)
         	unless product_state.save
