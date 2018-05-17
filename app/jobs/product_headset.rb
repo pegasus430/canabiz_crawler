@@ -14,6 +14,7 @@ class ProductHeadset < ActiveJob::Base
         
         @categories = Category.products.active
         @products = Product.all
+        @vendors = Vendor.all
         
         scrapeHeadset()
 
@@ -32,7 +33,6 @@ class ProductHeadset < ActiveJob::Base
 		        contents = JSON.parse(output.read)
 				
 				@state_record = State.where(name: state_name.titlecase).first
-				@vendors = Vendor.where(state_id: @state_record.id)
 
 				if contents[state_name] != nil
 					logger.info "HEADSET DID RETURN PRODUCTS FOR STATE: " + state_name
@@ -73,6 +73,17 @@ class ProductHeadset < ActiveJob::Base
 		if existing_vendors.size > 0
 			#still need to check if vendor product 
 			vendor = existing_vendors[0]
+			
+			#check if vendor state exists
+			if !VendorState.where(vendor_id: vendor.id).where(state_id: @state_record.id).any?
+				vendor_state = VendorState.new(
+					:vendor_id => vendor.id, 
+					:state_id => @state_record.id
+	        	)
+	        	unless vendor_state.save
+	        		puts "vendor_state Save Error: #{vendor_state.errors.messages}"
+	        	end
+			end
 		else
 			#vendor not in system - create
 			image_url = ''
@@ -96,6 +107,15 @@ class ProductHeadset < ActiveJob::Base
         		puts "vendor Save Error: #{vendor.errors.messages}"
         	end
         	@vendors.push(vendor)
+        	
+        	#create vendor state
+        	vendor_state = VendorState.new(
+				:vendor_id => vendor.id, 
+				:state_id => @state_record.id
+        	)
+        	unless vendor_state.save
+        		puts "vendor_state Save Error: #{vendor_state.errors.messages}"
+        	end
 		end
 
 		#check if the product itself is in the system
@@ -118,6 +138,17 @@ class ProductHeadset < ActiveJob::Base
 			#still need to check if vendor product 
 			product = existing_products[0]
 			product.increment_counters
+			
+			#check if product state exists
+			if !ProductState.where(product_id: product.id).where(state_id: @state_record.id).any?
+				product_state = ProductState.new(
+					:product_id => product.id, 
+					:state_id => @state_record.id
+	        	)
+	        	unless product_state.save
+	        		puts "product_state Save Error: #{product_state.errors.messages}"
+	        	end
+			end
 		else
 			#product not in system - create
 			product = Product.new(
@@ -134,6 +165,15 @@ class ProductHeadset < ActiveJob::Base
         		puts "product Save Error: #{product.errors.messages}"
         	end
         	@products.push(product)
+        	
+        	#create product state
+        	product_state = ProductState.new(
+				:product_id => product.id, 
+				:state_id => @state_record.id
+        	)
+        	unless product_state.save
+        		puts "product_state Save Error: #{product_state.errors.messages}"
+        	end
 		end
 
 		#check vendor product

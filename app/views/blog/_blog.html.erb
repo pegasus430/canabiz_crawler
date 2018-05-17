@@ -1,0 +1,18 @@
+<div class="col-md-12 col-lg-6 col-sm-12">
+    <article class="zm-post-lay-a1">
+        <div class="zm-post-dis">
+            <div class="zm-post-header">
+
+                <!-- name -->
+                <h2 class="zm-post-title">
+                    <a href="<%= blog_path(blog) %>"><%= blog.title %></a></h2>
+
+                <div class="zm-post-content">
+                    <%frag = Nokogiri::HTML(blog.body)%>
+                    <%= truncate_html frag, :length => 300 %>
+                </div>
+
+            </div>
+        </div>
+    </article>
+</div>

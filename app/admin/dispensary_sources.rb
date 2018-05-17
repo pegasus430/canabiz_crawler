@@ -48,7 +48,7 @@ ActiveAdmin.register DispensarySource do
   collection_action :dispensary_info, :method => :get do
     current_admin_user.dispensary_source
     if current_admin_user.admin?
-      redirect_to admin_dispensary_sources
+      redirect_to admin_dispensary_sources_path
     else
       redirect_to admin_dispensary_source_path(current_admin_user.dispensary_source)
     end

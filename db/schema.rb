@@ -104,6 +104,16 @@ ActiveRecord::Schema.define(version: 20180517061312) do
     t.decimal  "display_order"
   end
 
+  create_table "blog", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+    t.text     "body"
+  end
+
+  add_index "blog", ["slug"], name: "index_blog_on_slug", unique: true
+
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

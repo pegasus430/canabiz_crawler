@@ -11,8 +11,12 @@ class State < ActiveRecord::Base
     has_many :users, through: :user_states 
     
     has_many :dispensaries
-    has_many :vendors
-    has_many :products
+    
+    has_many :vendor_states
+    has_many :vendors, through: :vendor_states
+    
+    has_many :product_states
+    has_many :products, through: :product_states
     
     #validations
     validates :name, presence: true, length: {minimum: 1, maximum: 50}

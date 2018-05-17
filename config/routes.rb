@@ -81,6 +81,7 @@ Rails.application.routes.draw do
   match "/500", :to => "errors#internal_server_error", :via => :all
   match "/503", :to => "errors#application_error", :via => :all
   
+  resources :blog
   resources :categories
   resources :sources
   resources :average_prices

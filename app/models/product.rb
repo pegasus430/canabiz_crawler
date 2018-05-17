@@ -5,7 +5,9 @@ class Product < ActiveRecord::Base
     
     #relationships
     belongs_to :category
-    belongs_to :state
+    
+    has_many :product_states
+    has_many :states, through: :product_states
     
     has_many :vendor_products, -> { order(:units_sold => :desc) }
     has_many :vendors, through: :vendor_products

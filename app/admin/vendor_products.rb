@@ -1,7 +1,5 @@
 ActiveAdmin.register VendorProduct do
 
-	#NEEDS TO BE ALTERED!
-
 	menu :if => proc{ current_admin_user.admin? }
 	
 	permit_params :product_id, :vendor_id, :units_sold

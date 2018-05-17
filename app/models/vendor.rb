@@ -3,7 +3,9 @@ class Vendor < ActiveRecord::Base
     #relationships
     has_many :vendor_products
     has_many :products, through: :vendor_products
-    belongs_to :state
+    
+    has_many :vendor_states
+    has_many :states, through: :vendor_states
     
     #validations
     validates :name, presence: true

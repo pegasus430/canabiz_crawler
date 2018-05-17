@@ -1,11 +1,13 @@
+
 <select name="State" class="selectDropdown state-dropdown" data-live-search="true" onChange="setSelectedState(this.value)">
     <option value = "">State</option>
     <% @product_states.each do |state| %>
-    
-        <% if @searched_state != nil && @searched_state.name == state.name %>
+        <%= "state here: #{state.name}" %>
+        <%= "Searched State: #{@searched_state.name}" if @searched_state %>
+        <% if @site_visitor_state != nil && @site_visitor_state.name == state.name && @searched_state == nil %>
             <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
             <% @set_state = state.name %>
-        <% elsif @site_visitor_state != nil && @site_visitor_state.name == state.name%>
+        <% elsif @searched_state != nil && @searched_state.name == state.name%>
             <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
 			<% @set_state = state.name %>
         <% elsif @state != nil && @state.name == state.name%>
