@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   match "/admin/dispensary_sources/:id/delete_from_store" => 'admin/dispensary_sources#delete_from_store', via: :post
   match "/admin/dispensary_sources/:id/update_product_store" => 'admin/dispensary_sources#update_product_store', via: :put
   # match "/admin/dispensary_source_products/add_to_store" => 'admin/dispensary_source_products#add_to_store', via: :post
+  match "/admin/dispensary_products/add_to_store" => 'admin/dispensary_products#add_to_store', via: [:post, :patch]
   
   #ecommerce
   resources :carts

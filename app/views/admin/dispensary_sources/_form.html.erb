@@ -51,18 +51,27 @@
     end
 end %>
 
-<% if current_admin_user.dispensary_admin_user? %>
-    <% if @dispensary_source.dispensary_source_products.any? %>
+  <% if current_admin_user.dispensary_admin_user? %>
+    <div class="tab">
+      <button class="tablinks active" id="tab1">Your Product</button>
+      <button class="tablinks" id="tab2">Available Product</button>
+    </div>
+    <!-- Tab content -->
+    <div id="yourProduct" class="tabcontent" >
+     <% if @dispensary_source.dispensary_source_products.any? %>
         <h3>Your Products</h3>
         <%= render partial: 'dispensary_source_products', 
-        locals: {dispensary_source_products: @dispensary_source.dispensary_source_products} %>
-    <% else %>
-        <p>You are not currently selling any products on here. Add some below</p>
-    <% end %>
+          locals: {dispensary_source_products: @dispensary_source.dispensary_source_products} %>
+        <% else %>
+          <p>You are not currently selling any products on here. Add some below</p>
+        <% end %>
+    </div>
+    <div id="availableProduct" class="tabcontent" style="display: none;">
+      <h3>Available Products</h3>
+      <%= render partial: 'products', locals: {products: Product.featured} %>
+    </div>
+  <% end %>
 
-    <h3>Available Products</h3>
-    <%= render partial: 'products', locals: {products: Product.featured} %>
-<% end %>
 
 <!--javascript needed for price popup-->
 <script type="text/javascript">
@@ -90,6 +99,22 @@ end %>
                 });
             });
         });
+
+        $("#tab1").click(function(){
+          $("#yourProduct").show();
+          $("#availableProduct").hide();
+          $("#tab2").removeClass('active')
+          $("#tab1").addClass('active')
+        });
+        $("#tab2").click(function(){
+          $("#tab2").addClass('active');
+          $("#tab1").removeClass('active');
+          $("#yourProduct").hide();
+          $("#availableProduct").show();
+        });
+
+
+       
     });
 
     // Update selling price - needs to be inside bracket above

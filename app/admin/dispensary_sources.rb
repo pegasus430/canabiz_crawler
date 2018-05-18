@@ -42,7 +42,6 @@ ActiveAdmin.register DispensarySource do
               dispensary_source_id: disp.id)
     dsp.delete
     redirect_to edit_admin_dispensary_source_path(disp)
-    
   end
   
   collection_action :dispensary_info, :method => :get do

@@ -28,3 +28,30 @@ $panelHeaderBck: #2f2f2f;
 	width: 50px;
 	height: 50px;
 }
+
+#site_title_image{
+  height: 35px;
+  display: block;
+}
+#header h1.site_title{
+  padding-left: 10px !important;
+}
+.tab button.tablinks{
+  border: none;
+  background-image: none !important;
+  border-radius: 0 !important;
+  cursor: pointer;
+  margin: 0px !important;
+  box-shadow: none !important;
+  background: #2ab081;
+  text-shadow: none !important;
+  padding: 11px 20px !important;
+}
+.tab button.active{
+  background: #000 !important;
+  border: 1px solid #000 !important;
+}
+.tabcontent {
+  background: #fff;
+  padding: 15px;
+}
