@@ -21,7 +21,7 @@
                                         <% if @product.image.present? %> 
                                             <img itemprop="image" alt= "<%=@product.name%>" src="<%= @product.image_url(:product_show_smaller)%>" style = "border: 1px solid black;">
                                         <% else %>
-                                            <img itemprop="image" alt= "<%=@product.name%>" src="<%= asset_path product.default_image %>" style = "border: 1px solid black;">
+                                            <img itemprop="image" alt= "<%=@product.name%>" src="<%= asset_path @product.default_image %>" style = "border: 1px solid black;">
                                         <% end %>
                                     </div>
                                 </div>

@@ -75,7 +75,7 @@ class ProductHeadset < ActiveJob::Base
 			vendor = existing_vendors[0]
 			
 			#check if vendor state exists
-			if !VendorState.where(vendor_id: vendor.id).where(state_id: @state_record.id).any?
+			if VendorState.where(vendor_id: vendor.id).where(state_id: @state_record.id).empty?
 				vendor_state = VendorState.new(
 					:vendor_id => vendor.id, 
 					:state_id => @state_record.id
@@ -139,7 +139,7 @@ class ProductHeadset < ActiveJob::Base
 			product.increment_counters
 			
 			#check if product state exists
-			if !ProductState.where(product_id: product.id).where(state_id: @state_record.id).any?
+			if ProductState.where(product_id: product.id).where(state_id: @state_record.id).empty?
 				product_state = ProductState.new(
 					:product_id => product.id, 
 					:state_id => @state_record.id

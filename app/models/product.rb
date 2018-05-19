@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
     
     #scope
-    scope :featured, -> { where(featured_product: true).where.not(image: nil) }
+    scope :featured, -> { where(featured_product: true) }
     
     #relationships
     belongs_to :category

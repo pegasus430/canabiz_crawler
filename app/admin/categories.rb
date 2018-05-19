@@ -53,6 +53,7 @@ ActiveAdmin.register Category do
 	
 	index do
 		selectable_column
+		id_column
 		column :name
 		column "Keywords" do |category|
           truncate(category.keywords, omision: "...", length: 100) if category.keywords

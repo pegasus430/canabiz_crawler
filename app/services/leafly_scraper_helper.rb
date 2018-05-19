@@ -79,10 +79,10 @@ class LeaflyScraperHelper
 	def analyzeReturnedDispensarySourceMenu(returned_json_menu, existing_dispensary_source, is_new_dispensary)
 
 		categoryToMenu = {
-			"Flower" => returned_json_menu['Flower'], 
-			"Edibles" => returned_json_menu['Edible'],
-			"Concentrates" => returned_json_menu['Concentrate'],
-			"Pre-Roll" => returned_json_menu['PreRoll'],
+			#"Flower" => returned_json_menu['Flower'], 
+			"Edibles" => returned_json_menu['Edible']
+			#"Concentrates" => returned_json_menu['Concentrate'],
+			#"Pre-Roll" => returned_json_menu['PreRoll'],
 		}
 
 		categoryToMenu.each do |category_name, returned_menu_section|
@@ -94,15 +94,19 @@ class LeaflyScraperHelper
 				#loop through the different menu sections (separated by title - category)
 				returned_menu_section.each do |returned_dispensary_source_product|
 
-					#check if there is a strain
+					#IF ONE OF THE OTHER CATEGORIES - I WILL TAKE ALL OF THE PRODUCTS AND SEE IF THE 'NAME' CONTAINS THAT PRODUCT NAME (IGNORE CASE)
+
+					#check if there is a strain - this is only for flower
 					strain_name = nil
-					if returned_dispensary_source_product['strain'] != nil && returned_dispensary_source_product['strain']['name'] != nil
+					if returned_dispensary_source_product['strain'].present? && returned_dispensary_source_product['strain']['name'].present?
 						strain_name = returned_dispensary_source_product['strain']['name']
 					end
 
 					if strain_name != nil
+						
+						puts "THE STRAIN NAME IS NOT NIL: #{strain_name}"
 
-						#check if dispensary source already has this product
+						# check if dispensary source already has this product
 						existing_dispensary_source_products = []
 
 						#if its not a new dispensary, we will check if the dispensary source already has the product
@@ -173,6 +177,41 @@ class LeaflyScraperHelper
 							
 						end
 
+					elsif returned_dispensary_source_product['name'].present? #strain_name = nil
+
+						puts 'I AM IN HERE'
+						#puts returned_dispensary_source_product
+
+						#this is most likely the case for categories not flower
+						@category_products.each do |cat_product|
+
+							if returned_dispensary_source_product['name'].downcase.include? cat_product.name.downcase
+								#consider this a product match
+
+								puts 'I AM IN HERE 2'
+
+								#see if this dispensary_source already has this product
+								if is_new_dispensary == false && existing_dispensary_source.products.include?(cat_product)
+
+									puts 'I AM IN HERE 3'
+
+									# dispensary source has this product - just compare
+									compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, DispensarySourceProduct.
+																where(product: cat_product).where(dispensary_source: existing_dispensary_source).first, 
+																existing_dispensary_source)
+
+								else #dispensary source doesn't currently have this product - have to add it
+
+									puts 'I AM IN HERE 4'
+									
+									#just create a dispensary source product
+									createProductAndDispensarySourceProduct(cat_product, existing_dispensary_source.id, returned_dispensary_source_product)
+								end
+
+								break
+							end
+						end
+
 					end #end of if statement to see if the strain name is null
 
 				end #end loop of each section's products
@@ -187,11 +226,16 @@ class LeaflyScraperHelper
 
 		#if our product has no image, lets take their image:
 		if product.remote_image_url == nil && returned_dispensary_source_product['imageUrl'] && returned_dispensary_source_product['imageUrl'].length < 150
-			product.update_attribute :remote_image_url, returned_dispensary_source_product['imageUrl'].present?
+			product.update_attribute :remote_image_url, returned_dispensary_source_product['imageUrl']
+		end
+		
+		#if no description, lets take their description: 
+		if product.description == nil && returned_dispensary_source_product['description'].present?
+			product.update_attribute :description, returned_dispensary_source_product['description']
 		end
 
 		#create a product state if it doesn't exist
-		if !ProductState.where(product_id: product.id).where(state_id: @state.id).any?
+		if ProductState.where(product_id: product.id).where(state_id: @state.id).empty?
 			ProductState.create(
 				:product_id => product.id,
 				:state_id => @state.id,

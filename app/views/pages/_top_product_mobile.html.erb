@@ -4,7 +4,7 @@
             <!--product image --> 
             <a href="<%= product_path(product) %>">
                 <% if Rails.env.production? && product.image_url != nil %>
-                    <img src="<%= product.image_url(:profile_size)%>" onerror="this.src='<%= asset_path product.default_image' %>'" alt="<%=product.name%>">
+                    <img src="<%= product.image_url(:profile_size)%>" onerror="this.src='<%= asset_path product.default_image %>'" alt="<%=product.name%>">
                 <% else %>
                     <%= image_tag(product.default_image) %>
                 <% end %>

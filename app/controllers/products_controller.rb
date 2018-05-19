@@ -50,6 +50,9 @@ class ProductsController < ApplicationController
     
     def refine_index
         
+        puts 'HERE ARE THE PARAMS: '
+        puts params
+        
         result = ProductFinder.new(params).build
         
         #parse returns
