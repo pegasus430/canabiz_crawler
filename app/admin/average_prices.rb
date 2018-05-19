@@ -38,6 +38,7 @@ ActiveAdmin.register AveragePrice do
 		column :display_order
 		column :created_at
 		column :updated_at
+		actions
 	end
 
 	form do |f|

@@ -49,6 +49,8 @@ class DispensariesController < ApplicationController
 
     def show
         
+        #need to update dispensary page to show more than flower
+        
         @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).
                         includes(dispensary_source_products: [:product, :dsp_prices]).
                         order('last_menu_update DESC').first

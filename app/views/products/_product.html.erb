@@ -5,7 +5,7 @@
     	<% if product.image.present? && Rails.env.production? %>
     	    <img src="<%=product.image_url(:product_show)%>" onerror="this.src='<%= asset_path 'substitutes/product-substitute.png' %>'" alt="<%=product.name%>">
     	<% else %>
-    	    <%= image_tag('home_top_product.jpg') %>
+    	    <%= image_tag(product.default_image) %>
     	<% end %>
     </a>
     

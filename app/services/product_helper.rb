@@ -52,7 +52,7 @@ class ProductHelper
                     featured.where.not(id: @product.id).order("Random()").limit(4)
         end
         
-        #populate page maps
+        #populate page maps - IF THEY HAVE A SELF ONE THEN AUTOMATICALLY USE THAT, IF NOT USE ANOTHER
         dispensary_sources = @product.dispensary_sources.where(state_id: @state.id).
                                 includes(:dispensary, :state, :dispensary_source_products => :dsp_prices).
                                 order('last_menu_update DESC').order("name ASC")
