@@ -42,9 +42,11 @@ class Product < ActiveRecord::Base
     #stock image
     def default_image
         
+        
+        
         if Rails.env.Production?
             if self.category.name = 'Flower'
-                return_image = 'home_top_product.jpg'
+                return_image = 'substitutes/product-flower.png'
             else
                 #need to get default images for other categories
                 return_image = 'home_top_product.jpg'
