@@ -32,12 +32,8 @@ class ProductFinder
         end
 
         if params[:category_search].present?
-            puts 'THERE IS A CATEGORY SEARCH'
             if @searched_category = Category.find_by(name: params[:category_search])
-                puts 'CATEGORY IS FOUND'
                 @products = @products.where(category_id: @searched_category.id) 
-                puts 'THERE ARE SOME PRODUCTS: '
-                puts @products.count
                 add_to_search(params[:category_search], ' and ')
             #see if its a sub category
             elsif params[:category_search] == 'Hybrid-Sativa'

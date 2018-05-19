@@ -65,9 +65,11 @@ class ProductHelper
             
             #get the th from dsp_prices
             dispSource.dispensary_source_products.each do |dsp|
-                dsp.dsp_prices.each do |dsp_price|
-                    if dsp_price.display_order != nil
-                       @table_headers.store(dsp_price.display_order, dsp_price.unit)
+                if dsp.product_id == @product.id
+                    dsp.dsp_prices.each do |dsp_price|
+                        if dsp_price.display_order != nil
+                           @table_headers.store(dsp_price.display_order, dsp_price.unit)
+                        end
                     end
                 end
             end
