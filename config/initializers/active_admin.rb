@@ -10,7 +10,7 @@ ActiveAdmin.setup do |config|
   config.localize_format = :short
   config.site_title_link = "https://cannabiznetwork.com"
   config.favicon = 'favicon.ico'
-  config.site_title_image = "WI_Cannabiz.png"
+  config.site_title_image = "header_footer/cbz-logo-color.png"
   
   #friendly ids
   ActiveAdmin::ResourceController.class_eval do

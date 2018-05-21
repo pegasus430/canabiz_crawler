@@ -5,13 +5,13 @@ class PagesController < ApplicationController
     def home
         
         #test scraper
-        ProductHeadset.perform_later('washington')
+        #DispLeafly.perform_later('CO', 'A-B')
         
         #dont display nav search
         @nav_search = false
         
         #ARTICLES --  
-        @recent_articles = State.where(name: 'Washington').first.articles.active_source.
+        @recent_articles = @site_visitor_state.articles.active_source.
                             order("created_at DESC").
                             includes(:states, :source, :categories).limit(16)
 
@@ -36,15 +36,7 @@ class PagesController < ApplicationController
                 @top_products = Product.featured.includes(:vendors, :category, :average_prices).
                                     order("RANDOM()").limit(10)
             end
-            #not showing distance anymore
-            #includes(:dispensary_sources, :vendors, :category, :average_prices, :dispensary_sources => :dispensary).
-            #                            where(:dispensary_sources => {state_id: @site_visitor_state.id})
-        
-            #price range and distance
-            #result = ProductHelper.new(@top_products, @site_visitor_ip).findProductsPriceAndDistance
-            #@product_to_distance, @product_to_closest_disp = result[0], result[1]
         else 
-            #Project.joins(:vacancies).group("projects.id").having("count(vacancies.id)>0")
             @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").
                                     includes(:vendors, :category, :average_prices).
                                     order("RANDOM()").limit(10)
@@ -75,10 +67,6 @@ class PagesController < ApplicationController
             @product_results = @product_results | @product_results_two
             
             @product_results = @product_results.paginate(page: params[:page], per_page: 16)
-            
-                            
-            #result = ProductHelper.new(@product_results, @site_visitor_ip).findProductsPriceAndDistance
-            #    @product_to_distance, @product_to_closest_disp = result[0], result[1]
             
             #NEWS
             if Rails.env.production?

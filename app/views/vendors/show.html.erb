@@ -30,8 +30,12 @@
                                         <%=@vendor.description%>
                                     </div>
                                     <div class ="order-vendor-info">
-                                        <% if @vendor.state.present? %>
-                                    		<p><span class="title">State Serviced:</span> <%=@vendor.state.name%></p>
+                                        <% if @vendor.states.any? %>
+                                    		<p><span class="title">State Serviced:</span> 
+                                    		    <% @vendor.states.each do |state| %>
+                                    		        <%= state.name %>&nbsp;
+                                    		    <% end %>
+                                    		</p>
                                     	<% end %>
                                     	<% if @vendor.tier.present? %>
                                     		<p><span class="title">Tier:</span> <%=@vendor.tier%></p>

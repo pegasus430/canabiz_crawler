@@ -10,7 +10,8 @@ class AveragePrice < ActiveRecord::Base
     before_validation :set_display_order
     def set_display_order
         
-        displays = { 
+        displays = {
+            "Each" => 0,
             "Half Gram" => 0,
             "Half Grams" => 0,
             "Gram" => 1,

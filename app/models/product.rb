@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
     
     #scope
-    scope :featured, -> { where(featured_product: true).where.not(image: nil) }
+    scope :featured, -> { where(featured_product: true) }
     
     #relationships
     belongs_to :category
@@ -37,6 +37,24 @@ class Product < ActiveRecord::Base
        self.headset_weekly_count += 1
        self.headset_daily_count += 1
        self.save
+    end
+    
+    #stock image
+    def default_image
+        
+        
+        
+        if Rails.env.Production?
+            if self.category.name = 'Flower'
+                return_image = 'substitutes/product-flower.png'
+            else
+                #need to get default images for other categories
+                return_image = 'home_top_product.jpg'
+            end
+        else
+            return_image = 'home_top_product.jpg'
+        end
+       return_image
     end
     
     #delete relations

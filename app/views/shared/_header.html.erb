@@ -9,11 +9,13 @@
                             <ul>
                                 <!--if state use the state logo-->
                                 <% if @state.present? && @state.logo.present? %>
-                                    <a href="<%=root_path%>"><img style ="margin-top: -10px" 
-                                        src="<%=asset_path(@state.logo)%>"></a>
+                                    <a href="<%=root_path%>">
+                                        <img style ="margin-top: -10px" src="<%=asset_path(@state.logo)%>">
+                                    </a>
                                 <% elsif (@product.present? || @products.present? || @dispensary.present? || @vendor.present? || current_page?(root_path)) && @site_visitor_state.present? %>
-                                    <a href="<%=root_path%>"><img style ="margin-top: -10px" 
-                                        src="<%=asset_path(@site_visitor_state.logo)%>"></a>    
+                                    <a href="<%=root_path%>">
+                                        <img style ="margin-top: -10px" src="<%=asset_path(@site_visitor_state.logo)%>">
+                                    </a>    
                                 <% else %>
                             	    <%= link_to image_tag("header_footer/cbz-logo-color.svg"), root_path %>
                                 <% end %>

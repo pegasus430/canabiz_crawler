@@ -11,6 +11,9 @@
     </div>
     
     <div class="title">Pricing</div>
+    <p>TABLE HEADERS: </p>
+    <%= @table_headers %>
+    <%= @table_headers.length %>
     <!-- table -->
     <table id="product-price-table" class="display" style="width: 100% !important;">
         <thead>
@@ -36,7 +39,8 @@
                 <td>
                     <%=dispensary_source.location%>
                 </td>
-                <% if session[:product_state] || !Rails.env.Production? %>
+                <% if session[:product_state] || !Rails.env.Production? &&
+                    (@searched_state == nil || @searched_state.id == @site_visitor_state.id) %>
                     <td>
                         <% if dispensary_source.admin_user_id.present? && 
                             (dispensary_source.dispensary.has_payqwick || dispensary_source.dispensary.has_hypur) %>
@@ -59,7 +63,7 @@
                         <% else %>
                             <td style="text-align:center;">--</td>
                         <% end
-                        break if i == 5
+                        break if i + 1 == @table_headers.length
                         i += 1
                     end
                 %>

@@ -52,7 +52,7 @@ class ProductHelper
                     featured.where.not(id: @product.id).order("Random()").limit(4)
         end
         
-        #populate page maps
+        #populate page maps - IF THEY HAVE A SELF ONE THEN AUTOMATICALLY USE THAT, IF NOT USE ANOTHER
         dispensary_sources = @product.dispensary_sources.where(state_id: @state.id).
                                 includes(:dispensary, :state, :dispensary_source_products => :dsp_prices).
                                 order('last_menu_update DESC').order("name ASC")
@@ -65,9 +65,11 @@ class ProductHelper
             
             #get the th from dsp_prices
             dispSource.dispensary_source_products.each do |dsp|
-                dsp.dsp_prices.each do |dsp_price|
-                    if dsp_price.display_order != nil
-                       @table_headers.store(dsp_price.display_order, dsp_price.unit)
+                if dsp.product_id == @product.id
+                    dsp.dsp_prices.each do |dsp_price|
+                        if dsp_price.display_order != nil
+                           @table_headers.store(dsp_price.display_order, dsp_price.unit)
+                        end
                     end
                 end
             end
