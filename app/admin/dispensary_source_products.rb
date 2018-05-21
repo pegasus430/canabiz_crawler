@@ -1,13 +1,8 @@
 ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
-  
   menu priority: 5
-  
   permit_params :dispensary_source_id, :product_id, dsp_prices_attributes: [:id, :price, :unit, :_destroy]
-   
-  
   #save queries
   includes :dispensary_source, :product
-
   #ACTIONS FOR DISPENSARY ADMIN TO ADD / EDIT / REMOVE PRODUCTS FROM STORE
   collection_action :add_to_store, :method => :post do
     dispensary_source = current_admin_user.dispensary_source
@@ -19,39 +14,31 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
     end
     redirect_to edit_admin_dispensary_source_path(dispensary_source)
   end
-  
+  config.filters = false
+
   index do
-    column :id
-    column "Dispensary Source" do |dsp|
-      if dsp.dispensary_source.present?
-        link_to "#{dsp.dispensary_source.name} - #{dsp.dispensary_source.source.name}", admin_dispensary_source_path(dsp.dispensary_source)
-      end
-    end
-    column "Product" do |dsp|
-      if dsp.product.present?
-        link_to dsp.product.name , admin_product_path(dsp.product)
-      end
-    end
-    column :created_at
-    column :updated_at
-    actions
+    render 'admin/dispensary_source_products/index', context: self
   end
 
   form url: "/admin/dispensary_products/add_to_store"  do |f|
+    
     if f.object.persisted?
-      f.input :dispensary_source_id, :label => 'Dispensary Source', :as => :select, 
-        :collection => DispensarySource.order('name ASC').map{|u| ["#{u.name} - #{u.source_id}", u.id]}
-    	f.input :dispensary_source_product_id, :input_html => { :value => f.object.id }, as: :hidden
-
+      panel '' do
+        f.input :dispensary_source_id, :label => 'Dispensary Source', :as => :select, 
+          :collection => DispensarySource.order('name ASC').map{|u| ["#{u.name} - #{u.source_id}", u.id]}
+      	f.input :dispensary_source_product_id, :input_html => { :value => f.object.id }, as: :hidden
+      end
     end
       
-    f.input :product_id, :label => 'Product', :as => :select, 
-        :collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
-    f.inputs do
-      f.has_many :dsp_prices, allow_destroy: true do |t|
-        t.input :unit, :collection =>  DspPrice::UNIT_PRICES_OPTIONS.sort, :prompt => "Select Unit"      
-        t.input :price
-
+    panel '' do
+      f.input :product_id, :label => 'Product', :as => :select, 
+          :collection => Product.order('name ASC').map{|u| ["#{u.name}", u.id]}
+         
+      f.inputs do
+        f.has_many :dsp_prices, allow_destroy: true do |t|
+          t.input :unit, :collection =>  DspPrice::UNIT_PRICES_OPTIONS.sort, :prompt => "Select Unit"      
+          t.input :price
+        end
       end
     end
     f.actions
@@ -66,8 +53,12 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
         render :edit
       end
     end
+
+    def index
+      @dispensary_source_products =  current_admin_user.dispensary_source.dispensary_source_products
+      @products = Product.all
+    end
+     
   end
 
 end
-
-

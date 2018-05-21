@@ -11,7 +11,8 @@ class Ability
       can :read, Product
       can :manage, AdminUser, :id => user.id
       # can :manage, DispensarySourceProduct, :dispensary_source_id => user.dispensary_source.id
-      can :create, DispensarySourceProduct
+      can :manage, DispensarySourceProduct
+      
 
       can :manage, DispensarySource, :admin_user_id => user.id
       cannot [:destroy], DispensarySource

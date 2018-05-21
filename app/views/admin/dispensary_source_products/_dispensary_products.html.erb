@@ -1,0 +1,68 @@
+<% dispensary_source_products =  current_admin_user.dispensary_source.dispensary_source_products %>
+<% dispensary_source = current_admin_user.dispensary_source %>  
+  <% if current_admin_user.dispensary_admin_user? %>
+    <div class="tab">
+      <button class="tablinks active" id="tab1">Your Product</button>
+      <button class="tablinks" id="tab2">Available Product</button>
+    </div>
+    <!-- Tab content -->
+    <div id="yourProduct" class="tabcontent" >
+     <% if dispensary_source_products.any? %>
+        <h3>Your Products</h3>
+        <%= render partial: 'dispensary_source_products', 
+          locals: {dispensary_source_products: dispensary_source_products} %>
+        <% else %>
+          <p>You are not currently selling any products on here. Add some below</p>
+        <% end %>
+    </div>
+    <div id="availableProduct" class="tabcontent" style="display: none;">
+      <h3>Available Products</h3>
+      <%= render partial: 'products', locals: {products: Product.featured} %>
+    </div>
+  <% end %>
+
+
+<!--javascript needed for price popup-->
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+        // Add selling price 
+        $(document).on('click', ".add_to_store", function(){
+            product_id = $(this).attr('product_id')
+            ds_id = "<%=@dispensary_source.id %>";
+            ActiveAdmin.modal_dialog("Enter Selling Price", {price: 'number'}, function(inputs) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/dispensary_sources/" + ds_id +"/add_to_store",
+                    data: {
+                        product_id: product_id,
+                        price: $("input[name='price']").last().val()
+                    },
+                    success: function(data) {
+                        window.location.reload()
+                        return false;
+                    },
+                    error: function(data) {
+                        return false;
+                    }
+                });
+            });
+        });
+
+        // $("#tab1").click(function(){
+        //   $("#yourProduct").show();
+        //   $("#availableProduct").hide();
+        //   $("#tab2").removeClass('active')
+        //   $("#tab1").addClass('active')
+        // });
+        // $("#tab2").click(function(){
+        //   $("#tab2").addClass('active');
+        //   $("#tab1").removeClass('active');
+        //   $("#yourProduct").hide();
+        //   $("#availableProduct").show();
+        // });
+
+
+       
+    });
+</script>

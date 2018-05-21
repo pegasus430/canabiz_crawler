@@ -129,57 +129,62 @@ ActiveAdmin.register DispensarySource do
         actions
     end
     
-  #  form(:html => { :multipart => true }) do |f|
-    # f.inputs do
+   form(:html => { :multipart => true }) do |f|
+    f.inputs do
       
-    #   # if current_admin_user.dispensary_admin_user?
-    #   #   f.input :name, input_html: { disabled: true } 
-    #   # end
+      # if current_admin_user.dispensary_admin_user?
+      #   f.input :name, input_html: { disabled: true } 
+      # end
       
-    #   # if current_admin_user.admin?
-    #   #   f.input :name
-    #   #   f.input :admin_user_id, :label => 'Admin User', :as => :select, 
-  # #             :collection => AdminUser.order('email ASC').map{|u| ["#{u.email}", u.id]}
-    #   #   f.input :dispensary_id, :label => 'Dispensary', :as => :select, 
-    #   #       :collection => Dispensary.order('name ASC').map{|u| ["#{u.name}", u.id]}
-    #   #   f.input :source_id, :label => 'Source', :as => :select, 
-    #   #       :collection => Source.where(source_type: ['Dispensary', 'Both']).order('name ASC').
-    #   #               map{|u| ["#{u.name}", u.id]}
-    #   #   f.input :state_id, :label => 'State', :as => :select, 
-    #   #     :collection => State.order('name ASC').map{|u| ["#{u.name}", u.id]}
-    #   #   f.input :source_rating
-    #   #   f.input :last_menu_update
-    #   # end
+      # if current_admin_user.admin?
+      #   f.input :name
+      #   f.input :admin_user_id, :label => 'Admin User', :as => :select, 
+  #             :collection => AdminUser.order('email ASC').map{|u| ["#{u.email}", u.id]}
+      #   f.input :dispensary_id, :label => 'Dispensary', :as => :select, 
+      #       :collection => Dispensary.order('name ASC').map{|u| ["#{u.name}", u.id]}
+      #   f.input :source_id, :label => 'Source', :as => :select, 
+      #       :collection => Source.where(source_type: ['Dispensary', 'Both']).order('name ASC').
+      #               map{|u| ["#{u.name}", u.id]}
+      #   f.input :state_id, :label => 'State', :as => :select, 
+      #     :collection => State.order('name ASC').map{|u| ["#{u.name}", u.id]}
+      #   f.input :source_rating
+      #   f.input :last_menu_update
+      # end
       
-    #   f.input :image, :as => :file
-    #   f.input :street
-    #   f.input :city
-    #   f.input :zip_code
+      f.input :image, :as => :file
+      f.input :street
+      f.input :city
+      f.input :zip_code
       
-    #   f.input :instagram
-    #     f.input :twitter
-    #     f.input :website
-    #     f.input :email
-    #     f.input :phone, label: 'Phone Number'
-    #     f.input :min_age, label: 'Minimum Age'
+      f.input :instagram
+        f.input :twitter
+        f.input :website
+        f.input :email
+        f.input :phone, label: 'Phone Number'
+        f.input :min_age, label: 'Minimum Age'
         
-    #     f.input :monday_open_time, :as => :time_picker
-    #   f.input :monday_close_time, :as => :time_picker
-    #   f.input :tuesday_open_time, :as => :time_picker
-    #   f.input :tuesday_close_time, :as => :time_picker
-    #   f.input :wednesday_open_time, :as => :time_picker
-    #   f.input :wednesday_close_time, :as => :time_picker
-    #   f.input :thursday_open_time, :as => :time_picker
-    #   f.input :thursday_close_time, :as => :time_picker
-    #   f.input :friday_open_time, :as => :time_picker
-    #   f.input :friday_close_time, :as => :time_picker
-    #   f.input :saturday_open_time, :as => :time_picker
-    #   f.input :sunday_open_time, :as => :time_picker
-    #   f.input :saturday_close_time, :as => :time_picker
-    #   f.input :sunday_close_time, :as => :time_picker
-    # end
-    # f.actions
-  #  end
+        f.input :monday_open_time, :as => :time_picker
+      f.input :monday_close_time, :as => :time_picker
+      f.input :tuesday_open_time, :as => :time_picker
+      f.input :tuesday_close_time, :as => :time_picker
+      f.input :wednesday_open_time, :as => :time_picker
+      f.input :wednesday_close_time, :as => :time_picker
+      f.input :thursday_open_time, :as => :time_picker
+      f.input :thursday_close_time, :as => :time_picker
+      f.input :friday_open_time, :as => :time_picker
+      f.input :friday_close_time, :as => :time_picker
+      f.input :saturday_open_time, :as => :time_picker
+      f.input :sunday_open_time, :as => :time_picker
+      f.input :saturday_close_time, :as => :time_picker
+      f.input :sunday_close_time, :as => :time_picker
+    end
+    f.actions
+   end
   
+  controller do
+    def edit
+      @dispensary_source = current_admin_user.dispensary_source
+    end
+  end
   
 end

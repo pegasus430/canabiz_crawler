@@ -1,0 +1,75 @@
+<div class="tab">
+  <button class="tablinks active" id="tab1">Your Product</button>
+  <button class="tablinks" id="tab2">Available Product</button>
+</div>
+<div id="yourProduct">
+  <div>
+    <h3>Your Products</h3>
+    <table border="0" cellspacing="0" cellpadding="0" id="dispensary_source_products" class="index_table index" paginator="true">
+      <thead>
+        <tr>
+          <th class="col col-customer">Name</th>
+          <th class="col col-actions">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% index_count = 0 %>
+        <% @dispensary_source_products.each do |dsp| %>
+        <tr class="<%= ((index_count % 2) == 0) ? 'even' : 'odd' %>" id="dispensary_source_order_1">
+          <td class="col col-customer"><%=dsp.product.name %></td>
+          <td class="col col-actions">
+             <%= link_to "View",admin_dispensary_product_path(dsp), class: "remove", method: :get %>
+          </td>
+        </tr>
+        <% index_count += 1 %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="availableProduct" class="tabcontent" style="display: none;">
+  <h3>Available Products</h3>
+    <table border="0" cellspacing="0" cellpadding="0" id="index_table_stores" class="index_table index" paginator="true">
+    <thead>
+        <tr>
+            <th class="sortable col-name">Name</th>
+            <th class="col col-actions">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% index_count = 0 %>
+        <% @products.each do |product| %>
+            <tr class="<%= ((index_count % 2) == 0) ? 'even' : 'odd' %>">
+                <td class="col"><%=product.name %></td>
+                <td class="col col-actions">
+                    <%= link_to "Add to Store", new_admin_dispensary_product_path(product_id: product.id), 
+                            class: "add_to_store", method: :get %>  
+                </td>
+            </tr>
+            <% index_count += 1 %>
+        <% end %>
+    </tbody>
+  </table>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+      // Add selling price 
+      $("#tab1").click(function(){
+        $("#yourProduct").show();
+        $('#dispensary_source_products').show();
+        $("#availableProduct").hide();
+        $("#tab2").removeClass('active')
+        $("#tab1").addClass('active')
+     });
+      $("#tab2").click(function(){
+        $("#tab2").addClass('active')
+        $("#tab1").removeClass('active')
+        $("#yourProduct").hide();
+        $('#dispensary_source_products').hide();
+        $('#availableProduct').show();
+      });
+  });
+
+ 
+</script> 

@@ -1,0 +1,20 @@
+<table border="0" cellspacing="0" cellpadding="0" id="index_table_stores" class="index_table index" paginator="true">
+  <thead>
+    <tr>
+      <th class="sortable col-name">Name</th>
+      <th class="col col-actions">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% index_count = 0 %>
+    <% products.each do |product| %>
+      <tr class="<%= ((index_count % 2) == 0) ? 'even' : 'odd' %>">
+        <td class="col"><%=product.name %></td>
+        <td class="col col-actions">
+          <%= link_to "Add to Store", "javascript:void(0)", product_id: product.id, class: "add_to_store", method: :post %>
+        </td>
+      </tr>
+      <% index_count += 1 %>
+    <% end %>
+  </tbody>
+</table>
