@@ -14,10 +14,28 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
     end
     redirect_to edit_admin_dispensary_source_path(dispensary_source)
   end
+
   config.filters = false
 
   index do
-    render 'admin/dispensary_source_products/index', context: self
+    if current_admin_user.admin?
+      column :id
+      column "Dispensary Source" do |dsp|
+        if dsp.dispensary_source.present?
+          link_to "#{dsp.dispensary_source.name}  #{dsp.dispensary_source.source.name}", admin_dispensary_source_path(dsp.dispensary_source)
+        end
+      end
+      column "Product" do |dsp|
+        if dsp.product.present?
+          link_to dsp.product.name , admin_product_path(dsp.product)
+        end
+      end
+      column :created_at
+      column :updated_at
+      actions
+    else
+      render 'admin/dispensary_source_products/index', context: self
+    end
   end
 
   form url: "/admin/dispensary_products/add_to_store"  do |f|
@@ -55,7 +73,11 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
     end
 
     def index
-      @dispensary_source_products =  current_admin_user.dispensary_source.dispensary_source_products
+      if current_admin_user.admin?
+        @dispensary_source_products = DispensarySourceProduct.all
+      else
+        @dispensary_source_products =  current_admin_user.dispensary_source.dispensary_source_products
+      end
       @products = Product.all
     end
      
