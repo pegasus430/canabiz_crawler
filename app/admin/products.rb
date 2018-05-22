@@ -107,6 +107,14 @@ ActiveAdmin.register Product do
 		column :headset_monthly_count
 		column :headset_weekly_count 
 		column :headset_daily_count
+		column "DispensaryProduct" do |product|
+		  dsps = product.dispensary_source_products
+		  unless dsps.blank?
+		  	dsps.each.map do |dsp|
+			    link_to(dsp.dispensary_source.name, admin_dispensary_product_path(dsp)) 
+			  end.join(', ').html_safe
+		  end
+		end
 		actions
 	end
   

@@ -23,7 +23,7 @@ class DispensarySourceProductsController < ApplicationController
     
     #-------------------------------------    
     def edit
-    end   
+    end       
     def update
         if @dispensary_source_product.update(dispensary_source_product_params)
             flash[:success] = 'Dispensary Source Product was successfully updated'
