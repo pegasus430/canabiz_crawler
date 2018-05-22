@@ -208,8 +208,8 @@ ActiveRecord::Schema.define(version: 20180519022004) do
     t.decimal  "price"
     t.integer  "unit"
     t.integer  "display_order"
-    t.datetime "created_at",                   default: '2018-05-19 02:20:59'
-    t.datetime "updated_at",                   default: '2018-05-19 02:20:59'
+    t.datetime "created_at",                   default: '2018-05-21 11:07:43'
+    t.datetime "updated_at",                   default: '2018-05-21 11:07:43'
   end
 
   create_table "orders", force: :cascade do |t|
