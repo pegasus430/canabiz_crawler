@@ -18,7 +18,7 @@ ActiveAdmin.register Product do
 	scope :featured
 	
 	#save queries
-	includes :category
+	includes :category, :vendor
 	
 	#filters
 	filter :name
@@ -30,11 +30,11 @@ ActiveAdmin.register Product do
 	#-----CSV ACTIONS ----------#
     
     #import csv
-	# action_item only: :index do
-	# 	if current_admin_user.admin?
-	# 		link_to 'Import Products', admin_products_import_products_path, class: 'import_csv'
-	# 	end
-	# end
+	action_item only: :index do
+		if current_admin_user.admin?
+			link_to 'Import Products', admin_products_import_products_path, class: 'import_csv'
+		end
+	end
 	
 	#export csv
 	csv do
@@ -95,6 +95,11 @@ ActiveAdmin.register Product do
 			if product.category.present?
 				link_to product.category.name, admin_category_path(product.category)
 			end
+		end
+		column "Vendor" do |product|
+			if product.vendor.present?
+				link_to product.vendor.name, admin_vendor_path(product.vendor)
+			end	
 		end
 		column :sub_category
 		column :updated_at

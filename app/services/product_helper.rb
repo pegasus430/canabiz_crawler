@@ -52,6 +52,44 @@ class ProductHelper
                     featured.where.not(id: @product.id).order("Random()").limit(4)
         end
         
+        # disp_source_ids = DispensarySource.where(state_id: @state_id).pluck(:id)
+        
+        # dsps = DispensarySourceProduct.where(product_id: @product.id).where(dispensary_source_id: disp_source_ids)
+        
+        
+        # dsps = @product.dispensary_sources.where(state_id: @state.id).dispensary_source_products.
+        #             where(product_id: @product.id).includes(:dsp_prices, :dispensary_source)
+        
+        
+        
+        dsps = @product.dispensary_source_products.
+        #             where(:dispensary_source => {state_id: @state.id}).
+                    includes(:dsp_prices)
+                    
+                    # s.where()
+        
+        @table_headers = Hash.new #for product table
+        
+        puts 'dsp size::: '
+        puts dsps.count
+        
+        
+        dsps.each do |dsp|
+            
+            # get the th from dsp_prices
+            dsp.dsp_prices.each do |dsp_price|
+                if dsp_price.display_order.present?
+                    puts dsp_price.unit
+                    puts dsp_price.display_order
+                    @table_headers.store(dsp_price.display_order, dsp_price.unit)
+                end     
+            end
+        end
+        
+        
+        
+        
+        
         #populate page maps - IF THEY HAVE A SELF ONE THEN AUTOMATICALLY USE THAT, IF NOT USE ANOTHER
         dispensary_sources = @product.dispensary_sources.where(state_id: @state.id).
                                 includes(:dispensary, :state, :dispensary_source_products => :dsp_prices).
@@ -59,20 +97,18 @@ class ProductHelper
                                 
         #need a map of dispensary to dispensary source product
         @dispensary_to_product = Hash.new
-        @table_headers = Hash.new #for product table
+        
         
         dispensary_sources.each do |dispSource|
             
             #get the th from dsp_prices
-            dispSource.dispensary_source_products.each do |dsp|
-                if dsp.product_id == @product.id
-                    dsp.dsp_prices.each do |dsp_price|
-                        if dsp_price.display_order != nil
-                           @table_headers.store(dsp_price.display_order, dsp_price.unit)
-                        end
-                    end
-                end
-            end
+            # dispSource.dispensary_source_products.each do |dsp|
+            #     dsp.dsp_prices.each do |dsp_price|
+            #         if dsp_price.display_order != nil
+            #           @table_headers.store(dsp_price.display_order, dsp_price.unit)
+            #         end
+            #     end
+            # end
             
             #dispensary products
             if !@dispensary_to_product.has_key?(dispSource)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180519022004) do
+ActiveRecord::Schema.define(version: 20180520132101) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -282,6 +282,7 @@ ActiveRecord::Schema.define(version: 20180519022004) do
     t.integer  "headset_monthly_count", default: 0
     t.integer  "headset_weekly_count",  default: 0
     t.integer  "headset_daily_count",   default: 0
+    t.integer  "vendor_id"
   end
 
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true
