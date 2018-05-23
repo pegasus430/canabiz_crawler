@@ -159,6 +159,10 @@ class ProductHeadset < ActiveJob::Base
 				:headset_weekly_count => 1,
 				:headset_daily_count => 1,
         	)
+        	
+        	if category.name != 'Flower'
+        		product.vendor_id = vendor.id	
+        	end
         	unless product.save
         		puts "product Save Error: #{product.errors.messages}"
         	end
@@ -174,17 +178,19 @@ class ProductHeadset < ActiveJob::Base
         	end
 		end
 
-		#check vendor product
-		existing_vp = VendorProduct.where(vendor_id: vendor.id).where(product_id: product.id)
-
-		if (existing_vp.size == 0)
-			vendor_product = VendorProduct.new(
-				:vendor_id => vendor.id, 
-				:product_id => product.id
-        	)
-        	unless vendor_product.save
-        		puts "vendor_product Save Error: #{vendor_product.errors.messages}"
-        	end
+		#check vendor product (if flower)
+		if category.name == 'Flower'
+			existing_vp = VendorProduct.where(vendor_id: vendor.id).where(product_id: product.id)
+	
+			if (existing_vp.size == 0)
+				vendor_product = VendorProduct.new(
+					:vendor_id => vendor.id, 
+					:product_id => product.id
+	        	)
+	        	unless vendor_product.save
+	        		puts "vendor_product Save Error: #{vendor_product.errors.messages}"
+	        	end
+			end
 		end
 
 		# #check average price - if exists, update price, if not create

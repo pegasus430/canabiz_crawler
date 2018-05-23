@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   match "/admin/average_prices/import_average_prices" => 'admin/average_prices#import_average_prices', via: [:get, :post]
   match "/admin/categories/import_categories" => 'admin/categories#import_categories', via: [:get, :post]
   match "/admin/dispensaries/import_dispensaries" => 'admin/dispensaries#import_dispensaries', via: [:get, :post]
+  match "/admin/products/import_products" => 'admin/products#import_products', via: [:get, :post]
   
   # match "/admin/dispensary_sources/:id/add_to_store" => 'admin/dispensary_sources#add_to_store', via: :post
   match "/admin/dispensary_sources/:id/delete_from_store" => 'admin/dispensary_sources#delete_from_store', via: :post

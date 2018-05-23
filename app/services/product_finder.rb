@@ -56,7 +56,7 @@ class ProductFinder
        
         if params[:state_search].present?
             if @searched_state = State.find_by(name: params[:state_search])
-                #@products = @products.where(:dispensary_sources => {state_id: @searched_state.id})
+                @products = @products.where(:dispensary_sources => {state_id: @searched_state.id})
                 add_to_search(params[:state_search], ' in ')
             end
         end

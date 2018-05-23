@@ -9,8 +9,10 @@ class Product < ActiveRecord::Base
     has_many :product_states
     has_many :states, through: :product_states
     
+    #flowers is many to many, but other products are one to many
     has_many :vendor_products, -> { order(:units_sold => :desc) }
     has_many :vendors, through: :vendor_products
+    belongs_to :vendor
     
     has_many :average_prices, -> { order(:display_order => :asc) }
     
@@ -30,6 +32,31 @@ class Product < ActiveRecord::Base
     #photo aws storage
     mount_uploader :image, PhotoUploader
     
+    #import CSV file
+    def self.import_from_csv(products)
+        CSV.parse(products, :headers => true).each_with_index do |row, index|
+            
+            puts 'index: '
+            puts index
+            puts 'row'
+            puts row
+            
+            if index > 0
+                # product  = Product.where("id =?", row['id'].to_s.downcase).first
+                
+                #change to update record if id matches
+                product_hash = row.to_hash
+                product = self.where(id: row['id']).first
+                
+                if product.present? 
+                    #product.first.update_attributes(product_hash)
+                else
+                    #Product.create! product_hash
+                end
+            end
+        end
+    end 
+    
     #increment the counters for headset whenever an existing product appears
     def increment_counters
        self.headset_alltime_count += 1 
@@ -41,8 +68,6 @@ class Product < ActiveRecord::Base
     
     #stock image
     def default_image
-        
-        
         
         if Rails.env.Production?
             if self.category.name = 'Flower'
@@ -62,6 +87,7 @@ class Product < ActiveRecord::Base
     def delete_relations
        self.dispensary_source_products.destroy_all
        self.average_prices.destroy_all
+       self.vendor_products.destroy_all
     end
     
     #----------ECOMMERCE STUFF-----------

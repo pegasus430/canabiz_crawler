@@ -8,6 +8,7 @@ ActiveAdmin.register VendorProduct do
 	includes :product, :vendor
 	
 	index do
+		selectable_column
 		column "Product" do |vp|
 			if vp.product.present?
 				link_to vp.product.name, admin_product_path(vp.product)
