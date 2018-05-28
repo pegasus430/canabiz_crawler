@@ -10,7 +10,7 @@ class Dispensary < ActiveRecord::Base
     #relationships
     has_many :dispensary_sources
     has_many :sources, through: :dispensary_sources
-    has_many :orders
+    has_many :deals
     
     #geocode location
     geocoded_by :location
@@ -26,7 +26,8 @@ class Dispensary < ActiveRecord::Base
     #delete relations
     before_destroy :delete_relations
     def delete_relations
-       self.dispensary_sources.destroy_all
+        self.deals.destroy_all
+        self.dispensary_sources.destroy_all
     end
     
 end #end dispensary class

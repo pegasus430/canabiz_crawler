@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     def home
         
         #test scraper
-        #ProductHeadset.perform_later('nevada')
+        #Leafbuyer.perform_later('WA')
         
         #dont display nav search
         @nav_search = false

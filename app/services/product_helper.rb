@@ -52,6 +52,21 @@ class ProductHelper
                     featured.where.not(id: @product.id).order("Random()").limit(4)
         end
         
+        
+        
+        #THIS IS WHERE I NEED THE WORK DONE: 
+        
+        # we take in a state and product 
+        
+        # 10 dispensaries sell the product - they have 30 dispensary sources between them - 
+            # I would just want 10 dispensary sources (ideally source = 'Self' if not, last_menu_update desc)
+        # the data model: dispensary (state_id) <-- dispensary source (state_id) 
+        #                     <-- dispensary source product (product_id) <-- dsp_prices
+        
+        #first I want to see if there is a dispensary source where source name = 'Self' - if yes, take those dsps
+        # if not, sort the rest by Last_Menu_Update (most recent)
+        
+        
         # disp_source_ids = DispensarySource.where(state_id: @state_id).pluck(:id)
         
         # dsps = DispensarySourceProduct.where(product_id: @product.id).where(dispensary_source_id: disp_source_ids)
@@ -62,29 +77,29 @@ class ProductHelper
         
         
         
-        dsps = @product.dispensary_source_products.
-        #             where(:dispensary_source => {state_id: @state.id}).
-                    includes(:dsp_prices)
+        # dsps = @product.dispensary_source_products.
+        # #             where(:dispensary_source => {state_id: @state.id}).
+        #             includes(:dsp_prices)
                     
                     # s.where()
         
         @table_headers = Hash.new #for product table
         
-        puts 'dsp size::: '
-        puts dsps.count
+        # puts 'dsp size::: '
+        # puts dsps.count
         
         
-        dsps.each do |dsp|
+        # dsps.each do |dsp|
             
-            # get the th from dsp_prices
-            dsp.dsp_prices.each do |dsp_price|
-                if dsp_price.display_order.present?
-                    puts dsp_price.unit
-                    puts dsp_price.display_order
-                    @table_headers.store(dsp_price.display_order, dsp_price.unit)
-                end     
-            end
-        end
+        #     # get the th from dsp_prices
+        #     dsp.dsp_prices.each do |dsp_price|
+        #         if dsp_price.display_order.present?
+        #             puts dsp_price.unit
+        #             puts dsp_price.display_order
+        #             @table_headers.store(dsp_price.display_order, dsp_price.unit)
+        #         end     
+        #     end
+        # end
         
         
         
@@ -102,13 +117,13 @@ class ProductHelper
         dispensary_sources.each do |dispSource|
             
             #get the th from dsp_prices
-            # dispSource.dispensary_source_products.each do |dsp|
-            #     dsp.dsp_prices.each do |dsp_price|
-            #         if dsp_price.display_order != nil
-            #           @table_headers.store(dsp_price.display_order, dsp_price.unit)
-            #         end
-            #     end
-            # end
+            dispSource.dispensary_source_products.each do |dsp|
+                dsp.dsp_prices.each do |dsp_price|
+                    if dsp_price.display_order != nil
+                      @table_headers.store(dsp_price.display_order, dsp_price.unit)
+                    end
+                end
+            end
             
             #dispensary products
             if !@dispensary_to_product.has_key?(dispSource)
@@ -120,6 +135,8 @@ class ProductHelper
                 end
             end
         end
+        
+        # {0 => 'Gram', 1 => 'Eighth', 2 => 'Ounce'}
         
         @table_headers = Hash[@table_headers.sort_by {|k,v| k.to_i }]
         
