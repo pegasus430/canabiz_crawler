@@ -1,3 +1,4 @@
+require "redis"
 class ApplicationController < ActionController::Base
 
     protect_from_forgery with: :exception
@@ -70,12 +71,18 @@ class ApplicationController < ActionController::Base
   
     def populate_lists
         require 'will_paginate/array'
-        
-        @news_categories = Category.news.active.order("name ASC")
-        @product_categories = Category.products.active.order("name ASC")
-        @all_states = State.all.order("name ASC")
-        @states_with_products = @all_states.where(product_state: true)
-        @active_sources = Source.where(:active => true).order("name ASC")
+        @redis = @redis || Redis.new
+        if @redis.get("news_categories").blank?
+          @news_categories = Category.news.active.order("name ASC") 
+          @product_categories = Category.products.active.order("name ASC")
+          @all_states = State.all.order("name ASC")
+          @states_with_products = @all_states.where(product_state: true)
+          @active_sources = Source.where(:active => true).order("name ASC")
+          set_into_redis
+        else
+          get_from_redis
+        end
+
         @az_values = ['#', 'A','B','C','D','E','F','G','H','I','J','K','L','M',
                             'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     end
@@ -88,9 +95,35 @@ class ApplicationController < ActionController::Base
     
     private
   
-        def handle_error
-            if Rails.env.Production? 
-                redirect_to root_path
-            end
+      def handle_error
+        if Rails.env.Production? 
+            redirect_to root_path
         end
+      end
+
+      def set_into_redis
+        @redis.set("product_categories", marshal_dump(@product_categories))
+        @redis.set("news_categories", marshal_dump(@news_categories))
+        @redis.set("all_states", marshal_dump(@all_states))
+        @redis.set("states_with_products", marshal_dump(@states_with_products))
+        @redis.set("active_sources", marshal_dump(@active_sources))
+      end
+
+      def get_from_redis
+        @news_categories = marshal_load(@redis.get("news_categories")) 
+        @product_categories = marshal_load(@redis.get("product_categories"))
+        @all_states = marshal_load(@redis.get("all_states"))
+        @states_with_products = marshal_load(@redis.get("states_with_products"))
+        @active_sources = marshal_load(@redis.get("active_sources"))
+      end
+
+      def marshal_dump(object)
+        data = Marshal.dump(object)
+        data
+      end
+
+      def marshal_load(data)
+         object = Marshal.load(data)
+         object
+      end
 end
