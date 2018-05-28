@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522231540) do
+ActiveRecord::Schema.define(version: 20180528221258) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -228,8 +228,8 @@ ActiveRecord::Schema.define(version: 20180522231540) do
     t.decimal  "price"
     t.integer  "unit"
     t.integer  "display_order"
-    t.datetime "created_at",                   default: '2018-05-21 11:07:43'
-    t.datetime "updated_at",                   default: '2018-05-21 11:07:43'
+    t.datetime "created_at",                   default: '2018-05-19 02:20:59'
+    t.datetime "updated_at",                   default: '2018-05-19 02:20:59'
   end
 
   create_table "orders", force: :cascade do |t|
@@ -264,8 +264,12 @@ ActiveRecord::Schema.define(version: 20180522231540) do
   create_table "product_states", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "state_id"
-    t.datetime "created_at", default: '2018-05-17 18:21:24'
-    t.datetime "updated_at", default: '2018-05-17 18:21:24'
+    t.datetime "created_at",            default: '2018-05-17 18:21:24'
+    t.datetime "updated_at",            default: '2018-05-17 18:21:24'
+    t.integer  "headset_alltime_count", default: 0
+    t.integer  "headset_monthly_count", default: 0
+    t.integer  "headset_weekly_count",  default: 0
+    t.integer  "headset_daily_count",   default: 0
   end
 
   create_table "products", force: :cascade do |t|

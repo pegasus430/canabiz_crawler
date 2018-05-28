@@ -71,17 +71,17 @@ class ApplicationController < ActionController::Base
   
     def populate_lists
         require 'will_paginate/array'
-        @redis = @redis || Redis.new
-        if @redis.get("news_categories").blank?
+        # @redis = @redis || Redis.new
+        # if @redis.get("news_categories").blank?
           @news_categories = Category.news.active.order("name ASC") 
           @product_categories = Category.products.active.order("name ASC")
           @all_states = State.all.order("name ASC")
           @states_with_products = @all_states.where(product_state: true)
           @active_sources = Source.where(:active => true).order("name ASC")
-          set_into_redis
-        else
-          get_from_redis
-        end
+        #   set_into_redis
+        # else
+        #   get_from_redis
+        # end
 
         @az_values = ['#', 'A','B','C','D','E','F','G','H','I','J','K','L','M',
                             'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']

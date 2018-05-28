@@ -19,6 +19,10 @@ ActiveAdmin.register ProductState do
 				link_to ps.state.name, admin_vendor_path(ps.state)
 			end
 		end
+		column :headset_alltime_count
+	    column :headset_monthly_count
+	    column :headset_weekly_count 
+	    column :headset_daily_count
 		column :created_at
 		column :updated_at
 		actions

@@ -18,7 +18,7 @@ ActiveAdmin.register Product do
   scope :featured
   
   #save queries
-  includes :category, :vendor
+  includes :category, :vendor, :vendors, :dispensary_source_products, :dispensary_sources
   
   #filters
   filter :name
