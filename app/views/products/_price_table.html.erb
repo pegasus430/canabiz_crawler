@@ -22,8 +22,10 @@
                     (@searched_state == nil || @searched_state.id == @site_visitor_state.id) %>
                     <th>Buy</th>
                 <% end %>
-                <% @table_headers.each do |display_order, unit| %>
-                    <th><%= unit %></th>
+                <% unless @table_header_options.blank? %>
+                    <% @table_header_options.each do |unit| %>
+                        <th><%= unit %></th>
+                    <% end %>
                 <% end %>
             </tr>
         </thead>
@@ -61,7 +63,7 @@
                         <% else %>
                             <td style="text-align:center;">--</td>
                         <% end
-                        break if i + 1 == @table_headers.length
+                        break if i + 1 == @table_header_options.length
                         i += 1
                     end
                 %>

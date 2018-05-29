@@ -112,6 +112,7 @@ class ProductHelper
                                 
         #need a map of dispensary to dispensary source product
         @dispensary_to_product = Hash.new
+        @table_header_options = @product.dispensary_source_products.map{|dispensary_source| dispensary_source.dsp_prices.map(&:unit)}.flatten.uniq unless  @product.dispensary_source_products.blank?
         
         
         dispensary_sources.each do |dispSource|
@@ -141,7 +142,7 @@ class ProductHelper
         @table_headers = Hash[@table_headers.sort_by {|k,v| k.to_i }]
         
         #return
-        [@similar_products, @dispensary_to_product, @table_headers]
+        [@similar_products, @dispensary_to_product, @table_headers, @table_header_options]
 		
 	end
 	

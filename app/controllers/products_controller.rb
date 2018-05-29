@@ -65,7 +65,6 @@ class ProductsController < ApplicationController
     #------------------------------------
     
     def show
-        
         #only show featured product
         if @product.featured_product == false
             redirect_to root_path 
@@ -74,8 +73,8 @@ class ProductsController < ApplicationController
         begin 
             result = ProductHelper.new(@product, @site_visitor_state).buildProductDisplay
             
-            @similar_products, @dispensary_to_product, @table_headers = 
-                    result[0], result[1], result[2]
+            @similar_products, @dispensary_to_product, @table_headers, @table_header_options = 
+                    result[0], result[1], result[2], result[3]
                     
         rescue
             redirect_to root_path
