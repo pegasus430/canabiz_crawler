@@ -59,9 +59,10 @@
                         <% if unit.to_s == dps.unit.to_s && index_count == 0 %>
                             <% index_count += 1 %>
                             <td>$<%=dps.price.to_f %></td>
-                        <% else%>
-                            <td>--</td>
                         <% end %>
+                    <% end %>
+                    <% unless index_count == 1 %>
+                        <td>--</td>
                     <% end %>
                 <% end %>
 <!-- 
