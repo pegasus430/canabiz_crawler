@@ -79,10 +79,10 @@ class LeaflyScraperHelper
 	def analyzeReturnedDispensarySourceMenu(returned_json_menu, existing_dispensary_source, is_new_dispensary)
 
 		categoryToMenu = {
-			#"Flower" => returned_json_menu['Flower'], 
-			"Edibles" => returned_json_menu['Edible']
-			#"Concentrates" => returned_json_menu['Concentrate'],
-			#"Pre-Roll" => returned_json_menu['PreRoll'],
+			"Flower" => returned_json_menu['Flower'], 
+			"Edibles" => returned_json_menu['Edible'],
+			"Concentrates" => returned_json_menu['Concentrate'],
+			"Pre-Rolls" => returned_json_menu['PreRoll']
 		}
 
 		categoryToMenu.each do |category_name, returned_menu_section|

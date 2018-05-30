@@ -93,8 +93,8 @@ class ProductsController < ApplicationController
                 @searched_state = State.where(name: params[:State]).first
                 result = ProductHelper.new(@product, @searched_state).buildProductDisplay
                 
-                @similar_products, @dispensary_to_product, @table_headers = 
-                        result[0], result[1], result[2]
+                @similar_products, @dispensary_to_product, @table_headers, @table_header_options = 
+                    result[0], result[1], result[2], result[3]
                         
                 render 'show'
             rescue
