@@ -112,9 +112,7 @@ class ProductHelper
                                 
         #need a map of dispensary to dispensary source product
         @dispensary_to_product = Hash.new
-        @table_header_options =  DspPrice::UNIT_PRICES_OPTIONS#@product.dispensary_source_products.map{|dispensary_source| dispensary_source.dsp_prices.map(&:unit)}.flatten.uniq unless  @product.dispensary_source_products.blank?
-        
-        
+        @table_header_options =  @product.dispensary_source_products.map{|dispensary_source| dispensary_source.dsp_prices.map(&:unit)}.flatten.uniq unless  @product.dispensary_source_products.blank?
         dispensary_sources.each do |dispSource|
             
             #get the th from dsp_prices
