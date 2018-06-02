@@ -1,13 +1,12 @@
-<% disp_product = @matching_products.where(id: dispProduct.product_id).first %>
 <div class="col-md-12 col-lg-6 col-sm-12">
     <article class="zm-post-lay-a1 top-product-mobile">
         <div class="zm-post-thumb">
             <!--product image --> 
-            <a href="<%= product_path(disp_product) %>">
-                <% if Rails.env.production? && disp_product.image != nil %>
-                    <%= image_tag(disp_product.image_url(:profile_size))%>
+            <a href="<%= product_path(dispProduct.product) %>">
+                <% if Rails.env.production? && dispProduct.product.image != nil %>
+                    <img src="<%=dispProduct.product.image_url(:profile_size)%>" onerror="this.src='<%= asset_path dispProduct.product.default_image %>'" alt="<%=dispProduct.product.name%>">
                 <% else %>
-                    <%= image_tag("home_top_product.jpg") %>
+                    <%= image_tag(dispProduct.product.default_image) %>
                 <% end %>
             </a>
         </div>
@@ -16,16 +15,16 @@
 
                 <!--display product tags-->
                 <div class="zm-category">
-                    <% if disp_product.category.present? %>
-                        <a class="bg-cat-3 cat-btn" href="<%=products_path(disp_product.category.name)%>"><%= disp_product.category.name %></a>
+                    <% if dispProduct.product.category.present? %>
+                        <a class="bg-cat-3 cat-btn" href="<%=products_path(dispProduct.product.category.name)%>"><%= dispProduct.product.category.name %></a>
                     <% end %>
                     <!--sub category-->
-                    <% if disp_product.sub_category.present? %>
+                    <% if dispProduct.product.sub_category.present? %>
                     
                         <!--#see if it has is_dom-->
-                        <% if disp_product.is_dom.present? %>
+                        <% if dispProduct.product.is_dom.present? %>
                             
-                            <% if disp_product.is_dom == 'Indica' %>
+                            <% if dispProduct.product.is_dom == 'Indica' %>
                             
                                 <a class="bg-cat-3 cat-btn" 
                                     href="<%=products_path('Hybrid-Indica')%>">Hybrid-Indica</a>
@@ -39,7 +38,7 @@
                             
                         <% else %>
                             <a class="bg-cat-3 cat-btn" 
-                                href="<%=products_path(disp_product.sub_category)%>"><%= disp_product.sub_category %></a>   
+                                href="<%=products_path(dispProduct.product.sub_category)%>"><%= dispProduct.product.sub_category %></a>   
                         <% end %>
                         
                     <% end %>
@@ -47,17 +46,17 @@
                 <!--display product tags-->
 
                 <!-- name -->
-                <h2 class="zm-post-title"><a href="<%= product_path(disp_product) %>"><%= disp_product.name %></a></h2>
+                <h2 class="zm-post-title"><a href="<%= product_path(dispProduct.product) %>"><%= dispProduct.product.name %></a></h2>
 
                 <div class="zm-post-content">
-                    <p><%=disp_product.description.truncate(175) if disp_product.description%></p>
+                    <p><%=dispProduct.product.description.truncate(175) if dispProduct.product.description%></p>
                 </div>
 
                 <!-- meta info -->
                 <div class="product-info">
                     <p>Produced By:
-                        <% disp_product.vendors.each_with_index do |vendor, index| %>
-                            <% if index + 1 == disp_product.vendors.size %>
+                        <% dispProduct.product.vendors.each_with_index do |vendor, index| %>
+                            <% if index + 1 == dispProduct.product.vendors.size %>
                                 <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
                             <% else %>
                                 <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
@@ -84,8 +83,6 @@
                         <% end %>
                     </p>
                 </div>
-                
-                
             </div>
         </div>
     </article>

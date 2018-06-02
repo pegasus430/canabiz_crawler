@@ -156,18 +156,14 @@ class ArticlesController < ApplicationController
             redirect_to root_path
         end
         
-        #related articles
-        if @article.states.present?
-            @related_articles = @article.states.sample.articles
-        elsif @article.categories.present?
-            @related_articles = @article.categories.sample.articles
-        else
-            @related_articles = Article.all
-        end
-        
-        @related_articles = @related_articles.active_source.includes(:source, :states, :categories).
-                                order("created_at DESC").limit(3).where.not(id: @article.id)
-        
+        #we will now show some top products instead of related articles
+        @top_products = Product.featured.joins(:dispensary_source_products, :average_prices).
+                        group("products.id").
+                        having("count(dispensary_source_products.id)>4").
+                        having("count(average_prices.id)>0").
+                        includes(:vendors, :category).
+                        order("RANDOM()").limit(3)
+
         #SAME SOURCE ARTICLES
         @same_source_articles = Article.where(source_id: @article.source).order("created_at DESC").
                                     limit(3).where.not(id: @article.id).

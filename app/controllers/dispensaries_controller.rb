@@ -49,26 +49,23 @@ class DispensariesController < ApplicationController
 
     def show
         
-        #need to update dispensary page to show more than flower
+        require 'uri' #google map / facebook
         
-        @dispensary_source = DispensarySource.where(dispensary_id: @dispensary.id).
-                        includes(dispensary_source_products: [:product, :dsp_prices]).
-                        order('last_menu_update DESC').first
-                                
-        if @dispensary_source != nil
+        @dispensary_source = @dispensary.dispensary_sources.order('last_menu_update DESC').first
+        @dispensary_source_products = @dispensary_source.dispensary_source_products.includes(:dsp_prices, :product)
+        
+        @category_to_products = Hash.new
+        
+        @dispensary_source_products.each do |dsp|
             
-            #dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
-            #@dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC')
+            if dsp.product.present? && dsp.product.featured_product && dsp.product.category.present?
+                if @category_to_products.has_key?(dsp.product.category.name)
+                    @category_to_products[dsp.product.category.name].push(dsp)
+                else
+                    @category_to_products.store(dsp.product.category.name, [dsp])
+                end
+            end
             
-            @matching_products = Product.where(id: @dispensary_source.dispensary_source_products.pluck(:product_id)).
-                                    includes(:vendors, :category)
-            
-            @category_to_products = Hash.new
-            @category_to_products.store('Flower', @dispensary_source.dispensary_source_products)
-            
-            require 'uri' #google map / facebook
-        else 
-            redirect_to root_path
         end
         
     end
