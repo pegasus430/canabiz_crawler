@@ -56,7 +56,15 @@ class DispensarySourcesController < ApplicationController
             end
         end
         def set_dispensary_source
-            @dispensary_source = DispensarySource.find(params[:id])
+             @redis = @redis || Redis.new
+          
+            if marshal_load(@redis.get("dispensary_source")).blank?
+                @dispensary_source = DispensarySource.find(params[:id])
+                set_into_redis
+            else
+                get_from_redis
+            end     
+           
         end
         
         def dispensary_source_params
@@ -70,5 +78,15 @@ class DispensarySourcesController < ApplicationController
                                                             :thursday_close_time, :friday_close_time, :saturday_close_time, 
                                                             :sunday_close_time, :facebook, :instagram, :twitter, :website, 
                                                             :email, :phone, :min_age)
+        end
+
+         def set_into_redis
+            @redis.set("dispensary_source", marshal_dump(@dispensary_source))
+            
+        end
+
+        def get_from_redis
+            @dispensary_source = marshal_load(@redis.get("dispensary_source")) 
+           
         end
 end

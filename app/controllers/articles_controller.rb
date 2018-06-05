@@ -36,6 +36,7 @@ class ArticlesController < ApplicationController
            @source = @article.source
            @source.increment(:external_article_visits, by = 1)
            @source.save
+
         else
             redirect_to root_path     
         end
@@ -213,13 +214,31 @@ class ArticlesController < ApplicationController
         end
         
         def set_article
-            @article = Article.friendly.find(params[:id])
+            @redis = @redis || Redis.new
+          
+            if marshal_load(@redis.get("article")).blank?
+                @article = Article.friendly.find(params[:id])
+                set_into_redis
+            else
+                get_from_redis
+            end     
             if @article.blank?
                 redirect_to root_path 
             end
+
         end
+        
         def article_params
             params.require(:article).permit(:title, :abstract, :body, :date, :image, :remote_image_url, :web_url,
                                     :source_id, :include_in_digest, state_ids: [], category_ids: [])
+        end
+
+        def set_into_redis
+            @redis.set("article", marshal_dump(@article))
+            
+        end
+
+        def get_from_redis
+            @article = marshal_load(@redis.get("article")) 
         end
 end

@@ -124,7 +124,7 @@ class ApplicationController < ActionController::Base
       end
 
       def marshal_load(data)
-         object = Marshal.load(data)
+         object = Marshal.load(data) rescue nil
          object
       end
 end

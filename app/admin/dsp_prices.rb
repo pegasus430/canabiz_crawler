@@ -28,12 +28,20 @@ ActiveAdmin.register DspPrice do
 	end
 
 	form do |f|
-		f.input :dispensary_source_product_id, :label => 'Dispensary Source Product', :as => :select, 
-				:collection => DispensarySourceProduct.all.map{|u| ["#{u.id}", u.id]}
-		f.input :price
-		f.input :unit
-		f.input :display_order
-    	f.actions
-    end
+		panel " " do	
+			f.input :dispensary_source_product_id, :label => 'Dispensary Source Product', :as => :select, 
+					:collection => DispensarySourceProduct.all.map{|u| ["#{u.id}", u.id]}
+		end
+		panel " " do	 		
+			f.input :price
+		end 	
+		panel " " do	
+			f.input :unit
+		end 
+		panel " " do		
+			f.input :display_order
+		end 	
+	    	f.actions
+	    end
 
 end
