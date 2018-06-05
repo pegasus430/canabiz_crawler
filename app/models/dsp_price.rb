@@ -2,7 +2,6 @@ class DspPrice < ActiveRecord::Base
     
     #relations
     belongs_to :dispensary_source_product#, inverse_of: :dsp_prices
-    # validates :dispensary_source_product_id, presence: true
     validates :price, numericality: {greater_than_or_equal_to: 0.01}
     
     #validations - no duplicate units per dispensary source product

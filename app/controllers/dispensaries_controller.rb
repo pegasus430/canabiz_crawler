@@ -57,52 +57,31 @@ class DispensariesController < ApplicationController
         
         @category_to_products = Hash.new
         
-        @dispensary_source_products.each do |dsp|
         if @dispensary_source != nil
+            @dispensary_source_products.each do |dsp|
             
-            #dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
-            #@dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC')
-            
-            @matching_products = Product.where(id: @dispensary_source.dispensary_source_products.pluck(:product_id)).
-                                    includes(:vendors, :category)            
-            if dsp.product.present? && dsp.product.featured_product && dsp.product.category.present?
-                if @category_to_products.has_key?(dsp.product.category.name)
-                    @category_to_products[dsp.product.category.name].push(dsp)
-                else
-                    @category_to_products.store(dsp.product.category.name, [dsp])
+                
+                #dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
+                #@dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC')
+                
+                @matching_products = Product.where(id: @dispensary_source.dispensary_source_products.pluck(:product_id)).
+                                        includes(:vendors, :category)            
+                
+                if dsp.product.present? && dsp.product.featured_product && dsp.product.category.present?
+                    if @category_to_products.has_key?(dsp.product.category.name)
+                        @category_to_products[dsp.product.category.name].push(dsp)
+                    else
+                        @category_to_products.store(dsp.product.category.name, [dsp])
+                    end
                 end
+                
             end
-            
         end
         
     end
     
     #-------------------------------------    
-    def edit
-    end   
-    def update
-        if @dispensary.update(dispensary_params)
-            flash[:success] = 'Dispensary was successfully updated'
-            redirect_to dispensary_admin_path
-        else 
-            render 'edit'
-        end
-    end
-    #-------------------------------------
-   
-    def destroy
-        @dispensary.destroy
-        flash[:success] = 'Dispensary was successfully deleted'
-        redirect_to dispensary_admin_path
-    end  
-    
-    def destroy_multiple
-      Dispensary.destroy(params[:dispensaries])
-      flash[:success] = 'Dispensaries were successfully deleted'
-      redirect_to dispensary_admin_path        
-    end 
-    
-    #-------------------------------------
+
     private 
         
         def require_admin

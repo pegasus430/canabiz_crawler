@@ -5,14 +5,18 @@
     <!-- state dropdown -->
     <div style="overflow: visible; float: right;">
         <%= form_tag change_state_product_path do %>
-            <%= render 'shared/dropdown_states' %>
-            <button type="submit" class="button" style="margin-bottom: 0px; margin: 10px 0px;">Change State</button>
+            <div style ="display: inline-block; width: 160px;">
+                <%= render 'shared/dropdown_states' %>    
+            </div>
+            <div style ="display: inline-block;">
+                 <button type="submit" class="button" style="margin-bottom: 0px; margin: 10px 0px;">Change State</button>   
+            </div>
         <% end %>
     </div>
     
     <div class="title">Pricing</div>
-    <p>Table Header Options: </p>
-    <p><%=@table_header_options%></p>
+    <!--<p>Table Header Options: </p>-->
+    <!--<p>@table_header_options</p>-->
 
     <!-- table -->
     <table id="product-price-table" class="display" style="width: 100% !important;">
