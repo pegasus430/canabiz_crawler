@@ -15,9 +15,6 @@
     </div>
     
     <div class="title">Pricing</div>
-    <!--<p>Table Header Options: </p>-->
-    <!--<p>@table_header_options</p>-->
-
     <!-- table -->
     <table id="product-price-table" class="display" style="width: 100% !important;">
         <thead>
@@ -28,7 +25,7 @@
                     (@searched_state == nil || @searched_state.id == @site_visitor_state.id) %>
                     <th>Buy</th>
                 <% end %>
-                <% unless @table_header_options.blank? %>
+                <% if @table_header_options.present? && @dispensary_to_product.present? %>
                     <% @table_header_options.each do |unit| %>
                         <th><%= unit %></th>
                     <% end %>
