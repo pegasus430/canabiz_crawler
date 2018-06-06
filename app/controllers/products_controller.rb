@@ -111,13 +111,13 @@ class ProductsController < ApplicationController
         end
         
         def set_product
-            @redis = @redis || Redis.new
-            if marshal_load(@redis.get("product")).blank?
+            # @redis = @redis || Redis.new
+            # if marshal_load(@redis.get("product")).blank?
                 @product = Product.friendly.find(params[:id])
-                set_into_redis
-            else
-                get_from_redis
-            end     
+            #     set_into_redis
+            # else
+            #     get_from_redis
+            # end     
           
         end
         

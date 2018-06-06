@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     def home
         
         #test scraper
-        DispLeafly.perform_later('CO', 'A-B')
+        #DispWeedmaps.perform_later('Nevada', 'A-A')
         
         #dont display nav search
         @nav_search = false
