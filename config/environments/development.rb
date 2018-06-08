@@ -47,7 +47,7 @@ Rails.application.configure do
   Braintree::Configuration.merchant_id = ENV['merchant_id']
   Braintree::Configuration.public_key =  ENV['public_key']
   Braintree::Configuration.private_key = ENV['private_key']
-  
+
   #redis
   # config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
   
@@ -62,4 +62,8 @@ Rails.application.configure do
   #   password: "p384db25b425919fe4297a5aa76d4ebea27858fb42d40ec0864e358f1516e5c57",
   #   namespace: "cache"
   # }
+
+  ENV['AWS_ACCESS_KEY_ID'] = "AKIAIDXFF56B7XFCJANA"
+  ENV['AWS_SECRET_ACCESS_KEY'] = "AKIAIDXFF56B7XFCJANA"
+
 end

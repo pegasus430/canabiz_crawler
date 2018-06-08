@@ -65,15 +65,13 @@ class ProductsController < ApplicationController
         if @product.featured_product == false
             redirect_to root_path 
         end
-        
-        begin 
-            result = ProductHelper.new(@product, @site_visitor_state).buildProductDisplay
+        begin
+          result = ProductHelper.new(@product, @site_visitor_state).buildProductDisplay
             @similar_products, @dispensary_to_product, @table_headers, @table_header_options = 
-                    result[0], result[1], result[2], result[3]
-                    
+                    result[0], result[1], result[2], result[3]    
         rescue
-            redirect_to root_path
-        end
+          redirect_to root_path              
+        end           
     end
     
     def change_state
@@ -111,7 +109,8 @@ class ProductsController < ApplicationController
         end
         
         def set_product
-            if $redis.get("product_#{params[:id]}").blank?
+            @redis = @redis || Redis.new
+            if marshal_load(@redis.get("product_#{params[:id]}")).blank?
                 @product = Product.friendly.find(params[:id])
                 set_into_redis
             else
@@ -126,11 +125,10 @@ class ProductsController < ApplicationController
                                             :year, :month, :category_id, :description, dispensary_source_ids: [], vendor_ids: [])
         end  
          def set_into_redis
-            $redis.set("product_#{params[:id]}", marshal_dump(@product))
-            
+            @redis.set("product_#{params[:id]}", marshal_dump(@product))
         end
 
         def get_from_redis
-            @product = marshal_load($redis.get("product_#{params[:id]}")) 
+            @product = marshal_load(@redis.get("product_#{params[:id]}")) 
         end
 end
