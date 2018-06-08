@@ -117,15 +117,12 @@ class ProductsController < ApplicationController
             else
                 get_from_redis
             end
+            if @product.blank?
+                redirect_to root_path 
+            end
         end
         
-        def product_params
-          params.require(:product).permit(:name, :product_type, :image, :remote_image_url, 
-                                            :ancillary, :featured_product, :alternate_names,
-                                            :sub_category, :cbd, :cbn, :min_thc, :med_thc, :max_thc, :is_dom,
-                                            :year, :month, :category_id, :description, dispensary_source_ids: [], vendor_ids: [])
-        end  
-         def set_into_redis
+        def set_into_redis
             $redis.set("product_#{params[:id]}", marshal_dump(@product))
         end
 

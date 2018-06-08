@@ -55,6 +55,7 @@ ActiveAdmin.register Article do
 	
 	index do
 		selectable_column
+		id_column
 		column "Title" do |article|
           truncate(article.title, omision: "...", length: 50) if article.title
         end

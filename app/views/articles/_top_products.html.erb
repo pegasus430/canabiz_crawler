@@ -1,0 +1,67 @@
+<div class="row mb-40">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="section-title">
+             <h2 class="h6 header-color inline-block uppercase">Top Products in WA</h2> 
+        </div>
+    </div>
+</div>
+<div class="row">
+    <% random_integer = rand(1..2) %>
+	<% @top_products.each_with_index do |product, index| %>
+	    <% if index == random_integer %>
+	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	            <div class="zm-posts">
+	                <article class="zm-post-lay-a sidebar">
+	                    <div id="recommended"></div>
+	                    <div class="zm-post-dis">
+	                        <div class="zm-post-meta" style="margin-bottom: 15px;">
+	                            <ul>
+	                                <li class="s-meta" style="color: #7c8c99;">Add Sponored By Mantis</li>
+	                                <li class="s-meta" style = "float: right; color: #7c8c99;">Now</li>
+	                            </ul>
+	                        </div>
+	                    </div>
+	                </article>
+	            </div>
+	        </div>
+	    <% else %>
+	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	            <div class="zm-posts">
+	                <article class="zm-post-lay-a sidebar">
+	                    <div class="zm-post-thumb">
+	                        <a href="<%= product_path(product) %>">
+	                            <img src="<%= product.image_url(:profile_size)%>" onerror="this.src='<%= asset_path product.default_image %>'" alt="<%=product.name%>">
+	                        </a>
+	                    </div>
+	                    <div class="zm-post-dis">
+	                        <div class="zm-post-header">
+	                            <h2 class="zm-post-title h2" style="min-height: auto"><%= link_to product.name.truncate(60).titlecase, product_path(product)%></h2>
+	                            <div class="zm-post-meta" style="margin-bottom: 15px;">
+	                                <ul>
+	                                    <li class="s-meta">
+	                                    	Vendor:
+	                                    	<% if product.vendors.any? %>
+	                                    		<a style="color: #2ab081;" href="<%=vendor_path(product.vendors.first)%>">
+	                            					<%= product.vendors.first.name %>
+	                            				</a>
+	                            			<% end %>
+	                                    </li>
+	                                    <li class="s-meta" style = "float: right;">
+	                                    	Average Price:
+	                                    	<% if product.average_prices.any? %>
+	                                    		<a style="color: #2ab081;" href="<%=average_price_path(product.average_prices.first)%>">
+	                            					<%="$#{product.average_prices.first.average_price.round}/#{product.average_prices.first.average_price_unit}"%></a>
+	                                		<% end %>
+	                                	</li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </article>
+	            </div>
+	        </div>
+	    <% end %>
+	<% end %>
+</div>
+
+	

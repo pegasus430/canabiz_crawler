@@ -1,27 +1,7 @@
 class ArticlesController < ApplicationController
-    before_action :set_article, only: [:edit, :update, :destroy, :show, :tweet, :send_tweet]
+    before_action :set_article, only: [:edit, :update, :destroy, :show]
     before_action :require_admin, except: [:index, :show]
     skip_before_action :verify_authenticity_token #for saving article via ajax
-    
-    def tweet
-        #not on admin page but admin functionality
-        
-        require 'open-uri'
-        #this will be the link when live
-	    #link = u"http://cannabiznetwork.com/articles/#{@article.id}"
-	    
-	    #testing link
-	    link = URI::encode("http://cannabiz-news.herokuapp.com/articles/#{@article.id}")
-	    
-	   	bitlyResponse = HTTParty.get("https://api-ssl.bitly.com/v3/shorten?" + 
-	   	                "access_token=6a88d948272321a232f973370fd36ebafce5d121&longUrl=#{link}")
-	   	
-	   	@bitlyLink = ''
-	   	
-	   	if bitlyResponse["data"] != nil && bitlyResponse["data"]["url"] != nil
-	   		@bitlyLink = bitlyResponse["data"]["url"]		
-	   	end
-    end
     
     #method saves an external click of an article link (goes to external page)
     def save_visit
@@ -65,49 +45,9 @@ class ArticlesController < ApplicationController
             
         end
     end     
+
     
-    def send_tweet
-        
-       	require 'rubygems'
-		require 'oauth'
-		require 'json'
-		
-		if params[:tweet_body].present?
-		    
-            client = Twitter::REST::Client.new do |config|
-                config.consumer_key    = "PeKIPXsMPl80fKm6SipbqrRVL"
-                config.consumer_secret = "EzcwBZ1lBd8RlnhbuDyxt3URqPyhrBpDq00Z6n4btsnaPF7VpO"
-                config.access_token    = "418377285-HfXt8G0KxvBhNXQJRnnysTvt7yGAM0jWyfaIKSIU"
-                config.access_token_secret = "3QF4wvh1ESmSuKqWztD8LibyVJHhYNMcc93YlTWdrPqez"
-            end
-            
-            if @article.image.present?
-                data = open(@article.image.to_s) #when I didnt store image, i didnt have to do to_s
-                client.update_with_media(params[:tweet_body], File.new(data))
-            else 
-                client.update(params[:tweet_body])
-            end
-            
-            flash[:success] = 'Tweet Sent'
-            redirect_to root_path
-            
-        else
-            flash[:danger] = 'No Tweet Sent'
-            redirect_to root_path
-        end
-    end
-    
-    
-    #not on admin page but admin functionality
-    def digest
-       @articles = Article.where(include_in_digest: true)
-    end
-    
-    def send_weekly_digest
-        WeeklyDigestJob.perform_later()
-        flash[:success] = 'Digest will be sent out soon'
-        redirect_to admin_path
-    end
+
     
     def update_states_categories
     end
@@ -133,21 +73,6 @@ class ArticlesController < ApplicationController
           format.js # add this line for your js template
         end
     end
-
-    def new
-      @article = Article.new
-    end
-    
-    def create
-        @article = Article.new(article_params)
-        
-        if @article.save
-            flash[:success] = 'Article was successfully created'
-            redirect_to article_admin_path
-        else 
-            render 'new'
-        end
-    end 
     #-----------------------------------
     
     def show
@@ -173,38 +98,9 @@ class ArticlesController < ApplicationController
         #add view to article for sorting
         @article.increment(:num_views, by = 1)
         @article.save
-        
-        #add userView record
-        # if current_user
-        #     #the table isn't created yet
-        # end
     end
     
     
-    #-----------------------------------
-    def edit
-    end   
-    def update
-        if @article.update(article_params)
-            flash[:success] = 'Article was successfully updated'
-            redirect_to article_admin_path
-        else 
-            render 'edit'
-        end
-    end 
-    #-----------------------------------
-   
-    def destroy
-        @article.destroy
-        flash[:success] = 'Article was successfully deleted'
-        redirect_to article_admin_path
-    end 
-   
-    def destroy_multiple
-      Article.destroy(params[:articles])
-      flash[:success] = 'Articles were successfully deleted'
-      redirect_to article_admin_path        
-    end   
     
     private 
         def require_admin
@@ -214,9 +110,7 @@ class ArticlesController < ApplicationController
         end
         
         def set_article
-            @redis = @redis || Redis.new
-          
-            if marshal_load(@redis.get("article")).blank?
+            if marshal_load($redis.get("article_#{params[:id]}")).blank?
                 @article = Article.friendly.find(params[:id])
                 set_into_redis
             else
@@ -225,20 +119,13 @@ class ArticlesController < ApplicationController
             if @article.blank?
                 redirect_to root_path 
             end
-
-        end
-        
-        def article_params
-            params.require(:article).permit(:title, :abstract, :body, :date, :image, :remote_image_url, :web_url,
-                                    :source_id, :include_in_digest, state_ids: [], category_ids: [])
         end
 
         def set_into_redis
-            @redis.set("article", marshal_dump(@article))
-            
+            $redis.set("article_#{params[:id]}", marshal_dump(@article))
         end
 
         def get_from_redis
-            @article = marshal_load(@redis.get("article")) 
+            @article = marshal_load($redis.get("article_#{params[:id]}")) 
         end
 end

@@ -4,17 +4,31 @@ class CategoriesController < ApplicationController
     before_action :require_admin, except: [:show]
     
     def show
-        #only show active sources
-        @recents = @category.articles.active_source.
+        
+        if @category.category_type != 'News'
+            redirect_to root_path 
+        end
+        
+        if marshal_load($redis.get("#{@category.name.downcase}_recent_articles")).blank?
+            @recents = @category.articles.active_source.
                         includes(:source, :categories, :states).
                         order("created_at DESC").
                         paginate(:page => params[:page], :per_page => 24)
-        @mostviews = @category.articles.active_source.
+            $redis.set("#{@category.name.downcase}_recent_articles", Marshal.dump(@recents))           
+        else
+            @recents = Marshal.load($redis.get("#{@category.name.downcase}_recent_articles"))
+        end
+        
+        if marshal_load($redis.get("#{@category.name.downcase}_mostview_articles")).blank?
+            @mostviews = @category.articles.active_source.
                         includes(:source, :categories, :states).
                         order("num_views DESC").
                         paginate(:page => params[:page], :per_page => 24) 
-                        
-        expires_in 10.minutes, :public => true
+            $redis.set("#{@category.name.downcase}_mostview_articles", Marshal.dump(@mostviews))           
+        else
+            @mostviews = Marshal.load($redis.get("#{@category.name.downcase}_mostview_articles"))
+        end
+        
     end
   
     private
@@ -26,6 +40,22 @@ class CategoriesController < ApplicationController
         end
         
         def set_category
-            @category = Category.friendly.find(params[:id])
+            if marshal_load($redis.get("category_#{params[:id]}")).blank?
+                @category = Category.friendly.find(params[:id])
+                set_into_redis
+            else
+                get_from_redis
+            end     
+            if @category.blank?
+                redirect_to root_path 
+            end
+        end
+
+        def set_into_redis
+            $redis.set("category_#{params[:id]}", marshal_dump(@category))
+        end
+
+        def get_from_redis
+            @category = marshal_load($redis.get("category_#{params[:id]}")) 
         end
 end

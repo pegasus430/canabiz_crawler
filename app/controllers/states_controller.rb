@@ -4,11 +4,17 @@ class StatesController < ApplicationController
     before_action :require_admin, only: [:edit, :update, :destroy, :admin]
 
     def show
+        
         #state articles
-        @recents = @state.articles.active_source.
+        if marshal_load($redis.get("#{@state.name.downcase}_recent_articles")).blank?
+            @recents = @state.articles.active_source.
                         includes(:source, :categories, :states).
                         order("created_at DESC").
                         paginate(:page => params[:page], :per_page => 24)
+            $redis.set("#{@state.name.downcase}_recent_articles", Marshal.dump(@recents))           
+        else
+            @recents = Marshal.load($redis.get("#{@state.name.downcase}_recent_articles"))
+        end
         
         #state products
         if @state.product_state
@@ -18,12 +24,18 @@ class StatesController < ApplicationController
                                     paginate(:page => params[:page], :per_page => 16)
             @search_string = @state.name
         else
-            @mostviews = @state.articles.active_source.
+            
+            if marshal_load($redis.get("#{@state.name.downcase}_mostview_articles")).blank?
+                @mostviews = @state.articles.active_source.
                         includes(:source, :categories, :states).
                         order("num_views DESC").
                         paginate(:page => params[:page], :per_page => 24)
+                $redis.set("#{@state.name.downcase}_mostview_articles", Marshal.dump(@mostviews))           
+            else
+                @mostviews = Marshal.load($redis.get("#{@state.name.downcase}_mostview_articles"))
+            end
+            
         end
-
     end
     
     #refine the products on the state index
@@ -49,8 +61,24 @@ class StatesController < ApplicationController
     end
     
     private 
-
+        
         def set_state
-            @state = State.friendly.find(params[:id])
+            if marshal_load($redis.get("state_#{params[:id]}")).blank?
+                @state = State.friendly.find(params[:id])
+                set_into_redis
+            else
+                get_from_redis
+            end     
+            if @state.blank?
+                redirect_to root_path 
+            end
+        end
+
+        def set_into_redis
+            $redis.set("state_#{params[:id]}", marshal_dump(@state))
+        end
+
+        def get_from_redis
+            @state = marshal_load($redis.get("state_#{params[:id]}")) 
         end
 end

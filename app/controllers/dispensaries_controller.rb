@@ -31,20 +31,7 @@ class DispensariesController < ApplicationController
         
         render 'index'
     end
-    
-    #-----------------------------------
-    def new
-      @dispensary = Dispensary.new
-    end
-    def create
-      @dispensary = Dispensary.new(dispensary_params)
-      if @dispensary.save
-         flash[:success] = 'Dispensary was successfully created'
-         redirect_to dispensary_admin_path
-      else 
-         render 'new'
-      end
-    end 
+
     #-------------------------------------
 
     def show
@@ -90,10 +77,24 @@ class DispensariesController < ApplicationController
                 redirect_to root_path
             end
         end
+
         def set_dispensary
-            @dispensary = Dispensary.friendly.find(params[:id])
+            if marshal_load($redis.get("dispensary_#{params[:id]}")).blank?
+                @dispensary = Dispensary.friendly.find(params[:id])
+                set_into_redis
+            else
+                get_from_redis
+            end
+            if @dispensary.blank?
+                redirect_to root_path 
+            end
         end
-        def dispensary_params
-            params.require(:dispensary).permit(:name, :image, :location, :city, :state_id, :has_hypur, :has_payqwick)
+        
+        def set_into_redis
+            $redis.set("dispensary_#{params[:id]}", marshal_dump(@dispensary))
+        end
+
+        def get_from_redis
+            @dispensary = marshal_load($redis.get("dispensary_#{params[:id]}")) 
         end
 end
