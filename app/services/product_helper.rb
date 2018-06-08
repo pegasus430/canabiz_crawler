@@ -5,13 +5,11 @@ class ProductHelper
 		@state = state
 	end
 	
-	def findProductsPriceAndDistance()
-		
+	def findProductsPriceAndDistance()		
 		#hash returned
 		@product_to_distance = Hash.new
 		@product_to_closest_disp = Hash.new
-		
-		@products.each do |product|
+    	@products.each do |product|
 			
 			#distance
 			if @ip_address != nil
@@ -112,9 +110,9 @@ class ProductHelper
                                 
         #need a map of dispensary to dispensary source product
         @dispensary_to_product = Hash.new
-        header_options =  @product.dispensary_source_products.map{|dispensary_source| dispensary_source.dsp_prices.map(&:unit)}.flatten.uniq unless  @product.dispensary_source_products.blank?
-        @table_header_options = DspPrice::DISPLAYS.sort_by {|key, value| value}.to_h.select{|k, v| k if header_options.include?(k)}.keys
-
+        dispensary_source_products = @product.dispensary_source_products.includes(:product, :dsp_prices).where("products.state_id =?", @state.id).references(:products)
+        @header_options =  dispensary_source_products.map{|dispensary_source_product| dispensary_source_product.dsp_prices.map(&:unit)}.flatten.uniq  unless  dispensary_source_products.blank?
+        @table_header_options = DspPrice::DISPLAYS.sort_by {|key, value| value}.to_h.select{|k, v| k if @header_options.include?(k)}.keys  unless @header_options.blank?
         dispensary_sources.each do |dispSource|
             
             #get the th from dsp_prices
@@ -124,8 +122,7 @@ class ProductHelper
                       @table_headers.store(dsp_price.display_order, dsp_price.unit)
                     end
                 end
-            end
-            
+            end  
             #dispensary products
             if !@dispensary_to_product.has_key?(dispSource)
                 
