@@ -56,16 +56,18 @@
     				    <% end %>
     				</td>
     			<% end %>
-                <% @table_header_options.each do |unit| %>
-                    <% index_count = 0 %>
-                    <% product.dsp_prices.each do |dps| %>
-                        <% if unit.to_s == dps.unit.to_s && index_count == 0 %>
-                            <% index_count += 1 %>
-                            <td>$<%=dps.price.to_f %></td>
+    			<% if @table_header_options.present? %>
+                    <% @table_header_options.each do |unit| %>
+                        <% index_count = 0 %>
+                        <% product.dsp_prices.each do |dps| %>
+                            <% if unit.to_s == dps.unit.to_s && index_count == 0 %>
+                                <% index_count += 1 %>
+                                <td>$<%=dps.price.to_f %></td>
+                            <% end %>
                         <% end %>
-                    <% end %>
-                    <% unless index_count == 1 %>
-                        <td>--</td>
+                        <% unless index_count == 1 %>
+                            <td>--</td>
+                        <% end %>
                     <% end %>
                 <% end %>
 <!-- 

@@ -67,10 +67,12 @@ class ProductsController < ApplicationController
         end
         begin
           result = ProductHelper.new(@product, @site_visitor_state).buildProductDisplay
-            @similar_products, @dispensary_to_product, @table_headers, @table_header_options = 
-                    result[0], result[1], result[2], result[3]    
-        rescue
-          redirect_to root_path              
+            @similar_products, @dispensary_to_product, @table_header_options = 
+                    result[0], result[1], result[2]    
+        rescue => ex
+            puts 'here is the error: '
+            puts ex
+            redirect_to root_path              
         end           
     end
     
@@ -86,8 +88,8 @@ class ProductsController < ApplicationController
                 @searched_state = State.where(name: params[:State]).first
                 result = ProductHelper.new(@product, @searched_state).buildProductDisplay
                 
-                @similar_products, @dispensary_to_product, @table_headers, @table_header_options = 
-                    result[0], result[1], result[2], result[3]
+                @similar_products, @dispensary_to_product, @table_header_options = 
+                    result[0], result[1], result[2]
                         
                 render 'show'
             rescue
@@ -109,8 +111,7 @@ class ProductsController < ApplicationController
         end
         
         def set_product
-            @redis = @redis || Redis.new
-            if marshal_load(@redis.get("product_#{params[:id]}")).blank?
+            if marshal_load($redis.get("product_#{params[:id]}")).blank?
                 @product = Product.friendly.find(params[:id])
                 set_into_redis
             else
@@ -125,10 +126,10 @@ class ProductsController < ApplicationController
                                             :year, :month, :category_id, :description, dispensary_source_ids: [], vendor_ids: [])
         end  
          def set_into_redis
-            @redis.set("product_#{params[:id]}", marshal_dump(@product))
+            $redis.set("product_#{params[:id]}", marshal_dump(@product))
         end
 
         def get_from_redis
-            @product = marshal_load(@redis.get("product_#{params[:id]}")) 
+            @product = marshal_load($redis.get("product_#{params[:id]}")) 
         end
 end
