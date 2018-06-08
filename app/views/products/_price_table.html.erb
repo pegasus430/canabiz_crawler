@@ -25,7 +25,7 @@
                     (@searched_state == nil || @searched_state.id == @site_visitor_state.id) %>
                     <th>Buy</th>
                 <% end %>
-                <% if @table_header_options.present? && @dispensary_to_product.present? %>
+                <% if @table_header_options.present? %>
                     <% @table_header_options.each do |unit| %>
                         <th><%= unit %></th>
                     <% end %>

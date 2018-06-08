@@ -111,14 +111,12 @@ class ProductsController < ApplicationController
         end
         
         def set_product
-            # @redis = @redis || Redis.new
-            # if marshal_load(@redis.get("product")).blank?
+            if $redis.get("product_#{params[:id]}").blank?
                 @product = Product.friendly.find(params[:id])
-            #     set_into_redis
-            # else
-            #     get_from_redis
-            # end     
-          
+                set_into_redis
+            else
+                get_from_redis
+            end
         end
         
         def product_params
@@ -128,12 +126,11 @@ class ProductsController < ApplicationController
                                             :year, :month, :category_id, :description, dispensary_source_ids: [], vendor_ids: [])
         end  
          def set_into_redis
-            @redis.set("product", marshal_dump(@product))
+            $redis.set("product_#{params[:id]}", marshal_dump(@product))
             
         end
 
         def get_from_redis
-            @product = marshal_load(@redis.get("product")) 
-           
+            @product = marshal_load($redis.get("product_#{params[:id]}")) 
         end
 end

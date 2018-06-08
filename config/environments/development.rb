@@ -47,4 +47,19 @@ Rails.application.configure do
   Braintree::Configuration.merchant_id = ENV['merchant_id']
   Braintree::Configuration.public_key =  ENV['public_key']
   Braintree::Configuration.private_key = ENV['private_key']
+  
+  #redis
+  # config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
+  
+  # #redis
+  #   config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
+
+  #THIS WILL BE NEEDED FOR PAGE CACHING OR FRAGMENT CACHING    
+  # config.cache_store = :redis_store, {
+  #   host: "ec2-35-168-107-180.compute-1.amazonaws.com",
+  #   port: 9979,
+  #   db: 0,
+  #   password: "p384db25b425919fe4297a5aa76d4ebea27858fb42d40ec0864e358f1516e5c57",
+  #   namespace: "cache"
+  # }
 end

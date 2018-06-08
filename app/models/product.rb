@@ -103,5 +103,10 @@ class Product < ActiveRecord::Base
 			return false
 		end
 	end
+	
+	after_validation :set_redis_key
+	def set_redis_key
+	   #overwrite the key 
+	end
     
 end

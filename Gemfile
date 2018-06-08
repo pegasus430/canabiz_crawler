@@ -34,10 +34,14 @@ gem 'bootstrap-modal-rails', '~> 2.2', '>= 2.2.5' #for customer to select quanti
 #BACKGROUND JOBS
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'sidekiq', '~> 4.2', '>= 4.2.10' #background jobs - switching from sucker punch
-gem 'redis', '~> 3.3', '>= 3.3.3' #needed for sidekiq
+
 gem 'sinatra', '~> 1.4', '>= 1.4.8' #needed for sidekiq
 gem 'sidekiq-cron', '~> 0.6.0' #schedule sidekiq job
 gem 'sidekiq-failures', '~> 0.4.5' #see failed sidekiq jobs
+
+#REDIS
+gem 'redis', '~> 3.3', '>= 3.3.3' #needed for sidekiq
+gem 'redis-rails'
 
 #html safe truncation
 gem "nokogiri"

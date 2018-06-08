@@ -28,5 +28,8 @@ module CannabizNews
     
     #amp pages
     config.assets.precompile << 'amp/application.scss'
+    
+    #encoding of params
+    # config.middleware.insert_before ActionDispatch::ParamsParser, "ForceParamsEncoding"
   end
 end

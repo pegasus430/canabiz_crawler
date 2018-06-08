@@ -1,4 +1,3 @@
-require "redis"
 class ApplicationController < ActionController::Base
 
     protect_from_forgery with: :exception
@@ -73,60 +72,20 @@ class ApplicationController < ActionController::Base
     def populate_lists
         require 'will_paginate/array'
         
-        @redis = @redis || Redis.new(host: 'ec2-35-168-107-180.compute-1.amazonaws.com', 
-                            port: 9979, password: 'p384db25b425919fe4297a5aa76d4ebea27858fb42d40ec0864e358f1516e5c57')
+        # @redis = @redis || Redis.new(host: 'ec2-35-168-107-180.compute-1.amazonaws.com', 
+        #                     port: 9979, password: 'p384db25b425919fe4297a5aa76d4ebea27858fb42d40ec0864e358f1516e5c57')
 
         
-        @news_categories = Category.news.active.order("name ASC") 
-        @product_categories = Category.products.active.order("name ASC")
-        @all_states = State.all.order("name ASC")
-        @states_with_products = @all_states.where(product_state: true)
-        @active_sources = Source.where(:active => true).order("name ASC")
+        # @news_categories = Category.news.active.order("name ASC") 
+        #@product_categories = Category.products.active.order("name ASC")
+        #@all_states = State.all.order("name ASC")
+        # @states_with_products = @all_states.where(product_state: true)
+        # @active_sources = Source.where(:active => true).order("name ASC")
         
         
-        # if @redis.get('news_categories').blank?
-        #     @news_categories = Category.news.active.order("name ASC")
-        #     @redis.set("news_categories", @news_categories)
-        # else 
-        #     @news_categories = @redis.get("news_categories")
-        # end
-        
-        # if @redis.get('product_categories').blank?
-        #     @product_categories = Category.products.active.order("name ASC")
-        #     @redis.set("product_categories", @product_categories)
-        # else 
-        #     @product_categories = @redis.get("product_categories")
-        # end
-        
-        # if @redis.get('all_states').blank?
-        #     @all_states = State.all.order("name ASC")
-        #     @redis.set("all_states", @all_states)
-        # else 
-        #     @all_states = @redis.get("all_states")
-        # end
-        
-        # if @redis.get('states_with_products').blank?
-        #     @states_with_products = @all_states.where(product_state: true)
-        #     @redis.set("states_with_products", @states_with_products)
-        # else 
-        #     @states_with_products = @redis.get("states_with_products")
-        # end
-        
-        # if @redis.get('active_sources').blank?
-        #     @active_sources = Source.where(:active => true).order("name ASC")
-        #     @redis.set("active_sources", @active_sources)
-        # else 
-        #     @active_sources = @redis.get("active_sources")
-        # end
-        
-        
-        
-        # puts 'news category test: '
-        # puts @redis.get("news_categories_test")
-        # if @redis.get("news_categories_test").blank?
+
+        # if $redis.get("news_categories").blank?
         #   @news_categories = Category.news.active.order("name ASC") 
-        #   @redis.set("news_categories_test", @news_categories)
-          
         #   @product_categories = Category.products.active.order("name ASC")
         #   @all_states = State.all.order("name ASC")
         #   @states_with_products = @all_states.where(product_state: true)
@@ -135,6 +94,42 @@ class ApplicationController < ActionController::Base
         # else
         #   get_from_redis
         # end
+        
+        
+        if $redis.get('news_categories').blank?
+            @news_categories = Category.news.active.order("name ASC")
+            $redis.set("news_categories", Marshal.dump(@news_categories))
+        else 
+            @news_categories = Marshal.load($redis.get("news_categories"))
+        end
+        
+        if $redis.get('product_categories').blank?
+            @product_categories = Category.products.active.order("name ASC")
+            $redis.set("product_categories", Marshal.dump(@product_categories))
+        else 
+            @product_categories = Marshal.load($redis.get("product_categories"))
+        end
+        
+        if $redis.get('all_states').blank?
+            @all_states = State.all.order("name ASC")
+            $redis.set("all_states", Marshal.dump(@all_states))
+        else 
+            @all_states = Marshal.load($redis.get("all_states"))
+        end
+        
+        if $redis.get('states_with_products').blank?
+            @states_with_products = @all_states.where(product_state: true)
+            $redis.set("states_with_products", Marshal.dump(@states_with_products))
+        else 
+            @states_with_products = Marshal.load($redis.get("states_with_products"))
+        end
+        
+        if $redis.get('active_sources').blank?
+            @active_sources = Source.where(:active => true).order("name ASC")
+            $redis.set("active_sources", Marshal.dump(@active_sources))
+        else 
+            @active_sources = Marshal.load($redis.get("active_sources"))
+        end
 
         @az_values = ['#', 'A','B','C','D','E','F','G','H','I','J','K','L','M',
                             'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
@@ -155,20 +150,19 @@ class ApplicationController < ActionController::Base
       end
 
       def set_into_redis
-          @redis.set("news_categories_test", @news_categories)
-        # @redis.set("product_categories", marshal_dump(@product_categories))
-        # @redis.set("news_categories", marshal_dump(@news_categories))
-        # @redis.set("all_states", marshal_dump(@all_states))
-        # @redis.set("states_with_products", marshal_dump(@states_with_products))
-        # @redis.set("active_sources", marshal_dump(@active_sources))
+        $redis.set("product_categories", marshal_dump(@product_categories))
+        $redis.set("news_categories", marshal_dump(@news_categories))
+        $redis.set("all_states", marshal_dump(@all_states))
+        $redis.set("states_with_products", marshal_dump(@states_with_products))
+        $redis.set("active_sources", marshal_dump(@active_sources))
       end
 
       def get_from_redis
-        @news_categories = marshal_load(@redis.get("news_categories")) 
-        @product_categories = marshal_load(@redis.get("product_categories"))
-        @all_states = marshal_load(@redis.get("all_states"))
-        @states_with_products = marshal_load(@redis.get("states_with_products"))
-        @active_sources = marshal_load(@redis.get("active_sources"))
+        @news_categories = marshal_load($redis.get("news_categories")) 
+        @product_categories = marshal_load($redis.get("product_categories"))
+        @all_states = marshal_load($redis.get("all_states"))
+        @states_with_products = marshal_load($redis.get("states_with_products"))
+        @active_sources = marshal_load($redis.get("active_sources"))
       end
 
       def marshal_dump(object)
