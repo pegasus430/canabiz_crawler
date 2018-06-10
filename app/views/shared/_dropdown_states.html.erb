@@ -1,9 +1,6 @@
-
 <select name="State" class="selectDropdown state-dropdown" data-live-search="true" onChange="setSelectedState(this.value)">
     <option value = "">State</option>
     <% @states_with_products.each do |state| %>
-        <%= "state here: #{state.name}" %>
-        <%= "Searched State: #{@searched_state.name}" if @searched_state %>
         <% if @site_visitor_state != nil && @site_visitor_state.name == state.name && @searched_state == nil %>
             <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
             <% @set_state = state.name %>
@@ -19,6 +16,5 @@
         <% else %>
         	<option value = "<%=state.name%>"><%=state.name%></option>
         <% end %>
-
     <% end %>
 </select>

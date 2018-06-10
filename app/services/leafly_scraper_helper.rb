@@ -11,17 +11,27 @@ class LeaflyScraperHelper
 		
 		require "json"
 		require 'open-uri'
+		
+		puts 'i am here'
 
 		#GLOBAL VARIABLES
 		@source = Source.where(name: 'Leafly').first #source we are scraping
 		@state = State.where(abbreviation: @state_abbreviation).first #state we are scraping from the source
+		
+		puts 'i am here 2'
+		puts @state.name
 
 		#query the dispensarysources from this source and this state that have a dispensary lookup
 		@dispensary_sources = DispensarySource.where(state_id: @state.id).where(source_id: @source.id).
 								includes(:dispensary, :products, :products => :vendors, :dispensary_source_products => :dsp_prices)
+								
+		puts 'i am also here'
 
 		#the actual dispensaries that we will really display
 		@real_dispensaries = Dispensary.where(state_id: @state.id)
+		
+		puts 'i am also here 3'
+		puts @real_dispensaries.count
 
 		#MAKE CALL AND CREATE JSON
 		output = nil
@@ -33,11 +43,13 @@ class LeaflyScraperHelper
 
 		contents = JSON.parse(output.read)
 		
-		puts 'content: '
+		puts 'contents: '
 		puts contents
 
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)
 		contents[@state_abbreviation.downcase].each do |returned_dispensary_source|
+			
+			puts 'i am in the content loop'
 			
 			#check if the dispensary source already exists
 			existing_dispensary_sources = @dispensary_sources.select { |dispensary_source| dispensary_source.name.casecmp(returned_dispensary_source['name']) == 0 }
@@ -248,11 +260,12 @@ class LeaflyScraperHelper
 
 		#map of their quantities to our quantities
 		quantityToQuantity = {
+			'Â½ g' => 'Half Gram',
 			'1 g' => 'Gram',	
 			'2 g' => '2 Grams',	
-			'⅛ oz' => 'Eighth',	
-			'¼ oz' => 'Quarter Ounce',
-			'½ oz' => 'Half Ounce',
+			'â…› oz' => 'Eighth',	
+			'Â¼ oz' => 'Quarter Ounce',
+			'Â½ oz' => 'Half Ounce',
 			'1 oz' => 'Ounce',
 			'each' => 'Each'
 		}
@@ -272,6 +285,8 @@ class LeaflyScraperHelper
 						:unit => quantityToQuantity[quantity_price_pair['quantity']],
 						:price => quantity_price_pair['price']
 					)
+				else
+					UnitMissing.email('Leafly', quantity_price_pair['quantity'], quantity_price_pair['price']).deliver_now
 				end
 			end
 		end
@@ -287,11 +302,12 @@ class LeaflyScraperHelper
 
 			#need more for other categories
 			quantityToQuantity = {
+				'Â½ g' => 'Half Gram',
 				'1 g' => 'Gram',	
 				'2 g' => '2 Grams',	
-				'⅛ oz' => 'Eighth',	
-				'¼ oz' => 'Quarter Ounce',
-				'½ oz' => 'Half Ounce',
+				'â…› oz' => 'Eighth',	
+				'Â¼ oz' => 'Quarter Ounce',
+				'Â½ oz' => 'Half Ounce',
 				'1 oz' => 'Ounce',
 				'each' => 'Each'
 			}
@@ -320,7 +336,8 @@ class LeaflyScraperHelper
 						)
 						updated_menu = true
 					end
-
+				else
+					UnitMissing.email('Leafly', quantity_price_pair['quantity'], quantity_price_pair['price']).deliver_now	
 				end
 			end
 			

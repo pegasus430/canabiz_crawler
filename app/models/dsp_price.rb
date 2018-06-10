@@ -1,5 +1,12 @@
 class DspPrice < ActiveRecord::Base
     
+    #scope
+    scope :for_featured, -> { 
+        product_ids = Product.where(:featured_product => true).pluck(:id)
+        dsp_ids = DispensarySourceProduct.where("product_id IN (?)", product_ids).pluck(:id)
+        where("dispensary_source_product_id IN (?)", dsp_ids)
+    }
+    
     #relations
     belongs_to :dispensary_source_product#, inverse_of: :dsp_prices
     validates :price, numericality: {greater_than_or_equal_to: 0.01}

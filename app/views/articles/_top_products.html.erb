@@ -44,6 +44,10 @@
 	                                    		<a style="color: #2ab081;" href="<%=vendor_path(product.vendors.first)%>">
 	                            					<%= product.vendors.first.name %>
 	                            				</a>
+	                            			<% elsif product.vendor.present? %>
+	                            				<a style="color: #2ab081;" href="<%=vendor_path(product.vendor)%>">
+	                            					<%= product.vendor.name %>
+	                            				</a>
 	                            			<% end %>
 	                                    </li>
 	                                    <li class="s-meta" style = "float: right;">

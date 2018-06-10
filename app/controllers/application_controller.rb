@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
     end
     
     def default_visitor_location
-        @site_visitor_state = State.where(name: 'Colorado').first
+        @site_visitor_state = State.where(name: 'Washington').first
         @site_visitor_city = 'Seattle'
         @site_visitor_zip = '98101'
         @site_visitor_ip = '75.172.101.74'

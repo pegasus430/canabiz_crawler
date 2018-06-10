@@ -7,14 +7,14 @@ class StatesController < ApplicationController
         
         #state articles
         if marshal_load($redis.get("#{@state.name.downcase}_recent_articles")).blank?
-            @recents = @state.articles.active_source.
-                        includes(:source, :categories, :states).
-                        order("created_at DESC").
-                        paginate(:page => params[:page], :per_page => 24)
+            @recents = @state.articles.active_source.includes(:source, :categories, :states).
+                            order("created_at DESC")
             $redis.set("#{@state.name.downcase}_recent_articles", Marshal.dump(@recents))           
         else
             @recents = Marshal.load($redis.get("#{@state.name.downcase}_recent_articles"))
         end
+        
+        @recents = @recents.paginate(:page => params[:page], :per_page => 24)
         
         #state products
         if @state.product_state
@@ -26,14 +26,14 @@ class StatesController < ApplicationController
         else
             
             if marshal_load($redis.get("#{@state.name.downcase}_mostview_articles")).blank?
-                @mostviews = @state.articles.active_source.
-                        includes(:source, :categories, :states).
-                        order("num_views DESC").
-                        paginate(:page => params[:page], :per_page => 24)
+                @mostviews = @state.articles.active_source.includes(:source, :categories, :states).
+                                order("num_views DESC")
                 $redis.set("#{@state.name.downcase}_mostview_articles", Marshal.dump(@mostviews))           
             else
                 @mostviews = Marshal.load($redis.get("#{@state.name.downcase}_mostview_articles"))
             end
+            
+            @mostviews = @mostviews.paginate(:page => params[:page], :per_page => 24)
             
         end
     end

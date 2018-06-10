@@ -65,14 +65,8 @@ class ProductHelper
         @dispensary_to_product = Hash.new
         dispensary_source_products = @product.dispensary_source_products.includes(:product, :dispensary_source, :dsp_prices).where("dispensary_sources.state_id =?", @state.id).references(:dispensary_sources)
         
-        puts 'DISPENSARY SOURCE PRODUCTS: '
-        puts dispensary_source_products
-        
         @header_options =  dispensary_source_products.map{|dispensary_source_product| dispensary_source_product.dsp_prices.map(&:unit)}.flatten.uniq  unless  dispensary_source_products.blank?
-        
-        puts 'header_options: '
-        puts @header_options
-        
+
         if @header_options != nil
             @table_header_options = DspPrice::DISPLAYS.sort_by {|key, value| value}.to_h.select{|k, v| k if @header_options.include?(k)}.keys  unless @header_options.blank?
         else 

@@ -18,7 +18,7 @@ class WeedmapsScraperHelper
 				
 		#query the dispensarysources from this source and this state that have a dispensary lookup
 		@dispensary_sources = DispensarySource.where(state_id: @state.id).where(source_id: @source.id).
-								includes(:dispensary, :products, :products => :vendors, :dispensary_source_products => :dsp_prices)
+								includes(:dispensary, :products => [:vendors, :vendor, :category], :dispensary_source_products => :dsp_prices)
 		
 		#the actual dispensaries that we will really display
 		@real_dispensaries = Dispensary.where(state_id: @state.id)
@@ -34,8 +34,6 @@ class WeedmapsScraperHelper
 			'ounce' => 'Ounce',
 			'unit' => 'Each'
 		}
-								
-
 		
 		#MAKE CALL AND CREATE JSON
 		output = nil
@@ -73,12 +71,15 @@ class WeedmapsScraperHelper
 		
 		#LOOP THROUGH CONTENTS RETURNED (DISPENSARIES)
 		contents[@state.name.downcase].each do |returned_dispensary_source|
-			
+
 			#check if the dispensary source already exists
 			existing_dispensary_sources = @dispensary_sources.select { |dispensary_source| dispensary_source.name.casecmp(returned_dispensary_source['name']) == 0 }
 			
 			if existing_dispensary_sources.size > 0 #DISPENSARY SOURCE ALREADY EXISTS
 				
+				#trying to just update menu once
+				@updated_menu = false
+
 				#if exists, then I have to compare fields to see if any need to be updated
 				compareAndUpdateDispensarySourceValues(returned_dispensary_source, existing_dispensary_sources[0])
 				
@@ -86,6 +87,11 @@ class WeedmapsScraperHelper
 				if returned_dispensary_source['menu'] != nil 
 					analyzeReturnedDispensarySourceMenu(returned_dispensary_source['menu'], existing_dispensary_sources[0], false)
 				end
+
+				#update the last_menu_update of the dispensary_source
+				if @updated_menu
+					existing_dispensary_sources[0].update_attribute :last_menu_update, DateTime.now
+				end	
 				
 			else #THE DISPENSARYSOURCE DOES NOT EXIST
 				
@@ -121,60 +127,80 @@ class WeedmapsScraperHelper
 		returned_json_menu.each do |returned_menu_section|
 
 			#get the category products
+			@category_products = nil
 			if ['Indica', 'Hybrid', 'Sativa', 'Flower'].include? returned_menu_section['title']
-				@category_products = Category.where(name: 'Flower').first.products
+				@category_products = Category.where(name: 'Flower').first.products.includes(:vendors, :vendor)
 			elsif returned_menu_section['title'] == 'Edible'
-				@category_products = Category.where(name: 'Edibles').first.products
+				@category_products = Category.where(name: 'Edibles').first.products.includes(:vendors, :vendor)
 			elsif returned_menu_section['title'] == 'Concentrate'
-				@category_products = Category.where(name: 'Concentrates').first.products
+				@category_products = Category.where(name: 'Concentrates').first.products.includes(:vendors, :vendor)
 			elsif returned_menu_section['title'] == 'Drink'
-				@category_products = Category.where(name: 'Beverage').first.products
+				@category_products = Category.where(name: 'Beverage').first.products.includes(:vendors, :vendor)
 			elsif returned_menu_section['title'] == 'Tincture'
-				@category_products = Category.where(name: 'Tincture & Sublingual').first.products
+				@category_products = Category.where(name: 'Tincture & Sublingual').first.products.includes(:vendors, :vendor)
 			elsif returned_menu_section['title'] == 'Preroll'
-				@category_products = Category.where(name: 'Pre-Rolls').first.products
+				@category_products = Category.where(name: 'Pre-Rolls').first.products.includes(:vendors, :vendor)
 			elsif returned_menu_section['title'] == 'Topicals'
-				@category_products = Category.where(name: 'Topical').first.products
+				@category_products = Category.where(name: 'Topical').first.products.includes(:vendors, :vendor)
 			end
 
-			#loop through the different menu sections (separated by title - category)
-			returned_menu_section['items'].each do |returned_dispensary_source_product|
-			
-				#check if dispensary source already has this product
-				existing_dispensary_source_products = []
+			if @category_products != nil
+				#loop through the different menu sections (separated by title - category)
+				returned_menu_section['items'].each do |returned_dispensary_source_product|
 				
-				#if its not a new dispensary, we will check if the dispensary source already has the product
-				if is_new_dispensary == false
-					existing_dispensary_source_products = existing_dispensary_source.products.select { |product| 
-															product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
-				
-					#try alternate names or combine with vendors
-					if existing_dispensary_source_products.size == 0
-						existing_dispensary_source.products.each do |product|
-							
-							#check alternate names for a match
-							if product.alternate_names.present? 
-								product.alternate_names.split(',').each do |alt|
-									if alt.casecmp(returned_dispensary_source_product['name']) == 0
-										existing_dispensary_source_products.push(product)
-										break
+					#check if dispensary source already has this product
+					existing_dispensary_source_products = []
+					
+					#if its not a new dispensary, we will check if the dispensary source already has the product
+					if is_new_dispensary == false
+						existing_dispensary_source_products = existing_dispensary_source.products.select { |product| 
+																product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
+					
+						#try alternate names or combine with vendors
+						if existing_dispensary_source_products.size == 0
+							existing_dispensary_source.products.each do |product|
+								
+								#check alternate names for a match
+								if product.alternate_names.present? 
+									product.alternate_names.split(',').each do |alt|
+										if alt.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_dispensary_source_products.push(product)
+											break
+										end
 									end
 								end
-							end
-
-							if existing_dispensary_source_products.size == 0
-
-								#check products with vendor name
-								if product.vendors.any?
-									product.vendors.each do |vendor|
+	
+								if existing_dispensary_source_products.size == 0
+	
+									#check products with vendor name
+									if product.vendors.any?
+										product.vendors.each do |vendor|
+											combined = []
+											combined.push("#{product.name} - #{vendor.name}")
+											combined.push("#{vendor.name} - #{product.name}")
+											combined.push("#{product.name} by #{vendor.name}")
+											combined.push("#{product.name} : #{vendor.name}")
+											combined.push("#{vendor.name} : #{product.name}")
+											combined.push("#{product.name} (#{vendor.name})")
+											combined.push("#{product.name} by #{vendor.name} of " + @state.name)
+	
+											product_vendor_matches = combined.select { |product_vendor| 
+														product_vendor.casecmp(returned_dispensary_source_product['name']) == 0 }
+	
+											if product_vendor_matches.size > 0
+												existing_dispensary_source_products.push(product)
+												break
+											end
+										end
+									elsif product.vendor.present?
 										combined = []
-										combined.push("#{product.name} - #{vendor.name}")
-										combined.push("#{vendor.name} - #{product.name}")
-										combined.push("#{product.name} by #{vendor.name}")
-										combined.push("#{product.name} : #{vendor.name}")
-										combined.push("#{vendor.name} : #{product.name}")
-										combined.push("#{product.name} (#{vendor.name})")
-										combined.push("#{product.name} by #{vendor.name} of Washington")
+										combined.push("#{product.name} - #{product.vendor.name}")
+										combined.push("#{product.vendor.name} - #{product.name}")
+										combined.push("#{product.name} by #{product.vendor.name}")
+										combined.push("#{product.name} : #{product.vendor.name}")
+										combined.push("#{product.vendor.name} : #{product.name}")
+										combined.push("#{product.name} (#{product.vendor.name})")
+										combined.push("#{product.name} by #{product.vendor.name} of " + @state.name)
 
 										product_vendor_matches = combined.select { |product_vendor| 
 													product_vendor.casecmp(returned_dispensary_source_product['name']) == 0 }
@@ -182,64 +208,81 @@ class WeedmapsScraperHelper
 										if product_vendor_matches.size > 0
 											existing_dispensary_source_products.push(product)
 											break
-										end
+										end	
 									end
 								end
 							end
 						end
-					end
-				end #end of is_new_dispensary = false if statement
-				
-				if existing_dispensary_source_products.size > 0 #dispensary source has the product
+					end #end of is_new_dispensary = false if statement
 					
-					#if product already exists, check to see if any prices have changed
-					compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, DispensarySourceProduct.
-														where(product: existing_dispensary_source_products[0]).
-														where(dispensary_source: existing_dispensary_source).first, existing_dispensary_source)
-				
-				else #dispensary source does not have the product / it is a new dispensary source
-					
-					#first check if product is in the system - used to be all_products
-					existing_products = @category_products.select { |product| product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
-					
-					if existing_products.size > 0 #product is in the system
+					if existing_dispensary_source_products.size > 0 #dispensary source has the product
 						
-						#just create a dispensary source product
-						createProductAndDispensarySourceProduct(existing_products[0], 
-							existing_dispensary_source.id, returned_dispensary_source_product)
-		
-						#existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
-					else
-						#dive deeper for a match
-						@category_products.each do |product|
-
-							#check alternate names for a match
-							if product.alternate_names.present? 
-								product.alternate_names.split(',').each do |alt|
-									if alt.casecmp(returned_dispensary_source_product['name']) == 0
-										existing_products.push(product)
-										break
+						#if product already exists, check to see if any prices have changed
+						compareAndUpdateDispensarySourceProduct(returned_dispensary_source_product, DispensarySourceProduct.
+															where(product: existing_dispensary_source_products[0]).
+															where(dispensary_source: existing_dispensary_source).first, existing_dispensary_source)
+					
+					else #dispensary source does not have the product / it is a new dispensary source
+						
+						#first check if product is in the system - used to be all_products
+						existing_products = @category_products.select { |product| product.name.casecmp(returned_dispensary_source_product['name']) == 0 }
+						
+						if existing_products.size > 0 #product is in the system
+							
+							#just create a dispensary source product
+							createProductAndDispensarySourceProduct(existing_products[0], 
+								existing_dispensary_source.id, returned_dispensary_source_product)
+			
+							#existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
+						else
+							#dive deeper for a match
+							@category_products.each do |product|
+	
+								#check alternate names for a match
+								if product.alternate_names.present? 
+									product.alternate_names.split(',').each do |alt|
+										if alt.casecmp(returned_dispensary_source_product['name']) == 0
+											existing_products.push(product)
+											break
+										end
 									end
 								end
-							end
-
-							if existing_products.size > 0 
-								createProductAndDispensarySourceProduct(existing_products[0], 
-										existing_dispensary_source.id, returned_dispensary_source_product)
-								break
-							
-							else 
-								#check products with vendor name
-								if product.vendors.any?
-									product.vendors.each do |vendor|
+	
+								if existing_products.size > 0 
+									createProductAndDispensarySourceProduct(existing_products[0], 
+											existing_dispensary_source.id, returned_dispensary_source_product)
+									break
+								
+								else 
+									#check products with vendor name
+									if product.vendors.any?
+										product.vendors.each do |vendor|
+											combined = []
+											combined.push("#{product.name} - #{vendor.name}")
+											combined.push("#{vendor.name} - #{product.name}")
+											combined.push("#{product.name} by #{vendor.name}")
+											combined.push("#{product.name} : #{vendor.name}")
+											combined.push("#{vendor.name} : #{product.name}")
+											combined.push("#{product.name} (#{vendor.name})")
+											combined.push("#{product.name} by #{vendor.name} of " + @state.name)
+	
+											product_vendor_matches = combined.select { |product_vendor| 
+														product_vendor.casecmp(returned_dispensary_source_product['name']) == 0 }
+	
+											if product_vendor_matches.size > 0
+												existing_products.push(product)
+												break
+											end
+										end
+									elsif product.vendor.present?
 										combined = []
-										combined.push("#{product.name} - #{vendor.name}")
-										combined.push("#{vendor.name} - #{product.name}")
-										combined.push("#{product.name} by #{vendor.name}")
-										combined.push("#{product.name} : #{vendor.name}")
-										combined.push("#{vendor.name} : #{product.name}")
-										combined.push("#{product.name} (#{vendor.name})")
-										combined.push("#{product.name} by #{vendor.name} of Washington")
+										combined.push("#{product.name} - #{product.vendor.name}")
+										combined.push("#{product.vendor.name} - #{product.name}")
+										combined.push("#{product.name} by #{product.vendor.name}")
+										combined.push("#{product.name} : #{product.vendor.name}")
+										combined.push("#{product.vendor.name} : #{product.name}")
+										combined.push("#{product.name} (#{product.vendor.name})")
+										combined.push("#{product.name} by #{product.vendor.name} of " + @state.name)
 
 										product_vendor_matches = combined.select { |product_vendor| 
 													product_vendor.casecmp(returned_dispensary_source_product['name']) == 0 }
@@ -247,26 +290,26 @@ class WeedmapsScraperHelper
 										if product_vendor_matches.size > 0
 											existing_products.push(product)
 											break
-										end
+										end	
 									end
-								end
-
-								if existing_products.size > 0 
-									createProductAndDispensarySourceProduct(existing_products[0], 
-											existing_dispensary_source.id, returned_dispensary_source_product)
-									break
-								end
-							end 
-
+	
+									if existing_products.size > 0 
+										createProductAndDispensarySourceProduct(existing_products[0], 
+												existing_dispensary_source.id, returned_dispensary_source_product)
+										break
+									end
+								end 
+	
+							end
 						end
+						
+						#either way I update the dispensarySource.last_menu_update
+						#not sure why i was doing this
+						#existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
+						
 					end
-					
-					#either way I update the dispensarySource.last_menu_update
-					existing_dispensary_source.update_attribute :last_menu_update, DateTime.now
-					
-				end
-			end #end loop of each section's products
-
+				end #end loop of each section's products
+			end
 			
 		end #end loop of each menu 'section' -> sections are broken down by type 'indica, sativa, etc'
 	
@@ -290,12 +333,16 @@ class WeedmapsScraperHelper
 
 			returned_dispensary_source_product['prices'].keys.each do |price_key|
 
-				if @quantity_to_quantity.has_key?(price_key) && returned_dispensary_source_product['prices'][price_key].present? && returned_dispensary_source_product['prices'][price_key] > 0
-					DspPrice.create(
-						:dispensary_source_product_id => dsp.id,
+				if @quantity_to_quantity.has_key?(price_key) && returned_dispensary_source_product['prices'][price_key].present? && returned_dispensary_source_product['prices'][price_key] != 0.0
+					dsp_price = DspPrice.new(
 						:unit => @quantity_to_quantity[price_key],
 						:price => returned_dispensary_source_product['prices'][price_key]
 					)
+					unless dsp_price.save
+		        		puts "dsp_price Save Error: #{dsp_price.errors.messages}"
+		        	end 
+				elsif !@quantity_to_quantity.has_key?(price_key)
+					UnitMissing.email('Weed Maps', price_key, returned_dispensary_source_product['prices'][price_key]).deliver_now
 				end
 			end
 		end
@@ -306,38 +353,52 @@ class WeedmapsScraperHelper
 		
 		if  returned_dispensary_source_product['prices'] != nil
 			#see if we need to update the last_menu_update for the dispensary source
-			updated_menu = false
+
+			# [["dispensary_source_product_id", 9479], ["unit", "Ounce"]]
 
 			returned_dispensary_source_product['prices'].keys.each do |price_key|
 
-				if @quantity_to_quantity.has_key?(price_key) && returned_dispensary_source_product['prices'][price_key].present? && returned_dispensary_source_product['prices'][price_key] > 0 
+				puts 'HERE ARE THE VARIABLES: '
+				puts price_key
+				puts returned_dispensary_source_product['prices'][price_key]
+				puts @quantity_to_quantity.has_key?(price_key)
+				puts returned_dispensary_source_product['prices'][price_key].present?
+				puts returned_dispensary_source_product['prices'][price_key] > 0
 
+				if @quantity_to_quantity.has_key?(price_key) && returned_dispensary_source_product['prices'][price_key].present? && returned_dispensary_source_product['prices'][price_key] != 0.0 
+
+					puts 'IM IN HERE 1'
 					#see if we have any dsp prices with this quantity
 					if existing_dispensary_source_product.dsp_prices.where(unit: @quantity_to_quantity[price_key]).any?
+
+						puts 'IM IN HERE 2'
 						#compare the price - if its different we update
 						if existing_dispensary_source_product.dsp_prices.where(unit: @quantity_to_quantity[price_key]).first.price != returned_dispensary_source_product['prices'][price_key]
 							
 							existing_dispensary_source_product.dsp_prices.
 								where(unit: @quantity_to_quantity[price_key]).first.update_attribute :price, returned_dispensary_source_product['prices'][price_key]
 							
-							updated_menu = true
+							@updated_menu = true
 						end
 					else
+
+						puts 'IM IN HERE 3'
+
 						#create new dsp price
-						DspPrice.create(
+						dsp_price =  DspPrice.new(
 							:dispensary_source_product_id => existing_dispensary_source_product.id,
 							:unit => @quantity_to_quantity[price_key],
 							:price => returned_dispensary_source_product['prices'][price_key]
 						)
-						updated_menu = true
+						unless dsp_price.save
+			        		puts "dsp_price Save Error: #{dsp_price.errors.messages}"
+			        	end 
+						@updated_menu = true
 					end
+				elsif !@quantity_to_quantity.has_key?(price_key)
+					UnitMissing.email('Weed Maps', price_key, returned_dispensary_source_product['prices'][price_key]).deliver_now
 				end
-			end
-
-			#update the last_menu_update of the dispensary_source
-			if updated_menu
-				dispensary_source.update_attribute :last_menu_update, DateTime.now
-			end			
+			end		
 			
 		end #end of check to see if returned_dispensary_product['prices'] != nil
 	end
@@ -355,13 +416,14 @@ class WeedmapsScraperHelper
 			dispensary_id = dispensary.id
 		end
 	
-		dispensary_source = DispensarySource.create(:dispensary_id => dispensary_id, :source_id => @source.id, :state_id => @state.id,
-								:name => returned_dispensary_source["name"], :city => returned_dispensary_source['city'],
-								:street => returned_dispensary_source["address"], :zip_code => returned_dispensary_source["zip_code"],
-								:source_rating => returned_dispensary_source['rating'], :email => returned_dispensary_source['email'], 
-								:phone => returned_dispensary_source['phone'], :website => returned_dispensary_source['website'],
-								:remote_image_url => returned_dispensary_source['avatar_url']
-							)  
+		dispensary_source = DispensarySource.create(:dispensary_id => dispensary_id, :source_id => @source.id, 
+			:state_id => @state.id, :last_menu_update => DateTime.now,
+			:name => returned_dispensary_source["name"], :city => returned_dispensary_source['city'],
+			:street => returned_dispensary_source["address"], :zip_code => returned_dispensary_source["zip_code"],
+			:source_rating => returned_dispensary_source['rating'], :email => returned_dispensary_source['email'], 
+			:phone => returned_dispensary_source['phone'], :website => returned_dispensary_source['website'],
+			:remote_image_url => returned_dispensary_source['avatar_url']
+		)  
 
 		#hours
 		if returned_dispensary_source['hours_of_operation'] != nil

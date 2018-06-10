@@ -3,9 +3,7 @@ class HeadsetScraperHelper
 	attr_reader :state_string
 	
 	def initialize(state_string)
-    	
     	@state_string = state_string
-        
 	end
 	
 	def scrapeHeadset()
@@ -118,9 +116,13 @@ class HeadsetScraperHelper
     		
     		average_price_unit = item['product_name'][(item['product_name'].index('(') + 1), 
     									item['product_name'].length].chomp(')').strip
+    									
+    		if average_price_unit.downcase == 'bulk'
+    			average_price_unit = 'Gram'		
+    		end
     	else
     		product_name = item['product_name']
-    		average_price_unit = 'Unit'
+    		average_price_unit = 'Each'
     	end
 
 		existing_products = @products.select { |product| product.name.casecmp(product_name) == 0 }

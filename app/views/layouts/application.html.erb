@@ -72,40 +72,40 @@
         
         <% elsif @recents != nil && @mostviews != nil %>
             <!--article index-->
-            <title>Latest Cannabis News and Updates – Cannabiz Network</title>
+            <title>Latest Cannabis News and Updates - Cannabiz Network</title>
             <meta name ="description" 
                 content="Never miss an update about Cannabis News, CBD, THC, Legal Marijuana, Marijuana laws, State Laws and Political Movements. Stay tuned to Cannabiz Network"/>
             
         <% elsif current_page?('https://www.cannabiznetwork.com/contact_us') %>
             <!--contact us-->
-            <title>Contact – Cannabiz Network</title>
+            <title>Contact - Cannabiz Network</title>
             <meta name ="description"
                 content="Contact us today for any kind of help, queries, and suggestions related to our website. We promise you to help in best possible way."/>
          
         <% elsif current_page?('https://www.cannabiznetwork.com/feedback') %>
             <!--feedback-->
-            <title>Feedback – Cannabiz Network</title>
+            <title>Feedback - Cannabiz Network</title>
             <meta name ="description"
                 content="Leave us a feedback to help us grow better and bring improvements to our site and online store."/>
    
         <% elsif @products != nil %>
             <!--product index-->
-            <title>Cannabiz Network – Online Cannabis Store</title>
+            <title>Cannabiz Network - Online Cannabis Store</title>
             <meta name ="description"
                 content="Shop from our best quality collection of cannabis, legal marijuana, haze, hybrid sativa & hybrid-indica online. We assure the best quality online and fastest service."/>
    
        <% elsif current_page?('https://www.cannabiznetwork.com/login') %>
             <!--login -->
-            <title>Cannabiz Network – Member Login</title>
+            <title>Cannabiz Network - Member Login</title>
             <meta name ="description"
                 content="Create an account on Cannabiz Network to shop online among the trending cannabis, legal marijuana, haze, CBD, and Weed products."/>
    
    
         <% else %>
             <!--home page-->
-            <title>Cannabiz Network – The Leading Source of Cannabis and Haze News</title>
+            <title>Cannabiz Network - The Leading Source of Cannabis and Haze News</title>
             <meta name ="description" 
-                content="Cannabiz Network is Washington’s leading source of breaking news and expert opinions on cannabis-related developments and news like CBD, Legalization of Marijuana, Haze, Weed, Hybrid etc in Washington."/>
+                content="Cannabiz Network is Washington's leading source of breaking news and expert opinions on cannabis-related developments and news like CBD, Legalization of Marijuana, Haze, Weed, Hybrid etc in Washington."/>
      
         <% end %>
 
@@ -151,8 +151,16 @@
         <%= javascript_include_tag 'jquery.meanmenu' %>
         <%= javascript_include_tag 'jquery.meanmenu.min' %>
         <%= javascript_include_tag 'jquery.scrollUp' %>
+        <%= javascript_include_tag 'jquery.sticky' %>
         <%= javascript_include_tag 'main' %>
         <%= javascript_include_tag 'user_page' %>
+        
+        <script>
+            $(document).ready(function(){
+                $("#product-sidebar").sticky({topSpacing:10});
+            });   
+        </script>
+        
         
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <%= javascript_include_tag 'dispensary_product'%>
@@ -161,45 +169,6 @@
         <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
         
         <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=58c8388905e7400012bc6df2&product=inline-share-buttons"></script>
-        
-        
-        <!--owl carousel-->
-        <% if current_page?(root_path) %>
-            <script>
-                $(".owl-carousel").owlCarousel({
-                    items: 2,
-                    nav: true,
-                    center: true,
-                    loop: true,
-                    dots: false,
-                    mouseDrag: true,
-                    stagePadding: 50,
-                    responsiveClass:true,
-                    responsive:{
-                        0:{
-                            items:1,
-                            stagePadding: 0,
-                        },
-                        480:{
-                            items:1,
-                            stagePadding: 0,
-                        },
-                        768:{
-                            items:2,
-                        },
-                        1024:{
-                            items:2,
-                        },
-                        1380:{
-                            items:3,
-                        },
-                        1580:{
-                            items:4,
-                        }
-                    }
-                });
-            </script>
-        <% end %>
         
         <style>
             #modal_content {

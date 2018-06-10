@@ -83,13 +83,17 @@
                     </div>
                     <div class="product-info">
                         <p style="max-height: 53px; overflow: hidden;">Produced By:
-                            <% dispProduct.product.vendors.each_with_index do |vendor, index| %>
-                                <% if index + 1 == dispProduct.product.vendors.size %>
-                                    <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
-                                <% else %>
-                                    <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
+                            <% if dispProduct.product.vendors.any? %>
+                                <% dispProduct.product.vendors.each_with_index do |vendor, index| %>
+                                    <% if index + 1 == dispProduct.product.vendors.size %>
+                                        <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
+                                    <% else %>
+                                        <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
+                                    <% end %>
                                 <% end %>
-                            <% end %>
+                            <% elsif dispProduct.product.vendor.present? %>
+                                <%= link_to dispProduct.product.vendor.name, vendor_path(dispProduct.product.vendor), :class => 'vendor_path'%>
+                			<% end %>
                         </p>
                     </div>
                     <div class="product-info">

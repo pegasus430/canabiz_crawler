@@ -1,3 +1,0 @@
-class DspPricesController < ApplicationController
-	
-end

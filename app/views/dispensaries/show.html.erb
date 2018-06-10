@@ -32,13 +32,15 @@
                                                 </div>
                                                 <div class="google-map">
                                                     <div>
-                                                        <iframe
-                                                          width="100%"
-                                                          height=350
-                                                          frameborder="1" style="border:0"
-                                                          scrolling="no"
-                                                          src="<%="https://www.google.com/maps/embed/v1/place?key=#{ENV['GOOGLE_MAPS_KEY']}&q=#{URI.encode(@dispensary.location)}"%>" allowfullscreen>
-                                                        </iframe>
+                                                        <% if @dispensary_source.location.present? %>
+                                                            <iframe
+                                                              width="100%"
+                                                              height=350
+                                                              frameborder="1" style="border:0"
+                                                              scrolling="no"
+                                                              src="<%="https://www.google.com/maps/embed/v1/place?key=#{ENV['GOOGLE_MAPS_KEY']}&q=#{URI.encode(@dispensary_source.location)}"%>" allowfullscreen>
+                                                            </iframe>
+                                                        <% end %>
                                                     </div>
                                                 </div>
                                             </div>

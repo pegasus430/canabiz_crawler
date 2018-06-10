@@ -4,11 +4,16 @@ ActiveAdmin.register DspPrice do
 	
 	permit_params :dispensary_source_product_id, :price, :unit, :display_order
 	
+	#scopes
+	scope :all, default: true
+	scope :for_featured
+	
 	#save queries
-	includes :dispensary_source_product => [:product, :dispensary_source]
+	includes :dispensary_source_product => [:dispensary_source, :product => :category]
 	
 	index do
 		selectable_column
+		id_column
 		column "Dispensary Source" do |dsp|
 			if dsp.dispensary_source_product.present? && dsp.dispensary_source_product.dispensary_source.present?
 				link_to dsp.dispensary_source_product.dispensary_source.name, admin_dispensary_source_path(dsp.dispensary_source_product.dispensary_source)
@@ -19,6 +24,15 @@ ActiveAdmin.register DspPrice do
 				link_to dsp.dispensary_source_product.product.name, admin_product_path(dsp.dispensary_source_product.product)
 			end
 		end
+		column "Product Category" do |dsp|
+			if dsp.dispensary_source_product.present? && 
+				dsp.dispensary_source_product.product.present? && 
+					dsp.dispensary_source_product.product.category.present?
+
+	        	link_to dsp.dispensary_source_product.product.category.name , 
+	        		admin_category_path(dsp.dispensary_source_product.product.category)
+	    	end
+	    end
 		column "Dispensary Source Product" do |dsp|
 			if dsp.dispensary_source_product.present?
 				link_to dsp.dispensary_source_product.id, admin_dispensary_products_path(dsp.dispensary_source_product)
