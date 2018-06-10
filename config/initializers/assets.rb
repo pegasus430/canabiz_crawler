@@ -17,6 +17,7 @@ Rails.application.config.assets.precompile += %w( jquery-1.12.1.min.js )
 Rails.application.config.assets.precompile += %w( jquery.meanmenu.js )
 Rails.application.config.assets.precompile += %w( jquery.meanmenu.min.js )
 Rails.application.config.assets.precompile += %w( jquery.scrollUp.js )
+Rails.application.config.assets.precompile += %w( jquery.sticky.js )
 Rails.application.config.assets.precompile += %w( main.js )
 Rails.application.config.assets.precompile += %w( user_page.js )
 

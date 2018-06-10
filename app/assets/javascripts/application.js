@@ -17,10 +17,40 @@
 //= require jquery.infinitescroll
 //= require social-share-button
 //= require gmaps/google
-//= require toastr
 //= require owl.carousel
 
-// $(".owl-carousel").owlCarousel();
+$(".owl-carousel").owlCarousel({
+    items: 2,
+    nav: true,
+    center: true,
+    loop: true,
+    dots: false,
+    mouseDrag: true,
+    stagePadding: 50,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:1,
+            stagePadding: 0,
+        },
+        480:{
+            items:1,
+            stagePadding: 0,
+        },
+        768:{
+            items:2,
+        },
+        1024:{
+            items:2,
+        },
+        1380:{
+            items:3,
+        },
+        1580:{
+            items:4,
+        }
+    }
+});
 // bootstrap
 // bootstrap-modal
 // bootstrap-modalmanager
@@ -202,4 +232,3 @@ $( document ).ready(function() {
 // });
 
 //dispensary end
-
