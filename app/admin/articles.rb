@@ -56,16 +56,16 @@ ActiveAdmin.register Article do
 	index do
 		selectable_column
 		id_column
-		column "Title" do |article|
+		column "Title", :sortable=>:"articles.title" do |article|
           truncate(article.title, omision: "...", length: 50) if article.title
         end
-        column "Image" do |article|
+        column "Image",  :sortable=>:"articles.image"  do |article|
           truncate(article.image_url, omision: "...", length: 50) if article.image
         end
-        column "Body" do |article|
+        column "Body",  :sortable=>:"articles.body"   do |article|
           truncate(article.body, omision: "...", length: 50) if article.body
         end
-        column "Source" do |article|
+        column "Source",  :sortable=>:"sources.name" do |article|
 			if article.source.present?
 				link_to article.source.name, admin_source_path(article.source)
 			end

@@ -94,6 +94,8 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.string   "slug"
   end
 
+  add_index "articles", ["slug"], name: "index_articles_on_slug", unique: true
+
   create_table "average_prices", force: :cascade do |t|
     t.integer  "product_id"
     t.decimal  "average_price"
@@ -129,6 +131,8 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.string   "category_type"
   end
 
+  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true
+
   create_table "deals", force: :cascade do |t|
     t.integer  "dispensary_id"
     t.string   "name"
@@ -157,6 +161,8 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.boolean  "has_hypur",     default: false
     t.boolean  "has_payqwick",  default: false
   end
+
+  add_index "dispensaries", ["slug"], name: "index_dispensaries_on_slug", unique: true
 
   create_table "dispensary_source_orders", force: :cascade do |t|
     t.integer  "dispensary_source_id"
@@ -215,13 +221,15 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.integer  "admin_user_id"
   end
 
+  add_index "dispensary_sources", ["slug"], name: "index_dispensary_sources_on_slug", unique: true
+
   create_table "dsp_prices", force: :cascade do |t|
     t.integer  "dispensary_source_product_id"
     t.decimal  "price"
     t.integer  "unit"
     t.integer  "display_order"
-    t.datetime "created_at",                   default: '2018-05-21 11:07:43'
-    t.datetime "updated_at",                   default: '2018-05-21 11:07:43'
+    t.datetime "created_at",                   default: '2018-06-09 10:17:04'
+    t.datetime "updated_at",                   default: '2018-06-09 10:17:04'
   end
 
   create_table "orders", force: :cascade do |t|
@@ -256,8 +264,8 @@ ActiveRecord::Schema.define(version: 20180528221258) do
   create_table "product_states", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "state_id"
-    t.datetime "created_at",            default: '2018-05-18 11:24:24'
-    t.datetime "updated_at",            default: '2018-05-18 11:24:24'
+    t.datetime "created_at",            default: '2018-06-09 10:17:04'
+    t.datetime "updated_at",            default: '2018-06-09 10:17:04'
     t.integer  "headset_alltime_count", default: 0
     t.integer  "headset_monthly_count", default: 0
     t.integer  "headset_weekly_count",  default: 0
@@ -293,6 +301,8 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.integer  "vendor_id"
   end
 
+  add_index "products", ["slug"], name: "index_products_on_slug", unique: true
+
   create_table "sources", force: :cascade do |t|
     t.string   "name"
     t.string   "url"
@@ -307,6 +317,8 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.string   "source_type"
   end
 
+  add_index "sources", ["slug"], name: "index_sources_on_slug", unique: true
+
   create_table "states", force: :cascade do |t|
     t.string   "name"
     t.string   "abbreviation"
@@ -318,6 +330,8 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.boolean  "has_products"
     t.boolean  "product_state"
   end
+
+  add_index "states", ["slug"], name: "index_states_on_slug", unique: true
 
   create_table "user_articles", force: :cascade do |t|
     t.integer  "article_id"
@@ -361,6 +375,9 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.string   "password_reset_token"
   end
 
+  add_index "users", ["password_reset_token"], name: "index_users_on_password_reset_token"
+  add_index "users", ["slug"], name: "index_users_on_slug", unique: true
+
   create_table "vendor_products", force: :cascade do |t|
     t.integer  "vendor_id"
     t.integer  "product_id"
@@ -372,8 +389,8 @@ ActiveRecord::Schema.define(version: 20180528221258) do
   create_table "vendor_states", force: :cascade do |t|
     t.integer  "vendor_id"
     t.integer  "state_id"
-    t.datetime "created_at", default: '2018-05-18 11:24:24'
-    t.datetime "updated_at", default: '2018-05-18 11:24:24'
+    t.datetime "created_at", default: '2018-06-09 10:17:04'
+    t.datetime "updated_at", default: '2018-06-09 10:17:04'
   end
 
   create_table "vendors", force: :cascade do |t|
@@ -397,5 +414,7 @@ ActiveRecord::Schema.define(version: 20180528221258) do
     t.integer  "year_inc"
     t.integer  "month_inc_num"
   end
+
+  add_index "vendors", ["slug"], name: "index_vendors_on_slug", unique: true
 
 end
