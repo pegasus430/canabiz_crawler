@@ -78,9 +78,8 @@ ActiveAdmin.register Article do
 	filter :title
 	filter :image
 	filter :body
-	filter :source_id
+	filter :"source_id" , :as => :select, :collection => Source.all.map{|u| [u.name , u.id]}
 	filter :created_at
-	
 	form(:html => { :multipart => true }) do |f|
 		f.inputs do
 			f.input :title
