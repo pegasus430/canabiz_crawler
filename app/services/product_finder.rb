@@ -9,9 +9,23 @@ class ProductFinder
 	
 	def build
                     
-		@products = Product.featured.left_join(:dispensary_source_products).group(:id).
-                    order('COUNT(dispensary_source_products.id) DESC').
-		            includes(:category, :average_prices, :vendors, :dispensary_sources => :dispensary)
+        add_state_to_string = false
+		if params[:state_search].present?
+            if @searched_state = State.find_by(name: params[:state_search])
+                add_state_to_string = true
+
+                @products = @searched_state.products.featured.
+                left_join(:dispensary_source_products).group(:id).
+                order('COUNT(dispensary_source_products.id) DESC').
+	            includes(:category, :average_prices, :vendors, :dispensary_sources => :dispensary)
+            end
+        end
+		
+		if !add_state_to_string
+    		@products = Product.featured.left_join(:dispensary_source_products).group(:id).
+                order('COUNT(dispensary_source_products.id) DESC').
+	            includes(:category, :average_prices, :vendors, :dispensary_sources => :dispensary)
+	    end
             
         #only search either name or letter, not both
         if params[:name_search].present?
@@ -53,12 +67,10 @@ class ProductFinder
             @products = @products.where('dispensary_sources.location like ?', "%#{params[:location_search]}%")
             add_to_search(params[:location_search], ' in ')
         end
-       
-        if params[:state_search].present?
-            if @searched_state = State.find_by(name: params[:state_search])
-                @products = @products.where(:dispensary_sources => {state_id: @searched_state.id})
-                add_to_search(params[:state_search], ' in ')
-            end
+        
+        #add state value at the end
+        if add_state_to_string
+            add_to_search(params[:state_search], ' in ')
         end
         
         #return values

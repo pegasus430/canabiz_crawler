@@ -4,8 +4,17 @@ class VendorsController < ApplicationController
     before_action :require_admin, except: [:show, :index]
     
     def index
-        @vendors = Vendor.where(state_id: @site_visitor_state.id).
-                    order("RANDOM()").paginate(page: params[:page], per_page: 16)
+        if @site_visitor_state.product_state?
+            if marshal_load($redis.get("#{@site_visitor_state.name.downcase}_vendors")).blank?
+                @vendors = Vendor.where(state_id: @site_visitor_state.id).order("RANDOM()")
+                $redis.set("#{@site_visitor_state.name.downcase}_vendors", Marshal.dump(@vendors))
+            else
+                @vendors = Marshal.load($redis.get("#{@site_visitor_state.name.downcase}_vendors"))    
+            end
+            @vendors = @vendors.paginate(page: params[:page], per_page: 16)
+        else
+            @vendors = Vendor.order("RANDOM()").paginate(page: params[:page], per_page: 16)
+        end
     end
     
     def refine_index
@@ -22,55 +31,16 @@ class VendorsController < ApplicationController
     end
     
     #-------------------------------------------
-    def new
-      @vendor = Vendor.new
-    end
-    def create
-        @vendor = Vendor.new(vendor_params)
-        if @vendor.save
-            flash[:success] = 'Vendor was successfully created'
-            redirect_to vendor_admin_path
-        else 
-            render 'new'
-        end
-    end
-    
-    #-------------------------------------------
-    
+
     def show
-        @vendor_products = @vendor.products.featured.includes(:average_prices, :vendors, :category).
-                                    paginate(page: params[:page], per_page: 8)
-    end
-
-    #-------------------------------------------
-    
-    def edit
-    end   
-    def update
-        if @vendor.update(vendor_params)
-            flash[:success] = 'Vendor was successfully updated'
-            redirect_to vendor_admin_path
-        else 
-            render 'edit'
+        if marshal_load($redis.get("#{@vendor.name.downcase}_products")).blank?
+            @vendor_products = @vendor.products.featured.includes(:average_prices, :vendors, :category)
+            $redis.set("#{@vendor.name.downcase}_products", Marshal.dump(@vendor_products))           
+        else
+            @vendor_products = Marshal.load($redis.get("#{@vendor.name.downcase}_products"))
         end
-    end 
-    
-    #-------------------------------------------
-   
-    def destroy
-        @vendor.destroy
-        flash[:success] = 'Vendor was successfully deleted'
-        redirect_to vendor_admin_path
+        @vendor_products = @vendor_products.paginate(:page => params[:page], :per_page => 8)
     end
-   
-    def destroy_multiple
-        Vendor.destroy(params[:vendors])
-        flash[:success] = 'Vendors were successfully deleted'
-        redirect_to vendor_admin_path        
-    end
-    
-    #-------------------------------------------
-
   
     private
     
@@ -80,14 +50,25 @@ class VendorsController < ApplicationController
                 redirect_to root_path
             end
         end
-        
+
         def set_vendor
-          @vendor = Vendor.friendly.find(params[:id])
+            if marshal_load($redis.get("vendor_#{params[:id]}")).blank?
+                @vendor = Vendor.friendly.find(params[:id])
+                set_into_redis
+            else
+                get_from_redis
+            end
+            if @vendor.blank?
+                redirect_to root_path 
+            end
         end
         
-        def vendor_params
-          params.require(:vendor).permit(:name, :description, :image, :remote_image_url, :state_id, 
-                        :tier, :vendor_type, :address, :total_sales, :license_number, :ubi_number, 
-                        :dba, :month_inc, :year_inc, :month_inc_num, :longitude, :latitude, product_ids:[])
-        end  
+        def set_into_redis
+            $redis.set("vendor_#{params[:id]}", marshal_dump(@vendor))
+        end
+
+        def get_from_redis
+            @vendor = marshal_load($redis.get("vendor_#{params[:id]}")) 
+        end
+        
 end

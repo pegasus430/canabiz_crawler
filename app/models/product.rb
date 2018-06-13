@@ -47,13 +47,21 @@ class Product < ActiveRecord::Base
     
     #stock image
     def default_image
-        
-        if Rails.env.production?
-            if self.category.name = 'Flower'
-                return_image = 'substitutes/product-flower.png'
+        if Rails.env.production? && self.category.present?
+            if self.category.name == 'Flower'
+                return_image = 'substitutes/default_flower.jpg'
+            
+            elsif self.category.name == 'Concentrates'
+                return_image = 'substitutes/default_concentrate.jpeg'
+            
+            elsif self.category.name == 'Edibles'
+                return_image = 'substitutes/default_edible.jpg'
+                
+            elsif self.category.name == 'Pre-Rolls'
+                return_image = 'substitutes/default_preroll.jpg'
+            
             else
-                #need to get default images for other categories
-                return_image = 'home_top_product.jpg'
+                return_image = 'substitutes/default_flower.jpg'    
             end
         else
             return_image = 'home_top_product.jpg'
@@ -67,6 +75,14 @@ class Product < ActiveRecord::Base
        self.dispensary_source_products.destroy_all
        self.average_prices.destroy_all
        self.vendor_products.destroy_all
+    end
+    
+    #set redis key after save
+    after_save :set_redis_key
+    def set_redis_key
+        if self.slug.present?
+            $redis.set("product_#{self.slug}", Marshal.dump(self))   
+        end
     end
     
     #----------ECOMMERCE STUFF-----------

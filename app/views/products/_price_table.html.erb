@@ -14,7 +14,13 @@
         <% end %>
     </div>
     
-    <div class="title">Pricing</div>
+    <div class="title">
+        <% if @average_price.present? %>
+            Pricing at or below the Average Price of $<%=@average_price.average_price %> per <%= @average_price.average_price_unit %>
+        <% else %>
+            Pricing
+        <% end %>
+    </div>
     <!-- table -->
     <table id="product-price-table" class="display" style="width: 100% !important;">
         <thead>

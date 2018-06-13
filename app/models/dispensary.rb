@@ -30,4 +30,12 @@ class Dispensary < ActiveRecord::Base
         self.dispensary_sources.destroy_all
     end
     
+    #set redis key after save
+    after_save :set_redis_key
+    def set_redis_key
+        if self.slug.present?
+            $redis.set("dispensary_#{self.slug}", Marshal.dump(self))   
+        end
+    end
+    
 end #end dispensary class

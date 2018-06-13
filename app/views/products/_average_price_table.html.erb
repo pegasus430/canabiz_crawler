@@ -18,7 +18,7 @@
 				<% @product.average_prices.each_with_index do |average_price, index| %>
 					
                     <% if index == 0 %>
-    					<td><span itemprop="price">$<%=average_price.average_price%></span></td>
+    					<td class="highlight"><span itemprop="price">$<%=average_price.average_price%></span></td>
     				<% else %>
     					<td>$<%=average_price.average_price%></td>
     				<% end %>
@@ -26,3 +26,9 @@
 			</tr>
     </table>
 </div>
+
+<style>
+    .highlight {
+        background-color: green;
+    }
+</style>

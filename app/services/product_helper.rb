@@ -33,9 +33,9 @@ class ProductHelper
 	# 	[@product_to_distance, @product_to_closest_disp]
 	# end
 	
-	def buildProductDisplay()
-		
-        #similar products - include is_dom and sub_category as well
+	def buildSimilarProducts()
+	    
+	    #similar products - include is_dom and sub_category as well
         if @product.category.present?
 
             @similar_products = @product.category.products.featured.where.not(id: @product.id)
@@ -55,6 +55,12 @@ class ProductHelper
             @similar_products = Product.featured.order("Random()").limit(4)  
         end
         
+        #return
+        [@similar_products]
+        
+	end
+	
+	def buildProductDisplay()
         
         #populate page maps - IF THEY HAVE A SELF ONE THEN AUTOMATICALLY USE THAT, IF NOT USE ANOTHER
         dispensary_sources = @product.dispensary_sources.where(state_id: @state.id).
@@ -87,6 +93,6 @@ class ProductHelper
         end
         
         #return
-        [@similar_products, @dispensary_to_product, @table_header_options]
+        [@dispensary_to_product, @table_header_options]
 	end
 end
