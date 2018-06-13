@@ -33,4 +33,13 @@ class Article < ActiveRecord::Base
        self.article_categories.destroy_all 
        self.article_states.destroy_all
     end
+    
+    #set redis key after save
+    after_save :set_redis_key
+    def set_redis_key
+        if self.slug.present?
+            $redis.set("article_#{self.slug}", Marshal.dump(self))   
+        end
+    end
+    
 end

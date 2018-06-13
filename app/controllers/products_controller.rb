@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController  
     before_action :set_product, only: [:edit, :update, :destroy, :show, :change_state]
     before_action :require_admin, only: [:admin, :edit, :update, :delete]
+    
     def index
         
         if params[:format].present?
@@ -16,31 +17,46 @@ class ProductsController < ApplicationController
             end
         end
         
-        @products = Product.featured.left_join(:dispensary_source_products).group(:id).
-                    order('COUNT(dispensary_source_products.id) DESC').
+        if @site_visitor_state.present? && @site_visitor_state.product_state
+            @products = @site_visitor_state.products.featured.order('RANDOM()').
                     includes(:vendors, :category, :average_prices)
-
+        else 
+            @products = Product.featured.left_join(:dispensary_source_products).group(:id).
+                    order('COUNT(dispensary_source_products.id) DESC').
+                    includes(:vendors, :category, :average_prices)    
+        end
+        
         if @searched_category.present?
             
             @products = @products.where(category_id: @searched_category.id)
-            @search_string = "#{@searched_category.name} in #{@site_visitor_state.name}"
+            @search_string = @searched_category.name
         
         elsif @searched_sub_category.present? 
         
             @products = @products.where(sub_category: @searched_sub_category).where(is_dom: nil)
-            @search_string = "#{@searched_sub_category} in #{@site_visitor_state.name}"
+            @search_string = @searched_sub_category
         
         elsif @searched_is_dom.present?    
         
             @products = @products.where(is_dom: @searched_is_dom)
-            @search_string = "Hybrid-#{@searched_is_dom} in #{@site_visitor_state.name}"
+            @search_string = "Hybrid-#{@searched_is_dom}"
+        end
         
-        else
-            @search_string = @site_visitor_state.name
+        #search string
+        if @search_string.present? && @site_visitor_state.product_state
+            @search_string = "#{@search_string} in #{@site_visitor_state.name}"  
+        
+        elsif @search_string.present? && !@site_visitor_state.product_state
+            
+            state_string = ''
+            @states_with_products.each do |state|
+                state_string = state_string + state.name + ', ' 
+            end
+            state_string.chomp(', ')
+            @search_string = "#{@search_string} in #{state_string}"
         end
 
-        @products = @products. #order("dsp_count DESC").
-                        paginate(page: params[:page], per_page: 16)
+        @products = @products.paginate(page: params[:page], per_page: 16)
 
     end
     
@@ -61,6 +77,9 @@ class ProductsController < ApplicationController
     #------------------------------------
     
     def show
+        
+        puts 'here are the params:'
+        puts params
         #only show featured product
         if @product.featured_product == false
             redirect_to root_path 

@@ -7,12 +7,12 @@
                     <div class="header-top-left">
                         <nav class="header-top-menu zm-secondary-menu">
                             <ul>
-                                <!--if state use the state logo-->
+                                <!--desktop logo-->
                                 <% if @state.present? && @state.logo.present? %>
                                     <a href="<%=root_path%>">
                                         <img style ="margin-top: -10px" src="<%=asset_path(@state.logo)%>">
                                     </a>
-                                <% elsif (@product.present? || @products.present? || @dispensary.present? || @vendor.present? || current_page?(root_path)) && @site_visitor_state.present? %>
+                                <% elsif @site_visitor_state.present? %>
                                     <a href="<%=root_path%>">
                                         <img style ="margin-top: -10px" src="<%=asset_path(@site_visitor_state.logo)%>">
                                     </a>    
@@ -48,6 +48,7 @@
             </div>
         </div>
     </div>
+    
     <div class="header-middle-area">
         <div class="container">
             <div class="row">
@@ -57,8 +58,10 @@
                             <div class="global-cell">
                                 <div class="logo">
                                     <!--if state use the state logo-->
-                                    <% if @state != nil && @state.logo != nil && @state.logo != '' %>
+                                    <% if @state != nil && @state.logo.present? %>
                                         <%= link_to image_tag(asset_path(@state.logo), alt: "#{@state.name} Cannabiz Logo"), root_path %>
+                                    <% elsif @site_visitor_state != nil && @site_visitor_state.logo.present? %>
+                                        <%= link_to image_tag(asset_path(@site_visitor_state.logo), alt: "#{@site_visitor_state.name} Cannabiz Logo"), root_path %>
                                     <% else %>
                                 	    <%= link_to image_tag("header_footer/cbz-logo-color.svg", alt: "Cannabiz Network Logo"), root_path %>
                                     <% end %>
@@ -70,6 +73,7 @@
             </div>
         </div>
     </div>
+    
     <div class="header-bottom-area bg-theme hidden-sm hidden-xs">
         <div class="container">
             <div class="row">
@@ -88,7 +92,12 @@
                                                     <a href="<%= login_path %>">My Page</a>
                                                 <% end %>
                                             </li>
-                                            <li><a href="<%= articles_path %>">News</a></li>
+                                            <% if @site_visitor_state.present? %>
+                                                <li><a href="<%= state_path(@site_visitor_state) %>">News</a></li>
+                                            <% else %>
+                                                <li><a href="<%= articles_path %>">News</a></li>
+                                            <% end %>
+                                            
                                             <li><a href="<%= products_path %>">Products</a></li>
                                             <li><a href="<%= blog_index_path %>">Blog</a></li>
                                             <li class="ipad-remove"><a href="<%= contact_us_path %>">Contact Us</a></li>
@@ -153,7 +162,14 @@
 
 <!--mobile sticky header-->
 <div id = "mobile-sticky-logo">
-    <%= link_to image_tag("header_footer/mean-bar-logo.png"), root_path %>
+    <!--desktop logo-->
+    <% if @state.present? && @state.logo.present? %>
+        <%= link_to image_tag(asset_path(@state.logo)), root_path %>
+    <% elsif @site_visitor_state.present? && @site_visitor_state.logo.present? %>
+        <%= link_to image_tag(asset_path(@site_visitor_state.logo)), root_path %>
+    <% else %>
+	    <%= link_to image_tag("header_footer/mean-bar-logo.png"), root_path %>
+    <% end %>
 </div>
 
 <div id = "mobile-sticky-header">

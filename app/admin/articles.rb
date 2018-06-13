@@ -9,6 +9,15 @@ ActiveAdmin.register Article do
     	@article = Article.friendly.find(params[:id])
     end
     
+	filter :title
+	filter :image
+	filter :body
+	filter :"source_id" , :as => :select, :collection => Source.all.map{|u| [u.name , u.id]}
+	filter :created_at
+	
+	#save queries
+	includes :categories, :source
+    
     #-----CSV ACTIONS ----------#
     
     #import csv
@@ -48,10 +57,6 @@ ActiveAdmin.register Article do
   
 	#-----CSV ACTIONS ----------#
   
-  
-    
-    #save queries
-	includes :categories, :source
 	
 	index do
 		selectable_column
@@ -75,11 +80,6 @@ ActiveAdmin.register Article do
 		actions
 	end
 	
-	filter :title
-	filter :image
-	filter :body
-	filter :"source_id" , :as => :select, :collection => Source.all.map{|u| [u.name , u.id]}
-	filter :created_at
 	form(:html => { :multipart => true }) do |f|
 		f.inputs do
 			f.input :title

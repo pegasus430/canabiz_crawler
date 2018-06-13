@@ -1,8 +1,8 @@
 ActiveAdmin.register DispensarySource do
   
-  menu label: 'Dispensary Info', url: "/admin/dispensary_sources/dispensary_info"
+    menu label: 'Dispensary Info', url: "/admin/dispensary_sources/dispensary_info"
 
-  permit_params :name, :admin_user_id, :state_id, :dispensary_id, :source_id,
+    permit_params :name, :admin_user_id, :state_id, :dispensary_id, :source_id,
           :image, :location, :street, :city, :zip_code, :last_menu_update,
           :facebook, :instagram, :twitter, :website, :email, :phone, :min_age,
           :monday_open_time, :monday_close_time, :tuesday_open_time, :tuesday_close_time,
@@ -11,14 +11,14 @@ ActiveAdmin.register DispensarySource do
           :sunday_open_time, :sunday_close_time
           
   
-  scope :all, default: true, :if => proc{ current_admin_user.admin? }
+    scope :all, default: true, :if => proc{ current_admin_user.admin? }
     scope :has_admin, :if => proc{ current_admin_user.admin? }
     
     filter :name
-    filter :state_id
+    filter :"state_id" , :as => :select, :collection => State.all.map{|u| [u.name , u.id]}
     
     #save queries
-  includes :dispensary, :source, :state, :admin_user
+    includes :dispensary, :source, :state, :admin_user
   
   # #ACTIONS FOR DISPENSARY ADMIN TO ADD / EDIT / REMOVE PRODUCTS FROM STORE
   # member_action :add_to_store, :method => :post do

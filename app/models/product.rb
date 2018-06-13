@@ -34,27 +34,6 @@ class Product < ActiveRecord::Base
     
     #import CSV file
     def self.import_from_csv(products)
-        CSV.parse(products, :headers => true).each_with_index do |row, index|
-            
-            puts 'index: '
-            puts index
-            puts 'row'
-            puts row
-            
-            if index > 0
-                # product  = Product.where("id =?", row['id'].to_s.downcase).first
-                
-                #change to update record if id matches
-                product_hash = row.to_hash
-                product = self.where(id: row['id']).first
-                
-                if product.present? 
-                    #product.first.update_attributes(product_hash)
-                else
-                    #Product.create! product_hash
-                end
-            end
-        end
     end 
     
     #increment the counters for headset whenever an existing product appears
@@ -69,7 +48,7 @@ class Product < ActiveRecord::Base
     #stock image
     def default_image
         
-        if Rails.env.Production?
+        if Rails.env.production?
             if self.category.name = 'Flower'
                 return_image = 'substitutes/product-flower.png'
             else

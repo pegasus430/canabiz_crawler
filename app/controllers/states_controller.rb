@@ -17,13 +17,13 @@ class StatesController < ApplicationController
         @recents = @recents.paginate(:page => params[:page], :per_page => 24)
         
         #state products
-        if @state.product_state
-            #get products available at dispensaries in state
-            @products = Product.featured.includes(:dispensary_sources, :vendors, :category, :average_prices).
-                                    where(:dispensary_sources => {state_id: @state.id}).
-                                    paginate(:page => params[:page], :per_page => 16)
-            @search_string = @state.name
-        else
+        # if @state.product_state
+        #     #get products available at dispensaries in state
+        #     @products = Product.featured.includes(:dispensary_sources, :vendors, :category, :average_prices).
+        #                             where(:dispensary_sources => {state_id: @state.id}).
+        #                             paginate(:page => params[:page], :per_page => 16)
+        #     @search_string = @state.name
+        # else
             
             if marshal_load($redis.get("#{@state.name.downcase}_mostview_articles")).blank?
                 @mostviews = @state.articles.active_source.includes(:source, :categories, :states).
@@ -35,7 +35,7 @@ class StatesController < ApplicationController
             
             @mostviews = @mostviews.paginate(:page => params[:page], :per_page => 24)
             
-        end
+        # end
     end
     
     #refine the products on the state index

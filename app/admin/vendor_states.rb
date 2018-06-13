@@ -7,14 +7,18 @@ ActiveAdmin.register VendorState do
 	#save queries
 	includes :vendor, :state
 	
+	#filters
+    filter :"state_id" , :as => :select, :collection => State.all.map{|u| [u.name , u.id]}
+    filter :"vendor_id" , :as => :select, :collection => Vendor.all.map{|u| [u.name , u.id]}
+	
 	index do
 		selectable_column
-		column "Vendor" do |vp|
+		column "Vendor", :sortable=>:"vendors.name" do |vp|
 			if vp.vendor.present?
 				link_to vp.vendor.name, admin_product_path(vp.vendor)
 			end
 		end
-		column "State" do |vp|
+		column "State", :sortable=>:"states.name" do |vp|
 			if vp.state.present?
 				link_to vp.state.name, admin_vendor_path(vp.state)
 			end

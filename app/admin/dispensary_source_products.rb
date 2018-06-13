@@ -8,22 +8,26 @@ ActiveAdmin.register DispensarySourceProduct, as: "Dispensary Products" do
     #scopes
 	scope :all, default: true
 	scope :for_featured
+	
+	#filters
+    filter :"dispensary_source_id" , :as => :select, :collection => DispensarySource.all.map{|u| [u.name , u.id]}
+    filter :"product_id" , :as => :select, :collection => Product.all.map{|u| [u.name , u.id]}
     
     index do
         if current_admin_user.admin?
             selectable_column
             column :id
-            column "Dispensary Source" do |dsp|
+            column "Dispensary Source", :sortable=>:"dispensary_sources.name" do |dsp|
                 if dsp.dispensary_source.present? && dsp.dispensary_source.source.present?
                     link_to "#{dsp.dispensary_source.name} - #{dsp.dispensary_source.source.name}", admin_dispensary_source_path(dsp.dispensary_source)
                 end
             end
-            column "Product" do |dsp|
+            column "Product", :sortable=>:"products.name" do |dsp|
                 if dsp.product.present?
                     link_to dsp.product.name , admin_product_path(dsp.product)
                 end
             end
-            column "Product Category" do |dsp|
+            column "Product Category", :sortable=>:"products.categories.name" do |dsp|
                 if dsp.product.present? && dsp.product.category.present? 
                     link_to dsp.product.category.name , admin_category_path(dsp.product.category)
                 end

@@ -9,6 +9,11 @@ ActiveAdmin.register AveragePrice do
 	#save queries
 	includes :product
 	
+	#filters
+	filter :"product_id" , :as => :select, :collection => Product.all.map{|u| [u.name , u.id]}
+	filter :average_price
+	filter :average_price_unit
+	
 	#import csv
 	action_item only: :index do
 		if current_admin_user.admin?
@@ -19,6 +24,11 @@ ActiveAdmin.register AveragePrice do
 	#export csv
 	csv do
 		column :product_id
+		column "Product" do |ap|
+			if ap.product.present?
+				ap.product.name
+			end
+		end
 		column :average_price
 		column :average_price_unit
 		column :units_sold
@@ -27,7 +37,7 @@ ActiveAdmin.register AveragePrice do
 	
 	index do
 		selectable_column
-		column "Product" do |ap|
+		column "Product", :sortable=>:"products.name" do |ap|
 			if ap.product.present?
 				link_to ap.product.name, admin_product_path(ap.product)
 			end

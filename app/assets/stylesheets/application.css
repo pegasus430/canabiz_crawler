@@ -19050,7 +19050,10 @@ ul.tabs li.current{background:#ffffff;border:1px solid #e6e6e6;color:#8A2A88;}
 @media screen and (max-width: 991px) {
 	.fix-logo, .fix-search {display: block !important;}
 	.ind-product, #product-search-results .ind-product {height: auto;}
-	.plus-minus{display:inherit;}
+	/*hide options*/
+	.desktop-options {display: none;}
+	
+	/*.plus-minus{display:inherit;}*/
 	.header-middle-area{display:block;}
 	.hidden-991{display:none !important;}
 	.header-top-right{line-height:normal;}

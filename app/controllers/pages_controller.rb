@@ -26,7 +26,7 @@ class PagesController < ApplicationController
         end
 
         #PRODUCTS
-        if @site_visitor_state != nil && @site_visitor_state.product_state
+        #if @site_visitor_state.present? && @site_visitor_state.product_state
             
             if Rails.env.production? 
                 @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").
@@ -36,11 +36,11 @@ class PagesController < ApplicationController
                 @top_products = Product.featured.includes(:vendors, :category, :average_prices).
                                     order("RANDOM()").limit(10)
             end
-        else 
-            @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").
-                                    includes(:vendors, :category, :average_prices).
-                                    order("RANDOM()").limit(10)
-        end
+        # else 
+        #     @top_products = Product.featured.joins(:dispensary_source_products).group("products.id").having("count(dispensary_source_products.id)>4").
+        #                             includes(:vendors, :category, :average_prices).
+        #                             order("RANDOM()").limit(10)
+        # end
         
         
     end 

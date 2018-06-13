@@ -23,8 +23,8 @@ ActiveAdmin.register Product do
 	#filters
 	filter :name
     filter :featured_product
-    filter :state_id
-    filter :category_id
+    filter :"state_id" , :as => :select, :collection => State.all.map{|u| [u.name , u.id]}
+    filter :"category_id" , :as => :select, :collection => Category.all.map{|u| [u.name , u.id]}
     filter :sub_category
 	
 	#-----CSV ACTIONS ----------#
@@ -93,22 +93,22 @@ ActiveAdmin.register Product do
 		id_column
 		column :name
 		column :alternate_names
-		column "Description" do |product|
+		column "Description", :sortable=>:"products.description" do |product|
           truncate(product.description, omision: "...", length: 50)
         end
-		column "Image" do |product|
+		column "Image", :sortable=>:"products.image" do |product|
 			if product.image.present?
 				image_tag product.image_url, class: 'admin_image_size'
 			end
 		end
 		column :featured_product
-		column "Category" do |product|
+		column "Category", :sortable=>:"categories.name" do |product|
 			if product.category.present?
 				link_to product.category.name, admin_category_path(product.category)
 			end
 		end
 		column :sub_category
-		column "Vendor (1 to many)" do |product|
+		column "Vendor (1 to many)", :sortable=>:"vendors.name" do |product|
 			if product.vendor.present?
 				link_to product.vendor.name, admin_vendor_path(product.vendor)
 			end
@@ -121,7 +121,7 @@ ActiveAdmin.register Product do
 				end.join(', ').html_safe
 			end
 		end
-        column "DispensaryProduct" do |product|
+        column "DispensaryProducts" do |product|
             dsps = product.dispensary_source_products
             unless dsps.blank?
                 dsps.each.map do |dsp|

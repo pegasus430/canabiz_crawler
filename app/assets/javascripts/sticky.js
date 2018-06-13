@@ -15,7 +15,7 @@ $(window).scroll(function() {
 
         var heightToAppear = 52;
         if (productPage.length) {
-            heightToAppear = -400;
+            // heightToAppear = -400;
         }
         else if (dispensaryPage.length) {
             var elementOffset = $('.dispensary-product-categories').offset().top;

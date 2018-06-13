@@ -4,6 +4,13 @@
             <div class="row">
                 <!-- Start left side -->
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 columns">
+                    <% if @site_visitor_state.present? && !@site_visitor_state.product_state %>
+                        
+                        <div class="row mb-20">
+                            <h3>We don't have official product data for <%= @site_visitor_state.name %> yet. Hopefully it is coming soon.</h3>
+                        </div>
+                    
+                    <% end %>
                     <div class="row mb-40">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="section-title">

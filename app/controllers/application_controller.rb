@@ -37,21 +37,20 @@ class ApplicationController < ActionController::Base
   
     def site_visitor_location
         begin
-            default_visitor_location
-            if session[:state_id] != nil
+            if session[:state_id] == '5723'
                 @site_visitor_state = State.where(id: session[:state_id]).first
             elsif request.location && request.location.state
                 @site_visitor_state = State.where(name: request.location.state).first
             
-                if @site_visitor_state.product_state
-                    @site_visitor_city = request.location.city
-                    @site_visitor_zip = request.location.zip_code
-                    @site_visitor_ip = request.location.ip
-                    session[:state_id] = @site_visitor_state.id
-                    session[:product_state] = true
-                else
-                    default_visitor_location    
-                end
+                # if @site_visitor_state.product_state
+                #     @site_visitor_city = request.location.city
+                #     @site_visitor_zip = request.location.zip_code
+                #     @site_visitor_ip = request.location.ip
+                #     session[:state_id] = @site_visitor_state.id
+                #     session[:product_state] = true
+                # else
+                #     default_visitor_location    
+                # end
             else
                 default_visitor_location
             end

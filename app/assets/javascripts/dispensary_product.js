@@ -159,33 +159,33 @@ function clearFormValues() {
 }
 
 //collapsible option thing
-$('.plus-minus').click(function(){
-    $(this).text(function(i,old){
-        return old=='(+)' ?  '(-)' : '(+)';
-    });
-});
+// $('.plus-minus').click(function(){
+//     $(this).text(function(i,old){
+//         return old=='(+)' ?  '(-)' : '(+)';
+//     });
+// });
 
 //don't collapse on desktop, collapse on mobile
-$(window).resize(function() {
-	if ($(window).width() < 991) {
-	    $('#option-div').removeClass('in');
-	    $('.plus-minus').text('(+)');
-	} else {
-	    $('#option-div').addClass('in');
-	    $('.plus-minus').text('(-)');
-	}
-});
+// $(window).resize(function() {
+// 	if ($(window).width() < 991) {
+// 	    $('#option-div').removeClass('in');
+// 	    $('.plus-minus').text('(+)');
+// 	} else {
+// 	    $('#option-div').addClass('in');
+// 	    $('.plus-minus').text('(-)');
+// 	}
+// });
 
 //on load collapse on mobile
-$( document ).ready(function() {
-	if ($(window).width() < 991) {
-	    $('#option-div').removeClass('in');
-	    $('.plus-minus').text('(+)');
-	} else {
-	    $('#option-div').addClass('in');
-	    $('.plus-minus').text('(-)');
-	}
-});
+// $( document ).ready(function() {
+// 	if ($(window).width() < 991) {
+// 	    $('#option-div').removeClass('in');
+// 	    $('.plus-minus').text('(+)');
+// 	} else {
+// 	    $('#option-div').addClass('in');
+// 	    $('.plus-minus').text('(-)');
+// 	}
+// });
 
 //toggle product table rows
 // $('.state-name-row').click(function(){
