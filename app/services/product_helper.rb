@@ -34,7 +34,6 @@ class ProductHelper
 	# end
 	
 	def buildSimilarProducts()
-	    
 	    #similar products - include is_dom and sub_category as well
         if @product.category.present?
 
@@ -43,10 +42,21 @@ class ProductHelper
             if @product.is_dom.present?
             
                 @similar_products = @similar_products.where(is_dom: @product.is_dom).order("Random()").limit(4)
+                similar_products_count = @similar_products.count
+                if similar_products_count < 4
+                    sub_category_products =  @similar_products.where(sub_category: @product.sub_category).order("Random()").limit(4 - similar_products_count)
+                    sub_category_products.each do |sub_cat_prod|
+                       @similar_products << sub_cat_prod
+                    end
+                elsif similar_products_count < 4 && @similar_products.size < 4
+                    category_products = @similar_products.where(sub_category: @product.sub_category).order("Random()").limit(4 - @similar_products.size )
+                    category_products.each do |category_product|
+                        @similar_products << category_product
+                    end
+                end    
                 
             elsif @product.sub_category.present?
-            
-                @similar_products = @similar_products.where(sub_category: @product.sub_category).order("Random()").limit(4)
+                @similar_products = @similar_products.where(sub_category: @product.sub_category.strip).order("Random()").limit(4)
             else
                 @similar_products = @similar_products.order("Random()").limit(4)    
             end
