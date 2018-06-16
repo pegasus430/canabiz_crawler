@@ -4,10 +4,14 @@
     
     <!-- state dropdown -->
     <div style="overflow: visible; float: right;">
-        <%= form_tag change_state_product_path do %>
+        <%= form_tag change_state_product_path do |f| %>
             <div style ="display: inline-block; width: 160px;">
                 <%= render 'shared/dropdown_states' %>    
             </div>
+            <% if @average_price.present? %>
+                <%= hidden_field_tag 'average_price_id', @average_price.id %>
+                 <!--f.hidden_field :average_price_id, :value => @average_price.id %>-->
+            <% end %>
             <div style ="display: inline-block;">
                  <button type="submit" class="button" style="margin-bottom: 0px; margin: 10px 0px;">Change State</button>   
             </div>
@@ -17,6 +21,7 @@
     <div class="title">
         <% if @average_price.present? %>
             Pricing at or below the Average Price of $<%=@average_price.average_price %> per <%= @average_price.average_price_unit %>
+            <%= link_to'Clear Average Price', product_path(@product) %>
         <% else %>
             Pricing
         <% end %>

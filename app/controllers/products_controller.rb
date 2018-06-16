@@ -125,25 +125,27 @@ class ProductsController < ApplicationController
                         end
                     end
                 end
-                
-                
             end
+        else
+            #no average price
+            begin
+                result = ProductHelper.new(@product, @site_visitor_state, nil).buildSimilarProducts
+                @similar_products = result[0]
+            
+                result = ProductHelper.new(@product, @site_visitor_state, nil).buildProductDisplay
+                @dispensary_to_product, @table_header_options = result[0], result[1]    
+            rescue => ex
+                puts 'here is the error: '
+                puts ex
+                redirect_to root_path              
+            end  
         end
-        
-        begin
-            result = ProductHelper.new(@product, @site_visitor_state).buildSimilarProducts
-            @similar_products = result[0]
-        
-            result = ProductHelper.new(@product, @site_visitor_state).buildProductDisplay
-            @dispensary_to_product, @table_header_options = result[0], result[1]    
-        rescue => ex
-            puts 'here is the error: '
-            puts ex
-            redirect_to root_path              
-        end           
     end
     
     def change_state
+        
+        puts 'here are the params'
+        puts params[:average_price_id] 
         
         #only show featured product
         if @product.featured_product == false
@@ -154,15 +156,17 @@ class ProductsController < ApplicationController
             begin 
                 @searched_state = State.where(name: params[:State]).first
                 
-                result = ProductHelper.new(@product, @searched_state).buildSimilarProducts
+                result = ProductHelper.new(@product, @searched_state, nil).buildSimilarProducts
                 @similar_products = result[0]
                 
-                result = ProductHelper.new(@product, @searched_state).buildProductDisplay
+                result = ProductHelper.new(@product, @searched_state, nil).buildProductDisplay
                 @dispensary_to_product, @table_header_options = result[0], result[1]
                         
                 render 'show'
-            rescue
-                redirect_to root_path
+            rescue => ex
+                puts 'error'
+                puts ex
+                # redirect_to root_path
             end
         else
           redirect_to root_path 
