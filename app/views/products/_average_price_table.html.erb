@@ -19,13 +19,23 @@
 					
                     <% if index == 0 %>
     					<td class="highlight"><span itemprop="price">
-    					    <a href="<%=product_path(@product, average_price.id)%>" style="color: #2ab081;">
-                                <%="$#{average_price.average_price}"%></a>
+    					    <% if @searched_state.present? %>
+    					        <a href="<%=product_path(@product, average_price_id: average_price.id, state_id: @searched_state.id)%>" style="color: #2ab081;">
+                                    <%="$#{average_price.average_price}"%></a>
+    					    <% else %>
+    					        <a href="<%=product_path(@product, average_price_id: average_price.id)%>" style="color: #2ab081;">
+                                    <%="$#{average_price.average_price}"%></a>
+    					    <% end %>
     					 </span></td>
     				<% else %>
     					<td>
-    					    <a href="<%=product_path(@product, average_price.id)%>" style="color: #2ab081;">
-                                <%="$#{average_price.average_price}"%></a>
+    					    <% if @searched_state.present? %>
+    					        <a href="<%=product_path(@product, average_price_id: average_price.id, state_id: @searched_state.id)%>" style="color: #2ab081;">
+                                    <%="$#{average_price.average_price}"%></a>
+                            <% else %>
+                                <a href="<%=product_path(@product, average_price_id: average_price.id)%>" style="color: #2ab081;">
+                                    <%="$#{average_price.average_price}"%></a>
+                            <% end %>
     			        </td>
     				<% end %>
     			<% end %>

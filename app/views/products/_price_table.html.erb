@@ -21,7 +21,11 @@
     <div class="title">
         <% if @average_price.present? %>
             Pricing at or below the Average Price of $<%=@average_price.average_price %> per <%= @average_price.average_price_unit %>
-            <%= link_to'Clear Average Price', product_path(@product) %>
+            <% if @searched_state.present? %>
+                <%= link_to 'Clear Average Price', product_path(@product, state_id: @searched_state.id) %>
+            <% else %>
+                <%= link_to 'Clear Average Price', product_path(@product) %>
+            <% end %>
         <% else %>
             Pricing
         <% end %>
@@ -32,7 +36,7 @@
             <tr>
                 <th>Dispensary</th>
                 <th>Location</th>
-                <% if (session[:product_state] || !Rails.env.Production?) &&
+                <% if (session[:product_state] || !Rails.env.production?) &&
                     (@searched_state == nil || @searched_state.id == @site_visitor_state.id) %>
                     <th>Buy</th>
                 <% end %>
@@ -54,7 +58,7 @@
                 <td>
                     <%=dispensary_source.location%>
                 </td>
-                <% if session[:product_state] || !Rails.env.Production? &&
+                <% if session[:product_state] || !Rails.env.production? &&
                     (@searched_state == nil || @searched_state.id == @site_visitor_state.id) %>
                     <td>
                         <% if dispensary_source.admin_user_id.present? && 

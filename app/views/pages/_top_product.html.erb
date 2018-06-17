@@ -102,10 +102,10 @@
                 <p>Average Prices:
                     <% product.average_prices.each_with_index do |average_price, index| %>
                         <% if index + 1 == product.average_prices.size %>
-                            <a href="<%=product_path(product, average_price.id)%>" style="color: #2ab081;">
+                            <a href="<%=product_path(product, average_price_id: average_price.id)%>" style="color: #2ab081;">
                                 <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>
                         <% else %>
-                            <a href="<%=product_path(product, average_price.id)%>" style="color: #2ab081;">
+                            <a href="<%=product_path(product, average_price_id: average_price.id)%>" style="color: #2ab081;">
                                 <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>,&nbsp;
                         <% end %>
                     <% end %>
