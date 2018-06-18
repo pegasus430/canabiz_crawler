@@ -101,7 +101,9 @@ class Product < ActiveRecord::Base
 	
 	after_validation :set_redis_key
 	def set_redis_key
-	   #overwrite the key 
+	   if self.slug.present?
+            $redis.set("product_#{self.slug}", Marshal.dump(self))   
+        end
 	end
     
 end

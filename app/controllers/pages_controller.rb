@@ -5,6 +5,7 @@ class PagesController < ApplicationController
     def home
         
         #test scraper
+        #RedisVendorJob.perform_later()
         #DispLeafly.perform_later('WA', 'A-F')
         
         #dont display nav search

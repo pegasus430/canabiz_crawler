@@ -1,7 +1,7 @@
 class TheCannabistWorker
-  include Sidekiq::Worker
+    include Sidekiq::Worker
 
-  def perform()
+    def perform()
         logger.info "The Cannabist background job is running"
         scrapeCannabist()
     end    
