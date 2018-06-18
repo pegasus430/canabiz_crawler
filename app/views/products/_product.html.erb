@@ -50,30 +50,7 @@
                         <% end %>
                         
                     </div>
-                    <div class="product-info">
-                        <p style="max-height: 53px; overflow: hidden;">Produced By:
-                            <% product.vendors.each_with_index do |vendor, index| %>
-                                <% if index + 1 == product.vendors.size %>
-                                    <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>
-                                <% else %>
-                                    <%= link_to vendor.name, vendor_path(vendor), :class => 'vendor_path'%>,&nbsp;
-                                <% end %>
-                            <% end %>
-                        </p>
-                    </div>
-                    <div class="product-info">
-                        <p>Average Prices:
-                            <% product.average_prices.each_with_index do |average_price, index| %>
-                                <% if index + 1 == product.average_prices.size %>
-                                    <a href="<%=average_price_path(average_price)%>" style="color: #2ab081;">
-                                        <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>
-                                <% else %>
-                                    <a href="<%=average_price_path(average_price)%>" style="color: #2ab081;">
-                                        <%="$#{average_price.average_price.round}/#{average_price.average_price_unit}"%></a>,&nbsp;
-                                <% end %>
-                            <% end %>
-                        </p>
-                    </div>
+                    <%= render partial: 'shared/average_price_vendor', locals: {product: product} %>
                 </div>
             </div>
         </article>

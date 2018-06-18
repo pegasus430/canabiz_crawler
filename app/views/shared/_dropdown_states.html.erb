@@ -2,19 +2,19 @@
     <option value = "">State</option>
     <% @states_with_products.each do |state| %>
         <% if @site_visitor_state != nil && @site_visitor_state.name == state.name && @searched_state == nil %>
-            <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
+            <option value = "<%=state.id%>" selected="selected"><%=state.name%></option>
             <% @set_state = state.name %>
         <% elsif @searched_state != nil && @searched_state.name == state.name%>
-            <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
+            <option value = "<%=state.id%>" selected="selected"><%=state.name%></option>
 			<% @set_state = state.name %>
         <% elsif @state != nil && @state.name == state.name%>
-            <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
+            <option value = "<%=state.id%>" selected="selected"><%=state.name%></option>
             <% @set_state = state.name %>
         <% elsif @state != nil && @state.name == state.name%>
-            <option value = "<%=state.name%>" selected="selected"><%=state.name%></option>
+            <option value = "<%=state.id%>" selected="selected"><%=state.name%></option>
             <% @set_state = state.name %>
         <% else %>
-        	<option value = "<%=state.name%>"><%=state.name%></option>
+        	<option value = "<%=state.id%>"><%=state.name%></option>
         <% end %>
     <% end %>
 </select>
