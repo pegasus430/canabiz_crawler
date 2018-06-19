@@ -37,26 +37,21 @@ class ApplicationController < ActionController::Base
   
     def site_visitor_location
         begin
-            if session[:state_id] == '5723'
+            if session[:state_id].present?
                 @site_visitor_state = State.where(id: session[:state_id]).first
             elsif request.location && request.location.state.present?
                 @site_visitor_state = State.where(name: request.location.state).first
-            
-                # if @site_visitor_state.product_state
-                #     @site_visitor_city = request.location.city
-                #     @site_visitor_zip = request.location.zip_code
-                #     @site_visitor_ip = request.location.ip
-                #     session[:state_id] = @site_visitor_state.id
-                #     session[:product_state] = true
-                # else
-                #     default_visitor_location    
-                # end
+                session[:state_id] = @site_visitor_state.id
             else
                 default_visitor_location
+            end
+            if @site_visitor_state.blank?
+                default_visitor_location    
             end
         rescue => ex
             default_visitor_location
         end
+        puts @site_visitor_state.name
     end
     
     def default_visitor_location
@@ -64,8 +59,6 @@ class ApplicationController < ActionController::Base
         @site_visitor_city = 'Seattle'
         @site_visitor_zip = '98101'
         @site_visitor_ip = '75.172.101.74'
-        session[:state_id] = @site_visitor_state.id
-        session[:product_state] = false
     end
   
     def populate_lists

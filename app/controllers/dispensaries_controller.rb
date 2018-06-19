@@ -4,14 +4,17 @@ class DispensariesController < ApplicationController
     
     def index
         
-        if @site_visitor_state != nil
-            @dispensaries = Dispensary.where(state: @site_visitor_state).
-                                order("name ASC").paginate(page: params[:page], per_page: 16)
-            @search_string = @site_visitor_state.name
+        if @site_visitor_state.product_state?
+            if marshal_load($redis.get("#{@site_visitor_state.name.downcase}_dispensaries")).blank?
+                @dispensaries = Dispensary.where(state_id: @site_visitor_state.id).order("RANDOM()")
+                $redis.set("#{@site_visitor_state.name.downcase}_dispensaries", Marshal.dump(@dispensaries))
+            else
+                @dispensaries = Marshal.load($redis.get("#{@site_visitor_state.name.downcase}_dispensaries"))    
+            end
+            @dispensaries = @dispensaries.paginate(page: params[:page], per_page: 16)
         else
-            @dispensaries = Dispensary.order("name ASC").paginate(page: params[:page], per_page: 16)
+            @dispensaries = Dispensary.order("RANDOM()").paginate(page: params[:page], per_page: 16)
         end
-        
     end
     
     def refine_index
@@ -35,22 +38,33 @@ class DispensariesController < ApplicationController
         
         require 'uri' #google map / facebook
         
-        @dispensary_source = @dispensary.dispensary_sources.order('last_menu_update DESC').first
-        @dispensary_source_products = @dispensary_source.dispensary_source_products.
-                    includes(:dsp_prices, product: [:category, :vendors, :vendor])
+        if marshal_load($redis.get("#{@dispensary.name.downcase}_dispensary_source")).blank?
+            @dispensary_source = @dispensary.dispensary_sources.order('last_menu_update DESC').first
+            $redis.set("#{@dispensary.name.downcase}_dispensary_source", Marshal.dump(@dispensary_source))
+        else
+            @dispensary_source = Marshal.load($redis.get("#{@dispensary.name.downcase}_dispensary_source"))    
+        end
         
-        @category_to_products = Hash.new
-        
-        @dispensary_source_products.each do |dsp|
+        if marshal_load($redis.get("#{@dispensary.name.downcase}_category_to_products")).blank?
             
-            if dsp.product.present? && dsp.product.featured_product && dsp.product.category.present?
-                if @category_to_products.has_key?(dsp.product.category.name)
-                    @category_to_products[dsp.product.category.name].push(dsp)
-                else
-                    @category_to_products.store(dsp.product.category.name, [dsp])
+            @dispensary_source_products = @dispensary_source.dispensary_source_products.
+                        includes(:dsp_prices, product: [:category, :vendors, :vendor])
+            
+            @category_to_products = Hash.new
+            
+            @dispensary_source_products.each do |dsp|
+                
+                if dsp.product.present? && dsp.product.featured_product && dsp.product.category.present?
+                    if @category_to_products.has_key?(dsp.product.category.name)
+                        @category_to_products[dsp.product.category.name].push(dsp)
+                    else
+                        @category_to_products.store(dsp.product.category.name, [dsp])
+                    end
                 end
             end
-            
+            $redis.set("#{@dispensary.name.downcase}_category_to_products", Marshal.dump(@category_to_products))           
+        else
+            @category_to_products = Marshal.load($redis.get("#{@dispensary.name.downcase}_category_to_products"))
         end
         
     end
