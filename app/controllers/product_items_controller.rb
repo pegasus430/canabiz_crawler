@@ -46,7 +46,7 @@ class ProductItemsController < ApplicationController
 			@product_item.dispensary_source_id, @product_item.dsp_price_id, @product_item.quantity)
 		if @product_item.save
 			logger.info 'i am in here'
-			#redirect_to product_path(@product_item.product), notice: 'Product added to Cart'
+			redirect_to product_path(@product_item.product), notice: 'Product added to Cart'
 			@product = @product_item.product
 			flash[:success] = 'Product added to Cart!'
 			render 'products/show' do |page|
@@ -58,7 +58,7 @@ class ProductItemsController < ApplicationController
 			render 'products/show' do |page|
 				page << 'window.location.reload()'
 			end
-			#redirect_to product_path(@product_item.product), notice: 'Could Not Add Item To Cart'
+			redirect_to product_path(@product_item.product), notice: 'Could Not Add Item To Cart'
 		end
 	end
 	

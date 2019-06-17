@@ -30,10 +30,10 @@ class OrdersController < ApplicationController
 				session[:cart_id] = nil
 				CustomerOrder.email(@order).deliver #send email to customer
 				redirect_to root_path, notice: 'Thank You for Your Order!'
-			else 
-				flash[:error] = 'There was an error with payment'
-				redirect_to root_path, alert: @result.message
-				@order.destroy
+			# else 
+			# 	flash[:error] = 'There was an error with payment'
+			# 	redirect_to root_path, alert: @result.message
+			# 	@order.destroy
 			end
 		else
 		  render :new
