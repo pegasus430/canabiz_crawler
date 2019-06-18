@@ -16,12 +16,12 @@ class LeaflyDetailsExtractor(object):
 
         dataPattern = r"__Next_data__\s*=\s*(.*)\s*module={}"
         searchResult = re.search(dataPattern, response.content, re.IGNORECASE)
-        if searchResult:
-            json_data = loadJson(searchResult.group(1))
-            menuItemsLst = try_get_list(json_data, 'props', 'menu', 'categorized')
-            if len(menuItemsLst) > 0:
-                for k,v in menuItemsLst[0].items():
-                    categorized_menu[k] = map(self._get_menu_item_info, v)
+        # if searchResult:
+        #     json_data = loadJson(searchResult.group(1))
+        #     menuItemsLst = try_get_list(json_data, 'props', 'menu', 'categorized')
+        #     if len(menuItemsLst) > 0:
+        #         for k,v in menuItemsLst[0].items():
+        #             categorized_menu[k] = map(self._get_menu_item_info, v)
         return categorized_menu
 
 

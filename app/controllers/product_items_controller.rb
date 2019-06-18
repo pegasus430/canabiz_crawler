@@ -42,24 +42,24 @@ class ProductItemsController < ApplicationController
 		#have to see if item is already in cart and if so add to it
 		#that cart build method used to do this
 		
-		@product_item = @cart.add_product(@product_item.product_id, 
-			@product_item.dispensary_source_id, @product_item.dsp_price_id, @product_item.quantity)
-		if @product_item.save
-			logger.info 'i am in here'
-			redirect_to product_path(@product_item.product), notice: 'Product added to Cart'
-			@product = @product_item.product
-			flash[:success] = 'Product added to Cart!'
-			render 'products/show' do |page|
-				page << 'window.location.reload()'
-			end
-		else
-			@product = @product_item.product
-			flash[:danger] = 'Could not add Product to Cart'
-			render 'products/show' do |page|
-				page << 'window.location.reload()'
-			end
-			redirect_to product_path(@product_item.product), notice: 'Could Not Add Item To Cart'
-		end
+		# @product_item = @cart.add_product(@product_item.product_id, 
+		# 	@product_item.dispensary_source_id, @product_item.dsp_price_id, @product_item.quantity)
+		# if @product_item.save
+		# 	logger.info 'i am in here'
+		# 	redirect_to product_path(@product_item.product), notice: 'Product added to Cart'
+		# 	@product = @product_item.product
+		# 	flash[:success] = 'Product added to Cart!'
+		# 	render 'products/show' do |page|
+		# 		page << 'window.location.reload()'
+		# 	end
+		# else
+		# 	@product = @product_item.product
+		# 	flash[:danger] = 'Could not add Product to Cart'
+		# 	render 'products/show' do |page|
+		# 		page << 'window.location.reload()'
+		# 	end
+		# 	redirect_to product_path(@product_item.product), notice: 'Could Not Add Item To Cart'
+		# end
 	end
 	
 	def edit

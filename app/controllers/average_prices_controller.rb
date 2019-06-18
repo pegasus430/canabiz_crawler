@@ -15,12 +15,12 @@ class AveragePricesController < ApplicationController
         dispensary_source_ids = @dispensary_source_products.pluck(:dispensary_source_id)
         @dispensary_sources = DispensarySource.where(id: dispensary_source_ids).order('last_menu_update DESC')
         
-        #need a map of dispensary to dispensary source product
+        # need a map of dispensary to dispensary source product
         @dispensary_to_product = Hash.new
         
         @dispensary_sources.each do |dispSource|
             
-            #dispensary products
+            # dispensary products
             if !@dispensary_to_product.has_key?(dispSource.id)
                
                 if @dispensary_source_products.where(dispensary_source_id: dispSource.id).any?

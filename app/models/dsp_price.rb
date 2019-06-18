@@ -17,17 +17,17 @@ class DspPrice < ActiveRecord::Base
     #set the display order
     before_validation :set_display_order
     
-    UNIT_PRICES_OPTIONS = [:"Each", :"Half Gram", :"Gram", :"Bulk", :"2 Grams", :"Eighth", :"4 Grams", 
-    :"Quarter Ounce", :"Half Ounce", :"Ounce", :"10mg", :"20mg", :"30mg", :"32mg", :"50mg", :"75mg", :"80mg", 
-    :"85mg", :"90mg", :"100mg", :"125mg", :"130mg", :"0.25g", :"300mg", :".38g", :"400mg", :"500mg", :".7g", 
-    :"750mg", :".75g", :".8g", :"1000mg", :"1050mg", :"1.5g", :"1.8g", :"2.5g", :"1oz, 100mg", :"2oz", 
-    :"10mg CBD, 10mg THC", :"20mg CBD ,20mg THC", :"40mg CBD, 100mg THC", :"50mg CBD", :"50mg CBD, 50mg THC", 
-    :"90mg CBD, 90mg THC", :"100 mg CBD, 2mg THC", :"100mg CBD, 2mg THC", :"100mg CBD, 20mg THC", 
-    :"100mg CBD, 100mg THC", :"120mg CBD, 24mg THC", :"146mg CBD, 4mg THC", :"150mg CBD, 10mg THC", 
-    :"175mg CBD", :"182mg CBD, 18mg THC", :"210mg CBD", :"250mg CBD, 50mg THC", :"50mg THC", 
-    :"50mg THC, 50mg CBD", :"74.3mg THC, 1oz", :"100mg THC, 33mg CBD", :"100mg THC; 100mg CBD", 
-    :"300mg THC, 300mg CBD", :"100mg total; 60mg THC, 20mg CBD", :"2 pack, 0.75g each", 
-    :"10 Pack, 165mg CBD, 35mg THC", :"15 pack, 75mg THC, 45mg CBD", :"5ml, 75mg"]
+    # UNIT_PRICES_OPTIONS = [:"Each", :"Half Gram", :"Gram", :"Bulk", :"2 Grams", :"Eighth", :"4 Grams", 
+    # :"Quarter Ounce", :"Half Ounce", :"Ounce", :"10mg", :"20mg", :"30mg", :"32mg", :"50mg", :"75mg", :"80mg", 
+    # :"85mg", :"90mg", :"100mg", :"125mg", :"130mg", :"0.25g", :"300mg", :".38g", :"400mg", :"500mg", :".7g", 
+    # :"750mg", :".75g", :".8g", :"1000mg", :"1050mg", :"1.5g", :"1.8g", :"2.5g", :"1oz, 100mg", :"2oz", 
+    # :"10mg CBD, 10mg THC", :"20mg CBD ,20mg THC", :"40mg CBD, 100mg THC", :"50mg CBD", :"50mg CBD, 50mg THC", 
+    # :"90mg CBD, 90mg THC", :"100 mg CBD, 2mg THC", :"100mg CBD, 2mg THC", :"100mg CBD, 20mg THC", 
+    # :"100mg CBD, 100mg THC", :"120mg CBD, 24mg THC", :"146mg CBD, 4mg THC", :"150mg CBD, 10mg THC", 
+    # :"175mg CBD", :"182mg CBD, 18mg THC", :"210mg CBD", :"250mg CBD, 50mg THC", :"50mg THC", 
+    # :"50mg THC, 50mg CBD", :"74.3mg THC, 1oz", :"100mg THC, 33mg CBD", :"100mg THC; 100mg CBD", 
+    # :"300mg THC, 300mg CBD", :"100mg total; 60mg THC, 20mg CBD", :"2 pack, 0.75g each", 
+    # :"10 Pack, 165mg CBD, 35mg THC", :"15 pack, 75mg THC, 45mg CBD", :"5ml, 75mg"]
     
     enum unit: UNIT_PRICES_OPTIONS
     

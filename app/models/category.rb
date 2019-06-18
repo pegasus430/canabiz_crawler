@@ -24,8 +24,8 @@ class Category < ActiveRecord::Base
     
     #delete related article_categories and user_categories on delete
     before_destroy :delete_relations
-    def delete_relations
-       self.article_categories.destroy_all
-       self.user_categories.destroy_all
-    end
+    # def delete_relations
+    #    self.article_categories.destroy_all
+    #    self.user_categories.destroy_all
+    # end
 end
