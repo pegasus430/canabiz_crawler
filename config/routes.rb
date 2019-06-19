@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   #active admin
   devise_for :admin_users, ActiveAdmin::Devise.config
+
   ActiveAdmin.routes(self)
   match "/admin/admin_users/import_admin_users" => 'admin/admin_users#import_admin_users', via: [:get, :post]
   match "/admin/articles/import_articles" => 'admin/articles#import_articles', via: [:get, :post]
@@ -10,10 +11,10 @@ Rails.application.routes.draw do
   match "/admin/dispensaries/import_dispensaries" => 'admin/dispensaries#import_dispensaries', via: [:get, :post]
   match "/admin/products/import_products" => 'admin/products#import_products', via: [:get, :post]
   
-  # match "/admin/dispensary_sources/:id/add_to_store" => 'admin/dispensary_sources#add_to_store', via: :post
+  match "/admin/dispensary_sources/:id/add_to_store" => 'admin/dispensary_sources#add_to_store', via: :post
   match "/admin/dispensary_sources/:id/delete_from_store" => 'admin/dispensary_sources#delete_from_store', via: :post
   match "/admin/dispensary_sources/:id/update_product_store" => 'admin/dispensary_sources#update_product_store', via: :put
-  # match "/admin/dispensary_source_products/add_to_store" => 'admin/dispensary_source_products#add_to_store', via: :post
+  match "/admin/dispensary_source_products/add_to_store" => 'admin/dispensary_source_products#add_to_store', via: :post
   match "/admin/dispensary_products/add_to_store" => 'admin/dispensary_products#add_to_store', via: [:post, :patch]
   
   #ecommerce
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
 
   #GENERAL PAGES
   root 'pages#home'
+
   get 'admin', to: 'pages#admin'
   get 'search', to: 'pages#search'
   get 'save_email', to: 'pages#save_email'

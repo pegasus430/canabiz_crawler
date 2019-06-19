@@ -25,7 +25,7 @@ class LeaflyDispensaryScraper(object):
                     stateLst = try_get_list(item, 'State')
                     cityLst = try_get_list(item, 'City')
                     if len(stateLst) > 0  and len(cityLst) > 0:
-                        # print stateLst[0]
+                        print stateLst[0]
                         if stateLst[0].lower() == state_name.lower() and self._dispensary_filter.match_city(cityLst[0]):
                             yield self.get_partial_dispensary(item)
 

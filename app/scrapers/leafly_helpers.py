@@ -70,7 +70,7 @@ class LeaflyDetailsExtractor(object):
         result = {}
         result['name'] = self._get_first_or_empty(try_get_list(json_data, 'brandName'))
 
-        brandSlug = self._get_first_or_empty(try_get_list(json_data, 'brandSlug'))
+        # brandSlug = self._get_first_or_empty(try_get_list(json_data, 'brandSlug'))
 
         if brandSlug:
             result['url'] = 'https://www.leafly.com/brands/{0}'.format(brandSlug)
@@ -80,8 +80,8 @@ class LeaflyDetailsExtractor(object):
 
     def _get_menu_item_prices(self, json_data):
         result = {}
-        quantity = self._get_first_or_empty(try_get_list(json_data, 'packageDisplayUnit'))
-        price = self._get_first_or_empty(try_get_list(json_data, 'packagePrice'))
+        # quantity = self._get_first_or_empty(try_get_list(json_data, 'packageDisplayUnit'))
+        # price = self._get_first_or_empty(try_get_list(json_data, 'packagePrice'))
 
         if quantity and price:
             result['price'] = price
