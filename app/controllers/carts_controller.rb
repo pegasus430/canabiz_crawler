@@ -11,8 +11,8 @@ class CartsController < ApplicationController
 	end
 	
 	def destroy
-		@cart.destroy if @cart.id == session[:cart_id]
-		redirect_to root_path, notice: 'Your Cart is Empty'
+		# @cart.destroy if @cart.id == session[:cart_id]
+		# redirect_to root_path, notice: 'Your Cart is Empty'
 	end
 	
 	private 
@@ -26,7 +26,7 @@ class CartsController < ApplicationController
 	end
 	
 	def invalid_cart
-		logger_error = 'You are trying to access an invalid cart'
+		# logger_error = 'You are trying to access an invalid cart'
 		redirect_to root_path, notice: 'Invalid Cart'
 	end
 end
