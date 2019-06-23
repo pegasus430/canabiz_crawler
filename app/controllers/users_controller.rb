@@ -40,15 +40,15 @@ class UsersController < ApplicationController
         logger.info @user
         logger.info current_user
         if @user == current_user
-            #&& params[:old_password] != nil && params[:new_password] != nil && params[:confirm_password] != nil
+            && params[:old_password] != nil && params[:new_password] != nil && params[:confirm_password] != nil
 
             if @user.authenticate(params[:old_password])
-            #if @user.password == params[:old_password]
+            if @user.password == params[:old_password]
                 
                 if params[:new_password] == params[:confirm_password]
                     @user.update_attribute(:password, params[:new_password])
                     flash[:success] = 'Password Changed'
-                    #redirect_to root_path
+                    redirect_to root_path
                 else 
                     flash.now[:danger] = 'Passwords do not Match'
                     render 'change_password'
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
         else
             flash.now[:danger] = 'Missing a parameter'
             render 'change_password'
-            #redirect_to root_path
+            redirect_to root_p ath
         end
     end 
     
