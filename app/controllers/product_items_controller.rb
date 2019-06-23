@@ -3,7 +3,7 @@ class ProductItemsController < ApplicationController
 	# https://www.benkirane.ch/ajax-bootstrap-modals-rails/
 	
 	include CurrentCart
-	# before_action :set_cart, only: [:create, :add_to_cart, :destroy]
+	before_action :set_cart, only: [:create, :add_to_cart, :destroy]
 	before_action :set_product_item, only: [:show, :destroy]
 	skip_before_action :verify_authenticity_token #for ajax
 	
@@ -25,10 +25,10 @@ class ProductItemsController < ApplicationController
 		
 		@product_item = ProductItem.new
 		
-		# respond_to do |format|
-		# 	format.html
-		# 	format.js
-		# end
+		respond_to do |format|
+			format.html
+			format.js
+		end
 	end
 	
 	def create
