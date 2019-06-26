@@ -28,12 +28,12 @@ class NPGreenRushDaily(INewsParser):
             url = excerpt.xpath('.//h2/a/@href')[0]
             article_raw = requests.get(url, headers = self.headers)
             article = html.fromstring(article_raw.content)
-            for script in article.xpath('//script'):
-                script.getparent().remove(script)
-            for style in article.xpath('//style'):
-                style.getparent().remove(style)
-            for div in article.xpath('//div[contains(@class, "wipa-container")]'):
-                div.getparent().remove(div)
+            # for script in article.xpath('//script'):
+            #     script.getparent().remove(script)
+            # for style in article.xpath('//style'):
+            #     style.getparent().remove(style)
+            # for div in article.xpath('//div[contains(@class, "wipa-container")]'):
+            #     div.getparent().remove(div)
             image_url = None
             image_raw = article.xpath('.//meta[@property="og:image"]/@content')
             if len(image_raw):
