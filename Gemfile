@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'will_paginate', '3.0.7' # PAGINATION
 gem 'bootstrap-will_paginate', '0.0.10' # BOOTSTRAP STYLING
 gem 'bootstrap-sass', '~> 3.3.6' # BOOTSTRAP STYLING
-gem 'geocoder', '~> 1.4', '>= 1.4.4' #GET USER / DISPENSARY LOCATION
+gem 'geocoder', '~> 1.6' #GET USER / DISPENSARY LOCATION
 gem 'gmaps4rails', '~> 2.1', '>= 2.1.2' #INTEGRATE GOOGLE MAPS
 gem 'httparty', '~> 0.13.7' #External API Integration
 gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
