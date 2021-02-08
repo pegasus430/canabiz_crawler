@@ -56,7 +56,7 @@ gem 'twitter' #TWITTER
 gem 'oauth', '~> 0.5.1' #Needed for Twitter
 
 #IMAGE MANAGEMENT
-gem 'carrierwave', '~> 0.11.2' #rails tool for file uploads
+gem 'carrierwave', '~> 1.3.2' #rails tool for file uploads
 gem 'mini_magick', '~> 4.5', '>= 4.5.1' #handles file sizes - so they aren't too big - can resize images
 gem 'fog', '~> 1.38' #connects to AWS CDN
 gem 'figaro', '~> 1.1', '>= 1.1.1' #protects environment variables - so they don't go up to GitHub or anything
