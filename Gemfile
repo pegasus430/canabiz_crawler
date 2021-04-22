@@ -53,7 +53,7 @@ gem 'premailer-rails', '~> 1.9', '>= 1.9.5' # to style emails
 
 #TWITTER GEMS
 gem 'twitter' #TWITTER
-gem 'oauth', '~> 0.5.1' #Needed for Twitter
+gem 'oauth', '~> 0.5.6' #Needed for Twitter
 
 #IMAGE MANAGEMENT
 gem 'carrierwave', '~> 0.11.2' #rails tool for file uploads
