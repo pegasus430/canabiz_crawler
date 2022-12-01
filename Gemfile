@@ -35,7 +35,7 @@ gem 'bootstrap-modal-rails', '~> 2.2', '>= 2.2.5' #for customer to select quanti
 gem 'sucker_punch', '~> 2.0' #BACKGROUND JOB ENQUEUE
 gem 'sidekiq', '~> 4.2', '>= 4.2.10' #background jobs - switching from sucker punch
 
-gem 'sinatra', '~> 1.4', '>= 1.4.8' #needed for sidekiq
+gem 'sinatra', '~> 3.0' #needed for sidekiq
 gem 'sidekiq-cron', '~> 0.6.0' #schedule sidekiq job
 gem 'sidekiq-failures', '~> 0.4.5' #see failed sidekiq jobs
 
@@ -73,10 +73,10 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 6.0', '>= 6.0.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7.1'
+gem 'rails', '5.0.7.2'
 
 # STANDARD
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -93,7 +93,7 @@ end
 
 #for test methods
 group :test do
-  gem 'capybara', '2.7.1'
+  gem 'capybara', '3.38.0'
 end
 
 group :development do
