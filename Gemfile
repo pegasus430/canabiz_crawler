@@ -6,7 +6,7 @@ gem 'bootstrap-will_paginate', '0.0.10' # BOOTSTRAP STYLING
 gem 'bootstrap-sass', '~> 3.3.6' # BOOTSTRAP STYLING
 gem 'geocoder', '~> 1.4', '>= 1.4.4' #GET USER / DISPENSARY LOCATION
 gem 'gmaps4rails', '~> 2.1', '>= 2.1.2' #INTEGRATE GOOGLE MAPS
-gem 'httparty', '~> 0.13.7' #External API Integration
+gem 'httparty', '~> 0.21.0' #External API Integration
 gem 'bcrypt', '~> 3.1.7' #PASSWORD DIGEST
 gem 'rails_autolink', '~> 1.1', '>= 1.1.6' #helps to recognize a link in a string and output it as a link
 gem 'social-share-button', '~> 0.9.0' #social sharing
